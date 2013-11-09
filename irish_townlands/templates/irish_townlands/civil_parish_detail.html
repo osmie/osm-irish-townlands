@@ -1,0 +1,80 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load l10n humanize cache %}
+
+{% block title %}Townlands in {{ civil_parish.name }}{% endblock %}
+{% block header %}<h1>Civil Parish of {{ civil_parish.name }}{% if civil_parish.county %}, Co. {{ civil_parish.county.name }}{% endif %}</h1>{% endblock %}
+
+{% block body %}
+{% cache 3600 civil_parish_detail civil_parish.url_path %}
+
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in {{ civil_parish.name }}.</p>
+    {% if civil_parish.osm_id %}
+        <p>
+            <a href="{{ civil_parish.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ civil_parish.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ civil_parish.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
+
+    <ul>
+        <li><a href="#area">Area ↓</a></li>
+        <li><a href="#townlands">Townlands ↓</a></li>
+        <li><a href="#map">Map ↓</a></li>
+    </ul>
+
+    {% with baronies=civil_parish.baronies %}
+        {% if baronies %}
+            <p>{{ civil_parish.name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url view_area barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
+        {% endif %}
+    {% endwith %}
+
+
+    <a name="area"></a>
+    <h2>Area</h2>
+    <p>{{ civil_parish.name }} has an area of {{ civil_parish.area_km2|floatformat|intcomma }} km² / {{ civil_parish.area_acres|floatformat|intcomma }} acres / {{ civil_parish.area_mile2|floatformat|intcomma }} square miles</p>
+
+    <a name="townlands"></a>
+    <h2>Townlands</h2>
+    <p>
+        There are {% with nt=civil_parish.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ civil_parish.name }}. This represents {{ civil_parish.townland_cover|floatformat:-1 }}% of all the area in {{ civil_parish.name }}.
+    </p>
+    <ul>
+    {% for townland in civil_parish.townlands_sorted %}
+        <li>
+            <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>
+                <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
+                    {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
+                    {% endwith %}
+                </abbr>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <a name="map"></a>
+    <h2>Map</h2>
+    <p>
+        It is located at {{ civil_parish.centre_pretty }}.
+    </p>
+    <div id="map" style="height: 500px; width: 600px;"></div>
+    <script>
+        var map = new L.Map('map');
+        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib='Map data © OpenStreetMap contributors';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+        map.setView(new L.LatLng( {{ civil_parish.centre_y }}, {{ civil_parish.centre_x }}), 11 );
+        map.addLayer(osm);
+        var popup = new L.Popup();
+
+        var boundary = new L.GeoJSON()
+        boundary.addGeoJSON({
+            'type':'Feature',
+            'properties': { 'name': "{{ civil_parish.name }}" },
+            'geometry': {{ civil_parish.polygon_geojson|safe }}
+            } );
+        map.addLayer(boundary);
+    </script>
+
+
+{% endcache %}
+{% endblock body %}

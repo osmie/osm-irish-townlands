@@ -1,0 +1,130 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load l10n humanize cache %}
+
+{% block title %}{{ townland.name }} Townland{% if townland.county %}, Co. {{ townland.county.name }}{% endif %}{% endblock %}
+{% block header %}<h1>{{ townland.name }}{% if townland.county %}, Co. {{ townland.county.name }}{% endif %}</h1>{% endblock %}
+
+{% block body %}
+
+{% cache 3600 townland_detail townland.url_path %}
+
+    {% if townland.county and townland.barony and townland.civil_parish %}
+    <p>
+        <a href="{% url view_area townland.county.url_path %}">Co. {{ townland.county.name }}</a> → <a href="{% url view_area townland.barony.url_path %}">{{ townland.barony.name }}</a> → <a href="{% url view_area townland.civil_parish.url_path %}">{{ townland.civil_parish.name }} Civil Parish</a> → <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>
+    </p>
+    {% endif %}
+
+    <ul>
+        <li><a href="#area">Area ↓</a></li>
+        <li><a href="#borders">Bordering Townlands ↓</a></li>
+        <li><a href="#map">Map ↓</a></li>
+        <li><a href="#census">Census Search ↓</a></li>
+    </ul>
+
+    <p>
+    {% if townland.civil_parish and townland.barony and townland.county %}
+        {{ townland.name }} is in the Civil Parish of {{ townland.civil_parish.name }}, in the Barony of {{ townland.barony.name }}, in the County of {{ townland.county.name }}
+    {% else %}
+        {% if townland.civil_parish %}
+            {{ townland.name }} is in the Civil Parish of {{ townland.civil_parish.name }}</a>.
+        {% else %}
+            We don't know what Civil Parish {{ townland.name }} is in.
+        {% endif %}
+        {% if townland.barony %}
+            {{ townland.name }} is in the Barony of {{ townland.barony.name }}</a>.
+        {% else %}
+            We don't know what Barony {{ townland.name }} is in.
+        {% endif %}
+        {% if townland.county %}
+            {{ townland.name }} is in <a href="{% url view_area townland.county.url_path %}">Co. {{ townland.county.name }}</a>
+        {% else %}
+            We don't know what county {{ townland.name }} is in.
+        {% endif %}
+    {% endif %}
+    </p>
+
+    {% if townland.name_ga %}
+        <p>The Irish for {{ townland.name }} is {{ townland.name_ga }}</p>
+    {% endif %}
+    {% if townland.alt_name %}
+        <p>{{ townland.name }} is also known as {{ townland.alt_name }}</p>
+    {% endif %}
+
+    {% if townland.osm_id %}
+        <p>
+            <a href="{{ townland.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ townland.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ townland.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
+
+    <a name="area"></a>
+    <h2>Area</h2>
+    <p>{{ townland.name }} has an area of:
+        <ul>
+            <li>{{ townland.area_m2|stringformat:"d"|intcomma }} m²</li>
+            <li>{{ townland.area_hectares|floatformat:-2 }} hectares</li>
+            <li>{{ townland.area_km2|floatformat:-4 }} km²</li>
+            <li>{{ townland.area_mile2|floatformat:-2 }} square miles</li>
+            <li>{{ townland.area_acres|floatformat:-2 }} acres</li>
+            <li>{% with arp=townland.area_acres_roods_perches %}{{ arp.0 }} acre{{ arp.0|pluralize }}, {{ arp.1 }} rod{{ arp.1|pluralize }}, {{ arp.2 }} perch{{ arp.2|pluralize:"es" }}{% endwith %}</li>
+        </ul>
+    </p>
+
+    <p>Nationwide, it is the {{ townland.area_rank|ordinal }} largest townland that we know about</p>
+    {% if townland.county %}
+        <p>Within Co. {{ townland.county.name }}, it is the {{ townland.area_rank_county|ordinal }} largest townland</p>
+    {% endif %}
+
+    <a name="borders"></a>
+    <h2>Borders</h2>
+    {% if townland.touching_townlands %}
+        <p>{{ townland.name }} borders the following other townlands:
+            <ul>
+                {% for tt in townland.touching_townlands %}
+                    <li><a href="{% url view_area tt.townland_b.url_path %}">{{ tt.townland_b.name }}</a> to the {{ tt.direction_words }} </li>
+                {% endfor %}
+            </ul>
+        </p>
+    {% else %}
+        <p>We don't have a record for what townlands (if any) {{ townland.name }} borders</p>
+    {% endif %}
+
+    <a name="map"></a>
+    <h2>Map</h2>
+    <p>
+        It is located at {{ townland.centre_pretty }}.
+    </p>
+    <div class="map" id="map" style="height: 600px; width: 800px;"></div>
+    <script>
+        var map = new L.Map('map');
+        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib='Map data © OpenStreetMap contributors';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+        map.setView(new L.LatLng( {{ townland.centre_y }}, {{ townland.centre_x }}), 14 );
+        map.addLayer(osm);
+        var popup = new L.Popup();
+
+        var boundary = new L.GeoJSON()
+        boundary.addGeoJSON({
+            'type':'Feature',
+            'properties': { 'name': "{{ townland.name }}" },
+            'geometry': {{ townland.polygon_geojson|safe }}
+            } );
+        map.addLayer(boundary);
+    </script>
+
+    <a name="census"></a>
+    <h2>Census Search</h2>
+    <p>
+        Interested in Geneological / ancestors who may have lived in {{ townland.name }}?
+        <ul>
+            <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1911&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">Search the 1911 Irish Census for {{ townland.name }}</a></li>
+            <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">Search the 1901 Irish Census for {{ townland.name }}</a></li>
+        </ul>
+    </p>
+
+
+{% endcache %}
+{% endblock body %}

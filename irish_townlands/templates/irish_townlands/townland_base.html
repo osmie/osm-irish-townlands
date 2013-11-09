@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="/media/js/leaflet/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/media/js/leaflet/leaflet.ie.css" />
+    <![endif]-->
+
+    <script src="/media/js/leaflet/leaflet.js"></script>
+{% endblock %}
+
+{% block footer_extra %}
+    <section id="data-copyright">
+        This page has data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>
+    </section>
+    <section id="data-freshness">
+        This data was last updated on {{ last_update }}.
+    </section>
+{% endblock %}

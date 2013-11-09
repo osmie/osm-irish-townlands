@@ -1,0 +1,62 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load l10n humanize cache %}
+
+{% block title %}Irish Traditional Boundaries Progress Report{% endblock %}
+{% block header %}<h1>Irish Traditional Boundaries Progress Report</h1>{% endblock %}
+
+{% block extra_headers %}
+    {{ block.super }}
+    <style>
+        #coverage tbody tr:nth-child(even) {
+            background-color: #ebebeb;
+        }
+        #coverage tbody td {
+            padding: 8px 11px;
+        }
+        #coverage thead tr {
+            padding-bottom: 1em;
+        }
+        #coverage thead td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{% cache 3600 progress %}
+
+<p>How complete is the data in Open Street Map?</p>
+<p>The data in OpenStreetMap is continuously updated. This page shows how much of each county has been mapped in townlands, baronies and civil parishes</p>
+
+<table id=coverage>
+    <thead>
+        <td>County</td>
+        <td colspan=2>Townlands</td>
+        <td colspan=2>Baronies</td>
+        <td colspan=2>Civil Parishes</td>
+    </thead>
+    <tbody>
+    {% for county in counties %}
+        <tr>
+            <td><a href="{% url view_area county.url_path %}">{{ county.name }}</a></td>
+            <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
+            <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
+            <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<h2><a name=errors></a>Errors with the data</h2>
+
+<ul>
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% empty %}
+        <li><i>No Errors, data is good! 😁</i></li>
+    {% endfor %}
+</ul>
+
+{% endcache %}
+{% endblock %}
