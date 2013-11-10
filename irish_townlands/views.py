@@ -11,7 +11,7 @@ def progress(request):
         last_update = "N/A"
     counties = County.objects.order_by('name').all()
     errors = Error.objects.all().values_list('message', flat=True)
-    return render_to_response('longtaillists/progress.html', {'counties':counties, 'last_update':last_update, 'errors':errors}, context_instance=RequestContext(request))
+    return render_to_response('irish_townlands/progress.html', {'counties':counties, 'last_update':last_update, 'errors':errors}, context_instance=RequestContext(request))
 
 
 def view_area(request, url_path=None):
