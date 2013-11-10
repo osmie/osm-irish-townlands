@@ -13,4 +13,4 @@ setup(name="django-osm-irish-townlands",
       install_requires=[
           'django',
       ],
-      )
+)
