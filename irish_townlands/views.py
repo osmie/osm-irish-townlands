@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from .models import Metadata, Townland, CivilParish, Barony, County
+from .models import Metadata, Townland, CivilParish, Barony, County, Error
 
 def progress(request):
     try:
