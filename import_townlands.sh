@@ -2,8 +2,6 @@
 
 set -o errexit
 
-cd $(dirname $0)
-
 wget -q -N http://download.geofabrik.de/openstreetmap/europe/ireland-and-northern-ireland.osm.pbf
 osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
 rm ireland-and-northern-ireland.osm.pbf
