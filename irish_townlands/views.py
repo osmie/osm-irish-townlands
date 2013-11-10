@@ -19,7 +19,7 @@ def view_area(request, url_path=None):
         last_update = Metadata.objects.get(key="lastupdate").value
     except Metadata.DoesNotExist:
         last_update = "N/A"
-    if url_path in ['all', None ]:
+    if url_path in ['all', None]:
         return render_to_response('irish_townlands/index.html', {
             'townlands': Townland.objects.select_related("county").order_by("name").all(),
             'counties': County.objects.prefetch_related("townlands", "baronies", "civil_parishes").order_by('name').all(),
