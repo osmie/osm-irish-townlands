@@ -9,13 +9,6 @@
 {% cache 3600 county_detail county.url_path %}
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}.</p>
-    {% if county.osm_id %}
-        <p>
-            <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
-            <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
-        </p>
-    {% endif %}
 
     <h2>Area</h2>
     <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
@@ -64,6 +57,14 @@
         </li>
     {% endfor %}
     </ul>
+
+    {% if county.osm_id %}
+        <p>
+            <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
 
 {% endcache %}
 {% endblock body %}

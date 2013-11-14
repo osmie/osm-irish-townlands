@@ -8,21 +8,41 @@
 {% cache 3600 barony_detail barony.url_path %}
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ barony.name }}.</p>
-    {% if barony.osm_id %}
-        <p>
-            <a href="{{ barony.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a href="{{ barony.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
-            <a href="{{ barony.edit_in_potlatch_url }}">Edit in Potlatch</a>
-        </p>
-    {% endif %}
 
     <p>{{ barony.name }} is in <a href="{% url view_area barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
 
     <ul>
+        <li><a href="#map">Map ↓</a></li>
         <li><a href="#area">Area ↓</a></li>
         <li><a href="#townlands">Townlands ↓</a></li>
-        <li><a href="#map">Map ↓</a></li>
+        <li><a href="#osm">OpenStreetMap↓</a></li>
     </ul>
+
+    <a name="map"></a>
+    <h2>Map</h2>
+    <p>
+        It is located at {{ barony.centre_pretty }}.
+    </p>
+    <div id="map" style="height: 500px; width: 600px;"></div>
+    <script>
+        var map = new L.Map('map');
+        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib='Map data © OpenStreetMap contributors';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+        map.setView(new L.LatLng( {{ barony.centre_y }}, {{ barony.centre_x }}), 11 );
+        map.addLayer(osm);
+        var popup = new L.Popup();
+
+        var boundary = new L.GeoJSON()
+        boundary.addGeoJSON({
+            'type':'Feature',
+            'properties': { 'name': "{{ barony.name }}" },
+            'geometry': {{ barony.polygon_geojson|safe }}
+            } );
+        map.addLayer(boundary);
+    </script>
+
 
 
     <a name="area"></a>
@@ -60,30 +80,16 @@
     {% endfor %}
     </ul>
 
-    <a name="map"></a>
-    <h2>Map</h2>
-    <p>
-        It is located at {{ barony.centre_pretty }}.
-    </p>
-    <div id="map" style="height: 500px; width: 600px;"></div>
-    <script>
-        var map = new L.Map('map');
-        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttrib='Map data © OpenStreetMap contributors';
-        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+    <a name="osm"></a>
+    <h2>OpenStreetMap</h2>
+    {% if barony.osm_id %}
+        <p>
+            <a href="{{ barony.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ barony.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ barony.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
 
-        map.setView(new L.LatLng( {{ barony.centre_y }}, {{ barony.centre_x }}), 11 );
-        map.addLayer(osm);
-        var popup = new L.Popup();
-
-        var boundary = new L.GeoJSON()
-        boundary.addGeoJSON({
-            'type':'Feature',
-            'properties': { 'name': "{{ barony.name }}" },
-            'geometry': {{ barony.polygon_geojson|safe }}
-            } );
-        map.addLayer(boundary);
-    </script>
 
 {% endcache %}
 {% endblock body %}
