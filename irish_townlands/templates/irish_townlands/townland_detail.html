@@ -80,12 +80,9 @@
     <h2>Area</h2>
     <p>{{ townland.name }} has an area of:
         <ul>
-            <li>{{ townland.area_m2|stringformat:"d"|intcomma }} m²</li>
-            <li>{{ townland.area_hectares|floatformat:-2 }} hectares</li>
-            <li>{{ townland.area_km2|floatformat:-4 }} km²</li>
+            <li>{{ townland.area_m2|stringformat:"d"|intcomma }} m² / {{ townland.area_hectares|floatformat:-2 }} hectares / {{ townland.area_km2|floatformat:-4 }} km²</li>
             <li>{{ townland.area_mile2|floatformat:-2 }} square miles</li>
-            <li>{{ townland.area_acres|floatformat:-2 }} acres</li>
-            <li>{% with arp=townland.area_acres_roods_perches %}{{ arp.0 }} acre{{ arp.0|pluralize }}, {{ arp.1 }} rod{{ arp.1|pluralize }}, {{ arp.2 }} perch{{ arp.2|pluralize:"es" }}{% endwith %}</li>
+            <li>{{ townland.area_acres|floatformat:-2 }} acres / {% with arp=townland.area_acres_roods_perches %}{{ arp.0 }} acre{{ arp.0|pluralize }}, {{ arp.1 }} rod{{ arp.1|pluralize }}, {{ arp.2 }} perch{{ arp.2|pluralize:"es" }}{% endwith %}</li>
         </ul>
     </p>
 
