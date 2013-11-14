@@ -67,6 +67,7 @@
             <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
         </p>
     {% endif %}
+    <p> <a href="{% url county_debug county.url_path %}"a> Debug</a> overlaps and coverage</p>
 
 {% endcache %}
 {% endblock body %}
