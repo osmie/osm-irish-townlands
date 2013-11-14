@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import re
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error
 
@@ -13,21 +14,36 @@ def progress(request):
     errors = Error.objects.all().values_list('message', flat=True)
     return render_to_response('irish_townlands/progress.html', {'counties':counties, 'last_update':last_update, 'errors':errors}, context_instance=RequestContext(request))
 
+def county_debug(request, url_path):
+    try:
+        last_update = Metadata.objects.get(key="lastupdate").value
+    except Metadata.DoesNotExist:
+        last_update = "N/A"
+
+    # County debug page
+    try:
+        # strip debug from url to get county
+        url_path = re.sub('debug/$', '', url_path)
+        x = County.objects.select_related().get(url_path=url_path)
+        return render_to_response('irish_townlands/countydebug_detail.html', {'county': x, 'last_update': last_update}, context_instance=RequestContext(request))
+    except:
+        # Couldn't find county 
+        raise Http404("County not found")
 
 def view_area(request, url_path=None):
     try:
         last_update = Metadata.objects.get(key="lastupdate").value
     except Metadata.DoesNotExist:
         last_update = "N/A"
+
+    # County index page
     if url_path in ['all', None]:
         return render_to_response('irish_townlands/index.html', {
-            'townlands': Townland.objects.select_related("county").order_by("name").all(),
             'counties': County.objects.prefetch_related("townlands", "baronies", "civil_parishes").order_by('name').all(),
-            'baronies': Barony.objects.prefetch_related("townlands").select_related("county").order_by("county__name", "name").all(),
-            'civil_parishes': CivilParish.objects.prefetch_related("townlands").select_related("county").order_by("county__name", "name").all(),
             'last_update': last_update,
             }, context_instance=RequestContext(request))
 
+    # Detail pages
     for model, name in ( (Townland, 'townland'), (CivilParish, 'civil_parish'), (Barony, 'barony'), (County, 'county')):
         try:
             x = model.objects.select_related().get(url_path=url_path)
