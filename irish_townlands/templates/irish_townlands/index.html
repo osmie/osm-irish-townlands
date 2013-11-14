@@ -8,7 +8,8 @@
 
 {% cache 3600 index %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties, baronies, civil parishes and townlands in Ireland.</p>
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties in Ireland.</p>
+    <p>Click on each county to see baronies, civil parishes and townlands in the respective county.</p>
     <p>This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly. <a href="/townland/progress/">See how much we have done and how much we have left to do</a>.</p>
 
     <h2>Counties</h2>
@@ -22,36 +23,6 @@
         </li>
     {% endfor %}
     </ul>
-
-    <h2>Baronies</h2>
-    {% regroup baronies by county as baronies_per_county %}
-    {% for county in baronies_per_county %}
-        <h3>{{ county.grouper.name }}</h3>
-        <ul>
-        {% for barony in county.list %}
-            <li>
-                <a href="{% url view_area barony.url_path %}">{{ barony.name }}</a>.
-                {% with ncp=barony.civil_parishes|length %}{{ ncp }} civil parish{{ ncp|pluralize:"es" }}.{% endwith %}
-                {% with nt=barony.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
-            </li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-
-    <h2>Civil Parishes</h2>
-    {% regroup civil_parishes by county as civil_parishes_per_county %}
-    {% for county in civil_parishes_per_county %}
-        <h3>{{ county.grouper.name }}</h3>
-        <ul>
-        {% for civil_parish in county.list %}
-            <li>
-                <a href="{% url view_area civil_parish.url_path %}">{{ civil_parish.name }}</a>.
-                {% with nt=civil_parish.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
-            </li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-
 
 {% endcache %}
 {% endblock body %}
