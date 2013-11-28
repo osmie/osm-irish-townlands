@@ -24,7 +24,6 @@ def view_area(request, url_path=None):
             'townlands': Townland.objects.select_related("county").order_by("name").all(),
             'counties': County.objects.prefetch_related("townlands", "baronies", "civil_parishes").order_by('name').all(),
             'baronies': Barony.objects.prefetch_related("townlands").select_related("county").order_by("county__name", "name").all(),
-            'civil_parishes': CivilParish.objects.prefetch_related("townlands").select_related("county").order_by("county__name", "name").all(),
             'last_update': last_update,
             }, context_instance=RequestContext(request))
 

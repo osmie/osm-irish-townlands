@@ -38,20 +38,6 @@
         </ul>
     {% endfor %}
 
-    <h2>Civil Parishes</h2>
-    {% regroup civil_parishes by county as civil_parishes_per_county %}
-    {% for county in civil_parishes_per_county %}
-        <h3>{{ county.grouper.name }}</h3>
-        <ul>
-        {% for civil_parish in county.list %}
-            <li>
-                <a href="{% url view_area civil_parish.url_path %}">{{ civil_parish.name }}</a>.
-                {% with nt=civil_parish.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
-            </li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-
 
 {% endcache %}
 {% endblock body %}
