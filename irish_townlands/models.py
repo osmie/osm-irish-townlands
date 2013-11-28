@@ -23,7 +23,7 @@ class Area(models.Model):
         abstract = True
 
     osm_id = models.IntegerField()
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True)
     alt_name = models.CharField(max_length=255, default=None, null=True)
     area_m2 = models.FloatField(db_index=True)
