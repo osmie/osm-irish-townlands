@@ -9,13 +9,6 @@
 {% cache 3600 county_detail county.url_path %}
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}.</p>
-    {% if county.osm_id %}
-        <p>
-            <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
-            <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
-        </p>
-    {% endif %}
 
     <h2>Area</h2>
     <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
@@ -65,154 +58,16 @@
     {% endfor %}
     </ul>
 
-    <h2>Data Completeness</h2>
-    <h3>Land not covered by Townlands</h3>
-    
-    {% if county.polygon_townland_gaps %}
-        <div class="map" id="map-td-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-td-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by townlands" },
-                'geometry': {{ county.polygon_townland_gaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>All of {{ county.name }} is covered by townlands in the OpenStreetMap database.</p>
+    <a name="osm"></a>
+    <h2>OpenStreetMap</h2>
+    {% if county.osm_id %}
+        <p>
+            <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
     {% endif %}
-
-    <h3>Land covered by 2 (or more) Townlands</h3>
-
-    {% if county.polygon_barony_overlaps %}
-        <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
-        
-        <div class="map" id="map-td-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'geometry': {{ county.polygon_townland_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>None of the townlands in {{ county.name }} the OpenStreetMap database overlap.</p>
-    {% endif %}
-
-
-    <h3>Land not covered by Civil Parishes</h3>
-    
-    {% if county.polygon_civil_parish_gaps %}
-        <div class="map" id="map-cp-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by Civil Parishes" },
-                'geometry': {{ county.polygon_civil_parish_gaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>All of {{ county.name }} is covered by civil parishes in the OpenStreetMap database.</p>
-    {% endif %}
-
-    <h3>Land covered by 2 (or more) Civil Parishes</h3>
-    
-    {% if county.polygon_civil_parish_overlaps %}
-        <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
-        <div class="map" id="map-cp-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'geometry': {{ county.polygon_civil_parish_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>No civil parishes overlap in {{ county.name }} in the OpenStreetMap database.</p>
-    {% endif %}
-
-
-    <h3>Land not covered by Baronies</h3>
-    
-    {% if county.polygon_barony_gaps %}
-        <div class="map" id="map-b-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-b-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by townlands" },
-                'geometry': {{ county.polygon_barony_gaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>All of {{ county.name }} is covered by baronies in the OpenStreetMap database.</p>
-    {% endif %}
-
-    <h3>Land covered by 2 (or more) Baronies</h3>
-    
-    {% if county.polygon_barony_overlaps %}
-        <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
-        <div class="map" id="map-b-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-b-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'geometry': {{ county.polygon_barony_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
-        </script>
-    {% else %}
-        <p>None of the baronies in {{ county.name }} in the OpenStreetMap database overlap.</p>
-    {% endif %}
-
+    <p> <a href="{% url county_debug county.url_path %}"a> Debug</a> overlaps and coverage</p>
 
 {% endcache %}
 {% endblock body %}

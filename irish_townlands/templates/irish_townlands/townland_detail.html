@@ -15,10 +15,11 @@
     {% endif %}
 
     <ul>
+        <li><a href="#map">Map ↓</a></li>
         <li><a href="#area">Area ↓</a></li>
         <li><a href="#borders">Bordering Townlands ↓</a></li>
-        <li><a href="#map">Map ↓</a></li>
         <li><a href="#census">Census Search ↓</a></li>
+        <li><a href="#osm">OpenStreetMap↓</a></li>
     </ul>
 
     <p>
@@ -50,46 +51,6 @@
         <p>{{ townland.name }} is also known as {{ townland.alt_name }}</p>
     {% endif %}
 
-    {% if townland.osm_id %}
-        <p>
-            <a href="{{ townland.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a href="{{ townland.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
-            <a href="{{ townland.edit_in_potlatch_url }}">Edit in Potlatch</a>
-        </p>
-    {% endif %}
-
-    <a name="area"></a>
-    <h2>Area</h2>
-    <p>{{ townland.name }} has an area of:
-        <ul>
-            <li>{{ townland.area_m2|stringformat:"d"|intcomma }} m²</li>
-            <li>{{ townland.area_hectares|floatformat:-2 }} hectares</li>
-            <li>{{ townland.area_km2|floatformat:-4 }} km²</li>
-            <li>{{ townland.area_mile2|floatformat:-2 }} square miles</li>
-            <li>{{ townland.area_acres|floatformat:-2 }} acres</li>
-            <li>{% with arp=townland.area_acres_roods_perches %}{{ arp.0 }} acre{{ arp.0|pluralize }}, {{ arp.1 }} rod{{ arp.1|pluralize }}, {{ arp.2 }} perch{{ arp.2|pluralize:"es" }}{% endwith %}</li>
-        </ul>
-    </p>
-
-    <p>Nationwide, it is the {{ townland.area_rank|ordinal }} largest townland that we know about</p>
-    {% if townland.county %}
-        <p>Within Co. {{ townland.county.name }}, it is the {{ townland.area_rank_county|ordinal }} largest townland</p>
-    {% endif %}
-
-    <a name="borders"></a>
-    <h2>Borders</h2>
-    {% if townland.touching_townlands %}
-        <p>{{ townland.name }} borders the following other townlands:
-            <ul>
-                {% for tt in townland.touching_townlands %}
-                    <li><a href="{% url view_area tt.townland_b.url_path %}">{{ tt.townland_b.name }}</a> to the {{ tt.direction_words }} </li>
-                {% endfor %}
-            </ul>
-        </p>
-    {% else %}
-        <p>We don't have a record for what townlands (if any) {{ townland.name }} borders</p>
-    {% endif %}
-
     <a name="map"></a>
     <h2>Map</h2>
     <p>
@@ -115,6 +76,35 @@
         map.addLayer(boundary);
     </script>
 
+    <a name="area"></a>
+    <h2>Area</h2>
+    <p>{{ townland.name }} has an area of:
+        <ul>
+            <li>{{ townland.area_m2|stringformat:"d"|intcomma }} m² / {{ townland.area_hectares|floatformat:-2 }} hectares / {{ townland.area_km2|floatformat:-4 }} km²</li>
+            <li>{{ townland.area_mile2|floatformat:-2 }} square miles</li>
+            <li>{{ townland.area_acres|floatformat:-2 }} acres / {% with arp=townland.area_acres_roods_perches %}{{ arp.0 }} acre{{ arp.0|pluralize }}, {{ arp.1 }} rod{{ arp.1|pluralize }}, {{ arp.2 }} perch{{ arp.2|pluralize:"es" }}{% endwith %}</li>
+        </ul>
+    </p>
+
+    <p>Nationwide, it is the {{ townland.area_rank|ordinal }} largest townland that we know about</p>
+    {% if townland.county %}
+        <p>Within Co. {{ townland.county.name }}, it is the {{ townland.area_rank_county|ordinal }} largest townland</p>
+    {% endif %}
+
+    <a name="borders"></a>
+    <h2>Borders</h2>
+    {% if townland.touching_townlands %}
+        <p>{{ townland.name }} borders the following other townlands:
+            <ul>
+                {% for tt in townland.touching_townlands %}
+                    <li><a href="{% url view_area tt.townland_b.url_path %}">{{ tt.townland_b.name }}</a> to the {{ tt.direction_words }} </li>
+                {% endfor %}
+            </ul>
+        </p>
+    {% else %}
+        <p>We don't have a record for what townlands (if any) {{ townland.name }} borders</p>
+    {% endif %}
+
     <a name="census"></a>
     <h2>Census Search</h2>
     <p>
@@ -124,6 +114,16 @@
             <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">Search the 1901 Irish Census for {{ townland.name }}</a></li>
         </ul>
     </p>
+
+    <a name="osm"></a>
+    <h2>OpenStreetMap</h2>
+    {% if townland.osm_id %}
+        <p>
+            <a href="{{ townland.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ townland.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ townland.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
 
 
 {% endcache %}
