@@ -17,9 +17,9 @@
     {% for county in counties %}
         <li>
             <a href="{% url view_area county.url_path %}">{{ county.name }}</a>.
-                {% with nb=county.baronies.all|length %} {{ nb }} baron{{ nb|pluralize:"y,ies" }}, {% endwith %}
-                {% with ncp=county.civil_parishes.all|length %} {{ ncp }} civil parish{{ ncp|pluralize:"es" }}, {% endwith %}
-                {% with nt=county.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
+                {% with nb=county.baronies.count %} {{ nb }} baron{{ nb|pluralize:"y,ies" }}, {% endwith %}
+                {% with ncp=county.civil_parishes.count %} {{ ncp }} civil parish{{ ncp|pluralize:"es" }}, {% endwith %}
+                {% with nt=county.townlands.count %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
         </li>
     {% endfor %}
     </ul>
