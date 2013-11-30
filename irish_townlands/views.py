@@ -39,7 +39,7 @@ def view_area(request, url_path=None):
     # County index page
     if url_path in ['all', None]:
         return render_to_response('irish_townlands/index.html', {
-            'counties': County.objects.order_by('name').all(),
+            'counties': County.objects.only('name', 'url_path').order_by('name').all(),
             'last_update': last_update,
             }, context_instance=RequestContext(request))
 
