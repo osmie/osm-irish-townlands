@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name="django-osm-irish-townlands",
-      version="0.1.0",
+      version="1.0.0",
       author="Rory McCann",
       author_email="rory@technomancy.org",
       packages=['irish_townlands', 'irish_townlands.management', 'irish_townlands.management.commands'],
