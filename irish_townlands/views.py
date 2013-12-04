@@ -1,9 +1,13 @@
+"""Views."""
+
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models import Sum
 import re
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error
+
 
 def progress(request):
     try:
@@ -12,7 +16,23 @@ def progress(request):
         last_update = "N/A"
     counties = County.objects.order_by('name').all()
     errors = Error.objects.all().values_list('message', flat=True)
-    return render_to_response('irish_townlands/progress.html', {'counties':counties, 'last_update':last_update, 'errors':errors}, context_instance=RequestContext(request))
+
+    area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_all_civil_parishes = CivilParish.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_all_baronies = Barony.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+
+    townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+    civil_parish_progress = ( area_of_all_civil_parishes / area_of_ireland ) * 100
+    barony_progress = ( area_of_all_baronies / area_of_ireland ) * 100
+
+    return render_to_response('irish_townlands/progress.html',
+        {
+            'counties':counties, 'last_update':last_update, 'errors':errors,
+            'townland_progress': townland_progress, 'civil_parish_progress': civil_parish_progress,
+            'barony_progress': barony_progress,
+         },
+        context_instance=RequestContext(request))
 
 def county_debug(request, url_path):
     try:
