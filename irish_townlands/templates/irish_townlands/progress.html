@@ -50,9 +50,22 @@
             <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
         </tr>
     {% endfor %}
+
     </tbody>
 </table>
 
+<h2>Duplicate Townland Name</h2>
+<ul>
+    {% for group in duplicate_townland_names %}
+    <li>{{ group.name }}: {{ group.count }}
+        <ul>
+            {% for townland in group.townlands %}
+            <li><a href="{% url view_area townland.url_path %}">{{ group.name }}</a> in {% if townland.civil_parish__name %}{{ townland.civil_parish__name }} Civil Parish,{% endif %} {% if townland.barony__name %}{{ townland.barony__name }} Barony,{% endif %} Co. {{ townland.county__name }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
 
 <h2><a name=errors></a>Errors with the data</h2>
 
