@@ -8,7 +8,7 @@
 
 {% cache 3600 county_detail county.url_path %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}.</p>
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}. <i>(<a href="{% url county_debug county.url_path %}"a>Debug</a> overlaps and coverage)</i></p>
 
     <h2>Area</h2>
     <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
