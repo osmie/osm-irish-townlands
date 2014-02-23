@@ -34,7 +34,7 @@ def progress(request):
     duplicate_names = Townland.objects.all().values("name").annotate(count=Count('name')).filter(count__gte=2).order_by('-count', 'name')
     for item in duplicate_names:
         townland_name, townland_count = item['name'], item['count']
-        townlands = Townland.objects.filter(name=townland_name).values('url_path', 'county__name', 'barony__name', 'civil_parish__name')
+        townlands = Townland.objects.filter(name=townland_name).order_by("county__name", "barony__name", "civil_parish__name").values('url_path', 'county__name', 'barony__name', 'civil_parish__name')
         duplicate_townland_names.append({'name': townland_name, 'count': townland_count, 'townlands': townlands})
 
     return render_to_response('irish_townlands/progress.html',
