@@ -31,7 +31,7 @@ def progress(request):
 
     # Dupe names. Nothing wrong with duplicate names, it happens
     duplicate_townland_names = []
-    duplicate_names = Townland.objects.all().values("name").annotate(count=Count('name')).filter(count__ge=2).order_by('-count', 'name')
+    duplicate_names = Townland.objects.all().values("name").annotate(count=Count('name')).filter(count__gte=2).order_by('-count', 'name')
     for item in duplicate_names:
         townland_name, townland_count = item['name'], item['count']
         townlands = Townland.objects.filter(name=townland_name).values('url_path', 'county__name', 'barony__name', 'civil_parish__name')
