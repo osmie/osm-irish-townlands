@@ -25,9 +25,16 @@
 {% block body %}
 {% cache 3600 progress %}
 
+<ul>
+    <li><a href="#countyprogress">Progress of each county ↓</a></li>
+    <li><a href="#duplicatenames">Duplicate townland names ↓</a></li>
+    <li><a href="#errors">Errors with the Data ↓</a></li>
+</ul>
+
 <p>How complete is the data in Open Street Map?</p>
 <p>The data in OpenStreetMap is continuously updated. This page shows how much of each county has been mapped in townlands, baronies and civil parishes</p>
 
+<a name="countyprogress"></a>
 <table id=coverage>
     <thead>
         <td>County</td>
@@ -54,6 +61,7 @@
     </tbody>
 </table>
 
+<a name="duplicatenames"></a>
 <h2>Duplicate Townland Name</h2>
 <ul>
     {% for group in duplicate_townland_names %}
@@ -67,6 +75,7 @@
     {% endfor %}
 </ul>
 
+<a name="errors"></a>
 <h2><a name=errors></a>Errors with the data</h2>
 
 <ul>
