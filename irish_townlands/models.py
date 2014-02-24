@@ -271,3 +271,12 @@ class TownlandTouch(models.Model):
 
 class Error(models.Model):
     message = models.TextField()
+
+
+class Progress(models.Model):
+    when = models.DateField(auto_now=True)
+    percent = models.FloatField()
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return u"{name} was at {percent} on {when}".format(name=self.name, percent=self.percent, when=self.when)
