@@ -27,7 +27,7 @@
 
 <ul>
     <li><a href="#countyprogress">Progress of each county ↓</a></li>
-    <li><a href="#duplicatenames">Duplicate townland names ↓</a></li>
+    <li><a href="{% url duplicatenames %}">Duplicate townland names →</a></li>
     <li><a href="#errors">Potential conflicts with the data ↓</a></li>
 </ul>
 
@@ -63,17 +63,7 @@
 
 <a name="duplicatenames"></a>
 <h2>Duplicate Townland Name</h2>
-<ul>
-    {% for group in duplicate_townland_names %}
-    <li>{{ group.name }}: {{ group.count }}
-        <ul>
-            {% for townland in group.townlands %}
-            <li><a href="{% url view_area townland.url_path %}">{{ group.name }}</a> in {% if townland.civil_parish__name %}{{ townland.civil_parish__name }} Civil Parish,{% endif %} {% if townland.barony__name %}{{ townland.barony__name }} Barony,{% endif %} Co. {{ townland.county__name }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
+<p><a href="{% url duplicatenames %}">Duplicate townland names have moved to a separate page</a></p>
 
 <h2><a name=errors></a>Potential conflicts with the data</h2>
 

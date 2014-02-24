@@ -29,6 +29,16 @@ def progress(request):
         civil_parish_progress = ( area_of_all_civil_parishes / area_of_ireland ) * 100
         barony_progress = ( area_of_all_baronies / area_of_ireland ) * 100
 
+    return render_to_response('irish_townlands/progress.html',
+        {
+            'counties':counties, 'last_update':last_update, 'errors':errors,
+            'townland_progress': townland_progress, 'civil_parish_progress': civil_parish_progress,
+            'barony_progress': barony_progress,
+         },
+        context_instance=RequestContext(request))
+
+
+def duplicatenames(request):
     # Dupe names. Nothing wrong with duplicate names, it happens
     duplicate_townland_names = []
     duplicate_names = Townland.objects.all().values("name").annotate(count=Count('name')).filter(count__gte=2).order_by('-count', 'name')
@@ -37,11 +47,8 @@ def progress(request):
         townlands = Townland.objects.filter(name=townland_name).order_by("county__name", "barony__name", "civil_parish__name").values('url_path', 'county__name', 'barony__name', 'civil_parish__name')
         duplicate_townland_names.append({'name': townland_name, 'count': townland_count, 'townlands': townlands})
 
-    return render_to_response('irish_townlands/progress.html',
+    return render_to_response('irish_townlands/duplicatenames.html',
         {
-            'counties':counties, 'last_update':last_update, 'errors':errors,
-            'townland_progress': townland_progress, 'civil_parish_progress': civil_parish_progress,
-            'barony_progress': barony_progress,
             'duplicate_townland_names': duplicate_townland_names,
          },
         context_instance=RequestContext(request))
