@@ -6,7 +6,8 @@ from __future__ import division
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from ...models import County, Townland, Barony, CivilParish, TownlandTouch, Metadata, Error
+from django.db.models import Sum
+from ...models import County, Townland, Barony, CivilParish, TownlandTouch, Metadata, Error, Progress
 
 from collections import defaultdict
 import psycopg2
@@ -286,6 +287,17 @@ class Command(BaseCommand):
                         x.generate_url_path()
 
                 assert len(set(t.url_path for t in townlands.values())) == len(townlands)
+
+            with printer("recording progress"):
+                area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+                area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+                if area_of_ireland == 0:
+                    townland_progress = 0
+                else:
+                    townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+                Progress.objects.create(percent=townland_progress, name="ireland-tds")
+                for county in County.objects.all():
+                    Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
 
             # save all now
             with printer("final objects save"):
