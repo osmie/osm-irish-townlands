@@ -152,8 +152,8 @@ def calculate_rate(initial_date, initial_percent, current_date, current_percent,
     rate = delta_percent / days
     if rate == 0:
         days_left = None
-        end_date = "a hundred billion years"
-        human_readable_time_left = "a hundred billion years"
+        end_date = None
+        human_readable_time_left = None
     else:
         days_left =  int(amount_left / rate)
 
