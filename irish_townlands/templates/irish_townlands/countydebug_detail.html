@@ -48,6 +48,7 @@
                 } );
             map.addLayer(boundary);
         </script>
+        <p><a href="{% url rate %}#{{ county.name }}">How long will {{ county.name }} take to be mapped?</a></p>
     {% else %}
         <p>All of {{ county.name }} is covered by townlands in the OpenStreetMap database.</p>
     {% endif %}
