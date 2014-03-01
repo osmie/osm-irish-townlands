@@ -176,7 +176,7 @@ def calculate_rate(initial_date, initial_percent, current_date, current_percent,
 def many_range_rates(name):
     query_set = Progress.objects.filter(name=name+'-tds')
     most_recent_date, most_recent_percent = query_set.order_by("-when").values_list('when', 'percent')[0]
-    amount_left = 100 - most_recent_percent
+    amount_left = round(100 - most_recent_percent, 4)
     ## since start
     initial_date, initial_percent = query_set.order_by("when").values_list('when', 'percent')[0]
     ## since day before
