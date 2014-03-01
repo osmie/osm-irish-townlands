@@ -188,6 +188,7 @@ def many_range_rates(name):
     #week_percent = week_percent[0] if len(week_percent) > 0 else None
 
     return {
+        'amount_left': amount_left,
         'since_start': calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left),
         'since_yesterday': calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left),
 
