@@ -25,6 +25,7 @@
         <li>If we take the rate since {{ countyrates.since_start.initial_date }} of {{ countyrates.since_start.rate }}% per day, we'll be finished on {{ countyrates.since_start.end_date }} (only {{ countyrates.since_start.human_readable_time_left }} left)</li>
         <li>If we take the rate since yesterday ({{ countyrates.since_yesterday.initial_date }}) of {{ countyrates.since_yesterday.rate }}% per day, we'll be finished on {{ countyrates.since_yesterday.end_date }} (only {{ countyrates.since_yesterday.human_readable_time_left }} left!)</li>
     </ul>
+    <p><a href="{% url county_debug url_path=countyname|lower %}#unmapped_townlands">View unmapped area in {{ countyname }}</a></p>
 
 {% endfor %}
 
