@@ -1,12 +1,23 @@
 """Views."""
+from __future__ import division
+import re
+from datetime import timedelta, datetime
+import math
 
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Sum, Count
-import re
 
-from .models import Metadata, Townland, CivilParish, Barony, County, Error
+from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
+
+COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
+            u'Derry', u'Donegal', u'Down', u'Dublin', u'Fermanagh', u'Galway',
+            u'Kerry', u'Kildare', u'Kilkenny', u'Laois', u'Leitrim',
+            u'Limerick', u'Longford', u'Louth', u'Mayo', u'Meath', u'Monaghan',
+            u'Offaly', u'Roscommon', u'Sligo', u'Tipperary', u'Tyrone',
+            u'Waterford', u'Westmeath', u'Wexford', u'Wicklow']
+
 
 
 def progress(request):
@@ -92,3 +103,106 @@ def view_area(request, url_path=None):
 
     # nothing by here?
     raise Http404()
+
+def days_to_string(days):
+    days = int(days)
+    years, days = divmod(days, 365)
+    months, days = divmod(days, 30)
+    weeks, days = divmod(days, 7)
+    output = ""
+    if years > 0:
+        output += "%d years" % years
+    if months > 0:
+        output += " %d months" % months
+    if weeks > 0:
+        output += " %d weeks" % weeks
+    if days > 0:
+        output += " %d days" % days
+
+    return output
+
+
+def format_float(x):
+    """
+    Return a nice human readable version of a float.
+
+    It will never return something that looks like zero for a non-zero number.
+
+    """
+
+    if x == 0:
+        # It's zero, so return
+        return "0"
+    else:
+        # How many decimal places should be show?
+        # If x = 0.0002, then if we show to 2 decimal places it'll show 0.00,
+        # which looks like zero.
+        for exp in range(2, 20):
+            if x > math.pow(10, -exp):
+                return "{0:.{1}f}".format(x, exp)
+            else:
+                continue
+        else:
+            # Haven't found anything, so return a <tinynumber
+            return "<{0:.{1}f}".format(math.pow(10, -exp), exp)
+
+def calculate_rate(initial_date, initial_percent, current_date, current_percent, amount_left):
+    days = (current_date - initial_date).days
+    delta_percent = (current_percent - initial_percent)
+    rate = delta_percent / days
+    if rate == 0:
+        days_left = None
+        end_date = "a hundred billion years"
+        human_readable_time_left = "a hundred billion years"
+    else:
+        days_left =  int(amount_left / rate)
+
+        try:
+            end_date = current_date + timedelta(days=days_left)
+        except OverflowError:
+            # timedelta gives OverflowError if the days is too far in the future,
+            # so cap it, based on datetime.MAXYEAR (which is 9999)
+            end_date = "the year {0:.0f}".format(datetime.today().year + (days_left/365))
+        human_readable_time_left = days_to_string(days_left)
+
+
+    return {
+        'rate': format_float(rate), 'days_left':days_left, 'end_date':end_date,
+        'initial_date': initial_date,
+        'human_readable_time_left': human_readable_time_left,
+    }
+
+
+def many_range_rates(name):
+    query_set = Progress.objects.filter(name=name+'-tds')
+    most_recent_date, most_recent_percent = query_set.order_by("-when").values_list('when', 'percent')[0]
+    amount_left = 100 - most_recent_percent
+    ## since start
+    initial_date, initial_percent = query_set.order_by("when").values_list('when', 'percent')[0]
+    ## since day before
+    yesterday_percent = query_set.filter(when=(most_recent_date - timedelta(days=1))).values_list('percent', flat=True)[0]
+
+    ## since last week
+    # Haven't been collecting stats for a week yet
+    #week_percent = query_set.filter(when=(most_recent_date - timedelta(days=7))).values_list('percent', flat=True)
+    #week_percent = week_percent[0] if len(week_percent) > 0 else None
+
+    return {
+        'since_start': calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left),
+        'since_yesterday': calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left),
+
+        # haven't been collecting stats for a week yet
+        #'since_last_week': calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left),
+    }
+
+
+def rate(request):
+    results = {}
+    results['ireland'] = many_range_rates('ireland')
+    results['counties'] = []
+    for county in sorted(COUNTIES):
+        results['counties'].append((county, many_range_rates(county)))
+
+
+    return render_to_response('irish_townlands/rate.html', results,
+        context_instance=RequestContext(request))
