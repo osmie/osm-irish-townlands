@@ -288,6 +288,12 @@ class Command(BaseCommand):
 
                 assert len(set(t.url_path for t in townlands.values())) == len(townlands)
 
+            # save all now
+            with printer("final objects save"):
+                for objs in [townlands, civil_parishes, baronies, counties]:
+                    for x in objs.values():
+                        x.save()
+
             with printer("recording progress"):
                 area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
                 area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
@@ -298,12 +304,6 @@ class Command(BaseCommand):
                 Progress.objects.create(percent=townland_progress, name="ireland-tds")
                 for county in County.objects.all():
                     Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
-
-            # save all now
-            with printer("final objects save"):
-                for objs in [townlands, civil_parishes, baronies, counties]:
-                    for x in objs.values():
-                        x.save()
 
             with printer("updating metadata"):
                 last_updated, _ = Metadata.objects.get_or_create(key="lastupdate")
