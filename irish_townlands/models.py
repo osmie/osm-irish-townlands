@@ -27,6 +27,7 @@ class Area(models.Model):
     name_ga = models.CharField(max_length=255, default=None, null=True)
     alt_name = models.CharField(max_length=255, default=None, null=True)
     area_m2 = models.FloatField(db_index=True)
+    water_area_m2 = models.FloatField()
     url_path = models.CharField(db_index=True, max_length=255)
     unique_suffix = models.PositiveSmallIntegerField(null=True)
 
