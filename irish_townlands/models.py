@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import division
 
 from django.db import models
 from django.db.models import Sum, Q
@@ -85,9 +86,26 @@ class Area(models.Model):
         return u"{0[0]}° {0[1]}' {0[2]}\" N, {1[0]}° {1[1]}' {1[2]}\" W".format(float_to_sexagesimal(lat), float_to_sexagesimal(lon))
 
     @property
+    def area_excl_water_m2(self):
+        return self.area_m2 - self.water_area_m2
+
+    @property
+    def water_percent(self):
+        return ( self.water_area_m2 / self.area_m2 ) * 100
+
+    @property
     def townland_cover(self):
+        return self.townland_cover_excl_water
+
+    @property
+    def townland_cover_incl_water(self):
         townland_cover = self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
         return (townland_cover / self.area_m2) * 100.0
+
+    @property
+    def townland_cover_excl_water(self):
+        townland_cover = self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+        return (townland_cover / self.area_excl_water_m2) * 100.0
 
     @property
     def barony_cover(self):
