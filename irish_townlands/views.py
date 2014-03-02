@@ -175,12 +175,12 @@ def calculate_rate(initial_date, initial_percent, current_date, current_percent,
 
 def many_range_rates(name):
     query_set = Progress.objects.filter(name=name+'-tds')
-    most_recent_date, most_recent_percent = query_set.order_by("-when").values_list('when', 'percent')[0]
+    most_recent_date, most_recent_percent = query_set.order_by("-when", "-id").values_list('when', 'percent')[0]
     amount_left = round(100 - most_recent_percent, 4)
     ## since start
-    initial_date, initial_percent = query_set.order_by("when").values_list('when', 'percent')[0]
+    initial_date, initial_percent = query_set.order_by("when", "-id").values_list('when', 'percent')[0]
     ## since day before
-    yesterday_percent = query_set.filter(when=(most_recent_date - timedelta(days=1))).values_list('percent', flat=True)[0]
+    yesterday_percent = query_set.filter(when=(most_recent_date - timedelta(days=1))).order_by("-id").values_list('percent', flat=True)[0]
 
     ## since last week
     # Haven't been collecting stats for a week yet
