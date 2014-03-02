@@ -12,14 +12,16 @@
     <table id=coverage>
         <thead>
             <td>County</td>
-            <td colspan=2>Townlands</td>
+            <td colspan=2>Townlands (excl water)</td>
+            <td colspan=2>Townlands (incl water)</td>
             <td colspan=2>Baronies</td>
             <td colspan=2>Civil Parishes</td>
         </thead>
         <tbody>
             <tr>
                 <td><a href="{% url view_area county.url_path %}">{{ county.name }}</a></td>
-                <td>{{ county.townland_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
+                <td>{{ county.townland_cover_excl_water|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover_excl_water }}></progress></td>
+                <td>{{ county.townland_cover_incl_water|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover_incl_water }}></progress></td>
                 <td>{{ county.barony_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
                 <td>{{ county.civil_parish_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
             </tr>
@@ -28,7 +30,7 @@
 
 
     <h2>Area Coverage</h2>
-    <a name="unmapped_townlands"></a><h3>Land not covered by Townlands</h3>
+    <a name="unmapped_townlands"></a><h3>Land & Water not covered by Townlands</h3>
     
     {% if county.polygon_townland_gaps %}
         <div class="map" id="map-td-gap" style="height: 600px; width: 800px;"></div>
