@@ -28,7 +28,11 @@ def progress(request):
     counties = County.objects.order_by('name').all()
     errors = Error.objects.all().values_list('message', flat=True)
 
-    area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_ireland_incl_water = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    water_of_ireland = County.objects.all().aggregate(Sum('water_area_m2'))['water_area_m2__sum'] or 0
+    area_of_ireland_excl_water = area_of_ireland_incl_water - water_of_ireland
+    area_of_ireland = area_of_ireland_excl_water
+
     area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_civil_parishes = CivilParish.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_baronies = Barony.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
