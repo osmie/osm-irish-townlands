@@ -137,7 +137,7 @@ def format_float(x):
         # How many decimal places should be show?
         # If x = 0.0002, then if we show to 2 decimal places it'll show 0.00,
         # which looks like zero.
-        for exp in range(2, 20):
+        for exp in range(2, 6):
             if x > math.pow(10, -exp):
                 return "{0:.{1}f}".format(x, exp)
             else:
