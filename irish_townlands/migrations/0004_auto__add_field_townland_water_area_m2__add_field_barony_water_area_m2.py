@@ -10,22 +10,22 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Townland.water_area_m2'
         db.add_column('irish_townlands_townland', 'water_area_m2',
-                      self.gf('django.db.models.fields.FloatField')(default=0),
+                      self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
                       keep_default=False)
 
         # Adding field 'Barony.water_area_m2'
         db.add_column('irish_townlands_barony', 'water_area_m2',
-                      self.gf('django.db.models.fields.FloatField')(default=0),
+                      self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
                       keep_default=False)
 
         # Adding field 'County.water_area_m2'
         db.add_column('irish_townlands_county', 'water_area_m2',
-                      self.gf('django.db.models.fields.FloatField')(default=0),
+                      self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
                       keep_default=False)
 
         # Adding field 'CivilParish.water_area_m2'
         db.add_column('irish_townlands_civilparish', 'water_area_m2',
-                      self.gf('django.db.models.fields.FloatField')(default=0),
+                      self.gf('django.db.models.fields.FloatField')(null=True, blank=True),
                       keep_default=False)
 
 
@@ -60,7 +60,7 @@ class Migration(SchemaMigration):
             'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
             'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'water_area_m2': ('django.db.models.fields.FloatField', [], {})
+            'water_area_m2': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'})
         },
         'irish_townlands.civilparish': {
             'Meta': {'object_name': 'CivilParish'},
@@ -78,7 +78,7 @@ class Migration(SchemaMigration):
             'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
             'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'water_area_m2': ('django.db.models.fields.FloatField', [], {})
+            'water_area_m2': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'})
         },
         'irish_townlands.county': {
             'Meta': {'object_name': 'County'},
@@ -101,7 +101,7 @@ class Migration(SchemaMigration):
             'polygon_townland_overlaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
             'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'water_area_m2': ('django.db.models.fields.FloatField', [], {})
+            'water_area_m2': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'})
         },
         'irish_townlands.error': {
             'Meta': {'object_name': 'Error'},
@@ -139,7 +139,7 @@ class Migration(SchemaMigration):
             'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
             'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
-            'water_area_m2': ('django.db.models.fields.FloatField', [], {})
+            'water_area_m2': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'})
         },
         'irish_townlands.townlandtouch': {
             'Meta': {'unique_together': "[('townland_a', 'townland_b')]", 'object_name': 'TownlandTouch'},
