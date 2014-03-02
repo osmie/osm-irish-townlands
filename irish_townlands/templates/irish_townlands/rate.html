@@ -36,7 +36,7 @@
         <p><b>Done!</b> All the townlands in {{ countyname }} are in OpenStreetMap!</p>
     {% else %}
 
-        <p>There is {{ countyrates.amount_left|floatformat:0 }}% to be mapped.</p>
+        <p>There is {{ countyrates.amount_left|floatformat:2 }}% to be mapped.</p>
         <p>Based on...
             <ul>
                 <li>the rate since {{ countyrates.since_start.initial_date }} ({{ countyrates.since_start.rate }}% per day),
