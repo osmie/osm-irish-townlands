@@ -69,6 +69,7 @@
         </p>
     {% endif %}
     <p> <a href="{% url county_debug county.url_path %}"a> Debug</a> overlaps and coverage</p>
+    <p> <a href="{% url rate %}#{{ county.name }}">How long will it take OSM to finish {{ county.name }}?</a></p>
 
 {% endcache %}
 {% endblock body %}
