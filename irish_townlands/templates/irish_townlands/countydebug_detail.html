@@ -19,9 +19,9 @@
         <tbody>
             <tr>
                 <td><a href="{% url view_area county.url_path %}">{{ county.name }}</a></td>
-                <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
-                <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
-                <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
+                <td>{{ county.townland_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
+                <td>{{ county.barony_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
+                <td>{{ county.civil_parish_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
             </tr>
         </tbody>
     </table>

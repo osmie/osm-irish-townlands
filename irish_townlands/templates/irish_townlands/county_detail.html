@@ -42,7 +42,7 @@
 
     <h2>Townlands</h2>
     <p>
-        There are {% with nt=county.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}. This represents {{ county.townland_cover|floatformat:-1 }}% of all the area in Co. {{ county.name }}.
+        There are {% with nt=county.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}. This represents {{ county.townland_cover|floatformat:-2 }}% of all the area in Co. {{ county.name }}.
     </p>
     <ul>
     {% for townland in county.townlands_sorted %}
