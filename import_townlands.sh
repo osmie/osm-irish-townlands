@@ -5,7 +5,7 @@ set -o errexit
 cd $(dirname $0)
 
 PGOPTIONS="--client-min-messages=warning" psql -q -d gis -c "drop table if exists valid_polygon;"
-PGOPTIONS="--client-min-messages=warning" psql -q -d gis -c "drop table if exists valid_polygon;"
+PGOPTIONS="--client-min-messages=warning" psql -q -d gis -c "drop table if exists water_polygon;"
 
 wget -q -N http://download.geofabrik.de/openstreetmap/europe/ireland-and-northern-ireland.osm.pbf
 osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
