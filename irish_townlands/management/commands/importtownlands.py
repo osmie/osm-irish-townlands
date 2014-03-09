@@ -214,7 +214,7 @@ class Command(BaseCommand):
                 barony.calculate_county()
             for civil_parish in civil_parishes.values():
                 if civil_parish.townlands.count() == 0:
-                    err_msg("No townlands in CP")
+                    err_msg("No townlands in Civil Parish {0}".format(civil_parish.name))
                 else:
                     civil_parish.calculate_county()
 
