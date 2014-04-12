@@ -193,8 +193,10 @@ def many_range_rates(name):
 
     results = {
         'amount_left': amount_left,
-        'since_start': calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left),
     }
+    if most_recent_date > initial_date:
+        # If we're running on empty database, we won't have anything
+        results['since_start'] = calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left)
     if yesterday_percent is not None:
         results['since_yesterday'] = calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left)
     if week_percent is not None:
