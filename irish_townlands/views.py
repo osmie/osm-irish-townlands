@@ -153,6 +153,15 @@ def format_float(x):
 def calculate_rate(initial_date, initial_percent, current_date, current_percent, amount_left):
     days = (current_date - initial_date).days
     delta_percent = (current_percent - initial_percent)
+    if delta_percent < 0.00001:
+        # Tiny difference, so we presume that it's a float rounding error and
+        # round this down to zero.
+        # Without this, we get completion dates in the far future (like the
+        # year 150,000) which isn't very useful, so we might as well presume
+        # it'll never finish
+        #delta_percent = 0
+        pass
+
     rate = delta_percent / days
     if rate == 0:
         days_left = None
