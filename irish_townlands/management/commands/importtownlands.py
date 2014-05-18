@@ -204,7 +204,7 @@ class Command(BaseCommand):
                     townland = townlands[townland_osm_id]
                     other_cp = civil_parishes[cp_osm_id]
                     if not ( townland.civil_parish is None or townland.civil_parish.osm_id == cp_osm_id ):
-                        err_msg("Townland {td} is in civil parish {cp1} and {cp2}. Overlapping Civil Parishes?", td=townland, cp1=townland.civil_parish, cp2=other_cp)
+                        err_msg("County {county}, Townland {td} is in civil parish {cp1} and {cp2}. Overlapping Civil Parishes?", td=townland, cp1=townland.civil_parish, cp2=other_cp, county=townland.county)
                     else:
                         townlands[townland_osm_id].civil_parish = civil_parishes[cp_osm_id]
                         townlands[townland_osm_id].save()
@@ -214,7 +214,7 @@ class Command(BaseCommand):
                 barony.calculate_county()
             for civil_parish in civil_parishes.values():
                 if civil_parish.townlands.count() == 0:
-                    err_msg("No townlands in CP")
+                    err_msg("No townlands in Civil Parish {0}".format(civil_parish.name))
                 else:
                     civil_parish.calculate_county()
 

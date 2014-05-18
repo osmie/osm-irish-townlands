@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over" background-color="#b8dee6" maximum-extent="-20037508.34,-20037508.34,20037508.34,20037508.34">
+
+<Style name="provinces" filter-mode="first" >
+  <Rule>
+    <PolygonSymbolizer fill="#ff0000" />
+    <LineSymbolizer stroke="#ff0000" />
+  </Rule>
+</Style>
+<Layer name="provinces"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName>provinces</StyleName>
+    <Datasource>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="table"><![CDATA[(select way from valid_polygon where admin_level = '5') as prov]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[way]]></Parameter>
+       <Parameter name="extent_cache"><![CDATA[auto]]></Parameter>
+       <Parameter name="extent"><![CDATA[-1226003.71,6660657.29,-565256.06,7486292.19]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="user"><![CDATA[rory]]></Parameter>
+       <Parameter name="password"><![CDATA[password]]></Parameter>
+       <Parameter name="dbname"><![CDATA[gis]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Style name="water-water" filter-mode="first" >
+  <Rule>
+    <PolygonSymbolizer fill="#0000ff" />
+  </Rule>
+</Style>
+<Layer name="water"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName>water-water</StyleName>
+    <Datasource>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="table"><![CDATA[water_polygon]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[way]]></Parameter>
+       <Parameter name="extent_cache"><![CDATA[auto]]></Parameter>
+       <Parameter name="extent"><![CDATA[-1160609.27,6698160.95,-615585.15,7430711.81]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="user"><![CDATA[rory]]></Parameter>
+       <Parameter name="password"><![CDATA[password]]></Parameter>
+       <Parameter name="dbname"><![CDATA[gis]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Style name="townlands" filter-mode="first" >
+  <Rule>
+    <PolygonSymbolizer fill="#008000" />
+    <LineSymbolizer stroke="#008000" />
+  </Rule>
+</Style>
+<Layer name="townlands"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName>townlands</StyleName>
+    <Datasource>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="table"><![CDATA[(select way from valid_polygon where admin_level = '10') as tds]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[way]]></Parameter>
+       <Parameter name="extent_cache"><![CDATA[auto]]></Parameter>
+       <Parameter name="extent"><![CDATA[-1226003.71,6660657.29,-565256.06,7486292.19]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="user"><![CDATA[rory]]></Parameter>
+       <Parameter name="password"><![CDATA[password]]></Parameter>
+       <Parameter name="dbname"><![CDATA[gis]]></Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>

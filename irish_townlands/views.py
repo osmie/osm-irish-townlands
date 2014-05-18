@@ -153,6 +153,15 @@ def format_float(x):
 def calculate_rate(initial_date, initial_percent, current_date, current_percent, amount_left):
     days = (current_date - initial_date).days
     delta_percent = (current_percent - initial_percent)
+    if delta_percent < 0.00001:
+        # Tiny difference, so we presume that it's a float rounding error and
+        # round this down to zero.
+        # Without this, we get completion dates in the far future (like the
+        # year 150,000) which isn't very useful, so we might as well presume
+        # it'll never finish
+        #delta_percent = 0
+        pass
+
     rate = delta_percent / days
     if rate == 0:
         days_left = None
@@ -184,21 +193,25 @@ def many_range_rates(name):
     ## since start
     initial_date, initial_percent = query_set.order_by("when", "-id").values_list('when', 'percent')[0]
     ## since day before
-    yesterday_percent = query_set.filter(when=(most_recent_date - timedelta(days=1))).order_by("-id").values_list('percent', flat=True)[0]
+    yesterday_percent = query_set.filter(when=(most_recent_date - timedelta(days=1))).order_by("-id").values_list('percent', flat=True)
+    yesterday_percent = yesterday_percent[0] if len(yesterday_percent) > 0 else None
 
-    ## since last week
-    # Haven't been collecting stats for a week yet
-    #week_percent = query_set.filter(when=(most_recent_date - timedelta(days=7))).values_list('percent', flat=True)
-    #week_percent = week_percent[0] if len(week_percent) > 0 else None
+    # since last week
+    week_percent = query_set.filter(when=(most_recent_date - timedelta(days=7))).order_by("-id").values_list('percent', flat=True)
+    week_percent = week_percent[0] if len(week_percent) > 0 else None
 
-    return {
+    results = {
         'amount_left': amount_left,
-        'since_start': calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left),
-        'since_yesterday': calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left),
-
-        # haven't been collecting stats for a week yet
-        #'since_last_week': calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left),
     }
+    if most_recent_date > initial_date:
+        # If we're running on empty database, we won't have anything
+        results['since_start'] = calculate_rate(initial_date, initial_percent, most_recent_date, most_recent_percent, amount_left)
+    if yesterday_percent is not None:
+        results['since_yesterday'] = calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left)
+    if week_percent is not None:
+        results['since_last_week'] = calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left)
+
+    return results
 
 
 def rate(request):

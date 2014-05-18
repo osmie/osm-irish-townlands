@@ -20,13 +20,24 @@
             we'll be finished on {{ ireland.since_start.end_date }} (only {{ ireland.since_start.human_readable_time_left }} left).
         {% endif %}
     </li>
-    <li>If we take the rate since yesterday ({{ ireland.since_yesterday.initial_date }}) of {{ ireland.since_yesterday.rate }}% per day,
-        {% if ireland.since_yesterday.days_left == None %}
-            we'll never finish
-        {% else %}
-            we'll be finished on {{ ireland.since_yesterday.end_date }} (only {{ ireland.since_yesterday.human_readable_time_left }} left).
-        {% endif %}
-        </li>
+    {% if ireland.since_last_week != None %}
+        <li>If we take the rate since this day last week ({{ ireland.since_last_week.initial_date }}) of {{ ireland.since_last_week.rate }}% per day,
+            {% if ireland.since_last_week.days_left == None %}
+                we'll never finish
+            {% else %}
+                we'll be finished on {{ ireland.since_last_week.end_date }} (only {{ ireland.since_last_week.human_readable_time_left }} left).
+            {% endif %}
+            </li>
+    {% endif %}
+    {% if ireland.since_yesterday != None %}
+        <li>If we take the rate since yesterday ({{ ireland.since_yesterday.initial_date }}) of {{ ireland.since_yesterday.rate }}% per day,
+            {% if ireland.since_yesterday.days_left == None %}
+                we'll never finish
+            {% else %}
+                we'll be finished on {{ ireland.since_yesterday.end_date }} (only {{ ireland.since_yesterday.human_readable_time_left }} left).
+            {% endif %}
+            </li>
+    {% endif %}
 </ul>
 
 {% for countyname, countyrates in counties %}
@@ -46,11 +57,23 @@
                     we'll be finished on {{ countyrates.since_start.end_date }} (only {{ countyrates.since_start.human_readable_time_left }} left)
                 {% endif %}
                 </li>
-                <li>the rate since <abbr title="{{ countyrates.since_yesterday.initial_date }}">yesterday</abbr> ({{ countyrates.since_yesterday.rate }}% per day),
-                {% if countyrates.since_yesterday.days_left == None %}
-                    we'll never finish
-                {% else %}
-                    we'll be finished on {{ countyrates.since_yesterday.end_date }} (only {{ countyrates.since_yesterday.human_readable_time_left }} left!)</li>
+                {% if countyrates.since_last_week != None %}
+                    <li>the rate <abbr title="{{ countyrates.since_last_week.initial_date }}">in the last week</abbr> ({{ countyrates.since_last_week.rate }}% per day),
+                    {% if countyrates.since_last_week.days_left == None %}
+                        we'll never finish
+                    {% else %}
+                        we'll be finished on {{ countyrates.since_last_week.end_date }} (only {{ countyrates.since_last_week.human_readable_time_left }} left!)
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if countyrates.since_yesterday != None %}
+                    <li>the rate since <abbr title="{{ countyrates.since_yesterday.initial_date }}">yesterday</abbr> ({{ countyrates.since_yesterday.rate }}% per day),
+                    {% if countyrates.since_yesterday.days_left == None %}
+                        we'll never finish
+                    {% else %}
+                        we'll be finished on {{ countyrates.since_yesterday.end_date }} (only {{ countyrates.since_yesterday.human_readable_time_left }} left!)
+                    {% endif %}
+                    </li>
                 {% endif %}
             </ul>
             <a href="{% url county_debug url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
