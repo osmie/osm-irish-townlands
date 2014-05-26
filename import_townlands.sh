@@ -34,4 +34,4 @@ psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(tr
 psql -q -d gis -c "alter table water_polygon add column geo geography;"
 psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(transform(way, 4326)));"
 
-./screenshot-townlands.sh
+#./screenshot-townlands.sh
