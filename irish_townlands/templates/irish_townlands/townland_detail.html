@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
 {% block title %}
 {% if townland.county %}{% blocktrans with county_name=townland.county.name %}{{ townland_name }} Townland, Co. {{ county_name }}{% endblocktrans %}{% else %}{% blocktrans %}{{ townland_name }} Townland{% endblocktrans %}{% endif %}
