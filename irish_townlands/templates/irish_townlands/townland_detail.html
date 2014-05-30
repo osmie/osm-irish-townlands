@@ -35,7 +35,7 @@
         {% blocktrans with civil_parish=townland.civil_parish.name barony=townland.barony.name county=townland.county.name %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}, in the Barony of {{ barony }}, in the County of {{ county }}{% endblocktrans %}
     {% else %}
         {% if townland.civil_parish %}
-            {% blocktrans civil_parish=townland.civil_parish.name %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
+            {% blocktrans with civil_parish=townland.civil_parish.name %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
         {% else %}
             {% blocktrans %}We don't know what Civil Parish {{ townland_name }} is in.{% endblocktrans %}
         {% endif %}
@@ -66,7 +66,7 @@
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>
-        {% blocktrans gps_location=townland.centre_pretty %}It is located at {{ gps_location }}.{% endblocktrans %}
+        {% blocktrans with gps_location=townland.centre_pretty %}It is located at {{ gps_location }}.{% endblocktrans %}
     </p>
     <div class="map" id="map" style="height: 600px; width: 800px;"></div>
     <script>
@@ -90,7 +90,7 @@
 
     <a name="area"></a>
     <h2>{% trans "Area" %}</h2>
-    <p>{% blocktrans name=townland.name %}{{ name }} has an area of:{% endblocktrans %}
+    <p>{% blocktrans with name=townland.name %}{{ name }} has an area of:{% endblocktrans %}
         <ul>
             <li>{% blocktrans with townland.area_m2|stringformat:"d"|intcomma as area %}{{ area }} m²{% endblocktrans %} / {% blocktrans with area=townland.area_hectares|floatformat:-2 %}{{ area }} hectares{% endblocktrans %} / {% blocktrans with area=townland.area_km2|floatformat:-4 %}{{ area }} km²{% endblocktrans %}</li>
             <li>{% blocktrans with area=townland.area_mile2|floatformat:-2 %}{{ area }} square miles{% endblocktrans %}</li>
@@ -100,7 +100,7 @@
 
     <p>{% blocktrans with rank=townland.area_rank|ordinal %}Nationwide, it is the {{ rank }} largest townland that we know about{% endblocktrans %}</p>
     {% if townland.county %}
-        <p>{% blocktrans county=townland.county.name county_rank=townland.area_rank_county|ordinal %}Within Co. {{ county }}, it is the {{ county_rank }} largest townland{% endblocktrans %}</p>
+        <p>{% blocktrans with county=townland.county.name county_rank=townland.area_rank_county|ordinal %}Within Co. {{ county }}, it is the {{ county_rank }} largest townland{% endblocktrans %}</p>
     {% endif %}
 
     <a name="borders"></a>
