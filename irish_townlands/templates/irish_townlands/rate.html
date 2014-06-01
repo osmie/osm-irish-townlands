@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<p><a href="{% url view_area %}">Irish Townlands</a> » <a href="{% url progress %}"> Progress</a> » Rate of mapping</p>
+<p><a href="{% url 'view_area' %}">Irish Townlands</a> » <a href="{% url 'progress' %}"> Progress</a> » Rate of mapping</p>
 
 <p>Every day, the townlands from OpenStreetMap are processed and this website is updated. When this happens, we record how much of Ireland is covered by townlands, and from that predict how long it'll take to finish the whole lot. This calculation excludes water-y areas.</p>
 
@@ -76,7 +76,7 @@
                     </li>
                 {% endif %}
             </ul>
-            <a href="{% url county_debug url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
+            <a href="{% url 'county_debug' url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
         </p>
 
     {% endif %}

@@ -15,10 +15,10 @@
 
     {% if townland.county and townland.barony and townland.civil_parish %}
     <p>
-        <a href="{% url view_area townland.county.url_path %}">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
-        → <a href="{% url view_area townland.barony.url_path %}">{{ townland.barony.name }}</a>
-        → <a href="{% url view_area townland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
-        → <a href="{% url view_area townland.url_path %}">{{ townland_name }}</a>
+        <a href="{% url 'view_area' townland.county.url_path %}">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' townland.barony.url_path %}">{{ townland.barony.name }}</a>
+        → <a href="{% url 'view_area' townland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' townland.url_path %}">{{ townland_name }}</a>
     </p>
     {% endif %}
 
@@ -45,7 +45,7 @@
             {% blocktrans %}We don't know what Barony {{ townland_name }} is in.{% endblocktrans %}
         {% endif %}
         {% if townland.county %}
-            {% url view_area townland.county.url_path as county_url %}
+            {% url 'view_area' townland.county.url_path as county_url %}
             {% blocktrans with county=townland.county.name %}{{ townland_name }} is in <a href="{{ county_url }}">Co. {{ county }}</a>{% endblocktrans %}
         {% else %}
             {% blocktrans %}We don't know what county {{ townland_name }} is in.{% endblocktrans %}
@@ -110,13 +110,13 @@
             <ul>
                 {% for tt in townland.touching_townlands %}
                     {% if tt.direction_words = 'north' %}
-                        <li><a href="{% url view_area tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the north{% endblocktrans %}</li>
+                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the north{% endblocktrans %}</li>
                     {% elif tt.direction_words = 'south' %}
-                        <li><a href="{% url view_area tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the south{% endblocktrans %}</li>
+                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the south{% endblocktrans %}</li>
                     {% elif tt.direction_words = 'east' %}
-                        <li><a href="{% url view_area tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the east{% endblocktrans %}</li>
+                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the east{% endblocktrans %}</li>
                     {% elif tt.direction_words = 'west' %}
-                        <li><a href="{% url view_area tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the west{% endblocktrans %}</li>
+                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the west{% endblocktrans %}</li>
                     {% endif %}
                 {% endfor %}
             </ul>
