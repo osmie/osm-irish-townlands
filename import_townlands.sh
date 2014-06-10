@@ -10,7 +10,7 @@ for TABLE in valid_polygon water_polygon planet_osm_nodes planet_osm_rels planet
 done
 
 
-wget -q -N http://download.geofabrik.de/openstreetmap/europe/ireland-and-northern-ireland.osm.pbf
+wget -q -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf
 osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
 rm ireland-and-northern-ireland.osm.pbf
 
