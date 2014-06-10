@@ -11,8 +11,8 @@ done
 
 
 wget -q -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf
-osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
-rm ireland-and-northern-ireland.osm.pbf
+osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland-latest.osm.pbf
+rm ireland-and-northern-ireland-latest.osm.pbf
 
 # not needed anymore
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads; do
