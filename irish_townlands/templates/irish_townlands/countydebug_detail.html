@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr>
-                <td><a href="{% url view_area county.url_path %}">{{ county.name }}</a></td>
+                <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
                 <td>{{ county.townland_cover_excl_water|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover_excl_water }}></progress></td>
                 <td>{{ county.townland_cover_incl_water|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover_incl_water }}></progress></td>
                 <td>{{ county.barony_cover|floatformat:-2 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
@@ -50,7 +50,7 @@
                 } );
             map.addLayer(boundary);
         </script>
-        <p><a href="{% url rate %}#{{ county.name }}">How long will {{ county.name }} take to be mapped?</a></p>
+        <p><a href="{% url 'rate' %}#{{ county.name }}">How long will {{ county.name }} take to be mapped?</a></p>
     {% else %}
         <p>All of {{ county.name }} is covered by townlands in the OpenStreetMap database.</p>
     {% endif %}

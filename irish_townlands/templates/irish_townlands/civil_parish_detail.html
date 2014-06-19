@@ -18,7 +18,7 @@
 
     {% with baronies=civil_parish.baronies %}
         {% if baronies %}
-            <p>{{ civil_parish.name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url view_area barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
+            <p>{{ civil_parish.name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
         {% endif %}
     {% endwith %}
 
@@ -59,7 +59,7 @@
     <ul>
     {% for townland in civil_parish.townlands_sorted %}
         <li>
-            <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>
+            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
                 <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
                     {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
                     {% endwith %}

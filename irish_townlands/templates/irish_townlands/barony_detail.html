@@ -9,7 +9,7 @@
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ barony.name }}.</p>
 
-    <p>{{ barony.name }} is in <a href="{% url view_area barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
+    <p>{{ barony.name }} is in <a href="{% url 'view_area' barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
 
     <ul>
         <li><a href="#map">Map ↓</a></li>
@@ -71,7 +71,7 @@
     <ul>
     {% for townland in barony.townlands_sorted %}
         <li>
-            <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>
+            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
                 <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
                     {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
                     {% endwith %}

@@ -12,7 +12,7 @@
     <li>{{ group.name }}: {{ group.count }}
         <ul>
             {% for townland in group.townlands %}
-            <li><a href="{% url view_area townland.url_path %}">{{ group.name }}</a> in {% if townland.civil_parish__name %}{{ townland.civil_parish__name }} Civil Parish,{% endif %} {% if townland.barony__name %}{{ townland.barony__name }} Barony,{% endif %} Co. {{ townland.county__name }}</li>
+            <li><a href="{% url 'view_area' townland.url_path %}">{{ group.name }}</a> in {% if townland.civil_parish__name %}{{ townland.civil_parish__name }} Civil Parish,{% endif %} {% if townland.barony__name %}{{ townland.barony__name }} Barony,{% endif %} Co. {{ townland.county__name }}</li>
             {% endfor %}
         </ul>
     </li>

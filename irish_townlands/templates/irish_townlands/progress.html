@@ -27,9 +27,9 @@
 
 <ul>
     <li><a href="#countyprogress">Progress of each county ↓</a></li>
-    <li><a href="{% url duplicatenames %}">Duplicate townland names →</a></li>
+    <li><a href="{% url 'duplicatenames' %}">Duplicate townland names →</a></li>
     <li><a href="#errors">Potential conflicts with the data ↓</a></li>
-    <li><a href="{% url rate %}">Rate of mapping →</a></li>
+    <li><a href="{% url 'rate' %}">Rate of mapping →</a></li>
 </ul>
 
 <p>How complete is the data in Open Street Map?</p>
@@ -52,7 +52,7 @@
         </tr>
     {% for county in counties %}
         <tr>
-            <td><a href="{% url view_area county.url_path %}">{{ county.name }}</a></td>
+            <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
             <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
             <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
             <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
@@ -61,11 +61,11 @@
 
     </tbody>
 </table>
-<p><a href="{% url rate %}">How long will it take to finish?</a></p>
+<p><a href="{% url 'rate' %}">How long will it take to finish?</a></p>
 
 <a name="duplicatenames"></a>
 <h2>Duplicate Townland Name</h2>
-<p><a href="{% url duplicatenames %}">Duplicate townland names have moved to a separate page</a></p>
+<p><a href="{% url 'duplicatenames' %}">Duplicate townland names have moved to a separate page</a></p>
 
 <h2><a name=errors></a>Potential conflicts with the data</h2>
 
