@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
 {% block title %}Townlands in Co. {{ county.name }}{% endblock %}
 {% block header %}<h1>Co. {{ county.name }}</h1>{% endblock %}
@@ -8,7 +8,7 @@
 
 {% cache 3600 county_detail county.url_path %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}. <i>(<a href="{% url county_debug county.url_path %}"a>Debug</a> overlaps and coverage)</i></p>
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}. <i>(<a href="{% url 'county_debug' county.url_path %}"a>Debug</a> overlaps and coverage)</i></p>
 
     <h2>Area</h2>
     <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
@@ -22,7 +22,7 @@
 
         <ul>
         {% for barony in baronies %}
-            <li><a href="{% url view_area barony.url_path %}">{{ barony.name }}</a> ({{ barony.townlands.count }} townlands)</li>
+            <li><a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a> ({{ barony.townlands.count }} townlands)</li>
         {% endfor %}
         </ul>
     {% endwith %}
@@ -34,7 +34,7 @@
 
         <ul>
         {% for civil_parish in civil_parishes %}
-            <li><a href="{% url view_area civil_parish.url_path %}">{{ civil_parish.name }}</a> ({{ civil_parish.townlands.count }} townlands)</li>
+            <li><a href="{% url 'view_area' civil_parish.url_path %}">{{ civil_parish.name }}</a> ({{ civil_parish.townlands.count }} townlands)</li>
         {% endfor %}
         </ul>
 
@@ -48,7 +48,7 @@
     <ul>
     {% for townland in county.townlands_sorted %}
         <li>
-            <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>, 
+            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>, 
                 {% if townland.civil_parish %}{{ townland.civil_parish.name }} Civil Parish, {% endif %}
                 {% if townland.barony %}Barony of {{ townland.barony.name }}, {% endif %}
                 <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
@@ -65,11 +65,12 @@
         <p>
             <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
             <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ county.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
             <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
         </p>
     {% endif %}
-    <p> <a href="{% url county_debug county.url_path %}"a> Debug</a> overlaps and coverage</p>
-    <p> <a href="{% url rate %}#{{ county.name }}">How long will it take OSM to finish {{ county.name }}?</a></p>
+    <p> <a href="{% url 'county_debug' county.url_path %}"a> Debug</a> overlaps and coverage</p>
+    <p> <a href="{% url 'rate' %}#{{ county.name }}">How long will it take OSM to finish {{ county.name }}?</a></p>
 
 {% endcache %}
 {% endblock body %}

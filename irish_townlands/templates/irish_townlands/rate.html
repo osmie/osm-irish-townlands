@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<p><a href="{% url view_area %}">Irish Townlands</a> » <a href="{% url progress %}"> Progress</a> » Rate of mapping</p>
+<p><a href="{% url 'view_area' %}">Irish Townlands</a> » <a href="{% url 'progress' %}"> Progress</a> » Rate of mapping</p>
 
 <p>Every day, the townlands from OpenStreetMap are processed and this website is updated. When this happens, we record how much of Ireland is covered by townlands, and from that predict how long it'll take to finish the whole lot. This calculation excludes water-y areas.</p>
 
@@ -26,6 +26,15 @@
                 we'll never finish
             {% else %}
                 we'll be finished on {{ ireland.since_last_week.end_date }} (only {{ ireland.since_last_week.human_readable_time_left }} left).
+            {% endif %}
+            </li>
+    {% endif %}
+    {% if ireland.since_last_month != None %}
+        <li>If we take the rate since last month ({{ ireland.since_last_month.initial_date }}) of {{ ireland.since_last_month.rate }}% per day,
+            {% if ireland.since_last_month.days_left == None %}
+                we'll never finish
+            {% else %}
+                we'll be finished on {{ ireland.since_last_month.end_date }} (only {{ ireland.since_last_month.human_readable_time_left }} left).
             {% endif %}
             </li>
     {% endif %}
@@ -66,6 +75,15 @@
                     {% endif %}
                     </li>
                 {% endif %}
+                {% if countyrates.since_last_month != None %}
+                    <li>the rate since last month ({{ countyrates.since_last_month.initial_date }}) of {{ countyrates.since_last_month.rate }}% per day,
+                        {% if countyrates.since_last_month.days_left == None %}
+                            we'll never finish
+                        {% else %}
+                            we'll be finished on {{ countyrates.since_last_month.end_date }} (only {{ countyrates.since_last_month.human_readable_time_left }} left).
+                        {% endif %}
+                        </li>
+                {% endif %}
                 {% if countyrates.since_yesterday != None %}
                     <li>the rate since <abbr title="{{ countyrates.since_yesterday.initial_date }}">yesterday</abbr> ({{ countyrates.since_yesterday.rate }}% per day),
                     {% if countyrates.since_yesterday.days_left == None %}
@@ -76,7 +94,7 @@
                     </li>
                 {% endif %}
             </ul>
-            <a href="{% url county_debug url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
+            <a href="{% url 'county_debug' url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
         </p>
 
     {% endif %}

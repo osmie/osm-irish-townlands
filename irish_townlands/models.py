@@ -100,22 +100,22 @@ class Area(models.Model):
     @property
     def townland_cover_incl_water(self):
         townland_cover = self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return (townland_cover / self.area_m2) * 100.0
+        return min((townland_cover / self.area_m2) * 100.0, 100.0)
 
     @property
     def townland_cover_excl_water(self):
         townland_cover = self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return (townland_cover / self.area_excl_water_m2) * 100.0
+        return min((townland_cover / self.area_excl_water_m2) * 100.0, 100.0)
 
     @property
     def barony_cover(self):
         cover = self.baronies.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return (cover / self.area_m2) * 100.0
+        return min((cover / self.area_m2) * 100.0, 100.0)
 
     @property
     def civil_parish_cover(self):
         cover = self.civil_parishes.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return (cover / self.area_m2) * 100.0
+        return min((cover / self.area_m2) * 100.0, 100.0)
 
     @property
     def townlands_sorted(self):
@@ -140,6 +140,10 @@ class Area(models.Model):
     @property
     def edit_in_potlatch_url(self):
         return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+
+    @property
+    def edit_in_id_url(self):
+        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
 
 
 def float_to_sexagesimal(x):

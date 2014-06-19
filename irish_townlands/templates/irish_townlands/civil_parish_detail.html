@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
 {% block title %}Townlands in {{ civil_parish.name }}{% endblock %}
 {% block header %}<h1>Civil Parish of {{ civil_parish.name }}{% if civil_parish.county %}, Co. {{ civil_parish.county.name }}{% endif %}</h1>{% endblock %}
@@ -18,7 +18,7 @@
 
     {% with baronies=civil_parish.baronies %}
         {% if baronies %}
-            <p>{{ civil_parish.name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url view_area barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
+            <p>{{ civil_parish.name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
         {% endif %}
     {% endwith %}
 
@@ -59,7 +59,7 @@
     <ul>
     {% for townland in civil_parish.townlands_sorted %}
         <li>
-            <a href="{% url view_area townland.url_path %}">{{ townland.name }}</a>
+            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
                 <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
                     {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
                     {% endwith %}
@@ -74,6 +74,7 @@
         <p>
             <a href="{{ civil_parish.osm_browse_url }}">Show on OpenStreetMap.org</a>
             <a href="{{ civil_parish.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ civil_parish.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
             <a href="{{ civil_parish.edit_in_potlatch_url }}">Edit in Potlatch</a>
         </p>
     {% endif %}

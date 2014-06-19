@@ -2,7 +2,8 @@
 
 set -o errexit
 
-cd $(dirname $0)
+BASEDIR=$(dirname $0)
+cd ${BASEDIR}
 
 # In case these are still around
 for TABLE in valid_polygon water_polygon planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads planet_osm_polygon planet_osm_roads_tmp; do
@@ -10,9 +11,9 @@ for TABLE in valid_polygon water_polygon planet_osm_nodes planet_osm_rels planet
 done
 
 
-wget -q -N http://download.geofabrik.de/openstreetmap/europe/ireland-and-northern-ireland.osm.pbf
-osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
-rm ireland-and-northern-ireland.osm.pbf
+wget -q -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf
+osm2pgsql --cache 50M --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland-latest.osm.pbf
+rm ireland-and-northern-ireland-latest.osm.pbf
 
 # not needed anymore
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads; do
@@ -34,4 +35,5 @@ psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(tr
 psql -q -d gis -c "alter table water_polygon add column geo geography;"
 psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(transform(way, 4326)));"
 
-./screenshot-townlands.sh
+cd ${BASEDIR}
+#./screenshot-townlands.sh
