@@ -159,8 +159,7 @@ def calculate_rate(initial_date, initial_percent, current_date, current_percent,
         # Without this, we get completion dates in the far future (like the
         # year 150,000) which isn't very useful, so we might as well presume
         # it'll never finish
-        #delta_percent = 0
-        pass
+        delta_percent = 0
 
     rate = delta_percent / days
     if rate == 0:
