@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
 {% block title %}{{ barony.name }}{% endblock %}
 {% block header %}<h1>Barony of {{ barony.name }}{% if barony.county %}, Co. {{ barony.county.name }}{% endif %}</h1>{% endblock %}
@@ -86,6 +86,7 @@
         <p>
             <a href="{{ barony.osm_browse_url }}">Show on OpenStreetMap.org</a>
             <a href="{{ barony.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ barony.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
             <a href="{{ barony.edit_in_potlatch_url }}">Edit in Potlatch</a>
         </p>
     {% endif %}

@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
 {% block title %}Townlands in {{ civil_parish.name }}{% endblock %}
 {% block header %}<h1>Civil Parish of {{ civil_parish.name }}{% if civil_parish.county %}, Co. {{ civil_parish.county.name }}{% endif %}</h1>{% endblock %}
@@ -74,6 +74,7 @@
         <p>
             <a href="{{ civil_parish.osm_browse_url }}">Show on OpenStreetMap.org</a>
             <a href="{{ civil_parish.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ civil_parish.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
             <a href="{{ civil_parish.edit_in_potlatch_url }}">Edit in Potlatch</a>
         </p>
     {% endif %}

@@ -141,6 +141,10 @@ class Area(models.Model):
     def edit_in_potlatch_url(self):
         return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
 
+    @property
+    def edit_in_id_url(self):
+        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+
 
 def float_to_sexagesimal(x):
     x = abs(x)
