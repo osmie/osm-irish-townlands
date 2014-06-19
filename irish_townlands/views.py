@@ -199,6 +199,10 @@ def many_range_rates(name):
     week_percent = query_set.filter(when=(most_recent_date - timedelta(days=7))).order_by("-id").values_list('percent', flat=True)
     week_percent = week_percent[0] if len(week_percent) > 0 else None
 
+    # since last month
+    month_percent = query_set.filter(when=(most_recent_date - timedelta(days=30))).order_by("-id").values_list('percent', flat=True)
+    month_percent = month_percent[0] if len(month_percent) > 0 else None
+
     results = {
         'amount_left': amount_left,
     }
@@ -209,6 +213,9 @@ def many_range_rates(name):
         results['since_yesterday'] = calculate_rate((most_recent_date - timedelta(days=1)), yesterday_percent, most_recent_date, most_recent_percent, amount_left)
     if week_percent is not None:
         results['since_last_week'] = calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left)
+    if month_percent is not None:
+        results['since_last_month'] = calculate_rate((most_recent_date - timedelta(weeks=30)), month_percent, most_recent_date, most_recent_percent, amount_left)
+
 
     return results
 

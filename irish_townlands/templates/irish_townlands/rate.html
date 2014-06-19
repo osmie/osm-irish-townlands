@@ -29,6 +29,15 @@
             {% endif %}
             </li>
     {% endif %}
+    {% if ireland.since_last_month != None %}
+        <li>If we take the rate since last month ({{ ireland.since_last_month.initial_date }}) of {{ ireland.since_last_month.rate }}% per day,
+            {% if ireland.since_last_month.days_left == None %}
+                we'll never finish
+            {% else %}
+                we'll be finished on {{ ireland.since_last_month.end_date }} (only {{ ireland.since_last_month.human_readable_time_left }} left).
+            {% endif %}
+            </li>
+    {% endif %}
     {% if ireland.since_yesterday != None %}
         <li>If we take the rate since yesterday ({{ ireland.since_yesterday.initial_date }}) of {{ ireland.since_yesterday.rate }}% per day,
             {% if ireland.since_yesterday.days_left == None %}
@@ -65,6 +74,15 @@
                         we'll be finished on {{ countyrates.since_last_week.end_date }} (only {{ countyrates.since_last_week.human_readable_time_left }} left!)
                     {% endif %}
                     </li>
+                {% endif %}
+                {% if countyrates.since_last_month != None %}
+                    <li>the rate since last month ({{ countyrates.since_last_month.initial_date }}) of {{ countyrates.since_last_month.rate }}% per day,
+                        {% if countyrates.since_last_month.days_left == None %}
+                            we'll never finish
+                        {% else %}
+                            we'll be finished on {{ countyrates.since_last_month.end_date }} (only {{ countyrates.since_last_month.human_readable_time_left }} left).
+                        {% endif %}
+                        </li>
                 {% endif %}
                 {% if countyrates.since_yesterday != None %}
                     <li>the rate since <abbr title="{{ countyrates.since_yesterday.initial_date }}">yesterday</abbr> ({{ countyrates.since_yesterday.rate }}% per day),
