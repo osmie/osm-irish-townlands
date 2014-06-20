@@ -1,8 +1,8 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load  i18n l10n humanize cache %}
 
-{% block title %}Duplicate townland names | Irish Traditional Boundaries Progress Report{% endblock %}
-{% block header %}<h1>Duplicate names</h1>{% endblock %}
+{% block title %}{% trans "Duplicate townland names" %} | {% trans "Irish Traditional Boundaries Progress Report" %}{% endblock %}
+{% block header %}<h1>{% trans "Duplicate names" %}</h1>{% endblock %}
 
 {% block body %}
 {% cache 3600 duplicatenames %}
@@ -12,7 +12,7 @@
     <li>{{ group.name }}: {{ group.count }}
         <ul>
             {% for townland in group.townlands %}
-            <li><a href="{% url 'view_area' townland.url_path %}">{{ group.name }}</a> in {% if townland.civil_parish__name %}{{ townland.civil_parish__name }} Civil Parish,{% endif %} {% if townland.barony__name %}{{ townland.barony__name }} Barony,{% endif %} Co. {{ townland.county__name }}</li>
+            <li><a href="{% url 'view_area' townland.url_path %}">{{ group.name }}</a> {% trans "in" %} {% if townland.civil_parish__name %}{% blocktrans with civilparishname=townland.civil_parish__name %}{{ civilparishname }} Civil Parish{% endblocktrans %},{% endif %} {% if townland.barony__name %}{% blocktrans with baronyname=townland.barony__name %}{{ baronyname }} Barony{% endblocktrans %},{% endif %} {% blocktrans with countyname=townland.county__name %}Co. {{ countyname }}{% endblocktrans %}</li>
             {% endfor %}
         </ul>
     </li>
