@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block extra_headers %}
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.3/leaflet.css" />
@@ -11,9 +12,9 @@
 
 {% block footer_extra %}
     <section id="data-copyright">
-        This page has data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>
+        {% blocktrans %}This page has data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>{% endblocktrans %}
     </section>
     <section id="data-freshness">
-        This data was last updated on {{ last_update }}.
+        {% blocktrans %}This data was last updated on {{ last_update }}.{% endblocktrans %}
     </section>
 {% endblock %}
