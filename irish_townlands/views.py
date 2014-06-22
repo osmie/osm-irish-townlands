@@ -94,6 +94,9 @@ def view_area(request, url_path=None):
     if url_path in ['all', None]:
         return render_to_response('irish_townlands/index.html', {
             'counties': County.objects.only('name', 'url_path').order_by('name').all(),
+            'num_baronies': Barony.objects.all().count(),
+            'num_civil_parishes': CivilParish.objects.all().count(),
+            'num_townlands': Townland.objects.all().count(),
             'last_update': last_update,
             }, context_instance=RequestContext(request))
 

@@ -12,6 +12,12 @@
     <p>Click on each county to see baronies, civil parishes and townlands in the respective county.</p>
     <p>This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly. <a href="{% url 'progress' %}">See how much we have done and how much we have left to do</a>, and <a href="{% url 'rate' %}">how long it'll take us to finish</a>.</p>
 
+    <h2>Ireland</h2>
+    <p>
+        {% blocktrans count num_baronies=num_baronies %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
+        {% blocktrans count num_civil_parishes=num_civil_parishes %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
+        {% blocktrans count num_townlands=num_townlands %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}.
+    </p>
     <h2>Counties</h2>
     <ul>
     {% for county in counties %}
