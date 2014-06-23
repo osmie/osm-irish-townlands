@@ -1,16 +1,16 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}Townlands in Co. {{ county.name }}{% endblock %}
-{% block header %}<h1>Co. {{ county.name }}</h1>{% endblock %}
+{% block title %}{% blocktrans with county_name=county.name %}Townlands in Co. {{ county_name }}{% endblocktrans %}{% endblock %}
+{% block header %}<h1>{% blocktrans with county_name=county.name %}Co. {{ county_name }}{% endblocktrans %}</h1>{% endblock %}
 
 {% block body %}
 
 {% cache 3600 county_detail county.url_path %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county.name }}. <i>(<a href="{% url 'county_debug' county.url_path %}"a>Debug</a> overlaps and coverage)</i></p>
+    <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(<a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
 
-    <h2>Area</h2>
+    <h2>{% trans "Area" %}</h2>
     <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
     <p>{{ county.name }} has a total water area of {{ county.water_area_m2|floatformat|intcomma }} m², which is {{ county.water_percent|floatformat }}% of the total area</p>
 
@@ -41,7 +41,7 @@
     {% endif %}
     {% endwith %}
 
-    <h2>Townlands</h2>
+    <h2>{% trans "Townlands" %}</h2>
     <p>
         There are {% with nt=county.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}. This represents {{ county.townland_cover|floatformat:-2 }}% of all the area in Co. {{ county.name }}.
     </p>
@@ -49,9 +49,9 @@
     {% for townland in county.townlands_sorted %}
         <li>
             <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>, 
-                {% if townland.civil_parish %}{{ townland.civil_parish.name }} Civil Parish, {% endif %}
-                {% if townland.barony %}Barony of {{ townland.barony.name }}, {% endif %}
-                <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
+                {% if townland.civil_parish %}{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}, {% endif %}
+                {% if townland.barony %}{% blocktrans with barony_name=townland.barony.name %}Barony of {{ barony_name }}{% endblocktrans %}, {% endif %}
+                <abbr title="{% blocktrans %}Area in Acres, Rods and Perches{% endblocktrans %}">{% with arp=townland.area_acres_roods_perches %}
                     {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
                     {% endwith %}
                 </abbr>
@@ -60,17 +60,17 @@
     </ul>
 
     <a name="osm"></a>
-    <h2>OpenStreetMap</h2>
+    <h2>{% trans "OpenStreetMap" %}</h2>
     {% if county.osm_id %}
         <p>
-            <a href="{{ county.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a href="{{ county.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ county.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
+            <a href="{{ county.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
             <a href="{{ county.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a href="{{ county.edit_in_potlatch_url }}">Edit in Potlatch</a>
+            <a href="{{ county.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
         </p>
     {% endif %}
-    <p> <a href="{% url 'county_debug' county.url_path %}"a> Debug</a> overlaps and coverage</p>
-    <p> <a href="{% url 'rate' %}#{{ county.name }}">How long will it take OSM to finish {{ county.name }}?</a></p>
+    <p> <a href="{% url 'county_debug' county.url_path %}"a> {% trans "Debug</a> overlaps and coverage" %}</p>
+    <p> <a href="{% url 'rate' %}#{{ county.name }}">{% blocktrans with county_name=county.name %}How long will it take OSM to finish {{ county_name }}?{% endblocktrans %}</a></p>
 
 {% endcache %}
 {% endblock body %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-23 22:42+0100\n"
+"POT-Creation-Date: 2014-06-23 22:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,80 @@ msgstr[4] ""
 #: templates/irish_townlands/county_detail.html:68
 #: templates/irish_townlands/townland_detail.html:144
 msgid "Edit in iD"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:4
+#, python-format
+msgid "Townlands in Co. %(county_name)s"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:5
+#: templates/irish_townlands/townland_detail.html:18
+#, python-format
+msgid "Co. %(county_name)s"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:11
+#, python-format
+msgid ""
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
+"here is a list of townlands in Co. %(county_name)s."
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:11
+#: templates/irish_townlands/county_detail.html:72
+msgid "Debug</a> overlaps and coverage"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:13
+#: templates/irish_townlands/townland_detail.html:27
+#: templates/irish_townlands/townland_detail.html:92
+msgid "Area"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:44
+msgid "Townlands"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:52
+#: templates/irish_townlands/townland_detail.html:20
+#, python-format
+msgid "%(civil_parish_name)s Civil Parish"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:53
+#, python-format
+msgid "Barony of %(barony_name)s"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:54
+msgid "Area in Acres, Rods and Perches"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:63
+#: templates/irish_townlands/townland_detail.html:30
+#: templates/irish_townlands/townland_detail.html:139
+msgid "OpenStreetMap"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:66
+#: templates/irish_townlands/townland_detail.html:142
+msgid "Show on OpenStreetMap.org"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:67
+#: templates/irish_townlands/townland_detail.html:143
+msgid "Edit in JOSM"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:69
+#: templates/irish_townlands/townland_detail.html:145
+msgid "Edit in Potlatch"
+msgstr ""
+
+#: templates/irish_townlands/county_detail.html:73
+#, python-format
+msgid "How long will it take OSM to finish %(county_name)s?"
 msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:4
@@ -243,24 +317,9 @@ msgstr ""
 msgid "%(townland_name)s Townland"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:18
-#, python-format
-msgid "Co. %(county_name)s"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:20
-#, python-format
-msgid "%(civil_parish_name)s Civil Parish"
-msgstr ""
-
 #: templates/irish_townlands/townland_detail.html:26
 #: templates/irish_townlands/townland_detail.html:67
 msgid "Map"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:27
-#: templates/irish_townlands/townland_detail.html:92
-msgid "Area"
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:28
@@ -270,11 +329,6 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:29
 #: templates/irish_townlands/townland_detail.html:129
 msgid "Census Search"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:30
-#: templates/irish_townlands/townland_detail.html:139
-msgid "OpenStreetMap"
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:35
@@ -424,16 +478,4 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:134
 #, python-format
 msgid "Search the 1901 Irish Census for %(townland_name)s"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:142
-msgid "Show on OpenStreetMap.org"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:143
-msgid "Edit in JOSM"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:145
-msgid "Edit in Potlatch"
 msgstr ""
