@@ -4,6 +4,7 @@ from __future__ import division
 from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
+from django.utils.translation import ungettext
 import math
 
 from django.db import models
@@ -70,6 +71,14 @@ class Area(models.Model):
 
         return (acres, roods, perches)
 
+    @property
+    def area_acres_roods_perches_textual(self):
+        acres, roods, perches = self.area_acres_roods_perches
+        return ", ".join([
+            (ungettext("%d acre", "%d acres", acres) % acres),
+            (ungettext("%d rood", "%d roods", roods) % roods),
+            (ungettext("%d perch", "%d perches", perches) % perches),
+        ])
 
     @property
     def area_mile2(self):

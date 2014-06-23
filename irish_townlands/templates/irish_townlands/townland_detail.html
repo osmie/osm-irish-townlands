@@ -94,7 +94,7 @@
         <ul>
             <li>{% blocktrans with townland.area_m2|stringformat:"d"|intcomma as area %}{{ area }} m²{% endblocktrans %} / {% blocktrans with area=townland.area_hectares|floatformat:-2 %}{{ area }} hectares{% endblocktrans %} / {% blocktrans with area=townland.area_km2|floatformat:-4 %}{{ area }} km²{% endblocktrans %}</li>
             <li>{% blocktrans with area=townland.area_mile2|floatformat:-2 %}{{ area }} square miles{% endblocktrans %}</li>
-            <li>{% blocktrans with area=townland.area_acres|floatformat:-2 %}{{ area }} acres{% endblocktrans %} / {% with arp=townland.area_acres_roods_perches %}{% blocktrans with acres=arp.0 roods=arp.1 perces=arp.2 %}{{ acres }} acre(s), {{ roods }} rood(s), {{ perches }} perch(es){% endblocktrans %}{% endwith %}</li>
+            <li>{% blocktrans with area=townland.area_acres|floatformat:-2 %}{{ area }} acres{% endblocktrans %} / {{ townland.area_acres_roods_perches_textual }}</li>
         </ul>
     </p>
 
