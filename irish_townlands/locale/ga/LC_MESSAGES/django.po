@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-20 20:21+0100\n"
+"POT-Creation-Date: 2014-06-23 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,25 +95,55 @@ msgstr ""
 msgid "how long it'll take us to finish"
 msgstr ""
 
-#: templates/irish_townlands/index.html:15
+#: templates/irish_townlands/index.html:17
+#, python-format
+msgid "%(num_baronies)s barony"
+msgid_plural "%(num_baronies)s baronies"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+
+#: templates/irish_townlands/index.html:18
+#, python-format
+msgid "%(num_civil_parishes)s civil parish"
+msgid_plural "%(num_civil_parishes)s civil parishes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+
+#: templates/irish_townlands/index.html:19
+#, python-format
+msgid "%(num_townlands)s townland"
+msgid_plural "%(num_townlands)s townlands"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+
+#: templates/irish_townlands/index.html:21
 msgid "Counties"
 msgstr ""
 
-#: templates/irish_townlands/index.html:20
+#: templates/irish_townlands/index.html:26
 #, python-format
 msgid "%(numberofbaronies)s barony"
 msgid_plural "%(numberofbaronies)s baronies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/irish_townlands/index.html:21
+#: templates/irish_townlands/index.html:27
 #, python-format
 msgid "%(numberofcivilparishes)s civil parish"
 msgid_plural "%(numberofcivilparishes)s civil parishes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/irish_townlands/index.html:22
+#: templates/irish_townlands/index.html:28
 #, python-format
 msgid "%(numberoftownlands)s townland"
 msgid_plural "%(numberoftownlands)s townlands"
