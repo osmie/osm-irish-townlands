@@ -2,15 +2,15 @@
 {% load i18n l10n cache %}
 
 {% block title %}{% trans 'Townlands in Ireland' %}{% endblock %}
-{% block header %}<h1>Irish Townlands</h1>{% endblock %}
+{% block header %}<h1>{% trans "Irish Townlands" %}</h1>{% endblock %}
 
 {% block body %}
 
 {% cache 3600 index %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties in Ireland.</p>
-    <p>Click on each county to see baronies, civil parishes and townlands in the respective county.</p>
-    <p>This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly. <a href="{% url 'progress' %}">See how much we have done and how much we have left to do</a>, and <a href="{% url 'rate' %}">how long it'll take us to finish</a>.</p>
+    <p>{% blocktrans %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties in Ireland.{% endblocktrans %}</p>
+    <p>{% trans "Click on each county to see baronies, civil parishes and townlands in the respective county." %}</p>
+    <p>{% trans "This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly." %} <a href="{% url 'progress' %}">{% trans "See how much we have done and how much we have left to do" %}</a>, {% trans "and" %} <a href="{% url 'rate' %}">{% trans "how long it'll take us to finish" %}</a>.</p>
 
     <h2>Ireland</h2>
     <p>
@@ -18,14 +18,14 @@
         {% blocktrans count num_civil_parishes=num_civil_parishes %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
         {% blocktrans count num_townlands=num_townlands %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}.
     </p>
-    <h2>Counties</h2>
+    <h2>{% trans "Counties" %}</h2>
     <ul>
     {% for county in counties %}
         <li>
             <a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a>.
-                {% with nb=county.baronies.count %} {{ nb }} baron{{ nb|pluralize:"y,ies" }}, {% endwith %}
-                {% with ncp=county.civil_parishes.count %} {{ ncp }} civil parish{{ ncp|pluralize:"es" }}, {% endwith %}
-                {% with nt=county.townlands.count %}{{ nt }} townland{{ nt|pluralize }}.{% endwith %}
+                {% blocktrans count numberofbaronies=county.baronies.count %}{{ numberofbaronies }} barony{% plural %}{{ numberofbaronies }} baronies{% endblocktrans %}, {% endwith %}
+                {% blocktrans count numberofcivilparishes=county.civil_parishes.count %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %}, {% endwith %}
+                {% blocktrans count numberoftownlands=county.townlands.count %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}, {% endwith %}
         </li>
     {% endfor %}
     </ul>
