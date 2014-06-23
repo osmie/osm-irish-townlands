@@ -1,16 +1,16 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load l10n humanize cache %}
 
-{% block title %}How long until we're done{% endblock %}
-{% block header %}<h1>Rate of mapping</h1>{% endblock %}
+{% block title %}{% trans "How long until we're done" %}{% endblock %}
+{% block header %}<h1>{% trans "Rate of mapping" %}</h1>{% endblock %}
 
 {% block body %}
 
-<p><a href="{% url 'view_area' %}">Irish Townlands</a> » <a href="{% url 'progress' %}"> Progress</a> » Rate of mapping</p>
+<p><a href="{% url 'view_area' %}">{% trans "Irish Townlands" %}</a> » <a href="{% url 'progress' %}"> {% trans "Progress" %}</a> » {% trans "Rate of mapping" %}</p>
 
-<p>Every day, the townlands from OpenStreetMap are processed and this website is updated. When this happens, we record how much of Ireland is covered by townlands, and from that predict how long it'll take to finish the whole lot. This calculation excludes water-y areas.</p>
+<p>{% trans "Every day, the townlands from OpenStreetMap are processed and this website is updated. When this happens, we record how much of Ireland is covered by townlands, and from that predict how long it'll take to finish the whole lot. This calculation excludes water-y areas." %}</p>
 
-<a name="ireland"></a><h2>Ireland</h2>
+<a name="ireland"></a><h2>{% trans "Ireland" %}</h2>
 
 <ul>
     <li>If we take the rate since {{ ireland.since_start.initial_date }} of {{ ireland.since_start.rate }}% per day,
@@ -53,7 +53,7 @@
     <a name="{{ countyname }}"></a><h2>{{ countyname }}</h2>
 
     {% if countyrates.amount_left == 0 %}
-        <p><b>Done!</b> All the townlands in {{ countyname }} are in OpenStreetMap!</p>
+        <p><b>{% trans "Done!" %}</b> {% blocktrans %}All the townlands in {{ countyname }} are in OpenStreetMap!{% endblocktrans %}</p>
     {% else %}
 
         <p>There is {{ countyrates.amount_left|floatformat:2 }}% to be mapped.</p>
@@ -94,7 +94,7 @@
                     </li>
                 {% endif %}
             </ul>
-            <a href="{% url 'county_debug' url_path=countyname|lower %}#unmapped_townlands">Unmapped area in {{ countyname }}</a>
+            <a href="{% url 'county_debug' url_path=countyname|lower %}#unmapped_townlands">{% blocktrans %}Unmapped area in {{ countyname }}{% endblocktrans %}</a>
         </p>
 
     {% endif %}

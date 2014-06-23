@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-23 22:38+0100\n"
+"POT-Creation-Date: 2014-06-23 22:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,6 +92,7 @@ msgid "Townlands in Ireland"
 msgstr ""
 
 #: templates/irish_townlands/index.html:5
+#: templates/irish_townlands/rate.html:9
 msgid "Irish Townlands"
 msgstr ""
 
@@ -179,6 +180,44 @@ msgid "%(numberoftownlands)s townland"
 msgid_plural "%(numberoftownlands)s townlands"
 msgstr[0] ""
 msgstr[1] ""
+
+#: templates/irish_townlands/rate.html:4
+msgid "How long until we're done"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:5 templates/irish_townlands/rate.html:9
+msgid "Rate of mapping"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:9
+msgid "Progress"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:11
+msgid ""
+"Every day, the townlands from OpenStreetMap are processed and this website "
+"is updated. When this happens, we record how much of Ireland is covered by "
+"townlands, and from that predict how long it'll take to finish the whole "
+"lot. This calculation excludes water-y areas."
+msgstr ""
+
+#: templates/irish_townlands/rate.html:13
+msgid "Ireland"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:56
+msgid "Done!"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:56
+#, python-format
+msgid "All the townlands in %(countyname)s are in OpenStreetMap!"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:97
+#, python-format
+msgid "Unmapped area in %(countyname)s"
+msgstr ""
 
 #: templates/irish_townlands/townland_base.html:15
 msgid ""
