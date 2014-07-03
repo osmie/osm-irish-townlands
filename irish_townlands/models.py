@@ -281,6 +281,14 @@ class Townland(Area):
     def touching_townlands(self):
         return self.touching_as_a.order_by("townland_b__name")
 
+    @property
+    def long_desc(self):
+        result = self.name
+        if self.civil_parish:
+            result += ", " + self.civil_parish.name + " Civil Parish"
+        if self.barony.
+
+
 class TownlandTouch(models.Model):
     class Meta:
         unique_together = [('townland_a', 'townland_b')]

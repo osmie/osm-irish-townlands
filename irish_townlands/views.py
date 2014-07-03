@@ -7,7 +7,7 @@ import math
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
 
@@ -232,4 +232,19 @@ def rate(request):
 
 
     return render_to_response('irish_townlands/rate.html', results,
+        context_instance=RequestContext(request))
+
+def search(request):
+    search_term = request.GET.get('q', '').strip()
+
+    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)
+
+    results = {
+        'counties': County.objects.filter(qs),
+        'baronies': Barony.objects.filter(qs),
+        'civil_parishes': CivilParish.objects.filter(qs),
+        'townlands': Townland.objects.filter(qs),
+    }
+
+    return render_to_response('irish_townlands/search.html', results,
         context_instance=RequestContext(request))
