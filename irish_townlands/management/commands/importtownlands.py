@@ -154,6 +154,12 @@ class Command(BaseCommand):
                 if cp.name.lower().endswith(" civil parish"):
                     cp.name = cp.name[:-len(" civil parish")]
 
+            # remove "Barony of" suffix from baronies
+            for b in baronies.values():
+                if b.name.lower().startswith("barony of "):
+                    cp.name = cp.name[len("barony of "):]
+
+
             # townland in county
 
 
