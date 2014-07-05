@@ -1,0 +1,36 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans 'Search' %}{% endblock %}
+{% block header %}<h1>{% trans 'Search' %}</h1>{% endblock %}
+
+{% block body %}
+
+<h2>{% trans 'Counties' %}</h2>
+<p>
+    {% for c in counties %}
+        <li><a href="{% url 'view_area' c.url_path %}">{{ c.name }}</a></li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Baronies' %}</h2>
+<p>
+    {% for b in baronies %}
+        <li><a href="{% url 'view_area' b.url_path %}">{{ b.name }}</a></li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Civil Parish' %}</h2>
+<p>
+    {% for cp in civil_parishes %}
+        <li><a href="{% url 'view_area' cp.url_path %}">{{ cp.name }}</a></li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Townlands' %}</h2>
+<p>
+    {% for t in townlands %}
+        <li><a href="{% url 'view_area' t.url_path %}">{{ t.name }}</a></li>
+    {% endfor %}
+</p>
+{% endblock %}
