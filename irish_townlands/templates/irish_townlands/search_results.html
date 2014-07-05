@@ -16,7 +16,7 @@
 </p>
 <p>
     {% for c in counties %}
-        <li><a href="{% url 'view_area' c.url_path %}">{{ c.long_desc }}</a></li>
+        <li>{{ c.long_desc }}</li>
     {% endfor %}
 </p>
 
@@ -30,7 +30,7 @@
 </p>
 <p>
     {% for b in baronies %}
-        <li><a href="{% url 'view_area' b.url_path %}">{{ b.long_desc }}</a></li>
+        <li>{{ b.long_desc }}</li>
     {% endfor %}
 </p>
 
@@ -44,7 +44,7 @@
 </p>
 <p>
     {% for cp in civil_parishes %}
-        <li><a href="{% url 'view_area' cp.url_path %}">{{ cp.long_desc }}</a></li>
+        <li>{{ cp.long_desc }}</li>
     {% endfor %}
 </p>
 
@@ -58,7 +58,7 @@
 </p>
 <p>
     {% for t in townlands %}
-        <li><a href="{% url 'view_area' t.url_path %}">{{ t.long_desc }}</a></li>
+        <li>{{ t.long_desc }}</li>
     {% endfor %}
 </p>
 {% endblock %}
