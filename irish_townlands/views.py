@@ -246,5 +246,5 @@ def search(request):
         'townlands': Townland.objects.filter(qs),
     }
 
-    return render_to_response('irish_townlands/search.html', results,
+    return render_to_response('irish_townlands/search_results.html', results,
         context_instance=RequestContext(request))

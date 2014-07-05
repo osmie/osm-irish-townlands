@@ -4,7 +4,7 @@ from __future__ import division
 from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
-from django.utils.translation import ungettext
+from django.utils.translation import ungettext, ugettext
 import math
 
 from django.db import models
@@ -186,6 +186,15 @@ class Barony(Area):
             return
         self.county = counties[0]
 
+    @property
+    def long_desc(self):
+        result = self.name
+        if self.county:
+            result += ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+
+        return result
+
+
 
 class CivilParish(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="civil_parishes")
@@ -219,6 +228,14 @@ class CivilParish(Area):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
 
+    @property
+    def long_desc(self):
+        result = self.name
+        if self.county:
+            result += ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+
+        return result
+
 class County(Area):
 
     polygon_townland_gaps = models.TextField(default='')
@@ -237,6 +254,10 @@ class County(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
         self.url_path = "{0}".format(name)
+
+    @property
+    def long_desc(self):
+        return self.name
 
 
 class Townland(Area):
@@ -285,8 +306,13 @@ class Townland(Area):
     def long_desc(self):
         result = self.name
         if self.civil_parish:
-            result += ", " + self.civil_parish.name + " Civil Parish"
-        if self.barony.
+            result += ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
+        if self.barony:
+            result += ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
+        if self.county:
+            result += ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+
+        return result
 
 
 class TownlandTouch(models.Model):
