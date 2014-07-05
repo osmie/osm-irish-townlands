@@ -239,11 +239,25 @@ def search(request):
 
     qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)
 
+    counties = list(County.objects.filter(qs))
+    counties_num_results = len(counties)
+    baronies = list(Barony.objects.filter(qs))
+    baronies_num_results = len(baronies)
+    civil_parishes = list(CivilParish.objects.filter(qs))
+    civil_parishes_num_results = len(civil_parishes)
+    townlands = list(Townland.objects.filter(qs))
+    townlands_num_results = len(townlands)
+
     results = {
-        'counties': County.objects.filter(qs),
-        'baronies': Barony.objects.filter(qs),
-        'civil_parishes': CivilParish.objects.filter(qs),
-        'townlands': Townland.objects.filter(qs),
+        'counties': counties,
+        'counties_num_results': counties_num_results,
+        'baronies': baronies,
+        'baronies_num_results': baronies_num_results,
+        'civil_parishes': civil_parishes,
+        'civil_parishes_num_results': civil_parishes_num_results,
+        'townlands': townlands,
+        'townlands_num_results': townlands_num_results,
+        'search_term': search_term,
     }
 
     return render_to_response('irish_townlands/search_results.html', results,
