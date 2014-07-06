@@ -5,15 +5,6 @@
 {% block header %}<h1>{% trans 'Search' %}</h1>{% endblock %}
 
 {% block body %}
-
-<h2>{% trans 'Search' %}</h2>
-<p>
-    <form method=GET action="{% url 'search' %}">
-        <input type=search name=q placeholder="Search for a townland, civil parish, barony or county" value="{{ search_term }}"></input>
-        <button submit>{% trans 'Search' %}</button>
-    </form>
-</p>
-
 <h2>{% trans 'Counties' %}</h2>
 <p>
     {% blocktrans count num_results=counties_num_results %}

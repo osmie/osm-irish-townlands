@@ -12,14 +12,6 @@
     <p>{% trans "Click on each county to see baronies, civil parishes and townlands in the respective county." %}</p>
     <p>{% trans "This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly." %} <a href="{% url 'progress' %}">{% trans "See how much we have done and how much we have left to do" %}</a>, {% trans "and" %} <a href="{% url 'rate' %}">{% trans "how long it'll take us to finish" %}</a>.</p>
 
-    <h2>{% trans 'Search' %}</h2>
-    <p>
-        <form method=GET action="{% url 'search' %}">
-            <input type=search name=q placeholder="Search for a townland, civil parish, barony or county"></input>
-            <button submit>{% trans 'Search' %}</button>
-        </form>
-    </p>
-
     <h2>Ireland</h2>
     <p>
         {% blocktrans count num_baronies=num_baronies %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
