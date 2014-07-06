@@ -28,8 +28,8 @@ class Area(models.Model):
 
     osm_id = models.IntegerField()
     name = models.CharField(max_length=255, db_index=True)
-    name_ga = models.CharField(max_length=255, default=None, null=True)
-    alt_name = models.CharField(max_length=255, default=None, null=True)
+    name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     area_m2 = models.FloatField(db_index=True)
     water_area_m2 = models.FloatField(blank=True, null=True)
     url_path = models.CharField(db_index=True, max_length=255)
