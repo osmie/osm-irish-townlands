@@ -164,6 +164,11 @@ class Area(models.Model):
             name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
         else:
             name_ga = ''
+
+        if self.alt_name:
+            alt_name = format_html(u" (aka {0}) ", self.alt_name)
+        else:
+            alt_name = ''
             
         if getattr(self, 'civil_parish', None):
             civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
@@ -181,9 +186,9 @@ class Area(models.Model):
             county_name = ''
 
         return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{civil_parish_name}{barony_name}{county_name}',
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{civil_parish_name}{barony_name}{county_name}',
             url_path=reverse('view_area', args=[self.url_path]),
-            name=self.name, name_ga=name_ga, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
+            name=self.name, name_ga=name_ga, alt_name=alt_name, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
         )
 
 
