@@ -239,13 +239,13 @@ def search(request):
 
     qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)
 
-    counties = list(County.objects.filter(qs).order_by("name"))
+    counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
     counties_num_results = len(counties)
-    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name"))
+    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name"))
     baronies_num_results = len(baronies)
-    civil_parishes = list(CivilParish.objects.filter(qs).select_related("county").order_by("name"))
+    civil_parishes = list(CivilParish.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name"))
     civil_parishes_num_results = len(civil_parishes)
-    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"))
+    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "baronly__name", "civil_parish__name"))
     townlands_num_results = len(townlands)
 
     results = {
