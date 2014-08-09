@@ -4,7 +4,9 @@ from __future__ import division
 from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
-from django.utils.translation import ungettext
+from django.utils.translation import ungettext, ugettext
+from django.utils.html import format_html
+from django.core.urlresolvers import reverse
 import math
 
 from django.db import models
@@ -26,8 +28,8 @@ class Area(models.Model):
 
     osm_id = models.IntegerField()
     name = models.CharField(max_length=255, db_index=True)
-    name_ga = models.CharField(max_length=255, default=None, null=True)
-    alt_name = models.CharField(max_length=255, default=None, null=True)
+    name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     area_m2 = models.FloatField(db_index=True)
     water_area_m2 = models.FloatField(blank=True, null=True)
     url_path = models.CharField(db_index=True, max_length=255)
@@ -154,6 +156,41 @@ class Area(models.Model):
     def edit_in_id_url(self):
         return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
 
+    @property
+    def long_desc(self):
+        name = self.name
+
+        if self.name_ga:
+            name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
+        else:
+            name_ga = ''
+
+        if self.alt_name:
+            alt_name = format_html(u" (aka {0}) ", self.alt_name)
+        else:
+            alt_name = ''
+            
+        if getattr(self, 'civil_parish', None):
+            civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
+        else:
+            civil_parish_name = ''
+
+        if getattr(self, 'barony', None):
+            barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
+        else:
+            barony_name = ''
+
+        if getattr(self, 'county', None):
+            county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+        else:
+            county_name = ''
+
+        return format_html(
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{civil_parish_name}{barony_name}{county_name}',
+            url_path=reverse('view_area', args=[self.url_path]),
+            name=self.name, name_ga=name_ga, alt_name=alt_name, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
+        )
+
 
 def float_to_sexagesimal(x):
     x = abs(x)
@@ -187,6 +224,7 @@ class Barony(Area):
         self.county = counties[0]
 
 
+
 class CivilParish(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="civil_parishes")
 
@@ -218,6 +256,7 @@ class CivilParish(Area):
     def baronies(self):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
 
 class County(Area):
 

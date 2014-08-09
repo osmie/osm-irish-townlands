@@ -7,7 +7,7 @@ import math
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
 
@@ -232,4 +232,33 @@ def rate(request):
 
 
     return render_to_response('irish_townlands/rate.html', results,
+        context_instance=RequestContext(request))
+
+def search(request):
+    search_term = request.GET.get('q', '').strip()
+
+    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)
+
+    counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
+    counties_num_results = len(counties)
+    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
+    baronies_num_results = len(baronies)
+    civil_parishes = list(CivilParish.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
+    civil_parishes_num_results = len(civil_parishes)
+    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
+    townlands_num_results = len(townlands)
+
+    results = {
+        'counties': counties,
+        'counties_num_results': counties_num_results,
+        'baronies': baronies,
+        'baronies_num_results': baronies_num_results,
+        'civil_parishes': civil_parishes,
+        'civil_parishes_num_results': civil_parishes_num_results,
+        'townlands': townlands,
+        'townlands_num_results': townlands_num_results,
+        'search_term': search_term,
+    }
+
+    return render_to_response('irish_townlands/search_results.html', results,
         context_instance=RequestContext(request))

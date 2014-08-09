@@ -10,6 +10,20 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.3/leaflet.js"></script>
 {% endblock %}
 
+{% block prebody %}
+    <h2>{% trans 'Search' %}</h2>
+    <p>
+        <form role=form method=GET action="{% url 'search' %}" class="form">
+            <div class="form-group">
+                <label class=sr-only for=q>{% trans 'Search for a townland, civil parish, barony or county' %}</label>
+                <input class="form-control input-lg" type=search name=q placeholder="{% trans 'Search for a townland, civil parish, barony or county' %}" value="{{ search_term }}"></input>
+            </div>
+            <button class="btn btn-primary" submit>{% trans 'Search' %}</button>
+        </form>
+    </p>
+{% endblock %}
+
+
 {% block footer_extra %}
     <section id="data-copyright">
         {% blocktrans %}This page has data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>{% endblocktrans %}

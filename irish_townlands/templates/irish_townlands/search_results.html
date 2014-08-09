@@ -1,0 +1,63 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans 'Search' %}{% endblock %}
+{% block header %}<h1>{% trans 'Search' %}</h1>{% endblock %}
+
+{% block body %}
+<h2>{% trans 'Counties' %}</h2>
+<p>
+    {% blocktrans count num_results=counties_num_results %}
+        We found {{ num_results }} county matching your search of "{{ search_term }}".
+    {% plural %}
+        We found {{ num_results }} counties matching your search of "{{ search_term }}".
+    {% endblocktrans %}
+</p>
+<p>
+    {% for c in counties %}
+        <li>{{ c.long_desc }}</li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Baronies' %}</h2>
+<p>
+    {% blocktrans count num_results=baronies_num_results %}
+        We found {{ num_results }} barony matching your search of "{{ search_term }}".
+    {% plural %}
+        We found {{ num_results }} baronies matching your search of "{{ search_term }}".
+    {% endblocktrans %}
+</p>
+<p>
+    {% for b in baronies %}
+        <li>{{ b.long_desc }}</li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Civil Parish' %}</h2>
+<p>
+    {% blocktrans count num_results=civil_parishes_num_results %}
+        We found {{ num_results }} civil parish matching your search of "{{ search_term }}".
+    {% plural %}
+        We found {{ num_results }} civil parishes matching your search of "{{ search_term }}".
+    {% endblocktrans %}
+</p>
+<p>
+    {% for cp in civil_parishes %}
+        <li>{{ cp.long_desc }}</li>
+    {% endfor %}
+</p>
+
+<h2>{% trans 'Townlands' %}</h2>
+<p>
+    {% blocktrans count num_results=townlands_num_results %}
+        We found {{ num_results }} townland matching your search of "{{ search_term }}".
+    {% plural %}
+        We found {{ num_results }} townlands matching your search of "{{ search_term }}".
+    {% endblocktrans %}
+</p>
+<p>
+    {% for t in townlands %}
+        <li>{{ t.long_desc }}</li>
+    {% endfor %}
+</p>
+{% endblock %}
