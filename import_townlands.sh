@@ -30,10 +30,10 @@ psql -q -d gis -c "create index valid_polygon__way on valid_polygon using GIST (
 psql -q -d gis -c "create index water_polygon__way on water_polygon using GIST (way);"
 
 psql -q -d gis -c "alter table valid_polygon add column geo geography;"
-psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(transform(way, 4326)));"
+psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
 psql -q -d gis -c "alter table water_polygon add column geo geography;"
-psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(astext(transform(way, 4326)));"
+psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
 cd ${BASEDIR}
 #./screenshot-townlands.sh
