@@ -72,8 +72,8 @@ class Command(BaseCommand):
                 ('alt_name', 'alt_name'),
                 ('osm_id', 'osm_id'),
                 ('st_area(geo)', 'area_m2'),
-                ('X(transform((ST_centroid(way)), 4326))', 'centre_x'),
-                ('Y(transform((ST_centroid(way)), 4326))', 'centre_y'),
+                ('X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
+                ('Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
                 ('ST_AsGeoJSON(geo)', 'polygon_geojson'),
 
             ]
