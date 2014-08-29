@@ -39,17 +39,10 @@ def create_area_obj(name, where_clause, django_model, cols, cursor):
 
         for row in cursor:
             kwargs = dict(zip([c[1] for c in cols], row))
-            x = django_model(**kwargs)
-            results[x.osm_id] = x
-        # save
-        with printer("saving " + name):
-            values = list(results.values())
-            # Split into into groups of 100.
-            # We have so many townlands now that we're getting mysql errors with trying to add them too much
-            value_chunks = [values[x:x+100] for x in range(0, len(values), 100)]
-            for value_chunk in value_chunks:
-                django_model.objects.bulk_create(value_chunk)
-            results = dict((x.osm_id, x) for x in django_model.objects.all())
+            new_obj = django_model(**kwargs)
+            new_obj.save()
+
+        results = dict((x.osm_id, x) for x in django_model.objects.all())
 
     return results
 
