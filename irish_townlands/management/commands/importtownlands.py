@@ -42,7 +42,7 @@ def create_area_obj(name, where_clause, django_model, cols, cursor):
             new_obj = django_model(**kwargs)
             new_obj.save()
 
-        results = dict((x.osm_id, x) for x in django_model.objects.all())
+        results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
 
     return results
 
