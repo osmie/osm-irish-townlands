@@ -214,7 +214,7 @@ class Barony(Area):
 
     def calculate_county(self):
         # This logic breaks if baronies cross county borders.
-        counties = list(County.objects.filter(townlands__barony=self).distinct())
+        counties = list(County.objects.defer("polygon_geojson").filter(townlands__barony=self).distinct())
         if len(counties) == 0:
             err_msg("Barony {barony} has no county", barony=self)
             return
@@ -244,7 +244,7 @@ class CivilParish(Area):
 
     def calculate_county(self):
         # This logic breaks if CPs cross county borders.
-        counties = list(County.objects.filter(townlands__civil_parish=self).distinct())
+        counties = list(County.objects.defer("polygon_geojson").filter(townlands__civil_parish=self).distinct())
         if len(counties) == 0:
             err_msg("Civil Parish {0} has no county", self)
             return
