@@ -78,7 +78,7 @@ class Command(BaseCommand):
             else:
                 # using postgres (we presume)
                 dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
-                conn = psycopg2.connect(database="gis", user=dbuser, password=dbpass)
+                conn = psycopg2.connect(host='127.0.0.1', database="gis", user=dbuser, password=dbpass)
 
             cursor = conn.cursor()
 
