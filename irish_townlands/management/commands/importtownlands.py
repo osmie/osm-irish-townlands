@@ -6,6 +6,7 @@ from __future__ import division
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.conf import settings
 from django.db.models import Sum
 from ...models import County, Townland, Barony, CivilParish, TownlandTouch, Metadata, Error, Progress
 
@@ -71,8 +72,9 @@ class Command(BaseCommand):
 
             ]
 
-            conn = psycopg2.connect("dbname='gis'")
-            cursor = conn.cursor()
+            dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
+            conn = psycopg2.connect(database="gis", user=dbuser, password=dbpass)
+            cursor = connection.cursor()
 
             townlands = create_area_obj('townlands', "admin_level = '10'", Townland, cols, cursor)
 
