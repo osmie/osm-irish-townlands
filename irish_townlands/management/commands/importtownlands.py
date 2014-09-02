@@ -72,9 +72,15 @@ class Command(BaseCommand):
 
             ]
 
-            dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
-            conn = psycopg2.connect(database="gis", user=dbuser, password=dbpass)
-            cursor = connection.cursor()
+            if settings.DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+                # Development testing with sqlite
+                conn = psycopg2.connect("dbname='gis'")
+            else:
+                # using postgres (we presume)
+                dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
+                conn = psycopg2.connect(database="gis", user=dbuser, password=dbpass)
+
+            cursor = conn.cursor()
 
             townlands = create_area_obj('townlands', "admin_level = '10'", Townland, cols, cursor)
 
