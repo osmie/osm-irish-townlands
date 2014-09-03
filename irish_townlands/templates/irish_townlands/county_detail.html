@@ -16,7 +16,7 @@
 
     {% with baronies=county.baronies_sorted %}
         <h2>Baronies</h2>
-        <p>There {{ baronies|pluralize:"is,are" }} {{ baronies|length }} baron{{ baronies|pluralize:"y,ies" }} in Co {{ county.name }} that we know about.</p>
+        <p>There {{ baronies|pluralize:"is,are" }} {{ baronies|length }} baron{{ baronies|pluralize:"y,ies" }} in Co. {{ county.name }} that we know about.</p>
         <p>
             <a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
         </p>
@@ -32,7 +32,7 @@
 
     {% with civil_parishes=county.civil_parishes_sorted %}
         <h2>Civil Parishes</h2>
-        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co {{ county.name }} that we know about.</p>
+        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
         <p>
             <a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>
         </p>
