@@ -52,7 +52,7 @@
     {% with civil_parishes=county.civil_parishes.all %}
     {% if civil_parishes %}
         <h2>Civil Parishes</h2>
-        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"ies" }} in Co {{ county.name }}.</p>
+        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co {{ county.name }}.</p>
 
         <ul>
         {% for civil_parish in civil_parishes %}
