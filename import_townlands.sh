@@ -25,7 +25,7 @@ done
 psql -d gis -c "create table if not exists valid_polygon (like planet_osm_polygon);"
 psql -q -d gis -c "insert into valid_polygon select * from planet_osm_polygon where name IS NOT NULL and st_isvalid(way) and (admin_level is not null or boundary is not null)";
 
-psql -d gis -c "create table if not exists water_polygon (like planet_osm_polygon);"
+psql -d gis -c "create table if not exists water_polygon (way geometry(MultiPolygon, 4326));"
 psql -q -d gis -c "insert into water_polygon (way) select way from planet_osm_polygon where water IS NOT NULL OR waterway IS NOT NULL OR \"natural\" = 'water' and st_isvalid(way)";
 
 psql -q -d gis -c "drop table planet_osm_polygon;"
