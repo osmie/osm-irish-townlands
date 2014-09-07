@@ -6,8 +6,8 @@ BASEDIR=$(dirname $0)
 cd ${BASEDIR}
 
 # In case these are still around
-psql -q -d gis -c "truncate table if exists valid_polygon;"
-psql -q -d gis -c "truncate table if exists water_polygon;"
+psql -q -d gis -c "truncate table valid_polygon;"
+psql -q -d gis -c "truncate table water_polygon;"
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads planet_osm_polygon planet_osm_roads_tmp; do
 	PGOPTIONS="--client-min-messages=warning" psql -q -d gis -c "drop table if exists $TABLE;"
 done
