@@ -23,10 +23,10 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 done
 
 psql -d gis -c "create table if not exists valid_polygon (like planet_osm_polygon);"
-psql -q -d gis -c "insert into valid_polygon as select * from planet_osm_polygon where name IS NOT NULL and st_isvalid(way) and (admin_level is not null or boundary is not null)";
+psql -q -d gis -c "insert into valid_polygon select * from planet_osm_polygon where name IS NOT NULL and st_isvalid(way) and (admin_level is not null or boundary is not null)";
 
 psql -d gis -c "create table if not exists water_polygon (like planet_osm_polygon);"
-psql -q -d gis -c "insert into water_polygon as select way from planet_osm_polygon where water IS NOT NULL OR waterway IS NOT NULL OR \"natural\" = 'water' and st_isvalid(way)";
+psql -q -d gis -c "insert into water_polygon select way from planet_osm_polygon where water IS NOT NULL OR waterway IS NOT NULL OR \"natural\" = 'water' and st_isvalid(way)";
 
 psql -q -d gis -c "drop table planet_osm_polygon;"
 
