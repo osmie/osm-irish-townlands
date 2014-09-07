@@ -30,13 +30,13 @@ psql -q -d gis -c "insert into water_polygon (way) select way from planet_osm_po
 
 psql -q -d gis -c "drop table planet_osm_polygon;"
 
-psql -q -d gis -c "create index valid_polygon__way on valid_polygon using GIST (way); create index valid_polygon__admin_level on valid_polygon (admin_level); create index valid_polygon__name on valid_polygon (name);"
-psql -q -d gis -c "create index water_polygon__way on water_polygon using GIST (way);"
+#psql -q -d gis -c "create index valid_polygon__way on valid_polygon using GIST (way); create index valid_polygon__admin_level on valid_polygon (admin_level); create index valid_polygon__name on valid_polygon (name);"
+#psql -q -d gis -c "create index water_polygon__way on water_polygon using GIST (way);"
 
-psql -q -d gis -c "alter table valid_polygon add column geo geography;"
+#psql -q -d gis -c "alter table valid_polygon add column geo geography;"
 psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
-psql -q -d gis -c "alter table water_polygon add column geo geography;"
+#psql -q -d gis -c "alter table water_polygon add column geo geography;"
 psql -q -d gis -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
 cd ${BASEDIR}
