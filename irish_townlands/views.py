@@ -217,7 +217,7 @@ def many_range_rates(name):
     if week_percent is not None:
         results['since_last_week'] = calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left)
     if month_percent is not None:
-        results['since_last_month'] = calculate_rate((most_recent_date - timedelta(weeks=30)), month_percent, most_recent_date, most_recent_percent, amount_left)
+        results['since_last_month'] = calculate_rate((most_recent_date - timedelta(days=30)), month_percent, most_recent_date, most_recent_percent, amount_left)
 
 
     return results
