@@ -16,7 +16,8 @@
     <p>
         {% blocktrans count num_baronies=num_baronies %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
         {% blocktrans count num_civil_parishes=num_civil_parishes %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
-        {% blocktrans count num_townlands=num_townlands %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}.
+        {% blocktrans count num_townlands=num_townlands %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}
+        {% trans ' currently mapped on OpenStreetMap' %}.
     </p>
     <h2>{% trans "Counties" %}</h2>
     <ul>
