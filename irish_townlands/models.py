@@ -22,12 +22,7 @@ class Metadata(models.Model):
     key = models.CharField(unique=True, db_index=True, max_length=50)
     value = models.CharField(max_length=255)
 
-class DeferGeojsonManager(models.Manager):
-    def get_queryset(self):
-        return super(DeferGeojsonManager, self).get_queryset().defer("polygon_geojson")
-
 class Area(models.Model):
-    objects = DeferGeojsonManager()
 
     class Meta:
         abstract = True
