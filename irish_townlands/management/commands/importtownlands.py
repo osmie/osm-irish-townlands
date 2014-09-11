@@ -299,17 +299,12 @@ class Command(BaseCommand):
                         county.polygon_barony_gaps, county.polygon_barony_overlaps = _calculate_gaps_and_overlaps(county.osm_id, these_baronies)
 
                     # civil parishes
-
-                    ## gap
-
                     these_civil_parishes = set(str(cp.osm_id) for cp in civil_parishes.values() if cp.county == county)
                     if len(these_civil_parishes) == 0:
                         # Shortcut, there are no civil_parishes here
                         county.polygon_civil_parish_gaps = county.polygon_geojson
                         county.polygon_civil_parish_overlaps = ''
                     else:
-                        # gap
-
                         county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = _calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
 
                     county.save()
