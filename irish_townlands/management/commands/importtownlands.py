@@ -15,13 +15,16 @@ import psycopg2
 from contextlib import contextmanager
 import datetime
 
+DEBUG = False
 
 @contextmanager
 def printer(msg):
     """Context statement to print when a task starts & ends."""
-    #print "Starting "+msg
+    if DEBUG:
+        print "Starting "+msg
     yield
-    #print "Finished "+msg
+    if DEBUG:
+        print "Finished "+msg
 
 
 def err_msg(msg, *args, **kwargs):
@@ -50,7 +53,20 @@ def create_area_obj(name, where_clause, django_model, cols, cursor):
 
 class Command(BaseCommand):
 
+    option_list = BaseCommand.option_list + (
+        make_option('--verbose',
+            action='store_true',
+            dest='verbose',
+            default=False,
+            help='Be verbose, and print debugging output'),
+        )
+
     def handle(self, *args, **options):
+
+        if options['verbose']:
+            global DEBUG
+            DEBUG = True
+
         # delete old
         with transaction.commit_on_success():
             for obj in [Townland, County, CivilParish, Barony]:
