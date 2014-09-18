@@ -11,7 +11,7 @@ setup(name="django-osm-irish-townlands",
       license='GPLv3',
       description='',
       install_requires=[
-          'django',
+          'django==1.6',
           'south',
       ],
 )
