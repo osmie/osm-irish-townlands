@@ -1,5 +1,6 @@
 *.pyc
 *.egg-info
 .*.swp
-ireland-and-northern-ireland.osm.pbf
+.*.swo
+ireland-and-northern-ireland-latest.osm.pbf
 build/*
