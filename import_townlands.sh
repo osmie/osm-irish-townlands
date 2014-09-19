@@ -14,7 +14,7 @@ POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d gis"
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table valid_polygon;" || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table water_polygon;" || true
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads planet_osm_polygon planet_osm_roads_tmp; do
-	PGOPTIONS="--client-min-messages=warning" $POSTGIS_CMD -c "drop table if exists $TABLE;"
+	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=$DB_PASS $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
 
 
