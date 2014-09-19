@@ -24,7 +24,7 @@ rm ireland-and-northern-ireland-latest.osm.pbf
 
 # not needed anymore
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads; do
-	PGOPTIONS="--client-min-messages=warning" $POSTGIS_CMD -c "drop table if exists $TABLE;"
+	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table if not exists valid_polygon (like planet_osm_polygon);"
