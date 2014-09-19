@@ -10,7 +10,7 @@ DB_PASS=$2
 
 export PGPASSWORD=${DB_PASS}
 
-POSTGIS_CMD="pqsl -q -U ${DB_USER} -W -d gis"
+POSTGIS_CMD="psql -q -U ${DB_USER} -W -d gis"
 
 # In case these are still around
 $POSTGIS_CMD -c "truncate table valid_polygon;" || true
