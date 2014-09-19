@@ -19,7 +19,7 @@ done
 
 
 wget -q -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf
-PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --cache 200M --cache-strategy sparse --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland-latest.osm.pbf
+PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ./osm2pgsql.style -G ireland-and-northern-ireland-latest.osm.pbf
 rm ireland-and-northern-ireland-latest.osm.pbf
 
 # not needed anymore
