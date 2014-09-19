@@ -8,9 +8,7 @@ cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
 
-export PGPASSWORD=${DB_PASS}
-
-POSTGIS_CMD="psql -q -U ${DB_USER} -d gis"
+POSTGIS_CMD="PGPASSWORD=${DB_PASS} psql -q -U ${DB_USER} -d gis"
 
 # In case these are still around
 $POSTGIS_CMD -c "truncate table valid_polygon;" || true
