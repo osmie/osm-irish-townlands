@@ -47,6 +47,15 @@
             {% endif %}
             </li>
     {% endif %}
+    {% if ireland.since_90_days != None %}
+        <li>If we take the rate since 90 days ago ({{ ireland.since_90_days.initial_date }}) of {{ ireland.since_90_days.rate }}% per day,
+            {% if ireland.since_90_days.days_left == None %}
+                we'll never finish
+            {% else %}
+                we'll be finished on {{ ireland.since_90_days.end_date }} (only {{ ireland.since_90_days.human_readable_time_left }} left).
+            {% endif %}
+            </li>
+    {% endif %}
 </ul>
 
 {% for countyname, countyrates in counties %}
@@ -92,6 +101,15 @@
                         we'll be finished on {{ countyrates.since_yesterday.end_date }} (only {{ countyrates.since_yesterday.human_readable_time_left }} left!)
                     {% endif %}
                     </li>
+                {% endif %}
+                {% if countyrates.since_90_days != None %}
+                    <li>If we take the rate since 90 days ago ({{ countyrates.since_90_days.initial_date }}) of {{ countyrates.since_90_days.rate }}% per day,
+                        {% if countyrates.since_90_days.days_left == None %}
+                            we'll never finish
+                        {% else %}
+                            we'll be finished on {{ countyrates.since_90_days.end_date }} (only {{ countyrates.since_90_days.human_readable_time_left }} left).
+                        {% endif %}
+                        </li>
                 {% endif %}
             </ul>
             <a href="{% url 'county_debug' url_path=countyname|lower %}#unmapped_townlands">{% blocktrans %}Unmapped area in {{ countyname }}{% endblocktrans %}</a>

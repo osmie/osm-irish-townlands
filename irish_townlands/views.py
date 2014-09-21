@@ -209,6 +209,10 @@ def many_range_rates(name):
     month_percent = query_set.filter(when=(most_recent_date - timedelta(days=30))).order_by("-id").values_list('percent', flat=True)
     month_percent = month_percent[0] if len(month_percent) > 0 else None
 
+    # since 90 days ago
+    day90_percent = query_set.filter(when=(most_recent_date - timedelta(days=90))).order_by("-id").values_list('percent', flat=True)
+    day90_percent = day90_percent[0] if len(day90_percent) > 0 else None
+
     results = {
         'amount_left': amount_left,
     }
@@ -221,6 +225,8 @@ def many_range_rates(name):
         results['since_last_week'] = calculate_rate((most_recent_date - timedelta(days=7)), week_percent, most_recent_date, most_recent_percent, amount_left)
     if month_percent is not None:
         results['since_last_month'] = calculate_rate((most_recent_date - timedelta(days=30)), month_percent, most_recent_date, most_recent_percent, amount_left)
+    if day90_percent is not None:
+        results['since_90_days'] = calculate_rate((most_recent_date - timedelta(days=90)), day90_percent, most_recent_date, most_recent_percent, amount_left)
 
 
     return results
@@ -232,6 +238,7 @@ def rate(request):
     results['counties'] = []
     for county in sorted(COUNTIES):
         results['counties'].append((county, many_range_rates(county)))
+
 
 
     return render_to_response('irish_townlands/rate.html', results,
