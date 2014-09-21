@@ -3,11 +3,14 @@ from __future__ import division
 import re
 from datetime import timedelta, datetime
 import math
+import json
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
+
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
 
@@ -262,3 +265,70 @@ def search(request):
 
     return render_to_response('irish_townlands/search_results.html', results,
         context_instance=RequestContext(request))
+
+def taginfo(request):
+    domain = "http://www.townlands.ie"
+    return HttpResponse(json.dumps(
+        {
+            "data_format": 1,
+            "data_url": domain + reverse("taginfo"),
+            "project": {
+                "name": "Irish Townlands",
+                "description": "Irish townlands, civil parishes and baronies",
+                "doc_url": "https://github.com/rory/osm-irish-townlands",
+                "project_url": domain,
+                "contact_name": "Rory McCann",
+                "contact_email": "rory@technomancy.org"
+            },
+            "tags": [
+                {
+                    "key": "name"
+                },
+                {
+                    "key": "name:ga",
+                    "description": "Irish name"
+                },
+                {
+                    "key": "alt_name",
+                    "description": "Alternative name"
+                },
+                {
+                    "key": "natural",
+                    "value": "water",
+                    "description": "Used to exclude water areas from completeness calculations"
+                },
+                {
+                    "key": "water",
+                    "description": "Used to exclude water areas from completeness calculations"
+                },
+                {
+                    "key": "waterway",
+                    "description": "Used to exclude water areas from completeness calculations"
+                },
+                {
+                    "key": "boundary",
+                    "value": "barony",
+                    "description": "Barony"
+                },
+                {
+                    "key": "boundary",
+                    "value": "civil_parish",
+                    "description": "Civil Parish"
+                },
+                {
+                    "key": "boundary",
+                    "value": "administrative"
+                },
+                {
+                    "key": "admin_level",
+                    "value": "6",
+                    "description": "County"
+                },
+                {
+                    "key": "admin_level",
+                    "value": "10",
+                    "description": "Townland"
+                }
+            ]
+        }
+    ))
