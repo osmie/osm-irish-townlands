@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n staticfiles %}
 
 {% block extra_headers %}
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.3/leaflet.css" />
@@ -10,17 +10,23 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.3/leaflet.js"></script>
 {% endblock %}
 
-{% block prebody %}
-    <h2>{% trans 'Search' %}</h2>
-    <p>
-        <form role=form method=GET action="{% url 'search' %}" class="form">
-            <div class="form-group">
-                <label class=sr-only for=q>{% trans 'Search for a townland, civil parish, barony or county' %}</label>
-                <input class="form-control input-lg" type=search name=q placeholder="{% trans 'Search for a townland, civil parish, barony or county' %}" value="{{ search_term }}"></input>
-            </div>
-            <button class="btn btn-primary" submit>{% trans 'Search' %}</button>
-        </form>
-    </p>
+{% block header_div %}
+    <div class="row">
+        <img class="col-md-2 center-block" src="{% static 'logo.png' %}">
+        <div class="col-md-10">
+            <h1>{% block header %}{% trans "Irish Townlands" %}{% endblock %}</h1>
+            <h2>{% trans 'Search' %}</h2>
+            <p>
+                <form role=form method=GET action="{% url 'search' %}" class="form">
+                    <div class="form-group">
+                        <label class=sr-only for=q>{% trans 'Search for a townland, civil parish, barony or county' %}</label>
+                        <input class="form-control input-lg" type=search name=q placeholder="{% trans 'Search for a townland, civil parish, barony or county' %}" value="{{ search_term }}"></input>
+                    </div>
+                    <button class="btn btn-primary" submit>{% trans 'Search' %}</button>
+                </form>
+            </p>
+        </div>
+    </div>
 {% endblock %}
 
 
