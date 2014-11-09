@@ -33,7 +33,5 @@
 {% block footer_extra %}
     <a href="{% url 'page' 'copyright' %}">{% trans 'Copyright' %}</a> | <a href="{% url 'page' 'download' %}">{% trans 'Download Data' %}</a>
     |
-        {% blocktrans %}This data was last updated on {{ last_update }}.{% endblocktrans %}
-        {% blocktrans %}We use the data from <a href="http://download.geofabrik.de/europe/ireland-and-northern-ireland.html">Geofabrik's country extract for Ireland and Northern Ireland</a> on townlands.ie. That link will tell you what OSM objects are included.{% endblocktrans %}
-    </section>
+    <a href="{% url 'page' 'data_freshness' %}">{% trans 'How up-to-date is Townlands.ie?' %}</a> {% blocktrans %}Last update: {{ last_update }}.{% endblocktrans %}
 {% endblock %}

@@ -62,7 +62,15 @@ PAGES = {
             <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
 
         """,
-    }
+    },
+
+    'data_freshness': {
+        'title': "How up-to-date is Townlands.ie?",
+        'body': """
+            <p>Townlands.ie is updated every day. At the bottom of the page, you can see the date and time of the last import of data.</p>
+            <p>We use the Ireland extracts from <a href="http://planet.openstreetmap.ie/">OSM Data for Ireland</a>.</p>
+        """,
+    },
 
 
 }
