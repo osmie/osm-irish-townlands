@@ -18,11 +18,13 @@
             <h2>{% trans 'Search' %}</h2>
             <p>
                 <form role=form method=GET action="{% url 'search' %}" class="form">
-                    <div class="form-group">
+                    <div class="input-group">
                         <label class=sr-only for=q>{% trans 'Search for a townland, civil parish, barony or county' %}</label>
                         <input class="form-control input-lg" type=search name=q placeholder="{% trans 'Search for a townland, civil parish, barony or county' %}" value="{{ search_term }}"></input>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-lg" submit>{% trans 'Search' %}</button>
+                        </span>
                     </div>
-                    <button class="btn btn-primary" submit>{% trans 'Search' %}</button>
                 </form>
             </p>
         </div>
