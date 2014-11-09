@@ -99,7 +99,9 @@ class Area(models.Model):
 
     @property
     def area_excl_water_m2(self):
-        return self.area_m2 - self.water_area_m2
+        # Some things don't have water calculated and stored. e.g. CPs.
+        # cf. https://github.com/rory/osm-irish-townlands/issues/51
+        return self.area_m2 - (self.water_area_m2 or 0)
 
     @property
     def water_percent(self):
