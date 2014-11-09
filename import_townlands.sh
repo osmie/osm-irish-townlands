@@ -7,6 +7,7 @@ BASEDIR=$(dirname $0)
 cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
+EXPORTED_FILES_DIR=$3
 
 POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d gis"
 
@@ -43,6 +44,37 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_geograp
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table water_polygon add column geo geography;" || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
+
+# dump townlands etc as shapefiles
+mkdir -p $EXPORTED_FILES_DIR
+rm -f ${EXPORTED_FILES_DIR}/provinces*
+pgsql2shp -f ${EXPORTED_FILES_DIR}/provinces -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '5'" >/dev/null
+rm -f ${EXPORTED_FILES_DIR}/counties*
+pgsql2shp -f ${EXPORTED_FILES_DIR}/counties -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '6'" >/dev/null
+rm -f ${EXPORTED_FILES_DIR}/townlands*
+pgsql2shp -f ${EXPORTED_FILES_DIR}/townlands -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '10'" >/dev/null
+rm -f ${EXPORTED_FILES_DIR}/baronies*
+pgsql2shp -f ${EXPORTED_FILES_DIR}/baronies -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'barony'" >/dev/null
+rm -f ${EXPORTED_FILES_DIR}/civil_parishes*
+pgsql2shp -f ${EXPORTED_FILES_DIR}/civil_parishes -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'civil_parish'" >/dev/null
+
+pushd ${EXPORTED_FILES_DIR} 2> /dev/null
+for TYPE in townlands counties baronies civil_parishes provinces ; do
+    zip -q ${TYPE}.zip ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
+
+    ogr2ogr -f "GeoJSON" ${TYPE}.geojson ${TYPE}.shp
+    zip ${TYPE}.geojson.zip ${TYPE}.geojson
+    rm -f ${TYPE}.geojson
+
+    rm -f doc.kml
+    ogr2ogr -f "KML" doc.kml ${TYPE}.shp -dsco NameField=name
+    zip ${TYPE}.kmz doc.kml
+    rm -f doc.kml
+
+    rm -f ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
+done
+popd 2> /dev/null
+
 
 cd ${BASEDIR}
 #./screenshot-townlands.sh

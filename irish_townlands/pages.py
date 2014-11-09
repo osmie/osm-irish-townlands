@@ -29,27 +29,27 @@ PAGES = {
                 </tr>
                 <tr>
                     <td>Townlands</td>
-                    <td><a href="/static/shapefiles/townlands.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/townlands.geojson.gz">download GeoJSON</a></td>
-                    <td><a href="/static/shapefiles/townlands.kml.gz">download KML</a></td>
+                    <td><a href="/static/download/townlands.zip">download shapefile</a></td>
+                    <td><a href="/static/download/townlands.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/download/townlands.kmz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Civil Parishes</td>
-                    <td><a href="/static/shapefiles/civil_parishes.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/civil_parishes.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/shapefiles/civil_parishes.kml.zip">download KML</a></td>
+                    <td><a href="/static/download/civil_parishes.zip">download shapefile</a></td>
+                    <td><a href="/static/download/civil_parishes.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/download/civil_parishes.kmz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Baronies</td>
-                    <td><a href="/static/shapefiles/baronies.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/baronies.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/shapefiles/baronies.kml.zip">download KML</a></td>
+                    <td><a href="/static/download/baronies.zip">download shapefile</a></td>
+                    <td><a href="/static/download/baronies.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/download/baronies.kmlz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Counties</td>
-                    <td><a href="/static/shapefiles/counties.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/counties.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/shapefiles/counties.kml.zip">download KML</a></td>
+                    <td><a href="/static/download/counties.zip">download shapefile</a></td>
+                    <td><a href="/static/download/counties.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/download/counties.kmz">download KML</a></td>
                 </tr>
             </table>
 
@@ -61,7 +61,7 @@ PAGES = {
                     <dt>OSM_ID<dt>
                     <dd>Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more)</dd>
                     <dt>NAME<dt>
-                    <dd>String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish.</dd>
+                    <dd>String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish. <i>(NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.)</i></dd>
                     <dt>NAME:GA<dt>
                     <dd>String. The name of the object in Irish.</dd>
                 </dl>
