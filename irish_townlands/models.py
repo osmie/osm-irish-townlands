@@ -143,7 +143,7 @@ class Area(models.Model):
 
     @property
     def osm_browse_url(self):
-        return "http://www.openstreetmap.org/browse/{type}/{id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+        return "http://www.openstreetmap.org/{type}/{id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
 
     @property
     def edit_in_josm_url(self):
