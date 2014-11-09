@@ -61,7 +61,7 @@ PAGES = {
                     <dt>OSM_ID<dt>
                     <dd>Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more)</dd>
                     <dt>NAME<dt>
-                    <dd>String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish.</dd>
+                    <dd>String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish. <i>(NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.)</i></dd>
                     <dt>NAME:GA<dt>
                     <dd>String. The name of the object in Irish.</dd>
                 </dl>
