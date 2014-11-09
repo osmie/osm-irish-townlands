@@ -31,10 +31,8 @@
 
 
 {% block footer_extra %}
-    <section id="data-copyright">
-        {% blocktrans %}This page has data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>{% endblocktrans %}
-    </section>
-    <section id="data-freshness">
+    <a href="{% url 'page' 'copyright' %}">{% trans 'Copyright' %}</a> | <a href="{% url 'page' 'download' %}">{% trans 'Download Data' %}</a>
+    |
         {% blocktrans %}This data was last updated on {{ last_update }}.{% endblocktrans %}
         {% blocktrans %}We use the data from <a href="http://download.geofabrik.de/europe/ireland-and-northern-ireland.html">Geofabrik's country extract for Ireland and Northern Ireland</a> on townlands.ie. That link will tell you what OSM objects are included.{% endblocktrans %}
     </section>

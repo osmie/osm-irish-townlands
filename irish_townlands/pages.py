@@ -7,6 +7,15 @@ PAGES = {
         'body': 'About',
     },
 
+    'copyright': {
+        'title': 'Copyright of Townlands.ie',
+
+        'body': """
+            <p>Since this is derived from <a href="openstreetmap.org">OpenStreeMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
+            <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
+        """,
+    },
+
     'download': {
         'title': 'Downloading Townlands.ie data',
         'body': """
