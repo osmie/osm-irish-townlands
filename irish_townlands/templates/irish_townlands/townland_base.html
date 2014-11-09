@@ -12,7 +12,7 @@
 
 {% block header_div %}
     <div class="row vertical-align">
-        <img class="col-md-2" src="{% static 'logo.png' %}">
+        <div class="brand col-md-2"><a href="/"><img class="img-responsive" src="{% static 'logo.png' %}"></a></div>
         <div class="col-md-10">
             <h1>{% block header %}{% trans "Irish Townlands" %}{% endblock %}</h1>
             <h2>{% trans 'Search' %}</h2>
