@@ -25,26 +25,31 @@ PAGES = {
                     <th>Type of Data</th>
                     <th>Shapefile</th>
                     <th>GeoJSON</th>
+                    <th>KML</th>
                 </tr>
                 <tr>
                     <td>Townlands</td>
                     <td><a href="/static/shapefiles/townlands.zip">download shapefile</a></td>
                     <td><a href="/static/shapefiles/townlands.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/townlands.kml.gz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Civil Parishes</td>
                     <td><a href="/static/shapefiles/civil_parishes.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/civil_parishes.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/civil_parishes.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/civil_parishes.kml.zip">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Baronies</td>
                     <td><a href="/static/shapefiles/baronies.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/baronies.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/baronies.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/baronies.kml.zip">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Counties</td>
                     <td><a href="/static/shapefiles/counties.zip">download shapefile</a></td>
-                    <td><a href="/static/shapefiles/counties.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/counties.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/shapefiles/counties.kml.zip">download KML</a></td>
                 </tr>
             </table>
 
