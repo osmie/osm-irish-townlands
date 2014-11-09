@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
@@ -284,6 +285,7 @@ def taginfo(request):
                 "description": "Irish townlands, civil parishes and baronies",
                 "doc_url": "https://github.com/rory/osm-irish-townlands",
                 "project_url": domain,
+                "icon_url": domain + static("logo_small.png"),
                 "contact_name": "Rory McCann",
                 "contact_email": "rory@technomancy.org"
             },
