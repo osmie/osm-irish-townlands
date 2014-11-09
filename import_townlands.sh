@@ -66,9 +66,10 @@ for TYPE in townlands counties baronies civil_parishes provinces ; do
     zip ${TYPE}.geojson.zip ${TYPE}.geojson
     rm -f ${TYPE}.geojson
 
-    ogr2ogr -f "KML" ${TYPE}.kml ${TYPE}.shp
-    zip ${TYPE}.kml.zip ${TYPE}.kml
-    rm -f ${TYPE}.kml
+    rm -f doc.kml
+    ogr2ogr -f "KML" doc.kml ${TYPE}.shp -dsco NameField=name
+    zip ${TYPE}.kmz doc.kml
+    rm -f doc.kml
 
     rm -f ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
 done
