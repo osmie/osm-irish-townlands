@@ -14,6 +14,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
+from .pages import PAGES
 
 COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
             u'Derry', u'Donegal', u'Down', u'Dublin', u'Fermanagh', u'Galway',
@@ -341,3 +342,10 @@ def taginfo(request):
             ]
         }
     ))
+
+def page(request, url_path):
+    if url_path not in PAGES:
+        return Http404
+    else:
+        return render_to_response('irish_townlands/page.html', PAGES[url_path])
+    
