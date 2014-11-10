@@ -12,8 +12,8 @@ EXPORTED_FILES_DIR=$3
 POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d gis"
 
 # In case these are still around
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table valid_polygon;" || true
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table water_polygon;" || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table valid_polygon;" 2>/dev/null || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "truncate table water_polygon;" 2>/dev/null || true
 for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line planet_osm_line planet_osm_point planet_osm_roads planet_osm_polygon planet_osm_roads_tmp; do
 	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=$DB_PASS $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
@@ -58,22 +58,22 @@ pgsql2shp -f ${EXPORTED_FILES_DIR}/baronies -d gis "select osm_id, name, \"name:
 rm -f ${EXPORTED_FILES_DIR}/civil_parishes*
 pgsql2shp -f ${EXPORTED_FILES_DIR}/civil_parishes -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'civil_parish'" >/dev/null
 
-pushd ${EXPORTED_FILES_DIR} 2> /dev/null
+pushd ${EXPORTED_FILES_DIR} > /dev/null
 for TYPE in townlands counties baronies civil_parishes provinces ; do
-    zip -q ${TYPE}.zip ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
 
     ogr2ogr -f "GeoJSON" ${TYPE}.geojson ${TYPE}.shp
-    zip ${TYPE}.geojson.zip ${TYPE}.geojson
+    zip -q ${TYPE}.geojson.zip ${TYPE}.geojson
     rm -f ${TYPE}.geojson
 
     rm -f doc.kml
     ogr2ogr -f "KML" doc.kml ${TYPE}.shp -dsco NameField=name
-    zip ${TYPE}.kmz doc.kml
+    zip -q ${TYPE}.kmz doc.kml
     rm -f doc.kml
 
+    zip -q ${TYPE}.zip ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
     rm -f ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
 done
-popd 2> /dev/null
+popd > /dev/null
 
 
 cd ${BASEDIR}

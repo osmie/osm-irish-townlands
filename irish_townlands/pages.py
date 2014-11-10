@@ -29,27 +29,27 @@ PAGES = {
                 </tr>
                 <tr>
                     <td>Townlands</td>
-                    <td><a href="/static/download/townlands.zip">download shapefile</a></td>
-                    <td><a href="/static/download/townlands.geojson.gz">download GeoJSON</a></td>
-                    <td><a href="/static/download/townlands.kmz">download KML</a></td>
+                    <td><a href="/static/downloads/townlands.zip">download shapefile</a></td>
+                    <td><a href="/static/downloads/townlands.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/downloads/townlands.kmz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Civil Parishes</td>
-                    <td><a href="/static/download/civil_parishes.zip">download shapefile</a></td>
-                    <td><a href="/static/download/civil_parishes.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/download/civil_parishes.kmz">download KML</a></td>
+                    <td><a href="/static/downloads/civil_parishes.zip">download shapefile</a></td>
+                    <td><a href="/static/downloads/civil_parishes.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/downloads/civil_parishes.kmz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Baronies</td>
-                    <td><a href="/static/download/baronies.zip">download shapefile</a></td>
-                    <td><a href="/static/download/baronies.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/download/baronies.kmlz">download KML</a></td>
+                    <td><a href="/static/downloads/baronies.zip">download shapefile</a></td>
+                    <td><a href="/static/downloads/baronies.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/downloads/baronies.kmlz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Counties</td>
-                    <td><a href="/static/download/counties.zip">download shapefile</a></td>
-                    <td><a href="/static/download/counties.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/download/counties.kmz">download KML</a></td>
+                    <td><a href="/static/downloads/counties.zip">download shapefile</a></td>
+                    <td><a href="/static/downloads/counties.geojson.zip">download GeoJSON</a></td>
+                    <td><a href="/static/downloads/counties.kmz">download KML</a></td>
                 </tr>
             </table>
 
