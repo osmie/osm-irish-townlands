@@ -137,8 +137,12 @@ class Command(BaseCommand):
 
                     # calculate amount of water in this county
                     cursor.execute("""
-                        select sum(ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))) as water_area_m2
-                        from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.geo, water_polygon.geo)
+                        select sum(
+                           case
+                             when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.way)
+                             else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
+                           end) as water_area_m2
+                        from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
                         where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
                     """.format(original_county_name=original_county_name))
                     water_area_m2 = list(cursor)
