@@ -43,7 +43,7 @@ PAGES = {
                     <td>Baronies</td>
                     <td><a href="/static/downloads/baronies.zip">download shapefile</a></td>
                     <td><a href="/static/downloads/baronies.geojson.zip">download GeoJSON</a></td>
-                    <td><a href="/static/downloads/baronies.kmlz">download KML</a></td>
+                    <td><a href="/static/downloads/baronies.kmz">download KML</a></td>
                 </tr>
                 <tr>
                     <td>Counties</td>
