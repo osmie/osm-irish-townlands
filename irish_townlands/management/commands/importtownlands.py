@@ -139,7 +139,7 @@ class Command(BaseCommand):
                     cursor.execute("""
                         select sum(
                            case
-                             when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.way)
+                             when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
                              else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
                            end) as water_area_m2
                         from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
