@@ -319,6 +319,34 @@ class Townland(Area):
     def touching_townlands(self):
         return self.touching_as_a.order_by("townland_b__name")
 
+class ElectoralDivision(Area):
+    county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="eds")
+
+    def generate_url_path(self):
+        name = slugify(self.name.lower())
+        if self.county:
+            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        else:
+            self.url_path = "{0}".format(name)
+
+        if self.unique_suffix:
+            self.url_path += str(self.unique_suffix)
+
+    def calculate_county(self):
+        # This logic breaks if EDs cross county borders.
+        counties = list(County.objects.defer("polygon_geojson").filter(townlands__civil_parish=self).distinct())
+        if len(counties) == 0:
+            err_msg("ED {0} has no county", self)
+            return
+        if len(counties) > 1:
+            err_msg("ED {cp} overlaps counties: {counties}", cp=self, counties=", ".join(x.name for x in counties))
+            return
+        self.county = counties[0]
+
+    def baronies(self):
+        """The baronies that this ED is in (might overlap)"""
+        return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
 class TownlandTouch(models.Model):
     class Meta:
         unique_together = [('townland_a', 'townland_b')]
