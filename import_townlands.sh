@@ -44,7 +44,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index water_polygon__way on water_
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column geo geography;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table water_polygon add column geo geography;" || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table water_polygon add column geo geography;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
 
 # dump townlands etc as shapefiles
