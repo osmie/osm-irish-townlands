@@ -50,15 +50,15 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_geograp
 # dump townlands etc as shapefiles
 mkdir -p $EXPORTED_FILES_DIR
 rm -f ${EXPORTED_FILES_DIR}/provinces*
-pgsql2shp -f ${EXPORTED_FILES_DIR}/provinces -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '5'" >/dev/null
+pgsql2shp -f ${EXPORTED_FILES_DIR}/provinces -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '5'" >/dev/null
 rm -f ${EXPORTED_FILES_DIR}/counties*
-pgsql2shp -f ${EXPORTED_FILES_DIR}/counties -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '6'" >/dev/null
+pgsql2shp -f ${EXPORTED_FILES_DIR}/counties -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '6'" >/dev/null
 rm -f ${EXPORTED_FILES_DIR}/townlands*
-pgsql2shp -f ${EXPORTED_FILES_DIR}/townlands -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '10'" >/dev/null
+pgsql2shp -f ${EXPORTED_FILES_DIR}/townlands -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where admin_level = '10'" >/dev/null
 rm -f ${EXPORTED_FILES_DIR}/baronies*
-pgsql2shp -f ${EXPORTED_FILES_DIR}/baronies -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'barony'" >/dev/null
+pgsql2shp -f ${EXPORTED_FILES_DIR}/baronies -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'barony'" >/dev/null
 rm -f ${EXPORTED_FILES_DIR}/civil_parishes*
-pgsql2shp -f ${EXPORTED_FILES_DIR}/civil_parishes -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'civil_parish'" >/dev/null
+pgsql2shp -f ${EXPORTED_FILES_DIR}/civil_parishes -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where boundary = 'civil_parish'" >/dev/null
 
 pushd ${EXPORTED_FILES_DIR} > /dev/null
 for TYPE in townlands counties baronies civil_parishes provinces ; do
