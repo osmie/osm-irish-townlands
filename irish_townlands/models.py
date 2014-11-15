@@ -233,10 +233,6 @@ class CivilParish(Area):
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        self.url_path = "{0}".format(name)
-
-    def generate_url_path(self):
-        name = slugify(self.name.lower())
         if self.county:
             self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
         else:
