@@ -50,7 +50,7 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
-        for obj in [Townland, County, CivilParish, Barony]:
+        for obj in [Townland, County, CivilParish, Barony, ElectoralDivision]:
             obj.objects.all().delete()
 
         # Clear errors
@@ -315,7 +315,7 @@ class Command(BaseCommand):
 
     def calculate_unique_urls(self):
         with printer("uniqifying townland urls"):
-            all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values())
+            all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values()) | set(self.eds.values())
             for x in all_areas:
                 x.generate_url_path()
 
@@ -337,7 +337,7 @@ class Command(BaseCommand):
     def save_all_objects(self):
         # save all now
         with printer("final objects save"):
-            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties]:
+            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds]:
                 for x in objs.values():
                     x.save()
 
