@@ -401,8 +401,11 @@ class Command(BaseCommand):
             self.calculate_townlands_in_counties()
             self.calculate_townlands_in_baronies()
             self.calculate_townlands_in_civil_parishes()
+            self.calculate_townlands_in_eds()
             self.calculate_baronies_in_counties()
             self.calculate_civil_parishes_in_counties()
+
+            self.calculate_eds_in_counties()
 
             self.calculate_not_covered()
 
