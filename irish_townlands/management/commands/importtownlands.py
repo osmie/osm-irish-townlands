@@ -132,8 +132,10 @@ class Command(BaseCommand):
                     "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
                     "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
                     ])
-                counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
-                for c in counties.values():
+
+                self.counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
+
+                for c in self.counties.values():
                     original_county_name = c.name
 
                     # sanitize name
@@ -163,13 +165,13 @@ class Command(BaseCommand):
 
                     if not any(c.is_name(county_name) for county_name in county_names):
                         print "Deleting dud county ", c.name
-                        del counties[c.osm_id]
+                        del self.counties[c.osm_id]
                         c.delete()
                     else:
                         c.generate_url_path()
                         c.save()
 
-                seen_counties = set([c.name for c in counties.values()])
+                seen_counties = set([c.name for c in self.counties.values()])
                 missing_counties = county_names - seen_counties
                 for missing in missing_counties:
                     err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
@@ -197,7 +199,7 @@ class Command(BaseCommand):
                 self.cursor.execute("select c.name, t.osm_id from valid_polygon as c join valid_polygon as t on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));")
 
                 for county_name, townland_osm_id in self.cursor:
-                    county = [c for c in counties.values() if c.is_name(county_name)]
+                    county = [c for c in self.counties.values() if c.is_name(county_name)]
 
                     if len(county) == 0:
                         err_msg("Unknown county {0}", county_name)
@@ -284,7 +286,7 @@ class Command(BaseCommand):
 
             # County level gaps in coverage of townlands
             with printer("finding land in county not covered by townlands"):
-                for county in counties.values():
+                for county in self.counties.values():
 
                     # townlands
 
@@ -320,7 +322,7 @@ class Command(BaseCommand):
 
 
             with printer("uniqifying townland urls"):
-                all_areas = set(self.townlands.values()) | set(civil_parishes.values()) | set(baronies.values()) | set(counties.values())
+                all_areas = set(self.townlands.values()) | set(civil_parishes.values()) | set(baronies.values()) | set(self.counties.values())
                 for x in all_areas:
                     x.generate_url_path()
 
@@ -340,7 +342,7 @@ class Command(BaseCommand):
 
             # save all now
             with printer("final objects save"):
-                for objs in [self.townlands, civil_parishes, baronies, counties]:
+                for objs in [self.townlands, civil_parishes, baronies, self.counties]:
                     for x in objs.values():
                         x.save()
 
