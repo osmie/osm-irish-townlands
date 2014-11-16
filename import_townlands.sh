@@ -63,7 +63,7 @@ dump ${EXPORTED_FILES_DIR}/counties "admin_level = '6'"
 dump ${EXPORTED_FILES_DIR}/townlands "admin_level = '10'"
 dump ${EXPORTED_FILES_DIR}/baronies "boundary = 'barony'"
 dump ${EXPORTED_FILES_DIR}/civil_parishes "boundary = 'civil_parish'"
-dump ${EXPORTED_FILES_DIR}/eds "admin_level = '0'"
+dump ${EXPORTED_FILES_DIR}/eds "admin_level = '9'"
 
 pushd ${EXPORTED_FILES_DIR} > /dev/null
 for TYPE in townlands counties baronies civil_parishes provinces eds ; do
