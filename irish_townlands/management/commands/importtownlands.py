@@ -93,7 +93,7 @@ class Command(BaseCommand):
                 touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
             TownlandTouch.objects.bulk_create(touching_townlands)
 
-    def water_area_m2_in_county(original_county_name):
+    def water_area_m2_in_county(self, original_county_name):
         self.cursor.execute("""
             select sum(
                case
@@ -106,6 +106,7 @@ class Command(BaseCommand):
         water_area_m2 = list(self.cursor)
         assert len(water_area_m2) == 1
         water_area_m2 = water_area_m2[0][0] or 0
+        return water_area_m2
 
     def calculate_counties(self):
         with printer("creating counties"):
@@ -129,7 +130,7 @@ class Command(BaseCommand):
                     c.name = u'Derry'
 
                 # calculate amount of water in this county
-                water_area_m2 = water_area_m2_in_county(original_county_name)
+                water_area_m2 = self.water_area_m2_in_county(original_county_name)
                 c.water_area_m2 = water_area_m2
                 if c.water_area_m2 >= c.area_m2:
                     err_msg("County {0}, too much water?", c.name)
