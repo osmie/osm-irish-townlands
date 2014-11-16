@@ -7,7 +7,7 @@
 {% block body %}
 {% cache 3600 ed_detail ed.url_path %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / Distric Electoral Division of {{ ed.name }}.</p>
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / District Electoral Division of {{ ed.name }}.</p>
 
     <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
 
