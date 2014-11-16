@@ -294,7 +294,7 @@ class Command(BaseCommand):
             # Shortcut, there is townlands here
             gaps, overlaps = county.polygon_geojson, ''
         else:
-            gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
+            gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, ids)
 
         setattr(county, 'polygon_'+attr_name+'_gaps', gaps)
         setattr(county, 'polygon_'+attr_name+'_overlaps', overlaps)
