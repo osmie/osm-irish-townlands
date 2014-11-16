@@ -42,11 +42,10 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__name on valid
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index water_polygon__way on water_polygon using GIST (way);" 2>/dev/null || true
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column geo geography;" 2>/dev/null || true
-# FIXME can use way::geography instead of the to/from text
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_transform(way, 4326)::geography;"
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table water_polygon add column geo geography;" 2>/dev/null || true
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_geographyfromtext(st_astext(st_transform(way, 4326)));"
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_transform(way, 4326)::geography;"
 
 function dump() {
     PREFIX=$1
