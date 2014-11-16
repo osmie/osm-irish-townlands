@@ -216,6 +216,17 @@ class Command(BaseCommand):
                     self.townlands[townland_osm_id].save()
 
 
+    def calculate_baronies_in_counties(self):
+        for barony in self.baronies.values():
+            barony.calculate_county()
+
+    def calculate_civil_parishes_in_counties(self):
+        for civil_parish in self.civil_parishes.values():
+            if civil_parish.townlands.count() == 0:
+                err_msg("No townlands in Civil Parish {0}".format(civil_parish.name))
+            else:
+                civil_parish.calculate_county()
+
 
     def handle(self, *args, **options):
 
@@ -254,21 +265,11 @@ class Command(BaseCommand):
             self.clean_cp_names()
             self.clean_barony_names()
 
-            # townland in county
             self.calculate_townlands_in_counties()
-
             self.calculate_townlands_in_baronies()
-
-            # townland in civil parish
             self.calculate_townlands_in_civil_parishes()
-
-            for barony in self.baronies.values():
-                barony.calculate_county()
-            for civil_parish in self.civil_parishes.values():
-                if civil_parish.townlands.count() == 0:
-                    err_msg("No townlands in Civil Parish {0}".format(civil_parish.name))
-                else:
-                    civil_parish.calculate_county()
+            self.calculate_baronies_in_counties()
+            self.calculate_civil_parishes_in_counties()
 
             def _calculate_gaps_and_overlaps(osm_id, sub_ids):
                 # gap
