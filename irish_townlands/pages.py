@@ -34,6 +34,12 @@ PAGES = {
                     <td><a href="/static/downloads/townlands.kmz">download KML</a></td>
                 </tr>
                 <tr>
+                    <td>Electoral Divisions</td>
+                    <td><a href="/static/downloads/eds.zip">download shapefile</a></td>
+                    <td><a href="/static/downloads/eds.geojson.gz">download GeoJSON</a></td>
+                    <td><a href="/static/downloads/eds.kmz">download KML</a></td>
+                </tr>
+                <tr>
                     <td>Civil Parishes</td>
                     <td><a href="/static/downloads/civil_parishes.zip">download shapefile</a></td>
                     <td><a href="/static/downloads/civil_parishes.geojson.zip">download GeoJSON</a></td>
