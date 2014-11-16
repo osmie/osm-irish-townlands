@@ -13,7 +13,7 @@ from django.db.models import Sum, Count, Q
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
-from .models import Metadata, Townland, CivilParish, Barony, County, Error, Progress
+from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
 from .pages import PAGES
 
 COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
@@ -101,6 +101,7 @@ def view_area(request, url_path=None):
             'counties': County.objects.only('name', 'url_path').order_by('name').all(),
             'num_baronies': Barony.objects.all().count(),
             'num_civil_parishes': CivilParish.objects.all().count(),
+            'num_eds': ElectoralDivision.objects.all().count(),
             'num_townlands': Townland.objects.all().count(),
             'last_update': last_update,
             }, context_instance=RequestContext(request))
