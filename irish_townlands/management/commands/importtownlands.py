@@ -63,6 +63,18 @@ class Command(BaseCommand):
             help='Be verbose, and print debugging output'),
         )
 
+    def connect_to_db(self):
+        if settings.DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+            # Development testing with sqlite
+            self.conn = psycopg2.connect("dbname='gis'")
+        else:
+            # using postgres (we presume)
+            dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
+            self.conn = psycopg2.connect(host='127.0.0.1', database="gis", user=dbuser, password=dbpass)
+
+        self.cursor = self.conn.cursor()
+
+
     def handle(self, *args, **options):
 
         if options['verbose']:
@@ -90,23 +102,15 @@ class Command(BaseCommand):
 
             ]
 
-            if settings.DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
-                # Development testing with sqlite
-                conn = psycopg2.connect("dbname='gis'")
-            else:
-                # using postgres (we presume)
-                dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
-                conn = psycopg2.connect(host='127.0.0.1', database="gis", user=dbuser, password=dbpass)
+            self.connect_to_db()
 
-            cursor = conn.cursor()
-
-            townlands = create_area_obj('townlands', "admin_level = '10'", Townland, cols, cursor)
+            townlands = create_area_obj('townlands', "admin_level = '10'", Townland, cols, self.cursor)
 
             # touching
             touching_townlands = []
             with printer("touching townlands"):
-                cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
-                for a_osm_id, b_osm_id, length_m, direction_radians in cursor:
+                self.cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
+                for a_osm_id, b_osm_id, length_m, direction_radians in self.cursor:
                     touching_townlands.append(TownlandTouch(townland_a=townlands[a_osm_id], townland_b=townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
                 TownlandTouch.objects.bulk_create(touching_townlands)
 
@@ -120,7 +124,7 @@ class Command(BaseCommand):
                     "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
                     "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
                     ])
-                counties = create_area_obj('counties', "admin_level = '6'", County, cols, cursor)
+                counties = create_area_obj('counties', "admin_level = '6'", County, cols, self.cursor)
                 for c in counties.values():
                     original_county_name = c.name
 
@@ -131,7 +135,7 @@ class Command(BaseCommand):
                         c.name = u'Derry'
 
                     # calculate amount of water in this county
-                    cursor.execute("""
+                    self.cursor.execute("""
                         select sum(
                            case
                              when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
@@ -140,7 +144,7 @@ class Command(BaseCommand):
                         from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
                         where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
                     """.format(original_county_name=original_county_name))
-                    water_area_m2 = list(cursor)
+                    water_area_m2 = list(self.cursor)
                     assert len(water_area_m2) == 1
                     water_area_m2 = water_area_m2[0][0] or 0
                     c.water_area_m2 = water_area_m2
@@ -163,9 +167,9 @@ class Command(BaseCommand):
                     err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
 
 
-            baronies = create_area_obj('baronies', "boundary = 'barony'", Barony, cols, cursor)
-            civil_parishes = create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols, cursor)
-            eds = create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols, cursor)
+            baronies = create_area_obj('baronies', "boundary = 'barony'", Barony, cols, self.cursor)
+            civil_parishes = create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols, self.cursor)
+            eds = create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols, self.cursor)
 
             # remove "Civil Parish" suffix from C.P.s
             for cp in civil_parishes.values():
@@ -182,9 +186,9 @@ class Command(BaseCommand):
 
 
             with printer("townlands in counties"):
-                cursor.execute("select c.name, t.osm_id from valid_polygon as c join valid_polygon as t on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));")
+                self.cursor.execute("select c.name, t.osm_id from valid_polygon as c join valid_polygon as t on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));")
 
-                for county_name, townland_osm_id in cursor:
+                for county_name, townland_osm_id in self.cursor:
                     county = [c for c in counties.values() if c.is_name(county_name)]
 
                     if len(county) == 0:
@@ -211,9 +215,9 @@ class Command(BaseCommand):
             # townland in barony
 
             with printer("townlands in baronies"):
-                cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'barony' and t.admin_level = '10' and st_contains(b.way, t.way));")
+                self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'barony' and t.admin_level = '10' and st_contains(b.way, t.way));")
 
-                for barony_osm_id, townland_osm_id in cursor:
+                for barony_osm_id, townland_osm_id in self.cursor:
                     if not ( townlands[townland_osm_id].barony is None or townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
                         err_msg("Overlapping Baronies")
                     else:
@@ -222,9 +226,9 @@ class Command(BaseCommand):
 
             # townland in civil parish
             with printer("townlands in civil parishes"):
-                cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'civil_parish' and t.admin_level = '10' and st_contains(b.way, t.way));")
+                self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'civil_parish' and t.admin_level = '10' and st_contains(b.way, t.way));")
 
-                for cp_osm_id, townland_osm_id in cursor:
+                for cp_osm_id, townland_osm_id in self.cursor:
                     townland = townlands[townland_osm_id]
                     other_cp = civil_parishes[cp_osm_id]
                     if not ( townland.civil_parish is None or townland.civil_parish.osm_id == cp_osm_id ):
@@ -249,8 +253,8 @@ class Command(BaseCommand):
                                 st_difference(county.way, all_townlands.way)
                                 , 4326))))
                         from (select way from valid_polygon where osm_id = {osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids}) ) as all_townlands;""".format(osm_id=osm_id, sub_osm_ids=",".join(sub_ids))
-                cursor.execute(sql)
-                details = list(cursor)
+                self.cursor.execute(sql)
+                details = list(self.cursor)
                 assert len(details) == 1
                 gaps = details[0][0] or ""
                 if gaps == '{"type":"GeometryCollection","geometries":[]}':
@@ -263,8 +267,8 @@ class Command(BaseCommand):
                                 st_union(st_intersection(st_difference(a.way, st_boundary(a.way)), st_difference(b.way, st_boundary(b.way))))
                             , 4326))))
                     from (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as a, (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as b where a.osm_id <> b.osm_id and st_overlaps(a.way, b.way);""".format(sub_osm_ids=",".join(sub_ids))
-                cursor.execute(sql)
-                details = list(cursor)
+                self.cursor.execute(sql)
+                details = list(self.cursor)
                 assert len(details) == 1
                 overlaps = details[0][0] or ''
 
