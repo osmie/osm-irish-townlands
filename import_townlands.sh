@@ -51,7 +51,7 @@ function dump() {
     PREFIX=$1
     WHERE=$2
     rm -f ${PREFIX}
-    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" -d gis "select osm_id, name, \"name:ga\", geo from valid_polygon where ${WHERE}" >/dev/null
+    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" gis "select osm_id, name, \"name:ga\", geo from valid_polygon where ${WHERE}" >/dev/null
 }
 
 
