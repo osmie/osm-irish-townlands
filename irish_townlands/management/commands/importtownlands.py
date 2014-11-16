@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.conf import settings
 from django.db.models import Sum
-from ...models import County, Townland, Barony, CivilParish, TownlandTouch, Metadata, Error, Progress
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress
 
 from collections import defaultdict
 import psycopg2
@@ -170,6 +170,7 @@ class Command(BaseCommand):
 
             baronies = create_area_obj('baronies', "boundary = 'barony'", Barony, cols, cursor)
             civil_parishes = create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols, cursor)
+            eds = create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols, cursor)
 
             # remove "Civil Parish" suffix from C.P.s
             for cp in civil_parishes.values():
