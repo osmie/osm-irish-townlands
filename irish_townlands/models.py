@@ -144,6 +144,10 @@ class Area(models.Model):
         return self.civil_parishes.prefetch_related("townlands").order_by("name")
 
     @property
+    def eds_sorted(self):
+        return self.eds.order_by("name")
+
+    @property
     def osm_browse_url(self):
         return "http://www.openstreetmap.org/{type}/{id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
 
