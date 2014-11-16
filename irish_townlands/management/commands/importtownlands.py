@@ -290,39 +290,29 @@ class Command(BaseCommand):
 
         return gaps, overlaps
 
+    def calculate_county_not_covered_for_ids(self, county, attr_name, ids):
+        if len(ids) == 0:
+            # Shortcut, there is townlands here
+            gaps, overlaps = county.polygon_geojson, ''
+        else:
+            gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
+
+        setattr(county, 'polygon_'+attr_name+'_gaps', gaps)
+        setattr(county, 'polygon_'+attr_name+'_overlaps', overlaps)
+
     def calculate_not_covered(self):
         # County level gaps in coverage of townlands
         with printer("finding land in county not covered by townlands"):
             for county in self.counties.values():
 
-                # townlands
-
                 these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
-                if len(these_townlands) == 0:
-                    # Shortcut, there are no townlands here
-                    county.polygon_townland_gaps = county.polygon_geojson
-                    county.polygon_townland_overlaps = ''
-                else:
-                    county.polygon_townland_gaps, county.polygon_townland_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
-
-                # baronies
+                self.calculate_county_not_covered_for_ids(county, 'townland', these_townlands)
 
                 these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
-                if len(these_baronies) == 0:
-                    # Shortcut, there are no baronies here
-                    county.polygon_barony_gaps = county.polygon_geojson
-                    county.polygon_barony_overlaps = ''
-                else:
-                    county.polygon_barony_gaps, county.polygon_barony_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_baronies)
+                self.calculate_county_not_covered_for_ids(county, 'barony', these_baronies)
 
-                # civil parishes
                 these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
-                if len(these_civil_parishes) == 0:
-                    # Shortcut, there are no civil_parishes here
-                    county.polygon_civil_parish_gaps = county.polygon_geojson
-                    county.polygon_civil_parish_overlaps = ''
-                else:
-                    county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
+                self.calculate_county_not_covered_for_ids(county, 'civil_parish', these_civil_parishes)
 
                 county.save()
 
