@@ -36,6 +36,17 @@ def err_msg(msg, *args, **kwargs):
     print msg
 
 
+def rm_suffix(string, bad_suffix):
+    if string.lower().endswith(bad_suffix.lower()):
+        return string[:-len(bad_suffix)]
+    else:
+        return string
+
+def rm_prefix(string, bad_suffix):
+    if string.lower().startswith(bad_suffix.lower()):
+        return string[len(bad_suffix):]
+    else:
+        return string
 
 
 class Command(BaseCommand):
@@ -153,14 +164,17 @@ class Command(BaseCommand):
     def clean_cp_names(self):
         # remove "Civil Parish" suffix from C.P.s
         for cp in self.civil_parishes.values():
-            if cp.name.lower().endswith(" civil parish"):
-                cp.name = cp.name[:-len(" civil parish")]
+            cp.name = rm_suffix(cp.name, ' Civil Parish')
 
     def clean_barony_names(self):
         # remove "Barony of" suffix from baronies
         for b in self.baronies.values():
-            if b.name.lower().startswith("barony of "):
-                cp.name = cp.name[len("barony of "):]
+            b.name = rm_prefix(b.name, 'Barony of ')
+
+    def clean_ed_names(self):
+        # remove "ED" suffix from EDs
+        for ed in self.eds.values():
+            ed.name = rm_suffix(ed.name, ' ED')
 
     def calculate_townlands_in_counties(self):
         with printer("townlands in counties"):
