@@ -45,7 +45,7 @@ def rm_suffix(obj, attr, bad_suffix):
 def rm_prefix(obj, attr, bad_suffix):
     string = getattr(obj, attr)
     if string.lower().startswith(bad_suffix.lower()):
-        string string[len(bad_suffix):]
+        string = string[len(bad_suffix):]
         setattr(obj, attr, string)
 
 
