@@ -228,6 +228,35 @@ class Command(BaseCommand):
                 civil_parish.calculate_county()
 
 
+    def calculate_gaps_and_overlaps(self, osm_id, sub_ids):
+        # gap
+        sql = """select st_AsGeoJSON(
+                        st_geographyfromtext(st_astext(st_transform(
+                        st_difference(county.way, all_townlands.way)
+                        , 4326))))
+                from (select way from valid_polygon where osm_id = {osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids}) ) as all_townlands;""".format(osm_id=osm_id, sub_osm_ids=",".join(sub_ids))
+        self.cursor.execute(sql)
+        details = list(self.cursor)
+        assert len(details) == 1
+        gaps = details[0][0] or ""
+        if gaps == '{"type":"GeometryCollection","geometries":[]}':
+            # Simplify
+            gaps = ""
+
+        # overlap
+        sql = """select
+                    st_AsGeoJSON(st_geographyfromtext(st_astext(st_transform(
+                        st_union(st_intersection(st_difference(a.way, st_boundary(a.way)), st_difference(b.way, st_boundary(b.way))))
+                    , 4326))))
+            from (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as a, (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as b where a.osm_id <> b.osm_id and st_overlaps(a.way, b.way);""".format(sub_osm_ids=",".join(sub_ids))
+        self.cursor.execute(sql)
+        details = list(self.cursor)
+        assert len(details) == 1
+        overlaps = details[0][0] or ''
+
+        return gaps, overlaps
+
+
     def handle(self, *args, **options):
 
         if options['verbose']:
@@ -271,34 +300,6 @@ class Command(BaseCommand):
             self.calculate_baronies_in_counties()
             self.calculate_civil_parishes_in_counties()
 
-            def _calculate_gaps_and_overlaps(osm_id, sub_ids):
-                # gap
-                sql = """select st_AsGeoJSON(
-                                st_geographyfromtext(st_astext(st_transform(
-                                st_difference(county.way, all_townlands.way)
-                                , 4326))))
-                        from (select way from valid_polygon where osm_id = {osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids}) ) as all_townlands;""".format(osm_id=osm_id, sub_osm_ids=",".join(sub_ids))
-                self.cursor.execute(sql)
-                details = list(self.cursor)
-                assert len(details) == 1
-                gaps = details[0][0] or ""
-                if gaps == '{"type":"GeometryCollection","geometries":[]}':
-                    # Simplify
-                    gaps = ""
-
-                # overlap
-                sql = """select
-                            st_AsGeoJSON(st_geographyfromtext(st_astext(st_transform(
-                                st_union(st_intersection(st_difference(a.way, st_boundary(a.way)), st_difference(b.way, st_boundary(b.way))))
-                            , 4326))))
-                    from (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as a, (select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})) as b where a.osm_id <> b.osm_id and st_overlaps(a.way, b.way);""".format(sub_osm_ids=",".join(sub_ids))
-                self.cursor.execute(sql)
-                details = list(self.cursor)
-                assert len(details) == 1
-                overlaps = details[0][0] or ''
-
-                return gaps, overlaps
-
             # County level gaps in coverage of townlands
             with printer("finding land in county not covered by townlands"):
                 for county in self.counties.values():
@@ -311,7 +312,7 @@ class Command(BaseCommand):
                         county.polygon_townland_gaps = county.polygon_geojson
                         county.polygon_townland_overlaps = ''
                     else:
-                        county.polygon_townland_gaps, county.polygon_townland_overlaps = _calculate_gaps_and_overlaps(county.osm_id, these_townlands)
+                        county.polygon_townland_gaps, county.polygon_townland_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
 
                     # baronies
 
@@ -321,7 +322,7 @@ class Command(BaseCommand):
                         county.polygon_barony_gaps = county.polygon_geojson
                         county.polygon_barony_overlaps = ''
                     else:
-                        county.polygon_barony_gaps, county.polygon_barony_overlaps = _calculate_gaps_and_overlaps(county.osm_id, these_baronies)
+                        county.polygon_barony_gaps, county.polygon_barony_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_baronies)
 
                     # civil parishes
                     these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
@@ -330,7 +331,7 @@ class Command(BaseCommand):
                         county.polygon_civil_parish_gaps = county.polygon_geojson
                         county.polygon_civil_parish_overlaps = ''
                     else:
-                        county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = _calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
+                        county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
 
                     county.save()
 
