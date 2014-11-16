@@ -339,7 +339,7 @@ class ElectoralDivision(Area):
             err_msg("ED {0} has no county", self)
             return
         if len(counties) > 1:
-            err_msg("ED {cp} overlaps counties: {counties}", cp=self, counties=", ".join(x.name for x in counties))
+            err_msg("ED {ed} overlaps counties: {counties}", ed=self, counties=", ".join(x.name for x in counties))
             return
         self.county = counties[0]
 

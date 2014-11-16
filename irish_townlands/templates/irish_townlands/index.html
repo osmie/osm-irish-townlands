@@ -26,6 +26,7 @@
             <a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a>.
                 {% blocktrans count numberofbaronies=county.baronies.count|intcomma %}{{ numberofbaronies }} barony{% plural %}{{ numberofbaronies }} baronies{% endblocktrans %},
                 {% blocktrans count numberofcivilparishes=county.civil_parishes.count|intcomma %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %},
+                {% blocktrans count numberofeds=county.eds.count|intcomma %}{{ numberofeds }} electoral division{% plural %}{{ numberofeds }} electoral divisions{% endblocktrans %},
                 {% blocktrans count numberoftownlands=county.townlands.count|intcomma %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}
         </li>
     {% endfor %}

@@ -117,7 +117,7 @@ class Command(BaseCommand):
                 "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
                 ])
 
-            self.counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
+            self.counties = self.create_area_obj('counties', "admin_level = '6'", County, self.cols)
 
             for c in self.counties.values():
                 original_county_name = c.name
@@ -230,6 +230,9 @@ class Command(BaseCommand):
             else:
                 civil_parish.calculate_county()
 
+    def calculate_eds_in_counties(self):
+        for ed in self.eds.values():
+            ed.calculate_county()
 
     def calculate_gaps_and_overlaps(self, osm_id, sub_ids):
         # gap
@@ -355,7 +358,7 @@ class Command(BaseCommand):
 
             self.delete_all_data()
 
-            cols = [
+            self.cols = [
                 ('name', 'name'),
                 ('"name:ga"', 'name_ga'),
                 ('alt_name', 'alt_name'),
