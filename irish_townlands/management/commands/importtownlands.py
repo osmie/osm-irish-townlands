@@ -146,6 +146,52 @@ class Command(BaseCommand):
             for missing in missing_counties:
                 err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
 
+    def clean_cp_names(self):
+        # remove "Civil Parish" suffix from C.P.s
+        for cp in self.civil_parishes.values():
+            if cp.name.lower().endswith(" civil parish"):
+                cp.name = cp.name[:-len(" civil parish")]
+
+    def clean_barony_names(self):
+        # remove "Barony of" suffix from baronies
+        for b in self.baronies.values():
+            if b.name.lower().startswith("barony of "):
+                cp.name = cp.name[len("barony of "):]
+
+    def calculate_townlands_in_counties(self):
+        with printer("townlands in counties"):
+            self.cursor.execute("""
+                select c.name, t.osm_id
+                from valid_polygon as c
+                    join valid_polygon as t
+                    on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));
+            """)
+
+            for county_name, townland_osm_id in self.cursor:
+                county = [c for c in self.counties.values() if c.is_name(county_name)]
+
+                if len(county) == 0:
+                    err_msg("Unknown county {0}", county_name)
+                else:
+                    if len(county) > 1:
+                        err_msg("Townland (OSM ID: {townland_osm_id}) is in >1 counties! Overlapping border? Counties: {counties}", townland_osm_id=townland_osm_id, counties=", ".join(county))
+                        break
+                    county = county[0]
+                    if townland_osm_id not in self.townlands:
+                        err_msg("Weird townland ids")
+                        break
+                    townland = self.townlands[townland_osm_id]
+                    if townland.county not in [None, county]:
+                        err_msg("Townland {townland} is in 2 counties! Overlapping border? First county: {townland.county}, Second county: {county}", townland=townland, county=county)
+                    else:
+                        townland.county = county
+
+
+            #townlands_not_in_counties = set(t for t in self.townlands.values() if not hasattr(t, 'county'))
+            #assert len(townlands_not_in_counties) == 0, townlands_not_in_counties
+
+
+
 
     def handle(self, *args, **options):
 
@@ -181,46 +227,11 @@ class Command(BaseCommand):
             self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
             self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols)
 
-            # remove "Civil Parish" suffix from C.P.s
-            for cp in self.civil_parishes.values():
-                if cp.name.lower().endswith(" civil parish"):
-                    cp.name = cp.name[:-len(" civil parish")]
-
-            # remove "Barony of" suffix from baronies
-            for b in self.baronies.values():
-                if b.name.lower().startswith("barony of "):
-                    cp.name = cp.name[len("barony of "):]
-
+            self.clean_cp_names()
+            self.clean_barony_names()
 
             # townland in county
-
-            with printer("townlands in counties"):
-                self.cursor.execute("select c.name, t.osm_id from valid_polygon as c join valid_polygon as t on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));")
-
-                for county_name, townland_osm_id in self.cursor:
-                    county = [c for c in self.counties.values() if c.is_name(county_name)]
-
-                    if len(county) == 0:
-                        err_msg("Unknown county {0}", county_name)
-                    else:
-                        if len(county) > 1:
-                            err_msg("Townland (OSM ID: {townland_osm_id}) is in >1 counties! Overlapping border? Counties: {counties}", townland_osm_id=townland_osm_id, counties=", ".join(county))
-                            break
-                        county = county[0]
-                        if townland_osm_id not in self.townlands:
-                            err_msg("Weird townland ids")
-                            break
-                        townland = self.townlands[townland_osm_id]
-                        if townland.county not in [None, county]:
-                            err_msg("Townland {townland} is in 2 counties! Overlapping border? First county: {townland.county}, Second county: {county}", townland=townland, county=county)
-                        else:
-                            townland.county = county
-
-
-                townlands_not_in_counties = set(t for t in self.townlands.values() if not hasattr(t, 'county'))
-                #assert len(townlands_not_in_counties) == 0, townlands_not_in_counties
-
-
+            self.calculate_townlands_in_counties()
             # townland in barony
 
             with printer("townlands in baronies"):
