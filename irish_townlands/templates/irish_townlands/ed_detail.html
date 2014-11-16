@@ -1,0 +1,96 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{{ ed.name }}{% endblock %}
+{% block header %}<h1>{{ ed.name }} Electoral Division{% if ed.county %}, Co. {{ ed.county.name }}{% endif %}</h1>{% endblock %}
+
+{% block body %}
+{% cache 3600 ed_detail ed.url_path %}
+
+    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / Distric Electoral Division of {{ ed.name }}.</p>
+
+    <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
+
+    <ul>
+        <li><a href="#map">Map ↓</a></li>
+        <li><a href="#area">Area ↓</a></li>
+        <li><a href="#townlands">Townlands ↓</a></li>
+        <li><a href="#osm">OpenStreetMap↓</a></li>
+    </ul>
+
+    <a name="map"></a>
+    <h2>Map</h2>
+    <p>
+        It is located at {{ ed.centre_pretty }}.
+    </p>
+    <div id="map" style="height: 500px; width: 600px;"></div>
+    <script>
+        var map = new L.Map('map');
+        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib='Map data © OpenStreetMap contributors';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+        map.setView(new L.LatLng( {{ ed.centre_y }}, {{ ed.centre_x }}), 11 );
+        map.addLayer(osm);
+        var popup = new L.Popup();
+
+        var boundary = new L.GeoJSON()
+        boundary.addGeoJSON({
+            'type':'Feature',
+            'properties': { 'name': "{{ ed.name }}" },
+            'geometry': {{ ed.polygon_geojson|safe }}
+            } );
+        map.addLayer(boundary);
+    </script>
+
+
+
+    <a name="area"></a>
+    <h2>Area</h2>
+    <p>{{ ed.name }} has an area of {{ ed.area_km2|floatformat|intcomma }} km² / {{ ed.area_acres|floatformat|intcomma }} acres / {{ ed.area_mile2|floatformat|intcomma }} square miles</p>
+
+    {% with civil_parishes=county.civil_parishes.all %}
+    {% if civil_parishes %}
+        <h2>Civil Parishes</h2>
+        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }}.</p>
+
+        <ul>
+        {% for civil_parish in civil_parishes %}
+            <li>{{ civil_parish.name }} ({{ civil_parish.townlands.count }} townlands)</li>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
+    {% endwith %}
+
+    <a name="townlands"></a>
+    <h2>Townlands</h2>
+    <p>
+        There are {% with nt=ed.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ ed.name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ ed.name }}.
+    </p>
+    <ul>
+    {% for townland in ed.townlands_sorted %}
+        <li>
+            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
+                <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
+                    {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
+                    {% endwith %}
+                </abbr>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <a name="osm"></a>
+    <h2>OpenStreetMap</h2>
+    {% if ed.osm_id %}
+        <p>
+            <a href="{{ ed.osm_browse_url }}">Show on OpenStreetMap.org</a>
+            <a href="{{ ed.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ ed.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
+            <a href="{{ ed.edit_in_potlatch_url }}">Edit in Potlatch</a>
+        </p>
+    {% endif %}
+
+
+{% endcache %}
+{% endblock body %}

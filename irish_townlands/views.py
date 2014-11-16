@@ -107,7 +107,10 @@ def view_area(request, url_path=None):
             }, context_instance=RequestContext(request))
 
     # Detail pages
-    for model, name in ( (Townland, 'townland'), (CivilParish, 'civil_parish'), (Barony, 'barony'), (County, 'county')):
+    for model, name in (
+                (Townland, 'townland'), (CivilParish, 'civil_parish'),
+                (Barony, 'barony'), (County, 'county'),
+                (ElectoralDivision, 'ed') ):
         try:
             x = model.objects.select_related().get(url_path=url_path)
             return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
