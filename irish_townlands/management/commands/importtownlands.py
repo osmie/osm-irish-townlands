@@ -219,6 +219,19 @@ class Command(BaseCommand):
                     self.townlands[townland_osm_id].civil_parish = self.civil_parishes[cp_osm_id]
                     self.townlands[townland_osm_id].save()
 
+    def calculate_townlands_in_eds(self):
+        with printer("townlands in EDs"):
+            self.cursor.execute("select e.osm_id, t.osm_id from valid_polygon as e join valid_polygon as t on (e.admin_level = '9' and t.admin_level = '10' and st_contains(b.way, t.way));")
+
+            for ed_osm_id, townland_osm_id in self.cursor:
+                townland = self.townlands[townland_osm_id]
+                other_ed = self.eds[ed_osm_id]
+                if not ( townland.ed is None or townland.ed.osm_id == ed_osm_id ):
+                    err_msg("County {county}, Townland {td} is in ED {ed1} and {ed2}. Overlapping EDs?", td=townland, ed1=townland.ed, ed2=other_ed, county=townland.county)
+                else:
+                    self.townlands[townland_osm_id].ed = self.eds[ed_osm_id]
+                    self.townlands[townland_osm_id].save()
+
 
     def calculate_baronies_in_counties(self):
         for barony in self.baronies.values():
