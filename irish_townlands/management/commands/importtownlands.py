@@ -256,6 +256,90 @@ class Command(BaseCommand):
 
         return gaps, overlaps
 
+    def calculate_not_covered(self):
+        # County level gaps in coverage of townlands
+        with printer("finding land in county not covered by townlands"):
+            for county in self.counties.values():
+
+                # townlands
+
+                these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
+                if len(these_townlands) == 0:
+                    # Shortcut, there are no townlands here
+                    county.polygon_townland_gaps = county.polygon_geojson
+                    county.polygon_townland_overlaps = ''
+                else:
+                    county.polygon_townland_gaps, county.polygon_townland_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
+
+                # baronies
+
+                these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
+                if len(these_baronies) == 0:
+                    # Shortcut, there are no baronies here
+                    county.polygon_barony_gaps = county.polygon_geojson
+                    county.polygon_barony_overlaps = ''
+                else:
+                    county.polygon_barony_gaps, county.polygon_barony_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_baronies)
+
+                # civil parishes
+                these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
+                if len(these_civil_parishes) == 0:
+                    # Shortcut, there are no civil_parishes here
+                    county.polygon_civil_parish_gaps = county.polygon_geojson
+                    county.polygon_civil_parish_overlaps = ''
+                else:
+                    county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
+
+                county.save()
+
+
+    def calculate_unique_urls(self):
+        with printer("uniqifying townland urls"):
+            all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values())
+            for x in all_areas:
+                x.generate_url_path()
+
+
+            overlapping_url_paths = defaultdict(set)
+            for x in all_areas:
+                overlapping_url_paths[x.url_path].add(x)
+            for url_path in overlapping_url_paths:
+                if len(overlapping_url_paths[url_path]) == 1:
+                    continue
+                for x, i in zip(sorted(overlapping_url_paths[url_path], key=lambda x: x.area_m2), range(1, len(overlapping_url_paths[url_path])+1)):
+                    x.unique_suffix = i
+                    x.save()
+                    x.generate_url_path()
+
+            assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
+
+
+    def save_all_objects(self):
+        # save all now
+        with printer("final objects save"):
+            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties]:
+                for x in objs.values():
+                    x.save()
+
+    def record_progress(self):
+        with printer("recording progress"):
+            area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+            area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+            if area_of_ireland == 0:
+                townland_progress = 0
+            else:
+                townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+            Progress.objects.create(percent=townland_progress, name="ireland-tds")
+            for county in County.objects.all():
+                Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
+
+
+    def update_metadata(self):
+        with printer("updating metadata"):
+            last_updated, _ = Metadata.objects.get_or_create(key="lastupdate")
+            last_updated.value = datetime.datetime.utcnow().isoformat()
+            last_updated.save()
+
 
     def handle(self, *args, **options):
 
@@ -300,81 +384,12 @@ class Command(BaseCommand):
             self.calculate_baronies_in_counties()
             self.calculate_civil_parishes_in_counties()
 
-            # County level gaps in coverage of townlands
-            with printer("finding land in county not covered by townlands"):
-                for county in self.counties.values():
+            self.calculate_not_covered()
 
-                    # townlands
+            self.calculate_unique_urls()
 
-                    these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
-                    if len(these_townlands) == 0:
-                        # Shortcut, there are no townlands here
-                        county.polygon_townland_gaps = county.polygon_geojson
-                        county.polygon_townland_overlaps = ''
-                    else:
-                        county.polygon_townland_gaps, county.polygon_townland_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_townlands)
+            self.save_all_objects()
 
-                    # baronies
+            self.record_progress()
 
-                    these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
-                    if len(these_baronies) == 0:
-                        # Shortcut, there are no baronies here
-                        county.polygon_barony_gaps = county.polygon_geojson
-                        county.polygon_barony_overlaps = ''
-                    else:
-                        county.polygon_barony_gaps, county.polygon_barony_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_baronies)
-
-                    # civil parishes
-                    these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
-                    if len(these_civil_parishes) == 0:
-                        # Shortcut, there are no civil_parishes here
-                        county.polygon_civil_parish_gaps = county.polygon_geojson
-                        county.polygon_civil_parish_overlaps = ''
-                    else:
-                        county.polygon_civil_parish_gaps, county.polygon_civil_parish_overlaps = self.calculate_gaps_and_overlaps(county.osm_id, these_civil_parishes)
-
-                    county.save()
-
-
-
-            with printer("uniqifying townland urls"):
-                all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values())
-                for x in all_areas:
-                    x.generate_url_path()
-
-
-                overlapping_url_paths = defaultdict(set)
-                for x in all_areas:
-                    overlapping_url_paths[x.url_path].add(x)
-                for url_path in overlapping_url_paths:
-                    if len(overlapping_url_paths[url_path]) == 1:
-                        continue
-                    for x, i in zip(sorted(overlapping_url_paths[url_path], key=lambda x: x.area_m2), range(1, len(overlapping_url_paths[url_path])+1)):
-                        x.unique_suffix = i
-                        x.save()
-                        x.generate_url_path()
-
-                assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
-
-            # save all now
-            with printer("final objects save"):
-                for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties]:
-                    for x in objs.values():
-                        x.save()
-
-            with printer("recording progress"):
-                area_of_ireland = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-                area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-                if area_of_ireland == 0:
-                    townland_progress = 0
-                else:
-                    townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
-                Progress.objects.create(percent=townland_progress, name="ireland-tds")
-                for county in County.objects.all():
-                    Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
-
-            with printer("updating metadata"):
-                last_updated, _ = Metadata.objects.get_or_create(key="lastupdate")
-                last_updated.value = datetime.datetime.utcnow().isoformat()
-                last_updated.save()
-
+            self.update_metadata()
