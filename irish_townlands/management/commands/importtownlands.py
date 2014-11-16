@@ -93,6 +93,20 @@ class Command(BaseCommand):
                 touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
             TownlandTouch.objects.bulk_create(touching_townlands)
 
+    def water_area_m2_in_county(original_county_name):
+        self.cursor.execute("""
+            select sum(
+               case
+                 when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
+                 else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
+               end) as water_area_m2
+            from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
+            where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
+        """.format(original_county_name=original_county_name))
+        water_area_m2 = list(self.cursor)
+        assert len(water_area_m2) == 1
+        water_area_m2 = water_area_m2[0][0] or 0
+
     def calculate_counties(self):
         with printer("creating counties"):
 
@@ -115,18 +129,7 @@ class Command(BaseCommand):
                     c.name = u'Derry'
 
                 # calculate amount of water in this county
-                self.cursor.execute("""
-                    select sum(
-                       case
-                         when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
-                         else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
-                       end) as water_area_m2
-                    from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
-                    where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
-                """.format(original_county_name=original_county_name))
-                water_area_m2 = list(self.cursor)
-                assert len(water_area_m2) == 1
-                water_area_m2 = water_area_m2[0][0] or 0
+                water_area_m2 = water_area_m2_in_county(original_county_name)
                 c.water_area_m2 = water_area_m2
                 if c.water_area_m2 >= c.area_m2:
                     err_msg("County {0}, too much water?", c.name)
