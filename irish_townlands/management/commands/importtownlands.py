@@ -177,9 +177,9 @@ class Command(BaseCommand):
 
             self.calculate_counties()
 
-            baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, cols)
-            civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
-            eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols)
+            self.baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, cols)
+            self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
+            self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols)
 
             # remove "Civil Parish" suffix from C.P.s
             for cp in civil_parishes.values():
@@ -187,7 +187,7 @@ class Command(BaseCommand):
                     cp.name = cp.name[:-len(" civil parish")]
 
             # remove "Barony of" suffix from baronies
-            for b in baronies.values():
+            for b in self.baronies.values():
                 if b.name.lower().startswith("barony of "):
                     cp.name = cp.name[len("barony of "):]
 
@@ -230,7 +230,7 @@ class Command(BaseCommand):
                     if not ( self.townlands[townland_osm_id].barony is None or self.townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
                         err_msg("Overlapping Baronies")
                     else:
-                        self.townlands[townland_osm_id].barony = baronies[barony_osm_id]
+                        self.townlands[townland_osm_id].barony = self.baronies[barony_osm_id]
                         self.townlands[townland_osm_id].save()
 
             # townland in civil parish
@@ -247,7 +247,7 @@ class Command(BaseCommand):
                         self.townlands[townland_osm_id].save()
 
 
-            for barony in baronies.values():
+            for barony in self.baronies.values():
                 barony.calculate_county()
             for civil_parish in civil_parishes.values():
                 if civil_parish.townlands.count() == 0:
@@ -299,7 +299,7 @@ class Command(BaseCommand):
 
                     # baronies
 
-                    these_baronies = set(str(b.osm_id) for b in baronies.values() if b.county == county)
+                    these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
                     if len(these_baronies) == 0:
                         # Shortcut, there are no baronies here
                         county.polygon_barony_gaps = county.polygon_geojson
@@ -321,7 +321,7 @@ class Command(BaseCommand):
 
 
             with printer("uniqifying townland urls"):
-                all_areas = set(self.townlands.values()) | set(civil_parishes.values()) | set(baronies.values()) | set(self.counties.values())
+                all_areas = set(self.townlands.values()) | set(civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values())
                 for x in all_areas:
                     x.generate_url_path()
 
@@ -341,7 +341,7 @@ class Command(BaseCommand):
 
             # save all now
             with printer("final objects save"):
-                for objs in [self.townlands, civil_parishes, baronies, self.counties]:
+                for objs in [self.townlands, civil_parishes, self.baronies, self.counties]:
                     for x in objs.values():
                         x.save()
 
