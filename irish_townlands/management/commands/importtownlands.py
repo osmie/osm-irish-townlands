@@ -36,21 +36,6 @@ def err_msg(msg, *args, **kwargs):
     print msg
 
 
-def create_area_obj(name, where_clause, django_model, cols, cursor):
-    """Create one type of area."""
-    results = {}
-
-    with printer("getting " + name):
-        cursor.execute("select {0} from valid_polygon where {1} ;".format(", ".join(c[0] for c in cols), where_clause))
-
-        for row in cursor:
-            kwargs = dict(zip([c[1] for c in cols], row))
-            new_obj = django_model(**kwargs)
-            new_obj.save()
-
-        results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
-
-    return results
 
 
 class Command(BaseCommand):
@@ -74,6 +59,29 @@ class Command(BaseCommand):
 
         self.cursor = self.conn.cursor()
 
+    def create_area_obj(self, name, where_clause, django_model, cols):
+        """Create one type of area."""
+        results = {}
+
+        with printer("getting " + name):
+            self.cursor.execute("select {0} from valid_polygon where {1} ;".format(", ".join(c[0] for c in cols), where_clause))
+
+            for row in self.cursor:
+                kwargs = dict(zip([c[1] for c in cols], row))
+                new_obj = django_model(**kwargs)
+                new_obj.save()
+
+            results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
+
+        return results
+
+    def delete_all_data(self):
+        for obj in [Townland, County, CivilParish, Barony]:
+            obj.objects.all().delete()
+
+        # Clear errors
+        Error.objects.all().delete()
+
 
     def handle(self, *args, **options):
 
@@ -83,12 +91,8 @@ class Command(BaseCommand):
 
         # delete old
         with transaction.commit_on_success():
-            for obj in [Townland, County, CivilParish, Barony]:
-                obj.objects.all().delete()
 
-            # Clear errors
-            Error.objects.all().delete()
-
+            self.delete_all_data()
 
             cols = [
                 ('name', 'name'),
@@ -99,19 +103,18 @@ class Command(BaseCommand):
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
                 ('ST_Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
                 ('ST_AsGeoJSON(geo)', 'polygon_geojson'),
-
             ]
 
             self.connect_to_db()
 
-            townlands = create_area_obj('townlands', "admin_level = '10'", Townland, cols, self.cursor)
+            self.townlands = self.create_area_obj('townlands', "admin_level = '10'", Townland, cols)
 
             # touching
             touching_townlands = []
             with printer("touching townlands"):
                 self.cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
                 for a_osm_id, b_osm_id, length_m, direction_radians in self.cursor:
-                    touching_townlands.append(TownlandTouch(townland_a=townlands[a_osm_id], townland_b=townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
+                    touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
                 TownlandTouch.objects.bulk_create(touching_townlands)
 
 
@@ -124,7 +127,7 @@ class Command(BaseCommand):
                     "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
                     "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
                     ])
-                counties = create_area_obj('counties', "admin_level = '6'", County, cols, self.cursor)
+                counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
                 for c in counties.values():
                     original_county_name = c.name
 
@@ -167,9 +170,9 @@ class Command(BaseCommand):
                     err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
 
 
-            baronies = create_area_obj('baronies', "boundary = 'barony'", Barony, cols, self.cursor)
-            civil_parishes = create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols, self.cursor)
-            eds = create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols, self.cursor)
+            baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, cols)
+            civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
+            eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols)
 
             # remove "Civil Parish" suffix from C.P.s
             for cp in civil_parishes.values():
@@ -198,17 +201,17 @@ class Command(BaseCommand):
                             err_msg("Townland (OSM ID: {townland_osm_id}) is in >1 counties! Overlapping border? Counties: {counties}", townland_osm_id=townland_osm_id, counties=", ".join(county))
                             break
                         county = county[0]
-                        if townland_osm_id not in townlands:
+                        if townland_osm_id not in self.townlands:
                             err_msg("Weird townland ids")
                             break
-                        townland = townlands[townland_osm_id]
+                        townland = self.townlands[townland_osm_id]
                         if townland.county not in [None, county]:
                             err_msg("Townland {townland} is in 2 counties! Overlapping border? First county: {townland.county}, Second county: {county}", townland=townland, county=county)
                         else:
                             townland.county = county
 
 
-                townlands_not_in_counties = set(t for t in townlands.values() if not hasattr(t, 'county'))
+                townlands_not_in_counties = set(t for t in self.townlands.values() if not hasattr(t, 'county'))
                 #assert len(townlands_not_in_counties) == 0, townlands_not_in_counties
 
 
@@ -218,24 +221,24 @@ class Command(BaseCommand):
                 self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'barony' and t.admin_level = '10' and st_contains(b.way, t.way));")
 
                 for barony_osm_id, townland_osm_id in self.cursor:
-                    if not ( townlands[townland_osm_id].barony is None or townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
+                    if not ( self.townlands[townland_osm_id].barony is None or self.townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
                         err_msg("Overlapping Baronies")
                     else:
-                        townlands[townland_osm_id].barony = baronies[barony_osm_id]
-                        townlands[townland_osm_id].save()
+                        self.townlands[townland_osm_id].barony = baronies[barony_osm_id]
+                        self.townlands[townland_osm_id].save()
 
             # townland in civil parish
             with printer("townlands in civil parishes"):
                 self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'civil_parish' and t.admin_level = '10' and st_contains(b.way, t.way));")
 
                 for cp_osm_id, townland_osm_id in self.cursor:
-                    townland = townlands[townland_osm_id]
+                    townland = self.townlands[townland_osm_id]
                     other_cp = civil_parishes[cp_osm_id]
                     if not ( townland.civil_parish is None or townland.civil_parish.osm_id == cp_osm_id ):
                         err_msg("County {county}, Townland {td} is in civil parish {cp1} and {cp2}. Overlapping Civil Parishes?", td=townland, cp1=townland.civil_parish, cp2=other_cp, county=townland.county)
                     else:
-                        townlands[townland_osm_id].civil_parish = civil_parishes[cp_osm_id]
-                        townlands[townland_osm_id].save()
+                        self.townlands[townland_osm_id].civil_parish = civil_parishes[cp_osm_id]
+                        self.townlands[townland_osm_id].save()
 
 
             for barony in baronies.values():
@@ -280,7 +283,7 @@ class Command(BaseCommand):
 
                     # townlands
 
-                    these_townlands = set(str(t.osm_id) for t in townlands.values() if t.county == county)
+                    these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
                     if len(these_townlands) == 0:
                         # Shortcut, there are no townlands here
                         county.polygon_townland_gaps = county.polygon_geojson
@@ -312,7 +315,7 @@ class Command(BaseCommand):
 
 
             with printer("uniqifying townland urls"):
-                all_areas = set(townlands.values()) | set(civil_parishes.values()) | set(baronies.values()) | set(counties.values())
+                all_areas = set(self.townlands.values()) | set(civil_parishes.values()) | set(baronies.values()) | set(counties.values())
                 for x in all_areas:
                     x.generate_url_path()
 
@@ -328,11 +331,11 @@ class Command(BaseCommand):
                         x.save()
                         x.generate_url_path()
 
-                assert len(set(t.url_path for t in townlands.values())) == len(townlands)
+                assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
 
             # save all now
             with printer("final objects save"):
-                for objs in [townlands, civil_parishes, baronies, counties]:
+                for objs in [self.townlands, civil_parishes, baronies, counties]:
                     for x in objs.values():
                         x.save()
 
