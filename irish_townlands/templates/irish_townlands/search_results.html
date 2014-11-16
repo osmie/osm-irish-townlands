@@ -47,6 +47,21 @@
     {% endfor %}
 </p>
 
+<h2>{% trans 'Electoral Divisions' %}</h2>
+<p>
+    {% blocktrans count num_results=eds_num_results %}
+        We found {{ num_results }} ED matching your search of "{{ search_term }}".
+    {% plural %}
+        We found {{ num_results }} EDs matching your search of "{{ search_term }}".
+    {% endblocktrans %}
+</p>
+<p>
+    {% for ed in eds %}
+        <li>{{ ed.long_desc }}</li>
+    {% endfor %}
+</p>
+
+
 <h2>{% trans 'Townlands' %}</h2>
 <p>
     {% blocktrans count num_results=townlands_num_results %}
