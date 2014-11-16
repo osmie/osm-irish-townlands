@@ -36,17 +36,17 @@ def err_msg(msg, *args, **kwargs):
     print msg
 
 
-def rm_suffix(string, bad_suffix):
+def rm_suffix(obj, attr, bad_suffix):
+    string = getattr(obj, attr)
     if string.lower().endswith(bad_suffix.lower()):
-        return string[:-len(bad_suffix)]
-    else:
-        return string
-
-def rm_prefix(string, bad_suffix):
+        string = string[:-len(bad_suffix)]
+        setattr(obj, attr, string)
+        
+def rm_prefix(obj, attr, bad_suffix):
+    string = getattr(obj, attr)
     if string.lower().startswith(bad_suffix.lower()):
-        return string[len(bad_suffix):]
-    else:
-        return string
+        string string[len(bad_suffix):]
+        setattr(obj, attr, string)
 
 
 class Command(BaseCommand):
@@ -135,8 +135,7 @@ class Command(BaseCommand):
                 original_county_name = c.name
 
                 # sanitize name
-                if c.name.startswith("County "):
-                    c.name = c.name[7:]
+                rm_prefix(c, 'name', 'County ')
                 if c.name == 'Londonderry':
                     c.name = u'Derry'
 
@@ -156,7 +155,7 @@ class Command(BaseCommand):
                     c.generate_url_path()
                     c.save()
 
-            seen_counties = set([c.name for c in self.counties.values()])
+            seen_counties = set(c.name for c in self.counties.values())
             missing_counties = county_names - seen_counties
             for missing in missing_counties:
                 err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
@@ -164,17 +163,17 @@ class Command(BaseCommand):
     def clean_cp_names(self):
         # remove "Civil Parish" suffix from C.P.s
         for cp in self.civil_parishes.values():
-            cp.name = rm_suffix(cp.name, ' Civil Parish')
+            rm_suffix(cp, 'name', ' Civil Parish')
 
     def clean_barony_names(self):
         # remove "Barony of" suffix from baronies
         for b in self.baronies.values():
-            b.name = rm_prefix(b.name, 'Barony of ')
+            rm_prefix(b, 'name', 'Barony of ')
 
     def clean_ed_names(self):
         # remove "ED" suffix from EDs
         for ed in self.eds.values():
-            ed.name = rm_suffix(ed.name, ' ED')
+            rm_suffix(ed, 'name', ' ED')
 
     def calculate_townlands_in_counties(self):
         with printer("townlands in counties"):
