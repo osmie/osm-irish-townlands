@@ -321,7 +321,9 @@ class Townland(Area):
         def _pathify(*args):
             return "/".join(slugify(x.name.lower()) for x in args)
 
-        if self.county and self.barony and self.civil_parish:
+        if self.county and self.barony and self.civil_parish and self.ed:
+            self.url_path = _pathify(self.county, self.barony, self.civil_parish, self.ed, self)
+        elif self.county and self.barony and self.civil_parish:
             self.url_path = _pathify(self.county, self.barony, self.civil_parish, self)
         elif self.county and self.barony:
             self.url_path = _pathify(self.county, self.barony, self)
