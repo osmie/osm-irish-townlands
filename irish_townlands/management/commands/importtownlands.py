@@ -385,15 +385,15 @@ class Command(BaseCommand):
 
             self.connect_to_db()
 
-            self.townlands = self.create_area_obj('townlands', "admin_level = '10'", Townland, cols)
+            self.townlands = self.create_area_obj('townlands', "admin_level = '10'", Townland, self.cols)
 
             self.calculate_touching_townlands()
 
             self.calculate_counties()
 
-            self.baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, cols)
-            self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
-            self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, cols)
+            self.baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, self.cols)
+            self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, self.cols)
+            self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, self.cols)
 
             self.clean_cp_names()
             self.clean_barony_names()
