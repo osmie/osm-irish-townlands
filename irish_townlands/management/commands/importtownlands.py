@@ -108,12 +108,7 @@ class Command(BaseCommand):
                 cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
                 for a_osm_id, b_osm_id, length_m, direction_radians in cursor:
                     touching_townlands.append(TownlandTouch(townland_a=townlands[a_osm_id], townland_b=townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
-                    #townlands[a_osm_id].touching_townlands.add(townlands[b_osm_id])
-                    #townlands[b_osm_id].touching_townlands.add(townlands[a_osm_id])
                 TownlandTouch.objects.bulk_create(touching_townlands)
-
-            # check if a is touching b, that b is also touching a
-            #assert all(all(t in x.touching for x in t.touching) for t in townlands.values())
 
 
             # manually create counties
