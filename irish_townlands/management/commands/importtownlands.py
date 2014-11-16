@@ -93,6 +93,59 @@ class Command(BaseCommand):
                 touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
             TownlandTouch.objects.bulk_create(touching_townlands)
 
+    def calculate_counties(self):
+        with printer("creating counties"):
+
+            county_names = set([
+                "Tyrone", "Kerry", "Dublin", "Down", "Fermanagh", "Wexford", "Mayo", "Carlow",
+                "Wicklow", "Longford", "Westmeath", "Cork", "Leitrim", "Laois", "Waterford", "Tipperary",
+                "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
+                "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
+                ])
+
+            self.counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
+
+            for c in self.counties.values():
+                original_county_name = c.name
+
+                # sanitize name
+                if c.name.startswith("County "):
+                    c.name = c.name[7:]
+                if c.name == 'Londonderry':
+                    c.name = u'Derry'
+
+                # calculate amount of water in this county
+                self.cursor.execute("""
+                    select sum(
+                       case
+                         when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
+                         else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
+                       end) as water_area_m2
+                    from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
+                    where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
+                """.format(original_county_name=original_county_name))
+                water_area_m2 = list(self.cursor)
+                assert len(water_area_m2) == 1
+                water_area_m2 = water_area_m2[0][0] or 0
+                c.water_area_m2 = water_area_m2
+                if c.water_area_m2 >= c.area_m2:
+                    err_msg("County {0}, too much water?", c.name)
+
+                c.save()
+
+                if not any(c.is_name(county_name) for county_name in county_names):
+                    print "Deleting dud county ", c.name
+                    del self.counties[c.osm_id]
+                    c.delete()
+                else:
+                    c.generate_url_path()
+                    c.save()
+
+            seen_counties = set([c.name for c in self.counties.values()])
+            missing_counties = county_names - seen_counties
+            for missing in missing_counties:
+                err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
+
 
     def handle(self, *args, **options):
 
@@ -122,60 +175,7 @@ class Command(BaseCommand):
 
             self.calculate_touching_townlands()
 
-
-            # manually create counties
-            with printer("creating counties"):
-
-                county_names = set([
-                    "Tyrone", "Kerry", "Dublin", "Down", "Fermanagh", "Wexford", "Mayo", "Carlow",
-                    "Wicklow", "Longford", "Westmeath", "Cork", "Leitrim", "Laois", "Waterford", "Tipperary",
-                    "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
-                    "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
-                    ])
-
-                self.counties = self.create_area_obj('counties', "admin_level = '6'", County, cols)
-
-                for c in self.counties.values():
-                    original_county_name = c.name
-
-                    # sanitize name
-                    if c.name.startswith("County "):
-                        c.name = c.name[7:]
-                    if c.name == 'Londonderry':
-                        c.name = u'Derry'
-
-                    # calculate amount of water in this county
-                    self.cursor.execute("""
-                        select sum(
-                           case
-                             when st_within(water_polygon.way, valid_polygon.way) then ST_Area(water_polygon.geo)
-                             else ST_Area(ST_Intersection(valid_polygon.geo, water_polygon.geo))
-                           end) as water_area_m2
-                        from valid_polygon inner join water_polygon ON ST_Intersects(valid_polygon.way, water_polygon.way)
-                        where valid_polygon.admin_level  = '6' and name = '{original_county_name}'
-                    """.format(original_county_name=original_county_name))
-                    water_area_m2 = list(self.cursor)
-                    assert len(water_area_m2) == 1
-                    water_area_m2 = water_area_m2[0][0] or 0
-                    c.water_area_m2 = water_area_m2
-                    if c.water_area_m2 >= c.area_m2:
-                        err_msg("County {0}, too much water?", c.name)
-
-                    c.save()
-
-                    if not any(c.is_name(county_name) for county_name in county_names):
-                        print "Deleting dud county ", c.name
-                        del self.counties[c.osm_id]
-                        c.delete()
-                    else:
-                        c.generate_url_path()
-                        c.save()
-
-                seen_counties = set([c.name for c in self.counties.values()])
-                missing_counties = county_names - seen_counties
-                for missing in missing_counties:
-                    err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
-
+            self.calculate_counties()
 
             baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, cols)
             civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, cols)
@@ -193,7 +193,6 @@ class Command(BaseCommand):
 
 
             # townland in county
-
 
             with printer("townlands in counties"):
                 self.cursor.execute("select c.name, t.osm_id from valid_polygon as c join valid_polygon as t on (c.admin_level = '6' and t.admin_level = '10' and st_contains(c.way, t.way));")
