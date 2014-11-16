@@ -191,6 +191,16 @@ class Command(BaseCommand):
             #assert len(townlands_not_in_counties) == 0, townlands_not_in_counties
 
 
+    def calculate_townlands_in_baronies(self):
+        with printer("townlands in baronies"):
+            self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'barony' and t.admin_level = '10' and st_contains(b.way, t.way));")
+
+            for barony_osm_id, townland_osm_id in self.cursor:
+                if not ( self.townlands[townland_osm_id].barony is None or self.townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
+                    err_msg("Overlapping Baronies")
+                else:
+                    self.townlands[townland_osm_id].barony = self.baronies[barony_osm_id]
+                    self.townlands[townland_osm_id].save()
 
 
     def handle(self, *args, **options):
@@ -232,17 +242,8 @@ class Command(BaseCommand):
 
             # townland in county
             self.calculate_townlands_in_counties()
-            # townland in barony
 
-            with printer("townlands in baronies"):
-                self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'barony' and t.admin_level = '10' and st_contains(b.way, t.way));")
-
-                for barony_osm_id, townland_osm_id in self.cursor:
-                    if not ( self.townlands[townland_osm_id].barony is None or self.townlands[townland_osm_id].barony.osm_id == barony_osm_id ):
-                        err_msg("Overlapping Baronies")
-                    else:
-                        self.townlands[townland_osm_id].barony = self.baronies[barony_osm_id]
-                        self.townlands[townland_osm_id].save()
+            self.calculate_townlands_in_baronies()
 
             # townland in civil parish
             with printer("townlands in civil parishes"):
