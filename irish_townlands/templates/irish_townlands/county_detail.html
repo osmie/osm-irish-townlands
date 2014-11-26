@@ -84,6 +84,11 @@
 
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
+    {% if county.osm_timestamp %}
+        <p>{% blocktrans with osm_timestamp=county.osm_timestamp|date:"j M Y" osm_user=county.osm_user %}{{ county_name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
+    {% else %}
+        <p>{% blocktrans %}We don't know when {{ county_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+    {% endif %}
     {% if county.osm_id %}
         <p>
             <a href="{{ county.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>

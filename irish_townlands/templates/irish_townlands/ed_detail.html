@@ -82,6 +82,11 @@
 
     <a name="osm"></a>
     <h2>OpenStreetMap</h2>
+    {% if ed.osm_timestamp %}
+        <p>{% blocktrans with osm_timestamp=ed.osm_timestamp|date:"j M Y" osm_user=ed.osm_user %}{{ ed_name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
+    {% else %}
+        <p>{% blocktrans %}We don't know when {{ ed_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+    {% endif %}
     {% if ed.osm_id %}
         <p>
             <a href="{{ ed.osm_browse_url }}">Show on OpenStreetMap.org</a>
