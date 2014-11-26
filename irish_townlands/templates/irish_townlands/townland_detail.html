@@ -143,6 +143,11 @@
 
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
+    {% if townland.osm_timestamp %}
+        <p>{% blocktrans with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user %}{{ townland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
+    {% else %}
+        <p>{% blocktrans %}We don't know when {{ townland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+    {% endif %}
     {% if townland.osm_id %}
         <p>
             <a href="{{ townland.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
