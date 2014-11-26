@@ -1,0 +1,11 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{{ osm_user }}'s mapping contributions.{% endblock %}
+{% block header %}<h1>{{ osm_user }}'s mapping contributions</h1>{% endblock %}
+
+{% block body %}
+
+{{ osm_user }} has been mapping in OpenStreetMap.
+
+{% endblock body %}

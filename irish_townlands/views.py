@@ -357,3 +357,6 @@ def page(request, url_path):
     else:
         return render_to_response('irish_townlands/page.html', PAGES[url_path])
     
+
+def mapper_details(request, osm_user):
+    return render_to_response('irish_townlands/mapper_details.html', {'osm_user': osm_user})
