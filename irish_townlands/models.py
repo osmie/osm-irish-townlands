@@ -44,6 +44,11 @@ class Area(models.Model):
 
     polygon_geojson = models.TextField(default='')
 
+    # When v1 was made. NULL means we don't know it yet
+    osm_user = models.CharField(max_length=100, db_index=True, null=True)
+    osm_uid = models.IntegerField(null=True)
+    osm_timestamp = models.DateTimeField(db_index=True, null=True)
+
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
 
@@ -149,19 +154,19 @@ class Area(models.Model):
 
     @property
     def osm_browse_url(self):
-        return "http://www.openstreetmap.org/{type}/{id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_josm_url(self):
-        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=('relation' if self.osm_id <0 else 'way'), id=abs(self.osm_id))
+        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_potlatch_url(self):
-        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_id_url(self):
-        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=('relation' if self.osm_id < 0 else 'way'), id=abs(self.osm_id))
+        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def long_desc(self):
@@ -197,6 +202,10 @@ class Area(models.Model):
             url_path=reverse('view_area', args=[self.url_path]),
             name=self.name, name_ga=name_ga, alt_name=alt_name, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
         )
+
+    @property
+    def osm_type(self):
+        return 'relation' if self.osm_id < 0 else 'way'
 
 
 def float_to_sexagesimal(x):
