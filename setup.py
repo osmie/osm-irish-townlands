@@ -14,5 +14,6 @@ setup(name="django-osm-irish-townlands",
           'django==1.6',
           'south',
           'iso8601',
+          'requests',
       ],
 )
