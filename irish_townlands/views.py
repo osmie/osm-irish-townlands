@@ -360,10 +360,10 @@ def page(request, url_path):
 
 def mapper_details(request, osm_user):
     tmpl_data = {'osm_user': osm_user}
-    for model, name in (
-                (Townland, 'townlands'), (CivilParish, 'civil_parishes'),
-                (Barony, 'baronies'), (County, 'counties'),
-                (ElectoralDivision, 'eds') ):
-        tmpl_data[name] = model.objects.filter(osm_user=osm_user).order_by('name')
+    tmpl_data['counties'] = County.objects.filter(osm_user=osm_user).order_by('name')
+    tmpl_data['baronies'] = Barony.objects.select_related('county').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by('name')
+    tmpl_data['civil_parishes'] = CivilParish.objects.select_related('county').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by('name')
+    tmpl_data['eds'] = ElectoralDivision.objects.select_related('county').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by('name')
+    tmpl_data['townlands'] = Townland.objects.select_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').filter(osm_user=osm_user).order_by('name')
 
     return render_to_response('irish_townlands/mapper_details.html', tmpl_data)
