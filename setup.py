@@ -13,5 +13,6 @@ setup(name="django-osm-irish-townlands",
       install_requires=[
           'django==1.6',
           'south',
+          'iso8601',
       ],
 )
