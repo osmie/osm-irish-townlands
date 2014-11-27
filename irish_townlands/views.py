@@ -359,4 +359,11 @@ def page(request, url_path):
     
 
 def mapper_details(request, osm_user):
-    return render_to_response('irish_townlands/mapper_details.html', {'osm_user': osm_user})
+    tmpl_data = {'osm_user': osm_user}
+    for model, name in (
+                (Townland, 'townlands'), (CivilParish, 'civil_parishes'),
+                (Barony, 'baronies'), (County, 'counties'),
+                (ElectoralDivision, 'eds') ):
+        tmpl_data[name] = model.objects.filter(osm_user=osm_user).order_by('name')
+
+    return render_to_response('irish_townlands/mapper_details.html', tmpl_data)

@@ -8,4 +8,45 @@
 
 {{ osm_user }} has been mapping in OpenStreetMap.
 
+<h2>Counties</h2>
+<p>{{ counties|length }} mapped.</p>
+<p><ul>
+    {% for c in counties %}
+        <li>{{ c.long_desc }}</li>
+    {% endfor %}
+</ul></p>
+
+
+<h2>Baronies</h2>
+<p>{{ baronies|length }} mapped.</p>
+<p><ul>
+    {% for b in baronies %}
+        <li>{{ b.long_desc }}</li>
+    {% endfor %}
+</ul></p>
+
+<h2>Civil Parishes</h2>
+<p>{{ civil_parishes|length }} mapped.</p>
+<p><ul>
+    {% for c in civil_parishes %}
+        <li>{{ c.long_desc }}</li>
+    {% endfor %}
+</ul></p>
+
+<h2>Electoral Divisions</h2>
+<p>{{ eds|length }} mapped.</p>
+<p><ul>
+    {% for ed in eds %}
+        <li>{{ ed.long_desc }}</li>
+    {% endfor %}
+</ul></p>
+
+<h2>Townlands</h2>
+<p>{{ townlands|length }} mapped.</p>
+<p><ul>
+    {% for t in townlands %}
+        <li>{{ t.long_desc }}</li>
+    {% endfor %}
+</ul></p>
+
 {% endblock body %}
