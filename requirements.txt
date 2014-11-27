@@ -1,2 +1,4 @@
 Django==1.6
 South
+iso8601
+requests
