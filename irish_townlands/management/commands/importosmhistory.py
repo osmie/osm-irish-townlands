@@ -81,4 +81,7 @@ class Command(BaseCommand):
             else:
                 logger.error("Still have no data for %s", obj)
         
+        logger.info("Saving %d objects.", len(to_save))
+        for obj_to_save in to_save:
+            obj_to_save.save()
 
