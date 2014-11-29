@@ -27,10 +27,7 @@ COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
 
 
 def progress(request):
-    try:
-        last_update = Metadata.objects.get(key="lastupdate").value
-    except Metadata.DoesNotExist:
-        last_update = "N/A"
+    last_update = get_last_update()
     counties = County.objects.order_by('name').all()
     errors = Error.objects.all().values_list('message', flat=True)
 
@@ -74,11 +71,17 @@ def duplicatenames(request):
          },
         context_instance=RequestContext(request))
 
-def county_debug(request, url_path):
+def get_last_update():
     try:
-        last_update = Metadata.objects.get(key="lastupdate").value
+        last_update = int(Metadata.objects.get(key="lastupdate").value)
+        last_update = datetime(1970, 1, 1) + timedelta(seconds=last_update)
     except Metadata.DoesNotExist:
         last_update = "N/A"
+
+    return last_update
+
+def county_debug(request, url_path):
+    last_update = get_last_update()
 
     # County debug page
     try:
@@ -91,10 +94,7 @@ def county_debug(request, url_path):
         raise Http404("County not found")
 
 def view_area(request, url_path=None):
-    try:
-        last_update = Metadata.objects.get(key="lastupdate").value
-    except Metadata.DoesNotExist:
-        last_update = "N/A"
+    last_update = get_last_update()
 
     # County index page
     if url_path in ['all', None]:

@@ -360,7 +360,7 @@ class Command(BaseCommand):
     def update_metadata(self):
         with printer("updating metadata"):
             last_updated, _ = Metadata.objects.get_or_create(key="lastupdate")
-            last_updated.value = datetime.datetime.utcnow().isoformat()
+            last_updated.value = int((datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)).total_seconds())
             last_updated.save()
 
 
