@@ -9,7 +9,11 @@
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / District Electoral Division of {{ ed.name }}.</p>
 
-    <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
+    {% if ed.county %}
+        <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
+    {% else %}
+        <p>{% blocktrans %}We don't know what county {{ ed_name }} is in.{% endblocktrans %}</p>
+    {% endif %}
 
     <ul>
         <li><a href="#map">Map ↓</a></li>
