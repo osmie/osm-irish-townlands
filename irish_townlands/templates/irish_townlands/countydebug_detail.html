@@ -42,13 +42,11 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by townlands" },
-                'geometry': {{ county.polygon_townland_gaps|safe }}
-                } );
-            map.addLayer(boundary);
+            L.geoJson({
+                    'type':'Feature',
+                    'properties': { 'name': "Land not covered by townlands" },
+                    'geometry': {{ county.polygon_townland_gaps|safe }}
+                }).addTo(map);
         </script>
         <p><a href="{% url 'rate' %}#{{ county.name }}">How long will {{ county.name }} take to be mapped?</a></p>
     {% else %}
@@ -69,12 +67,10 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
+            L.geoJson({
                 'type':'Feature',
                 'geometry': {{ county.polygon_townland_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
+                } ).addTo(map);
         </script>
     {% else %}
         <p>None of the townlands in {{ county.name }} the OpenStreetMap database overlap.</p>
@@ -93,13 +89,11 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
+            L.geoJson({
                 'type':'Feature',
                 'properties': { 'name': "Land not covered by Civil Parishes" },
                 'geometry': {{ county.polygon_civil_parish_gaps|safe }}
-                } );
-            map.addLayer(boundary);
+                } ).addTo(map);
         </script>
     {% else %}
         <p>All of {{ county.name }} is covered by civil parishes in the OpenStreetMap database.</p>
@@ -118,12 +112,10 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
+            L.geoJson({
                 'type':'Feature',
                 'geometry': {{ county.polygon_civil_parish_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
+                }).addTo(map);
         </script>
     {% else %}
         <p>No civil parishes overlap in {{ county.name }} in the OpenStreetMap database.</p>
@@ -142,13 +134,11 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
+            L.geoJson({
                 'type':'Feature',
                 'properties': { 'name': "Land not covered by townlands" },
                 'geometry': {{ county.polygon_barony_gaps|safe }}
-                } );
-            map.addLayer(boundary);
+                }).addTo(map);
         </script>
     {% else %}
         <p>All of {{ county.name }} is covered by baronies in the OpenStreetMap database.</p>
@@ -167,12 +157,10 @@
 
             map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
             map.addLayer(osm);
-            var boundary = new L.GeoJSON()
-            boundary.addGeoJSON({
+            L.geoJson({
                 'type':'Feature',
                 'geometry': {{ county.polygon_barony_overlaps|safe }}
-                } );
-            map.addLayer(boundary);
+                }).addTo(map);
         </script>
     {% else %}
         <p>None of the baronies in {{ county.name }} in the OpenStreetMap database overlap.</p>

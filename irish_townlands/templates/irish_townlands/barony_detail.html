@@ -39,13 +39,11 @@
         map.addLayer(osm);
         var popup = new L.Popup();
 
-        var boundary = new L.GeoJSON()
-        boundary.addGeoJSON({
+        L.geoJson({
             'type':'Feature',
             'properties': { 'name': "{{ barony.name }}" },
             'geometry': {{ barony.polygon_geojson|safe }}
-            } );
-        map.addLayer(boundary);
+            }).addTo(map);
     </script>
 
 

@@ -34,13 +34,11 @@
         map.addLayer(osm);
         var popup = new L.Popup();
 
-        var boundary = new L.GeoJSON()
-        boundary.addGeoJSON({
+        L.geoJson({
             'type':'Feature',
             'properties': { 'name': "{{ ed.name }}" },
             'geometry': {{ ed.polygon_geojson|safe }}
-            } );
-        map.addLayer(boundary);
+            }).addTo(map);
     </script>
 
 
