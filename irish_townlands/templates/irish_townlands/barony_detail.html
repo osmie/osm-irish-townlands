@@ -74,11 +74,11 @@
     <ul>
     {% for townland in barony.townlands_sorted %}
         <li>
-            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
-                <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
-                    {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                    {% endwith %}
-                </abbr>
+            {{ townland.long_desc }}
+            <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
+                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
+                {% endwith %}
+            </abbr>
         </li>
     {% endfor %}
     </ul>
