@@ -9,7 +9,12 @@
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ barony.name }}.</p>
 
-    <p>{{ barony.name }} is in <a href="{% url 'view_area' barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
+    {% if barony.county %}
+        <p>{{ barony.name }} is in <a href="{% url 'view_area' barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
+    {% else %}
+        <p>{% blocktrans %}We don't know what county {{ barony_name }} is in.{% endblocktrans %}</p>
+    {% endif %}
+
 
     <ul>
         <li><a href="#map">Map ↓</a></li>
