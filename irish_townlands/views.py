@@ -4,9 +4,10 @@ import re
 from datetime import timedelta, datetime
 import math
 import json
+import urllib
 
 from django.http import Http404, HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
@@ -118,7 +119,9 @@ def view_area(request, url_path=None):
             continue  #  on to next model
 
     # nothing by here?
-    raise Http404()
+    # Do a search!
+    search_url = reverse('search') + "?" + urllib.urlencode({'q': url_path})
+    return redirect(search_url)
 
 def days_to_string(days):
     days = int(days)
