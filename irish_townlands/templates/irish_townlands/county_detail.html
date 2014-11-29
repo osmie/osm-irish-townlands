@@ -71,13 +71,11 @@
     <ul>
     {% for townland in county.townlands_sorted %}
         <li>
-            <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>, 
-                {% if townland.civil_parish %}{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}, {% endif %}
-                {% if townland.barony %}{% blocktrans with barony_name=townland.barony.name %}Barony of {{ barony_name }}{% endblocktrans %}, {% endif %}
-                <abbr title="{% blocktrans %}Area in Acres, Rods and Perches{% endblocktrans %}">{% with arp=townland.area_acres_roods_perches %}
-                    {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                    {% endwith %}
-                </abbr>
+            {{ townland.long_desc }}
+            <abbr title="{% blocktrans %}Area in Acres, Rods and Perches{% endblocktrans %}">{% with arp=townland.area_acres_roods_perches %}
+                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
+                {% endwith %}
+            </abbr>
         </li>
     {% endfor %}
     </ul>
