@@ -76,6 +76,10 @@ for TYPE in townlands counties baronies civil_parishes provinces eds ; do
     zip -q ${TYPE}.kmz doc.kml
     rm -f doc.kml
 
+    ogr2ogr -f CSV ${TYPE}.csv ${TYPE}.shp -lco GEOMETRY=AS_WKT
+    zip -q ${TYPE}.csv.zip ${TYPE}.csv
+    rm -f ${TYPE}.csv
+
     zip -q ${TYPE}.zip ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
     rm -f ${TYPE}.dbf ${TYPE}.prj ${TYPE}.shp ${TYPE}.shx
 done
