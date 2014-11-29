@@ -269,6 +269,11 @@ def search(request):
     townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
     townlands_num_results = len(townlands)
 
+    # if there is only one, then redirect to it
+    if counties_num_results + baronies_num_results + civil_parishes_num_results + eds_num_results + townlands_num_results == 1:
+        obj = (counties + baronies + civil_parishes + eds + townlands)[0]
+        return redirect('view_area', url_path=obj.url_path)
+
     results = {
         'counties': counties,
         'counties_num_results': counties_num_results,
