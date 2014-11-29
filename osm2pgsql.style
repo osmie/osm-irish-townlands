@@ -29,7 +29,8 @@ way   area         text         # hard coded support for area=1/yes => polygon i
 way   boundary     text         linear
 way   name         text         linear
 way   name:ga      text         linear
-way   alt_name         text         linear
+way   alt_name     text         linear
+way   alt_name:ga  text         linear
 way   natural      text         polygon  # natural=coastline tags are discarded by a hard coded rule in osm2pgsql
 way   water        text         polygon
 way   waterway     text         polygon

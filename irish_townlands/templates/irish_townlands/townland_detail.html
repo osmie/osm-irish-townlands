@@ -60,7 +60,12 @@
     </p>
 
     {% if townland.name_ga and townland.name != townland.name_ga %}
-        <p>{% blocktrans with name=townland.name ga_name=townland.name_ga %}The Irish name for {{ name }} is {{ ga_name }}{% endblocktrans %}</p>
+        <p>
+            {% blocktrans with name=townland.name ga_name=townland.name_ga %}The Irish name for {{ name }} is {{ ga_name }}{% endblocktrans %}
+            {% if townland.alt_name_ga %}
+                {% blocktrans with name=townland.name alt_name_ga=townland.alt_name_ga %}{{ name }} is also known as {{ alt_name_ga }} in Irish.{% endblocktrans %}
+            {% endif %}
+        </p>
     {% endif %}
     {% if townland.name_en and townland.name != townland.name_en %}
         <p>{% blocktrans with name=townland.name en_name=townland.name_en %}The English name for {{ name }} is {{ en_name }}{% endblocktrans %}</p>

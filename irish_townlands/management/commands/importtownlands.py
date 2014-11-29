@@ -379,6 +379,7 @@ class Command(BaseCommand):
                 ('name', 'name'),
                 ('"name:ga"', 'name_ga'),
                 ('alt_name', 'alt_name'),
+                ('"alt_name:ga"', 'alt_name_ga'),
                 ('osm_id', 'osm_id'),
                 ('st_area(geo)', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
