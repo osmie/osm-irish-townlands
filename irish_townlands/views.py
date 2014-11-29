@@ -75,7 +75,7 @@ def get_last_update():
     try:
         last_update = int(Metadata.objects.get(key="lastupdate").value)
         last_update = datetime(1970, 1, 1) + timedelta(seconds=last_update)
-    except Metadata.DoesNotExist:
+    except Exception:
         last_update = "N/A"
 
     return last_update
