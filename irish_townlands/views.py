@@ -344,6 +344,11 @@ def taginfo(request):
                 },
                 {
                     "key": "admin_level",
+                    "value": "9",
+                    "description": "Electoral Division"
+                },
+                {
+                    "key": "admin_level",
                     "value": "10",
                     "description": "Townland"
                 }
