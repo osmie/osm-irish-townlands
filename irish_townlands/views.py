@@ -256,7 +256,7 @@ def rate(request):
 def search(request):
     search_term = request.GET.get('q', '').strip()
 
-    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)
+    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term)
 
     counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
     counties_num_results = len(counties)
