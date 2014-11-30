@@ -78,7 +78,12 @@ def get_last_update():
     except Exception:
         last_update = "N/A"
 
-    return last_update
+    try:
+        data_age = Metadata.objects.get(key="dataage").value
+    except Exception:
+        data_age = "N/A"
+
+    return (last_update, data_age)
 
 def county_debug(request, url_path):
     last_update = get_last_update()

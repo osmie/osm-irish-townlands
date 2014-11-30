@@ -16,6 +16,7 @@ from collections import defaultdict
 import psycopg2
 from contextlib import contextmanager
 import datetime
+import subprocess
 
 DEBUG = False
 
@@ -362,6 +363,15 @@ class Command(BaseCommand):
             last_updated, _ = Metadata.objects.get_or_create(key="lastupdate")
             last_updated.value = int((datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)).total_seconds())
             last_updated.save()
+
+            try:
+                data_age, _ = Metadata.objects.get_or_create(key="dataage")
+                #value = subprocess.check_output(['osmconvert', '--out-timestamp', '/home/rory/code/python/django-osm-irish-townlands/ireland-and-northern-ireland.osm.pbf'])
+                value = subprocess.check_output(['/home/rory/osmconvert', '--out-timestamp', '/var/www/townlands/ireland-and-northern-ireland.osm.pbf'])
+                data_age.value = value
+                data_age.save()
+            except:
+                pass
 
 
     def handle(self, *args, **options):
