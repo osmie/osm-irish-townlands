@@ -29,6 +29,7 @@ class Area(models.Model):
 
     osm_id = models.IntegerField()
     name = models.CharField(max_length=255, db_index=True)
+    name_en = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)

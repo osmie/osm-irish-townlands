@@ -378,6 +378,7 @@ class Command(BaseCommand):
             self.cols = [
                 ('name', 'name'),
                 ('"name:ga"', 'name_ga'),
+                ('"name:en"', 'name_en'),
                 ('alt_name', 'alt_name'),
                 ('"alt_name:ga"', 'alt_name_ga'),
                 ('osm_id', 'osm_id'),

@@ -51,7 +51,7 @@ function dump() {
     PREFIX=$1
     WHERE=$2
     rm -f ${PREFIX}
-    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" gis "select osm_id, name, \"name:ga\", geo from valid_polygon where ${WHERE}" >/dev/null
+    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" gis "select osm_id, name, \"name:ga\", \"name:en\", alt_name, \"alt_name:ga\", st_area(geo) as area_m2, ST_X(st_transform((ST_centroid(way)), 4326)) as latitude, ST_Y(st_transform((ST_centroid(way)), 4326)) as longitude, geo from valid_polygon where ${WHERE}" >/dev/null
 }
 
 

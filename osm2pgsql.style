@@ -28,6 +28,7 @@ way   admin_level  text         linear
 way   area         text         # hard coded support for area=1/yes => polygon is in osm2pgsql
 way   boundary     text         linear
 way   name         text         linear
+way   name:en      text         linear
 way   name:ga      text         linear
 way   alt_name     text         linear
 way   alt_name:ga  text         linear
