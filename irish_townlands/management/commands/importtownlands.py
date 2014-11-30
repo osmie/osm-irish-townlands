@@ -62,8 +62,8 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
-        for obj in [Townland, County, CivilParish, Barony, ElectoralDivision, TownlandTouch]:
-            obj.objects.raw("TRUNCATE TABLE %s;" % obj._meta.db_table)
+        for obj in [Townland, County, CivilParish, Barony, ElectoralDivision]:
+            obj.objects.all().delete()
 
         # Clear errors
         Error.objects.all().delete()
