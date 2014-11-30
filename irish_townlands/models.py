@@ -33,6 +33,7 @@ class Area(models.Model):
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    place = models.CharField(max_length=255, default=None, null=True)
     area_m2 = models.FloatField(db_index=True)
     water_area_m2 = models.FloatField(blank=True, null=True)
     url_path = models.CharField(db_index=True, max_length=255)
