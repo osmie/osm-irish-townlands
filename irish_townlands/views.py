@@ -385,3 +385,36 @@ def mapper_details(request, osm_user):
     tmpl_data['townlands'] = Townland.objects.select_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').filter(osm_user=osm_user).order_by('name')
 
     return render_to_response('irish_townlands/mapper_details.html', tmpl_data)
+
+def stats_for_user(osm_user):
+    results = {}
+    total = 0
+    for model, name in (
+                (Townland, 'townland'), (CivilParish, 'civil_parish'),
+                (Barony, 'barony'), (County, 'county'),
+                (ElectoralDivision, 'ed') ):
+        this_model =  model.objects.filter(osm_user=osm_user).count()
+        total += this_model
+        results[name] = this_model
+
+    results['total'] = total
+    return results
+
+def get_all_mappers():
+    mappers = set()
+    for model, name in (
+                (Townland, 'townland'), (CivilParish, 'civil_parish'),
+                (Barony, 'barony'), (County, 'county'),
+                (ElectoralDivision, 'ed') ):
+        mappers.update(list(model.objects.exclude(osm_user=None).values_list('osm_user', flat=True).distinct()))
+
+    return mappers
+
+
+def mappers(request):
+    all_mappers = sorted(list(get_all_mappers()))
+
+    all_mappers = [(osm_user, stats_for_user(osm_user)) for osm_user in all_mappers]
+    all_mappers.sort(key=lambda x: x[1]['total'], reverse=True)
+
+    return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers})
