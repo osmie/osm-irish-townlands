@@ -209,6 +209,13 @@ class Area(models.Model):
             name=self.name, name_ga=name_ga, alt_name=alt_name, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
         )
 
+    def short_desc(self):
+        return format_html(
+            u'<a href="{url_path}">{name}</a>',
+            url_path=reverse('view_area', args=[self.url_path]), name=self.name
+        )
+
+
     @property
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
