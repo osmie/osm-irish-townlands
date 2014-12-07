@@ -1,0 +1,30 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}People mapping townlands{% endblock %}
+{% block header %}People mapping townlands{% endblock %}
+
+{% block body %}
+<p>
+<table class="table table-striped table-hover">
+        <tr>
+            <th>Username</th>
+            <th>Townlands</th>
+            <th>Electoral Divisions</th>
+            <th>Baronies</th>
+            <th>Civil Parishes</th>
+            <th>Counties</th></tr>
+    {% for osm_user, stats in all_mappers %}
+        <tr>
+            <td><a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a></td>
+            <td>{{ stats.townland|intcomma }} townlands</td>
+            <td>{{ stats.ed }} EDs</td>
+            <td>{{ stats.barony }} baronies</td>
+            <td>{{ stats.civil_parish }} civil parishes</td>
+            <td>{{ stats.county }} counties</td>
+        </tr>
+    {% endfor %}
+</table>
+</p>
+
+{% endblock %}
