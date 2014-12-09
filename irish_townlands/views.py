@@ -1,10 +1,12 @@
 """Views."""
 from __future__ import division
 import re
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, date
 import math
 import json
 import urllib
+from itertools import groupby
+from collections import defaultdict
 
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, redirect
@@ -418,3 +420,57 @@ def mappers(request):
     all_mappers.sort(key=lambda x: x[1]['total'], reverse=True)
 
     return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers})
+
+def group_by_username(model, start_date):
+    next_date = start_date + timedelta(days=1)
+    this_datetime = datetime(start_date.year, start_date.month, start_date.day, 0, 0)
+    next_datetime = datetime(next_date.year, next_date.month, next_date.day, 0, 0)
+
+    results = defaultdict(list)
+    for el in model.objects.filter(osm_timestamp__gte=this_datetime, osm_timestamp__lt=next_datetime).only("osm_user", "url_path", "name").order_by("osm_user"):
+        results[el.osm_user].append(el)
+
+    return results
+
+def detailed_stats_for_period(from_date, to_date):
+    assert from_date <= to_date, (from_date, to_date)
+    dates = []
+    curr_date = from_date
+    while curr_date <= to_date:
+        dates.append(curr_date)
+        curr_date += timedelta(days=1)
+
+    result = []
+    
+    dates.sort(reverse=True)
+
+    for date in dates:
+
+        townlands = group_by_username(Townland, date)
+        eds = group_by_username(ElectoralDivision, date)
+        cps = group_by_username(CivilParish, date)
+        baronies = group_by_username(Barony, date)
+        counties = group_by_username(County, date)
+
+        users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys())
+        users = sorted(list(users))
+        this_date_details = {'date': date, 'stats': [
+            {'osm_user': osm_user,
+             'townlands': townlands.get(osm_user, []),
+             'eds': eds.get(osm_user, []),
+             'cps': cps.get(osm_user, []),
+             'baronies': baronies.get(osm_user, []),
+             'counties': counties.get(osm_user, []),
+            }
+            for osm_user in users]}
+        result.append(this_date_details)
+
+    return result
+
+def activity(request):
+    today = date.today()
+    last_week = today - timedelta(days=7)
+
+    stats = detailed_stats_for_period(last_week, today)
+
+    return render_to_response('irish_townlands/activity.html', {'from': last_week, 'to': today, 'stats': stats})
