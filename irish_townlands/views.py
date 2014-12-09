@@ -469,7 +469,7 @@ def detailed_stats_for_period(from_date, to_date):
 
 def activity(request):
     today = date.today()
-    last_week = today - timedelta(days=30)
+    last_week = today - timedelta(days=7)
 
     stats = detailed_stats_for_period(last_week, today)
 
