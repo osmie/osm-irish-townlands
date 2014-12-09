@@ -468,9 +468,9 @@ def detailed_stats_for_period(from_date, to_date):
     return result
 
 def activity(request):
-    today = date.today()
-    last_week = today - timedelta(days=7)
+    yesterday = date.today() - timedelta(days=1)
+    last_week = yesterday - timedelta(days=7)
 
-    stats = detailed_stats_for_period(last_week, today)
+    stats = detailed_stats_for_period(last_week, yesterday)
 
-    return render_to_response('irish_townlands/activity.html', {'from': last_week, 'to': today, 'stats': stats})
+    return render_to_response('irish_townlands/activity.html', {'from': last_week, 'to': yesterday, 'stats': stats})
