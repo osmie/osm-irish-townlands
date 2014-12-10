@@ -375,7 +375,11 @@ def page(request, url_path):
     if url_path not in PAGES:
         return Http404
     else:
-        return render_to_response('irish_townlands/page.html', PAGES[url_path])
+        last_update = get_last_update()
+        tmpl_data = PAGES[url_path]
+        tmpl_data['last_update'] = last_update
+        return render_to_response('irish_townlands/page.html', tmpl_data,
+            context_instance=RequestContext(request))
     
 
 def mapper_details(request, osm_user):
