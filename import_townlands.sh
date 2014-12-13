@@ -20,7 +20,7 @@ done
 
 
 wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf
-PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf
+PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf >/dev/null
 #rm ireland-and-northern-ireland.osm.pbf
 
 # not needed anymore
