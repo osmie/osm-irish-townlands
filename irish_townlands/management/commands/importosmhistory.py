@@ -6,7 +6,7 @@ import osm_find_first
 from django.core.management.base import BaseCommand, CommandError
 
 #from irish_townlands.lib import importosmhistory
-from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony
+from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony, County
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +32,14 @@ class Command(BaseCommand):
             known_data = list(csv_reader)
 
         # Now make it indexable
-        # TODO convert datetime string to datetime obj
         results = [clean_result_row(x) for x in known_data]
 
         results = {(x['osm_type'], x['osm_id']): x for x in results}
         
+        # See if the file has details for OSM obj that aren't saved on the object.
         to_save = []
         to_look_up = []
-        for klass in (Townland, ElectoralDivision, CivilParish, Barony):
+        for klass in (Townland, ElectoralDivision, CivilParish, Barony, County):
             missing = klass.objects.filter(osm_timestamp__isnull=True)
             for miss in missing:
                 osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
