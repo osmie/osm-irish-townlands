@@ -51,21 +51,20 @@ class Command(BaseCommand):
                 else:
                     to_look_up.append(miss)
 
+        # If we have added some details to some objects, save them now.
         logger.info("Saving %d objects.", len(to_save))
         for obj_to_save in to_save:
             obj_to_save.save()
+        to_save = []
 
+        # Construct the data structure of things we want to look up
         to_look_up_dict = [{'osm_type': x.osm_type, 'osm_id': abs(x.osm_id)} for x in to_look_up]
 
 
         # this is where we query the OSM API
         # doing the OSM query!
-        #import pudb ; pudb.set_trace()
         logger.info("Querying OSM API for %d objects", len(to_look_up_dict))
         new_known_data = osm_find_first.find_first_from_csvs(csv_filename, to_look_up_dict)
-
-        # save it for later
-        #osm_find_first.write_to_csv(csv_filename, to_look_up_dict)
 
         results = [clean_result_row(x) for x in new_known_data]
         results = {(x['osm_type'], x['osm_id']): x for x in results}
