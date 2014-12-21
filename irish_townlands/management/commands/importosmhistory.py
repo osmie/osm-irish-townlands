@@ -6,7 +6,7 @@ import osm_find_first
 from django.core.management.base import BaseCommand, CommandError
 
 #from irish_townlands.lib import importosmhistory
-from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony
+from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony, County
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +32,14 @@ class Command(BaseCommand):
             known_data = list(csv_reader)
 
         # Now make it indexable
-        # TODO convert datetime string to datetime obj
         results = [clean_result_row(x) for x in known_data]
 
         results = {(x['osm_type'], x['osm_id']): x for x in results}
         
+        # See if the file has details for OSM obj that aren't saved on the object.
         to_save = []
         to_look_up = []
-        for klass in (Townland, ElectoralDivision, CivilParish, Barony):
+        for klass in (Townland, ElectoralDivision, CivilParish, Barony, County):
             missing = klass.objects.filter(osm_timestamp__isnull=True)
             for miss in missing:
                 osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
@@ -51,21 +51,20 @@ class Command(BaseCommand):
                 else:
                     to_look_up.append(miss)
 
+        # If we have added some details to some objects, save them now.
         logger.info("Saving %d objects.", len(to_save))
         for obj_to_save in to_save:
             obj_to_save.save()
+        to_save = []
 
+        # Construct the data structure of things we want to look up
         to_look_up_dict = [{'osm_type': x.osm_type, 'osm_id': abs(x.osm_id)} for x in to_look_up]
 
 
         # this is where we query the OSM API
         # doing the OSM query!
-        #import pudb ; pudb.set_trace()
         logger.info("Querying OSM API for %d objects", len(to_look_up_dict))
         new_known_data = osm_find_first.find_first_from_csvs(csv_filename, to_look_up_dict)
-
-        # save it for later
-        #osm_find_first.write_to_csv(csv_filename, to_look_up_dict)
 
         results = [clean_result_row(x) for x in new_known_data]
         results = {(x['osm_type'], x['osm_id']): x for x in results}
