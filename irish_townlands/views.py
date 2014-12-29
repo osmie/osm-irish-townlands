@@ -473,9 +473,25 @@ def detailed_stats_for_period(from_date, to_date):
     return result
 
 def activity(request):
-    yesterday = date.today() - timedelta(days=1)
-    last_week = yesterday - timedelta(days=7)
+    to_date = date.today() - timedelta(days=1)
+    try:
+        if 'to' in request.GET:
+            year, month, day = request.GET['to'].split("-")
+            year, month, day = int(year), int(month), int(day)
+            to_date = date(year, month, day)
+    except:
+        pass
 
-    stats = detailed_stats_for_period(last_week, yesterday)
+    from_date = to_date - timedelta(days=7)
+    try:
+        if 'from' in request.GET:
+            year, month, day = request.GET['from'].split("-")
+            year, month, day = int(year), int(month), int(day)
+            from_date = date(year, month, day)
+    except:
+        pass
 
-    return render_to_response('irish_townlands/activity.html', {'from': last_week, 'to': yesterday, 'stats': stats})
+
+    stats = detailed_stats_for_period(from_date, to_date)
+
+    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats})
