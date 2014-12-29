@@ -427,8 +427,9 @@ def mappers(request):
 
 def group_by_username(model, start_date):
     next_date = start_date + timedelta(days=1)
-    this_datetime = datetime(start_date.year, start_date.month, start_date.day, 0, 0)
-    next_datetime = datetime(next_date.year, next_date.month, next_date.day, 0, 0)
+    utc = datetime.utcnow().tzinfo
+    this_datetime = datetime(start_date.year, start_date.month, start_date.day, 0, 0).replace(tzinfo=utc)
+    next_datetime = datetime(next_date.year, next_date.month, next_date.day, 0, 0).replace(tzinfo=utc)
 
     results = defaultdict(list)
     for el in model.objects.filter(osm_timestamp__gte=this_datetime, osm_timestamp__lt=next_datetime).only("osm_user", "url_path", "name").order_by("osm_user"):
