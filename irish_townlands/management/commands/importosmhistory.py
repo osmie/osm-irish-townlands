@@ -69,7 +69,7 @@ class Command(BaseCommand):
         results = [clean_result_row(x) for x in new_known_data]
         results = {(x['osm_type'], x['osm_id']): x for x in results}
 
-        for obj in to_look_up:
+        for miss in to_look_up:
             osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
             if osm_history is not None:
                 logger.info("Found it %s", results[(miss.osm_type, abs(miss.osm_id))])
