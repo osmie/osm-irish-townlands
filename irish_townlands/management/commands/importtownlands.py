@@ -259,8 +259,34 @@ class Command(BaseCommand):
                 civil_parish.calculate_county()
 
     def calculate_eds_in_counties(self):
-        for ed in self.eds.values():
-            ed.calculate_county()
+        with printer("eds in counties"):
+            self.cursor.execute("""
+                select c.name, e.osm_id
+                from valid_polygon as c
+                    join valid_polygon as e
+                    on (c.admin_level = '6' and e.admin_level = '9' and st_contains(c.way, e.way));
+            """)
+
+            for county_name, ed_osm_id in self.cursor:
+                county = [c for c in self.counties.values() if c.is_name(county_name)]
+
+                if len(county) == 0:
+                    err_msg("Unknown county {0}", county_name)
+                else:
+                    if len(county) > 1:
+                        err_msg("ED (OSM ID: {ed_osm_id}) is in >1 counties! Overlapping border? Counties: {counties}", ed_osm_id=ed_osm_id, counties=", ".join(county))
+                        break
+                    county = county[0]
+                    if ed_osm_id not in self.eds:
+                        err_msg("Weird ed ids")
+                        break
+                    ed = self.eds[ed_osm_id]
+                    if ed.county not in [None, county]:
+                        err_msg("ED {ed} is in 2 counties! Overlapping border? First county: {ed.county}, Second county: {county}", ed=ed,county=county)
+                    else:
+                        ed.county = county
+
+
 
     def calculate_gaps_and_overlaps(self, osm_id, sub_ids):
         # gap
