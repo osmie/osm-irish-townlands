@@ -42,11 +42,8 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__name on valid
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index water_polygon__way on water_polygon using GIST (way);" 2>/dev/null || true
 
 # Index for each county
-for COUNTY_NAME in Tyrone Kerry Dublin Down Fermanagh Wexford Mayo Carlow
-                Wicklow Longford Westmeath Cork Leitrim Laois Waterford Tipperary
-                Monaghan Kilkenny Galway Meath Donegal Cavan Kildare Offaly
-                Londonderry Clare Armagh Antrim Limerick Louth Sligo Roscommon do ;
-                PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_county_${COUNTY_NAME} on valid_polygon using GIST (way) where admin_level = '6' and name = 'County ${COUNTY_NAME}';" 2>/dev/null || true
+for COUNTY_NAME in Tyrone Kerry Dublin Down Fermanagh Wexford Mayo Carlow Wicklow Longford Westmeath Cork Leitrim Laois Waterford Tipperary Monaghan Kilkenny Galway Meath Donegal Cavan Kildare Offaly Londonderry Clare Armagh Antrim Limerick Louth Sligo Roscommon ; do
+    PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_county_${COUNTY_NAME} on valid_polygon using GIST (way) where admin_level = '6' and name = 'County ${COUNTY_NAME}';" 2>/dev/null || true
 done
 
 
