@@ -15,7 +15,7 @@ from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, 
 from collections import defaultdict
 import psycopg2
 from contextlib import contextmanager
-import datetime
+import datetime, time
 import subprocess
 
 DEBUG = False
@@ -23,11 +23,13 @@ DEBUG = False
 @contextmanager
 def printer(msg):
     """Context statement to print when a task starts & ends."""
+    start = time.time()
     if DEBUG:
         print "Starting "+msg
     yield
+    duration = time.time() - start
     if DEBUG:
-        print "Finished "+msg
+        print "Finished "+msg+" in {} sec".format(duration)
 
 
 def err_msg(msg, *args, **kwargs):
@@ -132,29 +134,31 @@ class Command(BaseCommand):
 
             self.counties = self.create_area_obj('counties', "admin_level = '6'", County, self.cols)
 
-            for c in self.counties.values():
-                original_county_name = c.name
+            with printer("sanitizing counties"):
+                for c in self.counties.values():
+                    original_county_name = c.name
 
-                # sanitize name
-                rm_prefix(c, 'name', 'County ')
-                if c.name == 'Londonderry':
-                    c.name = u'Derry'
+                    # sanitize name
+                    rm_prefix(c, 'name', 'County ')
+                    if c.name == 'Londonderry':
+                        c.name = u'Derry'
 
-                # calculate amount of water in this county
-                water_area_m2 = self.water_area_m2_in_county(original_county_name)
-                c.water_area_m2 = water_area_m2
-                if c.water_area_m2 >= c.area_m2:
-                    err_msg("County {0}, too much water?", c.name)
+                    # calculate amount of water in this county
+                    with printer("getting water are for county {}".format(c.name)):
+                        water_area_m2 = self.water_area_m2_in_county(original_county_name)
+                    c.water_area_m2 = water_area_m2
+                    if c.water_area_m2 >= c.area_m2:
+                        err_msg("County {0}, too much water?", c.name)
 
-                c.save()
-
-                if not any(c.is_name(county_name) for county_name in county_names):
-                    print "Deleting dud county ", c.name
-                    del self.counties[c.osm_id]
-                    c.delete()
-                else:
-                    c.generate_url_path()
                     c.save()
+
+                    if not any(c.is_name(county_name) for county_name in county_names):
+                        print "Deleting dud county ", c.name
+                        del self.counties[c.osm_id]
+                        c.delete()
+                    else:
+                        c.generate_url_path()
+                        c.save()
 
             seen_counties = set(c.name for c in self.counties.values())
             missing_counties = county_names - seen_counties
@@ -409,7 +413,8 @@ class Command(BaseCommand):
         # delete old
         with transaction.commit_on_success():
 
-            self.delete_all_data()
+            with printer("deleting all old data"):
+                self.delete_all_data()
 
             self.cols = [
                 ('name', 'name'),
