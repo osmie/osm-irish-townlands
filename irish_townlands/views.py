@@ -427,8 +427,9 @@ def mappers(request):
 
 def group_by_username(model, start_date):
     next_date = start_date + timedelta(days=1)
-    this_datetime = datetime(start_date.year, start_date.month, start_date.day, 0, 0)
-    next_datetime = datetime(next_date.year, next_date.month, next_date.day, 0, 0)
+    utc = datetime.utcnow().tzinfo
+    this_datetime = datetime(start_date.year, start_date.month, start_date.day, 0, 0).replace(tzinfo=utc)
+    next_datetime = datetime(next_date.year, next_date.month, next_date.day, 0, 0).replace(tzinfo=utc)
 
     results = defaultdict(list)
     for el in model.objects.filter(osm_timestamp__gte=this_datetime, osm_timestamp__lt=next_datetime).only("osm_user", "url_path", "name").order_by("osm_user"):
@@ -472,9 +473,25 @@ def detailed_stats_for_period(from_date, to_date):
     return result
 
 def activity(request):
-    yesterday = date.today() - timedelta(days=1)
-    last_week = yesterday - timedelta(days=7)
+    to_date = date.today() - timedelta(days=1)
+    try:
+        if 'to' in request.GET:
+            year, month, day = request.GET['to'].split("-")
+            year, month, day = int(year), int(month), int(day)
+            to_date = date(year, month, day)
+    except:
+        pass
 
-    stats = detailed_stats_for_period(last_week, yesterday)
+    from_date = to_date - timedelta(days=7)
+    try:
+        if 'from' in request.GET:
+            year, month, day = request.GET['from'].split("-")
+            year, month, day = int(year), int(month), int(day)
+            from_date = date(year, month, day)
+    except:
+        pass
 
-    return render_to_response('irish_townlands/activity.html', {'from': last_week, 'to': yesterday, 'stats': stats})
+
+    stats = detailed_stats_for_period(from_date, to_date)
+
+    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats})

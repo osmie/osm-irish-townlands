@@ -20,7 +20,7 @@ done
 
 
 wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf
-PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf >/dev/null
+PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf &>/dev/null
 #rm ireland-and-northern-ireland.osm.pbf
 
 # not needed anymore
@@ -40,6 +40,12 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way on valid_
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__admin_level on valid_polygon (admin_level);" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__name on valid_polygon (name);" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index water_polygon__way on water_polygon using GIST (way);" 2>/dev/null || true
+
+# Index for each county
+for COUNTY_NAME in Tyrone Kerry Dublin Down Fermanagh Wexford Mayo Carlow Wicklow Longford Westmeath Cork Leitrim Laois Waterford Tipperary Monaghan Kilkenny Galway Meath Donegal Cavan Kildare Offaly Londonderry Clare Armagh Antrim Limerick Louth Sligo Roscommon ; do
+    PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_county_${COUNTY_NAME} on valid_polygon using GIST (way) where admin_level = '6' and name = 'County ${COUNTY_NAME}';" 2>/dev/null || true
+done
+
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column geo geography;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_transform(way, 4326)::geography;"
