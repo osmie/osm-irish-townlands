@@ -8,45 +8,55 @@
 
 <p>{{ osm_user }}'s mapping activity. <a href="{% url 'mappers' %}">View all mappers</a>. <a href="//www.openstreetmap.org/user/{{ osm_user }}/">View {{ osm_user }}'s OpenStreetMap profile.</a></p>
 
-<h2>Counties</h2>
-<p>{{ counties|length }} mapped.</p>
-<p><ul>
-    {% for c in counties %}
-        <li>{{ c.long_desc }}</li>
-    {% endfor %}
-</ul></p>
+{% if counties|length > 0 %}
+    <h2>Counties</h2>
+    <p>{{ counties|length }} mapped.</p>
+    <p><ul>
+        {% for c in counties %}
+            <li>{{ c.long_desc }}</li>
+        {% endfor %}
+    </ul></p>
+{% endif %}
 
 
-<h2>Baronies</h2>
-<p>{{ baronies|length }} mapped.</p>
-<p><ul>
-    {% for b in baronies %}
-        <li>{{ b.long_desc }}</li>
-    {% endfor %}
-</ul></p>
+{% if baronies|length > 0 %}
+    <h2>Baronies</h2>
+    <p>{{ baronies|length }} mapped.</p>
+    <p><ul>
+        {% for b in baronies %}
+            <li>{{ b.long_desc }}</li>
+        {% endfor %}
+    </ul></p>
+{% endif %}
 
-<h2>Civil Parishes</h2>
-<p>{{ civil_parishes|length }} mapped.</p>
-<p><ul>
-    {% for c in civil_parishes %}
-        <li>{{ c.long_desc }}</li>
-    {% endfor %}
-</ul></p>
+{% if civil_parishes|length > 0 %}
+    <h2>Civil Parishes</h2>
+    <p>{{ civil_parishes|length }} mapped.</p>
+    <p><ul>
+        {% for c in civil_parishes %}
+            <li>{{ c.long_desc }}</li>
+        {% endfor %}
+    </ul></p>
+{% endif %}
 
-<h2>Electoral Divisions</h2>
-<p>{{ eds|length }} mapped.</p>
-<p><ul>
-    {% for ed in eds %}
-        <li>{{ ed.long_desc }}</li>
-    {% endfor %}
-</ul></p>
+{% if eds|length > 0 %}
+    <h2>Electoral Divisions</h2>
+    <p>{{ eds|length }} mapped.</p>
+    <p><ul>
+        {% for ed in eds %}
+            <li>{{ ed.long_desc }}</li>
+        {% endfor %}
+    </ul></p>
+{% endif %}
 
-<h2>Townlands</h2>
-<p>{{ townlands|length }} mapped.</p>
-<p><ul>
-    {% for t in townlands %}
-        <li>{{ t.long_desc }}</li>
-    {% endfor %}
-</ul></p>
+{% if townlands|length > 0 %}
+    <h2>Townlands</h2>
+    <p>{{ townlands|length }} mapped.</p>
+    <p><ul>
+        {% for t in townlands %}
+            <li>{{ t.long_desc }}</li>
+        {% endfor %}
+    </ul></p>
+{% endif %}
 
 {% endblock body %}
