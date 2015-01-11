@@ -33,20 +33,20 @@
 
     <p>
     {% if townland.civil_parish and townland.barony and townland.county and townland.ed %}
-    {% blocktrans with civil_parish=townland.civil_parish.name barony=townland.barony.name county=townland.county.name ed=townland.ed.name %}{{ townland_name }} is in the Electoral Division of {{ ed }}, in Civil Parish of {{ civil_parish }}, in the Barony of {{ barony }}, in the County of {{ county }}{% endblocktrans %}
+    {% blocktrans with civil_parish=townland.civil_parish.short_desc barony=townland.barony.short_desc county=townland.county.short_desc ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}, in Civil Parish of {{ civil_parish }}, in the Barony of {{ barony }}, in the County of {{ county }}{% endblocktrans %}
     {% else %}
         {% if townland.ed %}
-            {% blocktrans with ed=townland.ed.name %}{{ townland_name }} is in the Electoral Division of {{ ed }}.{% endblocktrans %}
+            {% blocktrans with ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}.{% endblocktrans %}
         {% else %}
             {% blocktrans %}We don't know what Electoral Division {{ townland_name }} is in.{% endblocktrans %}
         {% endif %}
         {% if townland.civil_parish %}
-            {% blocktrans with civil_parish=townland.civil_parish.name %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
+            {% blocktrans with civil_parish=townland.civil_parish.short_desc %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
         {% else %}
             {% blocktrans %}We don't know what Civil Parish {{ townland_name }} is in.{% endblocktrans %}
         {% endif %}
         {% if townland.barony %}
-            {% blocktrans with barony=townland.barony.name %}{{ townland_name }} is in the Barony of {{ barony }}.{% endblocktrans %}
+            {% blocktrans with barony=townland.barony.short_desc %}{{ townland_name }} is in the Barony of {{ barony }}.{% endblocktrans %}
         {% else %}
             {% blocktrans %}We don't know what Barony {{ townland_name }} is in.{% endblocktrans %}
         {% endif %}
@@ -72,6 +72,9 @@
     {% endif %}
     {% if townland.alt_name %}
         <p>{% blocktrans with name=townland.name alt_name=townland.alt_name %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
+    {% endif %}
+    {% if townland.place = 'island' %}
+        <p>{% blocktrans with name=townland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
     {% endif %}
 
     <a name="map"></a>
