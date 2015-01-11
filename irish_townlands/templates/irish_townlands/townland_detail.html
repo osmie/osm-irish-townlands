@@ -73,6 +73,9 @@
     {% if townland.alt_name %}
         <p>{% blocktrans with name=townland.name alt_name=townland.alt_name %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
     {% endif %}
+    {% if townland.place = 'island' %}
+        <p>{% blocktrans with name=townland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
+    {% endif %}
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>

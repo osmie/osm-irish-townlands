@@ -203,10 +203,17 @@ class Area(models.Model):
         else:
             county_name = ''
 
+        if self.place == 'island':
+            island = ' ' + ugettext("(Island)") + ' '
+        else:
+            island = ''
+
         return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{civil_parish_name}{barony_name}{county_name}',
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
             url_path=reverse('view_area', args=[self.url_path]),
-            name=self.name, name_ga=name_ga, alt_name=alt_name, civil_parish_name=civil_parish_name, barony_name=barony_name, county_name=county_name
+            name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
+            civil_parish_name=civil_parish_name,
+            barony_name=barony_name, county_name=county_name
         )
 
     def short_desc(self):
