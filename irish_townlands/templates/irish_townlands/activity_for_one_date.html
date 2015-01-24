@@ -1,7 +1,7 @@
 <h3>{{ period.date }}</h2>
 <p><ul>
     {% for mapper_details in period.stats %}
-        <li><a href="{% url 'mapper_details' mapper_details.osm_user %}">{{ mapper_details.osm_user }}</a> added 
+    <li><a href="{{ request.build_absolute_uri }}{% url 'mapper_details' mapper_details.osm_user %}">{{ mapper_details.osm_user }}</a> added 
         {% if mapper_details.townlands %}
             {{ mapper_details.townlands|length }} townlands: {% for t in mapper_details.townlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
         {% endif %}

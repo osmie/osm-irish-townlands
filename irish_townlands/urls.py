@@ -12,7 +12,9 @@ urlpatterns = patterns('irish_townlands.views',
     url(r'^page/(?P<url_path>[-\w\d/]+)/$', 'page', name='page' ),
     url(r'^progress/duplicatenames/$', 'duplicatenames', name='duplicatenames' ),
     url(r'^progress/rate/$', 'rate', name='rate' ),
+
     url(r'^progress/activity/$', 'activity', name='activity' ),
+    url(r'^progress/activity/rss/$', 'activity_rss', name='activity_rss' ),
     url(r'^activity/$', RedirectView.as_view(pattern_name='activity')),
 
     url(r'^(?P<url_path>[-\w\d/]+)/debug/$', 'county_debug', name='county_debug' ),

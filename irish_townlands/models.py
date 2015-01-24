@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 from django.utils.translation import ungettext, ugettext
 from django.utils.html import format_html
 from django.core.urlresolvers import reverse
+from django.conf import settings
 import math
 
 from django.db import models
@@ -219,7 +220,7 @@ class Area(models.Model):
     def short_desc(self):
         return format_html(
             u'<a href="{url_path}">{name}</a>',
-            url_path=reverse('view_area', args=[self.url_path]), name=self.name
+            url_path=settings.BASE_URL + reverse('view_area', args=[self.url_path]), name=self.name
         )
 
 
