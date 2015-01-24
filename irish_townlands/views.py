@@ -10,11 +10,12 @@ from collections import defaultdict
 
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, redirect
+from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
 from django.contrib.staticfiles.templatetags.staticfiles import static
-
+from django.utils import feedgenerator
 
 from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
 from .pages import PAGES
@@ -495,3 +496,26 @@ def activity(request):
     stats = detailed_stats_for_period(from_date, to_date)
 
     return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats})
+
+def activity_rss(request):
+    to_date = date.today() - timedelta(days=1)
+    from_date = to_date - timedelta(days=7)
+
+    stats = detailed_stats_for_period(from_date, to_date)
+
+    feed = feedgenerator.Rss201rev2Feed(
+        title=u"Runnable",
+        link=u"http://www.townlands.ie/progress/activity/",
+        description=u"Irish Townlands mapping activity",
+        language=u"en",
+    )
+
+    for period in stats:
+        content = render_to_string("irish_townlands/activity_for_one_date.html", {'period': period}, context_instance=RequestContext(request))
+        feed.add_item(title=u"Townland activity",
+            link=u"http://www.example.com/entries/1/",
+            pubdate=period['date'],
+            description=content)
+
+    return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
+
