@@ -504,7 +504,7 @@ def activity_rss(request):
     stats = detailed_stats_for_period(from_date, to_date)
 
     feed = feedgenerator.Rss201rev2Feed(
-        title=u"Runnable",
+        title=u"Townlands.ie Activity",
         link=u"http://www.townlands.ie/progress/activity/",
         description=u"Irish Townlands mapping activity",
         language=u"en",
@@ -513,7 +513,7 @@ def activity_rss(request):
     for period in stats:
         content = render_to_string("irish_townlands/activity_for_one_date.html", {'period': period}, context_instance=RequestContext(request))
         feed.add_item(title=u"Townland activity",
-            link=u"http://www.example.com/entries/1/",
+            link=u"http://www.townlands.ie/progress/activity/",
             pubdate=period['date'],
             description=content)
 
