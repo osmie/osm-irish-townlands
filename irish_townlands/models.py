@@ -172,42 +172,41 @@ class Area(models.Model):
     def edit_in_id_url(self):
         return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
-    @property
-    def long_desc(self):
+    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
         name = self.name
 
-        if self.name_ga:
-            if self.alt_name_ga:
-                name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+        name_ga = ''
+        if incl_other_names:
+            if self.name_ga:
+                if self.alt_name_ga:
+                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+                else:
+                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
             else:
-                name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
-        else:
-            name_ga = ''
+                name_ga = ''
 
-        if self.alt_name:
-            alt_name = format_html(u" (aka {0}) ", self.alt_name)
-        else:
-            alt_name = ''
+            if self.alt_name:
+                alt_name = format_html(u" (aka {0}) ", self.alt_name)
+            else:
+                alt_name = ''
             
-        if getattr(self, 'civil_parish', None):
-            civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
-        else:
-            civil_parish_name = ''
+        civil_parish_name = ''
+        barony_name = ''
+        county_name = ''
+        if incl_hierachies:
+            if getattr(self, 'civil_parish', None):
+                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
 
-        if getattr(self, 'barony', None):
-            barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
-        else:
-            barony_name = ''
+            if getattr(self, 'barony', None):
+                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
 
-        if getattr(self, 'county', None):
-            county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
-        else:
-            county_name = ''
+            if getattr(self, 'county', None):
+                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
 
-        if self.place == 'island':
-            island = ' ' + ugettext("(Island)") + ' '
-        else:
-            island = ''
+        island = ''
+        if incl_misc:
+            if self.place == 'island':
+                island = ' ' + ugettext("(Island)") + ' '
 
         return format_html(
             u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
@@ -219,10 +218,15 @@ class Area(models.Model):
 
     @property
     def short_desc(self):
-        return format_html(
-            u'<a href="{url_path}">{name}</a>',
-            url_path=settings.BASE_URL + reverse('view_area', args=[self.url_path]), name=self.name
-        )
+        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
+
+    @property
+    def medium_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
+
+    @property
+    def long_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
 
 
     @property
@@ -247,11 +251,13 @@ class Area(models.Model):
             return None
 
     def expand_to_alternatives(self, incl_irish=True, desc="long"):
-        assert desc in ["long", "short"]
+        assert desc in ["long", "medium", "short"]
         results = []
 
         if desc == 'long':
             this_desc = self.long_desc
+        elif desc == 'medium':
+            this_desc = self.medium_desc
         elif desc == 'short':
             this_desc = self.short_desc
         else:

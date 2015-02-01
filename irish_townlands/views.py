@@ -587,7 +587,7 @@ def list(request, grouped=None):
 
     num_townlands = 0
     for t in townlands:
-        alternatives = t.expand_to_alternatives(incl_irish=incl_irish, desc=('short' if should_group else 'long'))
+        alternatives = t.expand_to_alternatives(incl_irish=incl_irish, desc=('medium' if should_group else 'long'))
         if should_group:
             alternatives = [
                 (format_html(u"Co. {}", t.county.name) if t.county else mark_safe('<i>(County unknown)</i>'),
