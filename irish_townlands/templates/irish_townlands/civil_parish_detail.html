@@ -2,7 +2,13 @@
 {% load i18n l10n humanize cache %}
 
 {% block title %}{% blocktrans %}Townlands in {{ civil_parish_name }}{% endblocktrans %}{% endblock %}
-{% block header %}<h1>Civil Parish of {{ civil_parish_name }}{% if civil_parish.county %}, Co. {{ civil_parish.county.name }}{% endif %}</h1>{% endblock %}
+{% block header %}<h1>
+    {% if civil_parish.county_name %}
+        {% blocktrans with county=civil_parish.county_name %}Civil Parish of {{ civil_parish_name }}, Co. {{ county }}{% endblocktrans %}
+    {% else %}
+        {% blocktrans %}Civil Parish of {{ civil_parish_name }}{% endblocktrans %}
+    {% endif %}
+</h1>{% endblock %}
 
 {% block body %}
 
@@ -17,14 +23,14 @@
 
     {% with baronies=civil_parish.baronies %}
         {% if baronies %}
-            <p>{{ civil_parish_name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {% for barony in baronies %}{% if not forloop.first %}{% if forloop.last %} and {% else %},{% endif %}{% endif %}<a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a>{% endfor %}.
+            <p>{{ civil_parish_name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.barony_list_textual|safe }}.
         {% endif %}
     {% endwith %}
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>
-        {% blocktrans location=civil_parish.centre_pretty %}It is located at {{ location }}.{% endblocktrans %}
+        It is located at {{ civil_parish.centre_pretty }}.
     </p>
     <div id="map" style="height: 500px; width: 600px;"></div>
     <script>

@@ -147,7 +147,7 @@ class Area(models.Model):
 
     @property
     def townlands_sorted(self):
-        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').order_by('name')
+        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'alt_name_ga', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name', "place").order_by('name')
 
     @property
     def baronies_sorted(self):
@@ -159,7 +159,7 @@ class Area(models.Model):
 
     @property
     def eds_sorted(self):
-        return self.eds.prefetch_related("townlands").order_by("name")
+        return self.eds.prefetch_related("townlands").only("name", "url_path", "county__id").order_by("name")
 
     @property
     def osm_browse_url(self):
@@ -222,6 +222,7 @@ class Area(models.Model):
             barony_name=barony_name, county_name=county_name
         )
 
+    @property
     def short_desc(self):
         return format_html(
             u'<a href="{url_path}">{name}</a>',
@@ -232,6 +233,23 @@ class Area(models.Model):
     @property
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
+
+    @property
+    def barony_list_textual(self):
+        baronies = [b.short_desc for b in self.baronies_sorted]
+        and_text = ugettext("and")
+        if len(baronies) < 2:
+            return "".join(baronies)
+        else:
+            return ", ".join(baronies[:-1]) + " " + and_text + " " + baronies[-1]
+
+    @property
+    def county_name(self):
+        # This is a bit of hack to do "select name from county where id = $COUNTY_ID"
+        try:
+            return County.objects.filter(id=self.county_id).values("name")[0]['name']
+        except:
+            return None
 
 
 def float_to_sexagesimal(x):
@@ -291,6 +309,7 @@ class CivilParish(Area):
             return
         self.county = counties[0]
 
+    @property
     def baronies(self):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")

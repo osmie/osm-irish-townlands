@@ -32,7 +32,7 @@ COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
 
 def progress(request):
     last_update = get_last_update()
-    counties = County.objects.order_by('name').all()
+    counties = County.objects.order_by('name').only("name", "url_path").all()
     errors = Error.objects.all().values_list('message', flat=True)
 
     area_of_ireland_incl_water = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
@@ -119,9 +119,16 @@ def view_area(request, url_path=None):
             }, context_instance=RequestContext(request))
 
     # Detail pages
+    # County
+    try:
+        name = "county"
+        x = County.objects.only("name", "url_path", "area_m2", "water_area_m2", "osm_user", "osm_timestamp", "osm_id").select_related().get(url_path=url_path)
+        return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
+    except County.DoesNotExist:
+        pass
     for model, name in (
                 (Townland, 'townland'), (CivilParish, 'civil_parish'),
-                (Barony, 'barony'), (County, 'county'),
+                (Barony, 'barony'), 
                 (ElectoralDivision, 'ed') ):
         try:
             x = model.objects.select_related().get(url_path=url_path)

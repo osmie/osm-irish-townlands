@@ -11,8 +11,6 @@
 
 {% block body %}
 
-{% cache 3600 townland_detail townland.url_path %}
-
     {% if townland.county and townland.barony and townland.civil_parish and townland.ed %}
     <p>
         <a href="{% url 'view_area' townland.county.url_path %}">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
@@ -164,5 +162,4 @@
     {% endif %}
 
 
-{% endcache %}
 {% endblock body %}

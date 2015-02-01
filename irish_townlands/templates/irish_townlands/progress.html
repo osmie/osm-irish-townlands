@@ -56,10 +56,12 @@
     {% for county in counties %}
         <tr>
             <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
-            <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
-            <td>{{ county.ed_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.ed_cover }}></progress></td>
-            <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
-            <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
+            {% with county_townland_cover=county.townland_cover county_ed_cover=county.ed_cover county_civil_parish_cover=county.civil_parish_cover county_barony_cover=county.barony_cover %}
+                <td>{{ county_townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county_townland_cover }}></progress></td>
+                <td>{{ county_ed_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county_ed_cover }}></progress></td>
+                <td>{{ county_civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county_civil_parish_cover }}></progress></td>
+                <td>{{ county_barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county_barony_cover }}></progress></td>
+            {% endwith %}
         </tr>
     {% endfor %}
 
