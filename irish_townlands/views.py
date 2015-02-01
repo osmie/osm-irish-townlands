@@ -264,8 +264,24 @@ def rate(request):
     return render_to_response('irish_townlands/rate.html', results,
         context_instance=RequestContext(request))
 
-def search(request):
-    search_term = request.GET.get('q', '').strip()
+def search(request, search_term=None):
+    if search_term is None or search_term == '':
+        search_term = request.GET.get('q', '')
+
+    search_term = search_term.strip()
+
+    if '/' in search_term and ' ' not in search_term:
+        # maybe an (old) URL. What they want is probably the last element
+        terms = [x for x in search_term.split("/") if len(x.strip()) > 0]
+        if len(terms) > 0:
+            last = terms[-1]
+            return redirect('search', search_term=last)
+
+    if search_term == '':
+        return render_to_response('irish_townlands/search_results.html', {},
+            context_instance=RequestContext(request))
+
+    search_term = search_term.replace("-", " ")
 
     qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term)
 
