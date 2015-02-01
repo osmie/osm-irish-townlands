@@ -1,0 +1,59 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans 'Townland Index' %}{% endblock %}
+{% block header %}<h1>{% trans 'Townland Index' %}</h1>{% endblock %}
+
+{% block body %}
+
+<p>
+This is a index of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
+
+It was generated on {{ today }}.
+
+<p>
+{% if should_group %}
+    This index is also available <a class="btn btn-primary btn-mini" href="{% url "townland_index_alphabetical" %}">Without any groupings, with all townlands alphabetical</a>.
+{% else %}
+    This index is also available <a class="btn btn-primary btn-mini"href="{% url "townland_index_grouped" %}">Grouped into counties, baronies and civil parishes</a>.
+{% endif %}
+</p>
+
+<p>
+{% if incl_irish %}
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=no">Hide Irish names</a>
+{% else %}
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=yes">Show Irish names</a>
+{% endif %}
+</p>
+
+<p><ol>
+{% for t in townlands %}
+    {% if should_group %}
+        {% ifchanged %}
+            </ol>
+            <h2>{{ t.0 }}</h2>
+            <ol>
+        {% endifchanged %}
+        {% ifchanged t.0 %}
+            </ol>
+            <h3>{{ t.1 }}</h3>
+            <ol>
+        {% endifchanged %}
+        {% ifchanged t.0 t.1 %}
+            </ol>
+            <h4>{{ t.2 }}</h4>
+            <ol>
+        {% endifchanged %}
+
+        <li>{{ t.4 }}</li>
+    {% else %}
+        {% ifchanged %}
+            <h2>{{ t.0.0|upper }}</h2>
+        {% endifchanged %}
+        <li>{{ t.1 }}</li>
+    {% endif %}
+{% endfor %}
+</ol></p>
+
+{% endblock %}

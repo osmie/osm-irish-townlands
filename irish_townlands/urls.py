@@ -4,6 +4,10 @@ from django.views.generic import RedirectView
 from django.conf import settings
 
 urlpatterns = patterns('irish_townlands.views',
+
+    url(r'^index/$', 'townland_index_alphabetical', name='townland_index_alphabetical' ),
+    url(r'^index/grouped/$', 'townland_index_grouped', name='townland_index_grouped' ),
+
     url(r'^taginfo.json$', 'taginfo', name='taginfo'),
     url(r'^progress/$', 'progress', name='progress' ),
     url(r'^search/$', 'search', name='search' ),

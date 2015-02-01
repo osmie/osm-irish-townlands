@@ -5,13 +5,15 @@ from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
 from django.utils.translation import ungettext, ugettext
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from django.core.urlresolvers import reverse
 from django.conf import settings
 import math
 
 from django.db import models
 
+
+from .utils import m2_to_arp, remove_prefixes, remove_accents
 
 def err_msg(msg, *args, **kwargs):
     msg = msg.format(*args, **kwargs)
@@ -74,14 +76,7 @@ class Area(models.Model):
 
     @property
     def area_acres_roods_perches(self):
-        acres_float = self.area_acres
-        acres = int(acres_float)
-        subacres = acres_float - acres
-
-        roods = int(subacres * 4)
-        perches = int((subacres * 4 - roods) * 40)
-
-        return (acres, roods, perches)
+        return m2_to_arp(self.area_m2)
 
     @property
     def area_acres_roods_perches_textual(self):
@@ -177,42 +172,41 @@ class Area(models.Model):
     def edit_in_id_url(self):
         return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
-    @property
-    def long_desc(self):
+    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
         name = self.name
 
-        if self.name_ga:
-            if self.alt_name_ga:
-                name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+        name_ga = ''
+        if incl_other_names:
+            if self.name_ga:
+                if self.alt_name_ga:
+                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+                else:
+                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
             else:
-                name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
-        else:
-            name_ga = ''
+                name_ga = ''
 
-        if self.alt_name:
-            alt_name = format_html(u" (aka {0}) ", self.alt_name)
-        else:
-            alt_name = ''
+            if self.alt_name:
+                alt_name = format_html(u" (aka {0}) ", self.alt_name)
+            else:
+                alt_name = ''
             
-        if getattr(self, 'civil_parish', None):
-            civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
-        else:
-            civil_parish_name = ''
+        civil_parish_name = ''
+        barony_name = ''
+        county_name = ''
+        if incl_hierachies:
+            if getattr(self, 'civil_parish', None):
+                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
 
-        if getattr(self, 'barony', None):
-            barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
-        else:
-            barony_name = ''
+            if getattr(self, 'barony', None):
+                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
 
-        if getattr(self, 'county', None):
-            county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
-        else:
-            county_name = ''
+            if getattr(self, 'county', None):
+                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
 
-        if self.place == 'island':
-            island = ' ' + ugettext("(Island)") + ' '
-        else:
-            island = ''
+        island = ''
+        if incl_misc:
+            if self.place == 'island':
+                island = ' ' + ugettext("(Island)") + ' '
 
         return format_html(
             u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
@@ -224,10 +218,15 @@ class Area(models.Model):
 
     @property
     def short_desc(self):
-        return format_html(
-            u'<a href="{url_path}">{name}</a>',
-            url_path=settings.BASE_URL + reverse('view_area', args=[self.url_path]), name=self.name
-        )
+        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
+
+    @property
+    def medium_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
+
+    @property
+    def long_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
 
 
     @property
@@ -251,6 +250,84 @@ class Area(models.Model):
         except:
             return None
 
+    def expand_to_alternatives(self, incl_irish=True, desc="long"):
+        assert desc in ["long", "medium", "short"]
+        results = []
+
+        if desc == 'long':
+            this_desc = self.long_desc
+        elif desc == 'medium':
+            this_desc = self.medium_desc
+        elif desc == 'short':
+            this_desc = self.short_desc
+        else:
+            raise NotImplementedError()
+
+        def split_string(input_string):
+            strings_to_split = [" and ", " or ", " agus ", u" nó "]
+            results = []
+            for s in strings_to_split:
+                if s in input_string:
+                    names = input_string.split(s)
+                    for name in names[1:]:
+                        results.append(name)
+            return results
+
+        def name_to_key(name):
+            key = remove_prefixes(name, ['An t-', 'An t', 'An ', 'Na h-', 'Na h', 'Na '])
+            key = remove_accents(key)
+            key = key.lower()
+            return key
+
+        arp_text = ugettext("Area in Acres, Rods and Perches")
+        arp = self.area_acres_roods_perches
+        results.append((
+            name_to_key(self.name),
+            format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
+                mark_safe(unicode(this_desc)), arp_text, arp[0], arp[1], arp[2])))
+        alternatives = []
+
+        alternatives.extend(split_string(self.name))
+
+        if self.alt_name:
+            alternatives.append(self.alt_name)
+            alternatives.extend(split_string(self.alt_name))
+        
+        if incl_irish:
+            if self.name_ga:
+                alternatives.append(self.name_ga)
+                alternatives.extend(split_string(self.name_ga))
+
+            if self.alt_name_ga:
+                alternatives.append(self.alt_name_ga)
+                alternatives.extend(split_string(self.alt_name_ga))
+
+        for alt in alternatives:
+            key = name_to_key(alt)
+
+            results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), this_desc))))
+
+        return results
+
+    @property
+    def townlands_for_list_display(self):
+        """
+        Returns a list of strings that can be used to show a list of townlands.
+        A townland can be entered more than once if there's an altname, namega,
+        altnamega, or an " or " or an " and " in the name.
+
+        It's then sorted by a sensible key for manual searching.
+        """
+
+        townlands = self.townlands_sorted
+        results = []
+
+        for t in townlands:
+            results.extend(t.expand_to_alternatives())
+
+        results.sort()
+        results = [x[1] for x in results]
+        return results
 
 def float_to_sexagesimal(x):
     x = abs(x)

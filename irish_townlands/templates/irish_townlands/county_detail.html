@@ -38,7 +38,7 @@
         {% if civil_parishes %}
             <ul>
             {% for civil_parish in civil_parishes %}
-                <li><a href="{% url 'view_area' civil_parish.url_path %}">{{ civil_parish.name }}</a> ({{ civil_parish.townlands.count }} townlands)</li>
+                <li>{{ civil_parish.short_desc }} ({{ civil_parish.townlands.count }} townlands)</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -52,7 +52,7 @@
         {% if eds %}
             <ul>
             {% for ed in eds %}
-                <li><a href="{% url 'view_area' ed.url_path %}">{{ ed.name }}</a> ({{ ed.townlands.count }} townlands)</li>
+                <li>{{ ed.short_desc }} ({{ ed.townlands.count }} townlands)</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -67,13 +67,9 @@
         <a href="//en.wikipedia.org/wiki/List_of_townlands_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of townlands in {{ county_name }}.{% endblocktrans %}</a>
     </p>
     <ul>
-    {% for townland in county.townlands_sorted %}
+    {% for townland in county.townlands_for_list_display %}
         <li>
-            {{ townland.long_desc }}
-            <abbr title="{% blocktrans %}Area in Acres, Rods and Perches{% endblocktrans %}">{% with arp=townland.area_acres_roods_perches %}
-                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                {% endwith %}
-            </abbr>
+            {{ townland }}
         </li>
     {% endfor %}
     </ul>
