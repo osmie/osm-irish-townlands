@@ -594,10 +594,14 @@ def townland_list(request, should_group=False):
     for t in townlands:
         alternatives = t.expand_to_alternatives(incl_irish=incl_irish, desc=('medium' if should_group else 'long'))
         if should_group:
+            # Big hack here to get the sorting I want. Added zero width space
+            # (\ufeff) before each 'unknown' element so that it would be sorted
+            # last (e.g. "barony unknown" section will be the last entry for
+            # that county under all the actual baronies we know about.
             alternatives = [
-                (format_html(u"<span class=\"text-muted\">Co.</span> {}", t.county.name) if t.county else mark_safe('<i class=\"text-muted\">(County unknown)</i>'),
-                 format_html(u"<span class=\"text-muted\">Barony of</span> {}", t.barony.name) if t.barony else mark_safe('<i class=\"text-muted\">(Barony unknown)</i>'),
-                 format_html(u"{} <span class=\"text-muted\">Civil Parish</span>", t.civil_parish.name) if t.civil_parish else mark_safe('<i class=\"text-muted\">(Civil Parish unknown)</i>'),
+                (format_html(u"<span class=\"text-muted\">Co.</span> {}", t.county.name) if t.county else mark_safe(u"\ufeff<i class=\"text-muted\">(County unknown)</i>"),
+                 format_html(u"<span class=\"text-muted\">Barony of</span> {}", t.barony.name) if t.barony else mark_safe(u'\ufeff<i class=\"text-muted\">(Barony unknown)</i>'),
+                 format_html(u"{} <span class=\"text-muted\">Civil Parish</span>", t.civil_parish.name) if t.civil_parish else mark_safe(u'\ufeff<i class=\"text-muted\">(Civil Parish unknown)</i>'),
                  townland_key, text) for (townland_key, text) in alternatives]
         results.extend(alternatives)
         num_townlands += 1
