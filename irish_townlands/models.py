@@ -159,7 +159,7 @@ class Area(models.Model):
 
     @property
     def eds_sorted(self):
-        return self.eds.prefetch_related("townlands").order_by("name")
+        return self.eds.prefetch_related("townlands").only("name", "url_path", "county__id").order_by("name")
 
     @property
     def osm_browse_url(self):
