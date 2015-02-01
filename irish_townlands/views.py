@@ -530,7 +530,7 @@ def activity(request):
 
 def activity_rss(request):
     to_date = date.today() - timedelta(days=1)
-    from_date = to_date - timedelta(days=7)
+    from_date = to_date - timedelta(days=30)
 
     stats = detailed_stats_for_period(from_date, to_date)
 
