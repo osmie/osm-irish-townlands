@@ -520,7 +520,7 @@ def activity_rss(request):
     for period in stats:
         content = render_to_string("irish_townlands/activity_for_one_date.html", {'period': period}, context_instance=RequestContext(request))
         feed.add_item(title=u"Townland activity",
-            link=u"http://www.townlands.ie/progress/activity/",
+            link=u"http://www.townlands.ie/progress/activity/?on={}-{}-{}".format(period['date'].year, period['date'].month, period['date'].day),
             pubdate=period['date'],
             description=content)
 
