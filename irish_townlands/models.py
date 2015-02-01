@@ -246,8 +246,16 @@ class Area(models.Model):
         except:
             return None
 
-    def expand_to_alternatives(self, incl_irish=True):
+    def expand_to_alternatives(self, incl_irish=True, desc="long"):
+        assert desc in ["long", "short"]
         results = []
+
+        if desc == 'long':
+            this_desc = self.long_desc
+        elif desc == 'short':
+            this_desc = self.short_desc
+        else:
+            raise NotImplementedError()
 
         def split_string(input_string):
             strings_to_split = [" and ", " or ", " agus ", u" nó "]
@@ -270,7 +278,7 @@ class Area(models.Model):
         results.append((
             name_to_key(self.name),
             format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
-                mark_safe(unicode(self.long_desc)), arp_text, arp[0], arp[1], arp[2])))
+                mark_safe(unicode(this_desc)), arp_text, arp[0], arp[1], arp[2])))
         alternatives = []
 
         alternatives.extend(split_string(self.name))
@@ -291,7 +299,7 @@ class Area(models.Model):
         for alt in alternatives:
             key = name_to_key(alt)
 
-            results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), self.long_desc))))
+            results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), this_desc))))
 
         return results
 
