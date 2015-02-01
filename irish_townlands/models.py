@@ -249,50 +249,46 @@ class Area(models.Model):
     def expand_to_alternatives(self):
         results = []
 
-        strings_to_split = [" and ", " or ", " agus ", u" nó "]
+        def split_string(input_string):
+            strings_to_split = [" and ", " or ", " agus ", u" nó "]
+            results = []
+            for s in strings_to_split:
+                if s in input_string:
+                    names = input_string.split(s)
+                    for name in names[1:]:
+                        results.append(name)
+            return results
+
+        def name_to_key(name):
+            key = remove_prefixes(name, ['An t-', 'An t', 'An ', 'Na h-', 'Na h', 'Na '])
+            key = remove_accents(key)
+            key = key.lower()
+            return key
+
         arp_text = ugettext("Area in Acres, Rods and Perches")
         arp = self.area_acres_roods_perches
         results.append((
-            self.name,
+            name_to_key(self.name),
             format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
                 mark_safe(unicode(self.long_desc)), arp_text, arp[0], arp[1], arp[2])))
         alternatives = []
 
-        for s in strings_to_split:
-            if s in self.name:
-                names = self.name.split(s)
-                for name in names[1:]:
-                    alternatives.append(name)
+        alternatives.extend(split_string(self.name))
 
         if self.alt_name:
             alternatives.append(self.alt_name)
-            for s in strings_to_split:
-                if s in self.alt_name:
-                    names = self.alt_name.split(s)
-                    for name in names[1:]:
-                        alternatives.append(name)
+            alternatives.extend(split_string(self.alt_name))
         
         if self.name_ga:
             alternatives.append(self.name_ga)
-            for s in strings_to_split:
-                if s in self.name_ga:
-                    names = self.name_ga.split(s)
-                    for name in names[1:]:
-                        alternatives.append(name)
+            alternatives.extend(split_string(self.name_ga))
 
         if self.alt_name_ga:
             alternatives.append(self.alt_name_ga)
-            for s in strings_to_split:
-                if s in self.alt_name_ga:
-                    names = self.alt_name_ga.split(s)
-                    for name in names[1:]:
-                        alternatives.append(name)
+            alternatives.extend(split_string(self.alt_name_ga))
 
         for alt in alternatives:
-            # What's the sort key
-            key = remove_prefixes(alt, ['An t-', 'An t', 'An '])
-            key = remove_accents(key)
-            key = key.lower()
+            key = name_to_key(alt)
 
             results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), self.long_desc))))
 
