@@ -38,5 +38,5 @@
     | <a href="{% url 'mappers' %}">{% trans "Who's mapping townlands?" %}</a>
     | <a href="{% url 'activity' %}">{% trans "Townland mapping activity" %}</a>
     | <a href="{% url "townland_index_alphabetical" %}"><i class="glyphicon glyphicon-list"></i> Townland Index</a>
-    | {% blocktrans with update_date=last_update.0 data_age=last_update.1 %}Last update: {{ update_date }} using OSM data from {{ data_age }}.{% endblocktrans %}
+    | {% blocktrans with update_date=last_update.0 data_age=last_update.1 %}Last update: {{ update_date }}{% endblocktrans %}
 {% endblock %}
