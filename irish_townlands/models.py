@@ -13,6 +13,8 @@ import math
 from django.db import models
 
 
+from .utils import m2_to_arp
+
 def err_msg(msg, *args, **kwargs):
     msg = msg.format(*args, **kwargs)
     Error.objects.create(message=msg)
@@ -74,14 +76,7 @@ class Area(models.Model):
 
     @property
     def area_acres_roods_perches(self):
-        acres_float = self.area_acres
-        acres = int(acres_float)
-        subacres = acres_float - acres
-
-        roods = int(subacres * 4)
-        perches = int((subacres * 4 - roods) * 40)
-
-        return (acres, roods, perches)
+        return m2_to_arp(self.area_m2)
 
     @property
     def area_acres_roods_perches_textual(self):
