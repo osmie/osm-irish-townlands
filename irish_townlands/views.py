@@ -586,7 +586,7 @@ def townland_index_grouped(request):
 def townland_index(request, should_group=False):
     incl_irish = request.GET.get("incl_irish", "yes") == "yes"
 
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")[:500]
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")
 
     results = []
 
