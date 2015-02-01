@@ -577,12 +577,13 @@ def activity_rss(request):
     return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
 
 def list(request):
-    townlands = Townland.objects.only("name")[:10]
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")
 
     results = []
 
     for t in townlands:
-        results.extend(t.expand_to_alternatives())
+        alternatives = t.expand_to_alternatives()
+        results.extend(alternatives)
 
     results.sort()
     results = [x[1] for x in results]
