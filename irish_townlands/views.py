@@ -264,9 +264,8 @@ def rate(request):
     return render_to_response('irish_townlands/rate.html', results,
         context_instance=RequestContext(request))
 
-def search(request, search_term=None):
-    if search_term is None or search_term == '':
-        search_term = request.GET.get('q', '')
+def search(request):
+    search_term = request.GET.get('q', '')
 
     search_term = search_term.strip()
 
@@ -275,7 +274,8 @@ def search(request, search_term=None):
         terms = [x for x in search_term.split("/") if len(x.strip()) > 0]
         if len(terms) > 0:
             last = terms[-1]
-            return redirect('search', search_term=last)
+            search_url = reverse('search') + "?" + urllib.urlencode({'q': last})
+            return redirect(search_url)
 
     if search_term == '':
         return render_to_response('irish_townlands/search_results.html', {},

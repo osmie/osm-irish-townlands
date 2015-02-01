@@ -6,7 +6,7 @@ from django.conf import settings
 urlpatterns = patterns('irish_townlands.views',
     url(r'^taginfo.json$', 'taginfo', name='taginfo'),
     url(r'^progress/$', 'progress', name='progress' ),
-    url(r'^search/(?P<search_term>.*)$', 'search', name='search' ),
+    url(r'^search/$', 'search', name='search' ),
     url(r'^mappers/$', 'mappers', name='mappers' ),
     url(r'^mapper/(?P<osm_user>.+)/$', 'mapper_details', name='mapper_details' ),
     url(r'^page/(?P<url_path>[-\w\d/]+)/$', 'page', name='page' ),
