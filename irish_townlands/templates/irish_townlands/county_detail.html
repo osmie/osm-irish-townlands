@@ -38,7 +38,7 @@
         {% if civil_parishes %}
             <ul>
             {% for civil_parish in civil_parishes %}
-                <li><a href="{% url 'view_area' civil_parish.url_path %}">{{ civil_parish.name }}</a> ({{ civil_parish.townlands.count }} townlands)</li>
+                <li>{{ civil_parish.short_desc }} ({{ civil_parish.townlands.count }} townlands)</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -52,7 +52,7 @@
         {% if eds %}
             <ul>
             {% for ed in eds %}
-                <li><a href="{% url 'view_area' ed.url_path %}">{{ ed.name }}</a> ({{ ed.townlands.count }} townlands)</li>
+                <li>{{ ed.short_desc }} ({{ ed.townlands.count }} townlands)</li>
             {% endfor %}
             </ul>
         {% endif %}
