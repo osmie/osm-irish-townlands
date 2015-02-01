@@ -291,7 +291,10 @@ class Area(models.Model):
                 alternatives.append(t.alt_name_ga)
 
             for alt in alternatives:
-                results.append((alt, format_html(u"{} <i>(see {})</i>".format(unicode(alt), t.long_desc))))
+                # What's the sort key
+                key = alt[3:] if alt.startswith("An ") else alt
+
+                results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), t.long_desc))))
 
         results.sort()
         results = [x[1] for x in results]
