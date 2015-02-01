@@ -17,7 +17,7 @@
     {% for osm_user, stats in all_mappers %}
         <tr>
             <td><a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a></td>
-            <td>{% blocktrans count num=stats.townland townlands=stats.townland|intcomma %}{{ townland }} townland{% plural %}{{ townland }} townlands{% endblocktrans %}</td>
+            <td>{% with townlands=stats.townland|intcomma %}{% blocktrans count num=stats.townland %}{{ townlands }} townland{% plural %}{{ townlands }} townlands{% endblocktrans %}{% endwith %}</td>
             <td>{% blocktrans count num=stats.ed %}{{ num }} ED{% plural %}{{ num }} EDs{% endblocktrans %}</td>
             <td>{% blocktrans count num=stats.civil_parish %}{{ num }} Civil Parish{% plural %}{{ num }} Civil Parishes{% endblocktrans %}</td>
             <td>{% blocktrans count num=stats.barony %}{{ num }} Barony{% plural %}{{ num }} Baronies{% endblocktrans %}</td>
