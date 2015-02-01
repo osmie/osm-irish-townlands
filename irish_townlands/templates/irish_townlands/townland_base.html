@@ -32,8 +32,8 @@
 
 
 {% block footer_extra %}
-      <a href="{% url 'page' 'copyright' %}">{% trans 'Copyright' %}</a>
-    | <a href="{% url 'page' 'download' %}">{% trans 'Download Data' %}</a>
+      <a href="{% url 'page' 'copyright' %}"><i class="glyphicon glyphicon-copyright-mark"></i> {% trans 'Copyright' %}</a>
+    | <a href="{% url 'page' 'download' %}"><i class="glyphicon glyphicon-download"></i> {% trans 'Download Data' %}</a>
     | <a href="{% url 'page' 'data_freshness' %}">{% trans 'How up-to-date is Townlands.ie?' %}</a>
     | <a href="{% url 'mappers' %}">{% trans "Who's mapping townlands?" %}</a>
     | <a href="{% url 'activity' %}">{% trans "Townland mapping activity" %}</a>
