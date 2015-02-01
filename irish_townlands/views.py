@@ -16,6 +16,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils import feedgenerator
+from django.utils.translation import ungettext, ugettext
 
 from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
 from .pages import PAGES
@@ -458,17 +459,40 @@ def detailed_stats_for_period(from_date, to_date):
         baronies = group_by_username(Barony, date)
         counties = group_by_username(County, date)
 
+        num_townlands = sum(len(l) for l in townlands.values())
+        num_eds = sum(len(l) for l in eds.values())
+        num_cps = sum(len(l) for l in cps.values())
+        num_baronies = sum(len(l) for l in baronies.values())
+
+        summary = []
+        if num_townlands > 0:
+            summary.append(ungettext("%d townland", "%d townlands", num_townlands) % num_townlands)
+        if num_eds > 0:
+            summary.append(ungettext("%d ED", "%d EDs", num_eds) % num_eds)
+        if num_cps > 0:
+            summary.append(ungettext("%d civil parish", "%d civil parises", num_cps) % num_cps)
+        if num_baronies > 0:
+            summary.append(ungettext("%d barony", "%d baronies", num_baronies) % num_baronies)
+        if len(summary) == 0:
+            summary.append(ugettext("No mapping activity"))
+
+        summary = " ".join(summary)
+
+
         users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys())
         users = sorted(list(users))
-        this_date_details = {'date': date, 'stats': [
-            {'osm_user': osm_user,
-             'townlands': townlands.get(osm_user, []),
-             'eds': eds.get(osm_user, []),
-             'cps': cps.get(osm_user, []),
-             'baronies': baronies.get(osm_user, []),
-             'counties': counties.get(osm_user, []),
-            }
-            for osm_user in users]}
+        this_date_details = {
+            'date': date,
+            'summary': summary,
+            'stats': [
+                {'osm_user': osm_user,
+                 'townlands': townlands.get(osm_user, []),
+                 'eds': eds.get(osm_user, []),
+                 'cps': cps.get(osm_user, []),
+                 'baronies': baronies.get(osm_user, []),
+                 'counties': counties.get(osm_user, []),
+                }
+                for osm_user in users]}
         result.append(this_date_details)
 
     return result
@@ -519,7 +543,8 @@ def activity_rss(request):
 
     for period in stats:
         content = render_to_string("irish_townlands/activity_for_one_date.html", {'period': period}, context_instance=RequestContext(request))
-        feed.add_item(title=u"Townland activity",
+        feed.add_item(
+            title=u"Townlands.ie: " + period['summary'],
             link=u"http://www.townlands.ie/progress/activity/?on={}-{}-{}".format(period['date'].year, period['date'].month, period['date'].day),
             pubdate=period['date'],
             description=content)
