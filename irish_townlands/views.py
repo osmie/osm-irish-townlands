@@ -17,6 +17,7 @@ from django.db.models import Sum, Count, Q
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils import feedgenerator
 from django.utils.translation import ungettext, ugettext
+from django.utils.html import format_html, mark_safe
 
 from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
 from .pages import PAGES
@@ -576,8 +577,10 @@ def activity_rss(request):
 
     return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
 
-def list(request):
+def list(request, grouped=None):
     incl_irish = request.GET.get("incl_irish", "yes") == "yes"
+    should_group = (grouped == '/grouped')
+
     townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")
 
     results = []
@@ -585,11 +588,16 @@ def list(request):
     num_townlands = 0
     for t in townlands:
         alternatives = t.expand_to_alternatives(incl_irish=incl_irish)
+        if should_group:
+            alternatives = [
+                (format_html(u"Co. {}", t.county.name) if t.county else mark_safe('<i>(County unknown)</i>'),
+                 format_html(u"Barony of {}", t.barony.name) if t.barony else mark_safe('<i>(Barony unknown)</i>'),
+                 format_html(u"{} Civil Parish", t.civil_parish.name) if t.civil_parish else mark_safe('<i>(Civil Parish unknown)</i>'),
+                 townland_key, text) for (townland_key, text) in alternatives]
         results.extend(alternatives)
         num_townlands += 1
 
     results.sort()
-    results = [x[1] for x in results]
 
-    return render_to_response('irish_townlands/list.html', {'townlands': results, 'num_townlands': num_townlands, 'today': date.today()},
+    return render_to_response('irish_townlands/list.html', {'townlands': results, 'num_townlands': num_townlands, 'today': date.today(), 'should_group': should_group},
             context_instance=RequestContext(request))

@@ -14,7 +14,21 @@ It was generated on {{ today }}.
 
 <p><ul>
 {% for t in townlands %}
-    <li>{{ t }}</li>
+    {% if should_group %}
+        {% ifchanged %}
+            <h2>{{ t.0 }}</h2>
+        {% endifchanged %}
+        {% ifchanged %}
+            <h3>{{ t.1 }}</h3>
+        {% endifchanged %}
+        {% ifchanged %}
+            <h4>{{ t.2 }}</h4>
+        {% endifchanged %}
+
+        <li>{{ t.4 }}</li>
+    {% else %}
+        <li>{{ t.1 }}</li>
+    {% endif %}
 {% endfor %}
 </ul></p>
 
