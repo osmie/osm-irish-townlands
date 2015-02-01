@@ -222,6 +222,7 @@ class Area(models.Model):
             barony_name=barony_name, county_name=county_name
         )
 
+    @property
     def short_desc(self):
         return format_html(
             u'<a href="{url_path}">{name}</a>',
@@ -232,6 +233,15 @@ class Area(models.Model):
     @property
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
+
+    @property
+    def barony_list_textual(self):
+        baronies = [b.short_desc for b in self.baronies_sorted]
+        and_text = ugettext("and")
+        if len(baronies) < 2:
+            return "".join(baronies)
+        else:
+            return ", ".join(baronies[:-1]) + " " + and_text + " " + baronies[-1]
 
 
 def float_to_sexagesimal(x):
@@ -291,6 +301,7 @@ class CivilParish(Area):
             return
         self.county = counties[0]
 
+    @property
     def baronies(self):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
