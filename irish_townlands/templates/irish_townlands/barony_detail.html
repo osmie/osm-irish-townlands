@@ -1,11 +1,10 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load i18n l10n humanize cache %}
+{% load i18n l10n humanize %}
 
 {% block title %}{{ barony.name }}{% endblock %}
 {% block header %}<h1>Barony of {{ barony.name }}{% if barony.county %}, Co. {{ barony.county.name }}{% endif %}</h1>{% endblock %}
 
 {% block body %}
-{% cache 3600 barony_detail barony.url_path %}
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ barony.name }}.</p>
 
@@ -94,5 +93,4 @@
     {% endif %}
 
 
-{% endcache %}
 {% endblock body %}
