@@ -40,6 +40,7 @@
     <thead>
         <td>County</td>
         <td colspan=2>Townlands</td>
+        <td colspan=2>Electoral Divisions</td>
         <td colspan=2>Civil Parishes</td>
         <td colspan=2>Baronies</td>
     </thead>
@@ -47,6 +48,7 @@
         <tr>
             <td>All Ireland</td>
             <td>{{ townland_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ townland_progress }}></progress></td>
+            <td>{{ ed_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ ed_progress }}></progress></td>
             <td>{{ civil_parish_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ civil_parish_progress }}></progress></td>
             <td>{{ barony_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ barony_progress }}></progress></td>
         </tr>
@@ -54,6 +56,7 @@
         <tr>
             <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
             <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
+            <td>{{ county.ed_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.ed_cover }}></progress></td>
             <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
             <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
         </tr>

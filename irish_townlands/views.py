@@ -41,6 +41,7 @@ def progress(request):
     area_of_ireland = area_of_ireland_excl_water
 
     area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_all_eds = ElectoralDivision.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_civil_parishes = CivilParish.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_baronies = Barony.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
 
@@ -48,14 +49,15 @@ def progress(request):
         townland_progress = civil_parish_progress = barony_progress = 0
     else:
         townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+        ed_progress = ( area_of_all_eds / area_of_ireland ) * 100
         civil_parish_progress = ( area_of_all_civil_parishes / area_of_ireland ) * 100
         barony_progress = ( area_of_all_baronies / area_of_ireland ) * 100
 
     return render_to_response('irish_townlands/progress.html',
         {
             'counties':counties, 'last_update':last_update, 'errors':errors,
-            'townland_progress': townland_progress, 'civil_parish_progress': civil_parish_progress,
-            'barony_progress': barony_progress,
+            'townland_progress': townland_progress, 'ed_progress': ed_progress,
+            'civil_parish_progress': civil_parish_progress, 'barony_progress': barony_progress,
          },
         context_instance=RequestContext(request))
 
