@@ -13,7 +13,7 @@ import math
 from django.db import models
 
 
-from .utils import m2_to_arp
+from .utils import m2_to_arp, remove_prefixes, remove_accents
 
 def err_msg(msg, *args, **kwargs):
     msg = msg.format(*args, **kwargs)
@@ -275,7 +275,9 @@ class Area(models.Model):
 
         for alt in alternatives:
             # What's the sort key
-            key = alt[3:] if alt.startswith("An ") else alt
+            key = remove_prefixes(alt, ['An t-', 'An t', 'An '])
+            key = remove_accents(key)
+            key = key.lower()
 
             results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), self.long_desc))))
 
