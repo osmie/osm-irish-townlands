@@ -32,7 +32,7 @@ COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
 
 def progress(request):
     last_update = get_last_update()
-    counties = County.objects.order_by('name').all()
+    counties = County.objects.order_by('name').only("name").all()
     errors = Error.objects.all().values_list('message', flat=True)
 
     area_of_ireland_incl_water = County.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
