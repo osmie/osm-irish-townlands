@@ -48,6 +48,9 @@ It was generated on {{ today }}.
 
         <li>{{ t.4 }}</li>
     {% else %}
+        {% ifchanged %}
+            <h2>{{ t.0.0|upper }}</h2>
+        {% endifchanged %}
         <li>{{ t.1 }}</li>
     {% endif %}
 {% endfor %}
