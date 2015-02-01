@@ -147,7 +147,7 @@ class Area(models.Model):
 
     @property
     def townlands_sorted(self):
-        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').order_by('name')
+        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name', "place").order_by('name')
 
     @property
     def baronies_sorted(self):
