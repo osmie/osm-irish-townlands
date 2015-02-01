@@ -40,22 +40,22 @@
     <thead>
         <td>County</td>
         <td colspan=2>Townlands</td>
-        <td colspan=2>Baronies</td>
         <td colspan=2>Civil Parishes</td>
+        <td colspan=2>Baronies</td>
     </thead>
     <tbody>
         <tr>
             <td>All Ireland</td>
             <td>{{ townland_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ townland_progress }}></progress></td>
-            <td>{{ barony_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ barony_progress }}></progress></td>
             <td>{{ civil_parish_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ civil_parish_progress }}></progress></td>
+            <td>{{ barony_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ barony_progress }}></progress></td>
         </tr>
     {% for county in counties %}
         <tr>
             <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
             <td>{{ county.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.townland_cover }}></progress></td>
-            <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
             <td>{{ county.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.civil_parish_cover }}></progress></td>
+            <td>{{ county.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ county.barony_cover }}></progress></td>
         </tr>
     {% endfor %}
 
