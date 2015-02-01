@@ -251,6 +251,36 @@ class Area(models.Model):
         except:
             return None
 
+    @property
+    def townlands_for_list_display(self):
+        strings_to_split = [" and ", " or "]
+        townlands = self.townlands_sorted
+        results = []
+        for t in townlands:
+            results.append((t.name, t.long_desc))
+            alternatives = []
+
+            for s in strings_to_split:
+                if s in t.name:
+                    names = t.name.split(s)
+                    for name in names[1:]:
+                        alternatives.append(name)
+
+            if t.alt_name:
+                alternatives.append(t.alt_name)
+            
+            if t.name_ga:
+                alternatives.append(t.name_ga)
+
+            if t.alt_name_ga:
+                alternatives.append(t.alt_name_ga)
+
+            for alt in alternatives:
+                results.append((alt, format_html(u"{} <i>(see {})</i>".format(unicode(alt), t.long_desc))))
+
+        results.sort()
+        results = [x[1] for x in results]
+        return results
 
 def float_to_sexagesimal(x):
     x = abs(x)

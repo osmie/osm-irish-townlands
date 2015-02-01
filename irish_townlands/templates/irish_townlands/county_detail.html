@@ -67,13 +67,9 @@
         <a href="//en.wikipedia.org/wiki/List_of_townlands_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of townlands in {{ county_name }}.{% endblocktrans %}</a>
     </p>
     <ul>
-    {% for townland in county.townlands_sorted %}
+    {% for townland in county.townlands_for_list_display %}
         <li>
-            {{ townland.long_desc }}
-            <abbr title="{% blocktrans %}Area in Acres, Rods and Perches{% endblocktrans %}">{% with arp=townland.area_acres_roods_perches %}
-                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                {% endwith %}
-            </abbr>
+            {{ townland }}
         </li>
     {% endfor %}
     </ul>
