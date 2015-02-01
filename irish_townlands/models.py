@@ -176,19 +176,16 @@ class Area(models.Model):
         name = self.name
 
         name_ga = ''
+        alt_name = ''
         if incl_other_names:
             if self.name_ga:
                 if self.alt_name_ga:
                     name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
                 else:
                     name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
-            else:
-                name_ga = ''
 
             if self.alt_name:
                 alt_name = format_html(u" (aka {0}) ", self.alt_name)
-            else:
-                alt_name = ''
             
         civil_parish_name = ''
         barony_name = ''
