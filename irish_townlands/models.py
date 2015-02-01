@@ -246,7 +246,7 @@ class Area(models.Model):
         except:
             return None
 
-    def expand_to_alternatives(self):
+    def expand_to_alternatives(self, incl_irish=True):
         results = []
 
         def split_string(input_string):
@@ -279,13 +279,14 @@ class Area(models.Model):
             alternatives.append(self.alt_name)
             alternatives.extend(split_string(self.alt_name))
         
-        if self.name_ga:
-            alternatives.append(self.name_ga)
-            alternatives.extend(split_string(self.name_ga))
+        if incl_irish:
+            if self.name_ga:
+                alternatives.append(self.name_ga)
+                alternatives.extend(split_string(self.name_ga))
 
-        if self.alt_name_ga:
-            alternatives.append(self.alt_name_ga)
-            alternatives.extend(split_string(self.alt_name_ga))
+            if self.alt_name_ga:
+                alternatives.append(self.alt_name_ga)
+                alternatives.extend(split_string(self.alt_name_ga))
 
         for alt in alternatives:
             key = name_to_key(alt)
