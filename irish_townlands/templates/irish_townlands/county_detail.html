@@ -6,8 +6,6 @@
 
 {% block body %}
 
-{% cache 3600 county_detail county.url_path %}
-
     <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(<a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
 
     <h2>{% trans "Area" %}</h2>
@@ -98,5 +96,4 @@
     <p> <a href="{% url 'county_debug' county.url_path %}"a> {% trans "Debug</a> overlaps and coverage" %}</p>
     <p> <a href="{% url 'rate' %}#{{ county.name }}">{% blocktrans with county_name=county.name %}How long will it take OSM to finish {{ county_name }}?{% endblocktrans %}</a></p>
 
-{% endcache %}
 {% endblock body %}
