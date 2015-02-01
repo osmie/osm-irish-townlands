@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
 from django.utils.translation import ungettext, ugettext
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from django.core.urlresolvers import reverse
 from django.conf import settings
 import math
@@ -256,8 +256,15 @@ class Area(models.Model):
         strings_to_split = [" and ", " or "]
         townlands = self.townlands_sorted
         results = []
+
+        arp_text = ugettext("Area in Acres, Rods and Perches")
+
         for t in townlands:
-            results.append((t.name, t.long_desc))
+            arp = t.area_acres_roods_perches
+            results.append((
+                t.name,
+                format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
+                    mark_safe(unicode(t.long_desc)), arp_text, arp[0], arp[1], arp[2])))
             alternatives = []
 
             for s in strings_to_split:
