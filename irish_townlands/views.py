@@ -581,12 +581,14 @@ def list(request):
 
     results = []
 
+    num_townlands = 0
     for t in townlands:
         alternatives = t.expand_to_alternatives()
         results.extend(alternatives)
+        num_townlands += 1
 
     results.sort()
     results = [x[1] for x in results]
 
-    return render_to_response('irish_townlands/list.html', {'townlands': results},
+    return render_to_response('irish_townlands/list.html', {'townlands': results, 'num_townlands': num_townlands, 'today': date.today()},
             context_instance=RequestContext(request))

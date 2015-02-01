@@ -6,8 +6,16 @@
 
 {% block body %}
 
+<p>
+This is a list of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
+
+It was generated on {{ today }}.
+</p>
+
+<p><ul>
 {% for t in townlands %}
     <li>{{ t }}</li>
 {% endfor %}
+</ul></p>
 
 {% endblock %}
