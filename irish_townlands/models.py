@@ -253,6 +253,14 @@ class Area(models.Model):
 
     @property
     def townlands_for_list_display(self):
+        """
+        Returns a list of strings that can be used to show a list of townlands.
+        A townland can be entered more than once if there's an altname, namega,
+        altnamega, or an " or " or an " and " in the name.
+
+        It's then sorted by a sensible key for manual searching.
+        """
+
         strings_to_split = [" and ", " or "]
         townlands = self.townlands_sorted
         results = []
