@@ -1,11 +1,11 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}Mapping Acitivity{% endblock %}
-{% block header %}Mapping Activity{% endblock %}
+{% block title %}{% trans "Mapping Acitivity" %}{% endblock %}
+{% block header %}{% trans "Mapping Activity" %}{% endblock %}
 
 {% block body %}
-<h2>OpenStreetMap mapping activity from {{ from }} to {{ to }}</h2>
+<h2>{% blocktrans %}OpenStreetMap mapping activity from {{ from }} to {{ to }}{% endblocktrans %}</h2>
 {% for period in stats %}
     {% include "irish_townlands/activity_for_one_date.html" %}
 {% endfor %}

@@ -16,6 +16,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count, Q
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils import feedgenerator
+from django.utils.translation import ungettext, ugettext
 
 from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
 from .pages import PAGES
@@ -40,6 +41,7 @@ def progress(request):
     area_of_ireland = area_of_ireland_excl_water
 
     area_of_all_townlands = Townland.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+    area_of_all_eds = ElectoralDivision.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_civil_parishes = CivilParish.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
     area_of_all_baronies = Barony.objects.all().aggregate(Sum('area_m2'))['area_m2__sum'] or 0
 
@@ -47,14 +49,15 @@ def progress(request):
         townland_progress = civil_parish_progress = barony_progress = 0
     else:
         townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+        ed_progress = ( area_of_all_eds / area_of_ireland ) * 100
         civil_parish_progress = ( area_of_all_civil_parishes / area_of_ireland ) * 100
         barony_progress = ( area_of_all_baronies / area_of_ireland ) * 100
 
     return render_to_response('irish_townlands/progress.html',
         {
             'counties':counties, 'last_update':last_update, 'errors':errors,
-            'townland_progress': townland_progress, 'civil_parish_progress': civil_parish_progress,
-            'barony_progress': barony_progress,
+            'townland_progress': townland_progress, 'ed_progress': ed_progress,
+            'civil_parish_progress': civil_parish_progress, 'barony_progress': barony_progress,
          },
         context_instance=RequestContext(request))
 
@@ -261,8 +264,24 @@ def rate(request):
     return render_to_response('irish_townlands/rate.html', results,
         context_instance=RequestContext(request))
 
-def search(request):
-    search_term = request.GET.get('q', '').strip()
+def search(request, search_term=None):
+    if search_term is None or search_term == '':
+        search_term = request.GET.get('q', '')
+
+    search_term = search_term.strip()
+
+    if '/' in search_term and ' ' not in search_term:
+        # maybe an (old) URL. What they want is probably the last element
+        terms = [x for x in search_term.split("/") if len(x.strip()) > 0]
+        if len(terms) > 0:
+            last = terms[-1]
+            return redirect('search', search_term=last)
+
+    if search_term == '':
+        return render_to_response('irish_townlands/search_results.html', {},
+            context_instance=RequestContext(request))
+
+    search_term = search_term.replace("-", " ")
 
     qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term)
 
@@ -458,39 +477,69 @@ def detailed_stats_for_period(from_date, to_date):
         baronies = group_by_username(Barony, date)
         counties = group_by_username(County, date)
 
+        num_townlands = sum(len(l) for l in townlands.values())
+        num_eds = sum(len(l) for l in eds.values())
+        num_cps = sum(len(l) for l in cps.values())
+        num_baronies = sum(len(l) for l in baronies.values())
+
+        summary = []
+        if num_townlands > 0:
+            summary.append(ungettext("%d townland", "%d townlands", num_townlands) % num_townlands)
+        if num_eds > 0:
+            summary.append(ungettext("%d ED", "%d EDs", num_eds) % num_eds)
+        if num_cps > 0:
+            summary.append(ungettext("%d civil parish", "%d civil parises", num_cps) % num_cps)
+        if num_baronies > 0:
+            summary.append(ungettext("%d barony", "%d baronies", num_baronies) % num_baronies)
+        if len(summary) == 0:
+            summary.append(ugettext("No mapping activity"))
+
+        summary = " ".join(summary)
+
+
         users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys())
         users = sorted(list(users))
-        this_date_details = {'date': date, 'stats': [
-            {'osm_user': osm_user,
-             'townlands': townlands.get(osm_user, []),
-             'eds': eds.get(osm_user, []),
-             'cps': cps.get(osm_user, []),
-             'baronies': baronies.get(osm_user, []),
-             'counties': counties.get(osm_user, []),
-            }
-            for osm_user in users]}
+        this_date_details = {
+            'date': date,
+            'summary': summary,
+            'stats': [
+                {'osm_user': osm_user,
+                 'townlands': townlands.get(osm_user, []),
+                 'eds': eds.get(osm_user, []),
+                 'cps': cps.get(osm_user, []),
+                 'baronies': baronies.get(osm_user, []),
+                 'counties': counties.get(osm_user, []),
+                }
+                for osm_user in users]}
         result.append(this_date_details)
 
     return result
 
 def activity(request):
-    to_date = date.today() - timedelta(days=1)
-    try:
-        if 'to' in request.GET:
-            year, month, day = request.GET['to'].split("-")
-            year, month, day = int(year), int(month), int(day)
-            to_date = date(year, month, day)
-    except:
-        pass
+    if 'on' in request.GET:
+        year, month, day = request.GET['on'].split("-")
+        year, month, day = int(year), int(month), int(day)
+        on_date = date(year, month, day)
+        to_date = on_date
+        from_date = on_date
+    else:
+        to_date = date.today() - timedelta(days=1)
+        try:
+            if 'to' in request.GET:
+                year, month, day = request.GET['to'].split("-")
+                year, month, day = int(year), int(month), int(day)
+                to_date = date(year, month, day)
+        except:
+            pass
 
-    from_date = to_date - timedelta(days=7)
-    try:
-        if 'from' in request.GET:
-            year, month, day = request.GET['from'].split("-")
-            year, month, day = int(year), int(month), int(day)
-            from_date = date(year, month, day)
-    except:
-        pass
+        from_date = to_date - timedelta(days=7)
+        try:
+            if 'from' in request.GET:
+                year, month, day = request.GET['from'].split("-")
+                year, month, day = int(year), int(month), int(day)
+                from_date = date(year, month, day)
+        except:
+            pass
 
 
     stats = detailed_stats_for_period(from_date, to_date)
@@ -499,7 +548,7 @@ def activity(request):
 
 def activity_rss(request):
     to_date = date.today() - timedelta(days=1)
-    from_date = to_date - timedelta(days=7)
+    from_date = to_date - timedelta(days=30)
 
     stats = detailed_stats_for_period(from_date, to_date)
 
@@ -512,8 +561,9 @@ def activity_rss(request):
 
     for period in stats:
         content = render_to_string("irish_townlands/activity_for_one_date.html", {'period': period}, context_instance=RequestContext(request))
-        feed.add_item(title=u"Townland activity",
-            link=u"http://www.townlands.ie/progress/activity/",
+        feed.add_item(
+            title=u"Townlands.ie: " + period['summary'],
+            link=u"http://www.townlands.ie/progress/activity/?on={}-{}-{}".format(period['date'].year, period['date'].month, period['date'].day),
             pubdate=period['date'],
             description=content)
 

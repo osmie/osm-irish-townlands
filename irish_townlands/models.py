@@ -141,6 +141,11 @@ class Area(models.Model):
         return min((cover / self.area_m2) * 100.0, 100.0)
 
     @property
+    def ed_cover(self):
+        cover = self.eds.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+        return min((cover / self.area_m2) * 100.0, 100.0)
+
+    @property
     def townlands_sorted(self):
         return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').order_by('name')
 
