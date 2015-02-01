@@ -249,7 +249,7 @@ class Area(models.Model):
     def expand_to_alternatives(self):
         results = []
 
-        strings_to_split = [" and ", " or "]
+        strings_to_split = [" and ", " or ", " agus ", u" nó "]
         arp_text = ugettext("Area in Acres, Rods and Perches")
         arp = self.area_acres_roods_perches
         results.append((
@@ -266,12 +266,27 @@ class Area(models.Model):
 
         if self.alt_name:
             alternatives.append(self.alt_name)
+            for s in strings_to_split:
+                if s in self.alt_name:
+                    names = self.alt_name.split(s)
+                    for name in names[1:]:
+                        alternatives.append(name)
         
         if self.name_ga:
             alternatives.append(self.name_ga)
+            for s in strings_to_split:
+                if s in self.name_ga:
+                    names = self.name_ga.split(s)
+                    for name in names[1:]:
+                        alternatives.append(name)
 
         if self.alt_name_ga:
             alternatives.append(self.alt_name_ga)
+            for s in strings_to_split:
+                if s in self.alt_name_ga:
+                    names = self.alt_name_ga.split(s)
+                    for name in names[1:]:
+                        alternatives.append(name)
 
         for alt in alternatives:
             # What's the sort key
