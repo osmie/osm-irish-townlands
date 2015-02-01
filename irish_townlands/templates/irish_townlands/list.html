@@ -27,17 +27,23 @@ It was generated on {{ today }}.
 {% endif %}
 </p>
 
-<p><ul>
+<p><ol>
 {% for t in townlands %}
     {% if should_group %}
         {% ifchanged %}
+            </ol>
             <h2>{{ t.0 }}</h2>
+            <ol>
         {% endifchanged %}
         {% ifchanged t.0 %}
+            </ol>
             <h3>{{ t.1 }}</h3>
+            <ol>
         {% endifchanged %}
         {% ifchanged t.0 t.1 %}
+            </ol>
             <h4>{{ t.2 }}</h4>
+            <ol>
         {% endifchanged %}
 
         <li>{{ t.4 }}</li>
@@ -45,6 +51,6 @@ It was generated on {{ today }}.
         <li>{{ t.1 }}</li>
     {% endif %}
 {% endfor %}
-</ul></p>
+</ol></p>
 
 {% endblock %}
