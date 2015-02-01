@@ -1,16 +1,16 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}{{ osm_user }}'s mapping contributions.{% endblock %}
-{% block header %}<h1>{{ osm_user }}'s mapping contributions</h1>{% endblock %}
+{% block title %}{% blocktrans %}{{ osm_user }}'s mapping contributions{% endblocktrans %}{% endblock %}
+{% block header %}<h1>{% blocktrans %}{{ osm_user }}'s mapping contributions{% endblocktrans %}</h1>{% endblock %}
 
 {% block body %}
 
-<p>{{ osm_user }}'s mapping activity. <a href="{% url 'mappers' %}">View all mappers</a>. <a href="//www.openstreetmap.org/user/{{ osm_user }}/">View {{ osm_user }}'s OpenStreetMap profile.</a></p>
+<p>{% blocktrans %}{{ osm_user }}'s mapping activity.{% endblocktrans %} <a href="{% url 'mappers' %}">{% trans "View all mappers" %}</a>. <a href="//www.openstreetmap.org/user/{{ osm_user }}/">{% blocktrans %}View {{ osm_user }}'s OpenStreetMap profile.{% endblocktrans %}</a></p>
 
 {% if counties|length > 0 %}
-    <h2>Counties</h2>
-    <p>{{ counties|length }} mapped.</p>
+    <h2>{% trans "Counties" %}</h2>
+    <p>{% blocktrans count num=counties|length %}{{ num }} mapped.{% plural %}{{ num }} mapped.{% endblocktrans %}</p>
     <p><ul>
         {% for c in counties %}
             <li>{{ c.long_desc }}</li>
@@ -20,8 +20,8 @@
 
 
 {% if baronies|length > 0 %}
-    <h2>Baronies</h2>
-    <p>{{ baronies|length }} mapped.</p>
+    <h2>{% trans "Baronies" %}</h2>
+    <p>{% blocktrans count num=baronies|length %}{{ num }} mapped.{% plural %}{{ num }} mapped.{% endblocktrans %}</p>
     <p><ul>
         {% for b in baronies %}
             <li>{{ b.long_desc }}</li>
@@ -30,8 +30,8 @@
 {% endif %}
 
 {% if civil_parishes|length > 0 %}
-    <h2>Civil Parishes</h2>
-    <p>{{ civil_parishes|length }} mapped.</p>
+    <h2>{% trans "Civil Parishes" %}</h2>
+    <p>{% blocktrans count num=civil_parishes|length %}{{ num }} mapped.{% plural %}{{ num }} mapped.{% endblocktrans %}</p>
     <p><ul>
         {% for c in civil_parishes %}
             <li>{{ c.long_desc }}</li>
@@ -40,8 +40,8 @@
 {% endif %}
 
 {% if eds|length > 0 %}
-    <h2>Electoral Divisions</h2>
-    <p>{{ eds|length }} mapped.</p>
+    <h2>{% trans "Electoral Divisions" %}</h2>
+    <p>{% blocktrans count num=eds|length %}{{ num }} mapped.{% plural %}{{ num }} mapped.{% endblocktrans %}</p>
     <p><ul>
         {% for ed in eds %}
             <li>{{ ed.long_desc }}</li>
@@ -50,8 +50,8 @@
 {% endif %}
 
 {% if townlands|length > 0 %}
-    <h2>Townlands</h2>
-    <p>{{ townlands|length }} mapped.</p>
+    <h2>{% trans "Townlands" %}</h2>
+    <p>{% blocktrans count num=townlands|length %}{{ num }} mapped.{% plural %}{{ num }} mapped.{% endblocktrans %}</p>
     <p><ul>
         {% for t in townlands %}
             <li>{{ t.long_desc }}</li>
