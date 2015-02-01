@@ -474,23 +474,30 @@ def detailed_stats_for_period(from_date, to_date):
     return result
 
 def activity(request):
-    to_date = date.today() - timedelta(days=1)
-    try:
-        if 'to' in request.GET:
-            year, month, day = request.GET['to'].split("-")
-            year, month, day = int(year), int(month), int(day)
-            to_date = date(year, month, day)
-    except:
-        pass
+    if 'on' in request.GET:
+        year, month, day = request.GET['on'].split("-")
+        year, month, day = int(year), int(month), int(day)
+        on_date = date(year, month, day)
+        to_date = on_date
+        from_date = on_date
+    else:
+        to_date = date.today() - timedelta(days=1)
+        try:
+            if 'to' in request.GET:
+                year, month, day = request.GET['to'].split("-")
+                year, month, day = int(year), int(month), int(day)
+                to_date = date(year, month, day)
+        except:
+            pass
 
-    from_date = to_date - timedelta(days=7)
-    try:
-        if 'from' in request.GET:
-            year, month, day = request.GET['from'].split("-")
-            year, month, day = int(year), int(month), int(day)
-            from_date = date(year, month, day)
-    except:
-        pass
+        from_date = to_date - timedelta(days=7)
+        try:
+            if 'from' in request.GET:
+                year, month, day = request.GET['from'].split("-")
+                year, month, day = int(year), int(month), int(day)
+                from_date = date(year, month, day)
+        except:
+            pass
 
 
     stats = detailed_stats_for_period(from_date, to_date)
