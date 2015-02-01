@@ -246,6 +246,41 @@ class Area(models.Model):
         except:
             return None
 
+    def expand_to_alternatives(self):
+        results = []
+
+        strings_to_split = [" and ", " or "]
+        arp_text = ugettext("Area in Acres, Rods and Perches")
+        arp = self.area_acres_roods_perches
+        results.append((
+            self.name,
+            format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
+                mark_safe(unicode(self.long_desc)), arp_text, arp[0], arp[1], arp[2])))
+        alternatives = []
+
+        for s in strings_to_split:
+            if s in self.name:
+                names = self.name.split(s)
+                for name in names[1:]:
+                    alternatives.append(name)
+
+        if self.alt_name:
+            alternatives.append(self.alt_name)
+        
+        if self.name_ga:
+            alternatives.append(self.name_ga)
+
+        if self.alt_name_ga:
+            alternatives.append(self.alt_name_ga)
+
+        for alt in alternatives:
+            # What's the sort key
+            key = alt[3:] if alt.startswith("An ") else alt
+
+            results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), self.long_desc))))
+
+        return results
+
     @property
     def townlands_for_list_display(self):
         """
@@ -256,40 +291,11 @@ class Area(models.Model):
         It's then sorted by a sensible key for manual searching.
         """
 
-        strings_to_split = [" and ", " or "]
         townlands = self.townlands_sorted
         results = []
 
-        arp_text = ugettext("Area in Acres, Rods and Perches")
-
         for t in townlands:
-            arp = t.area_acres_roods_perches
-            results.append((
-                t.name,
-                format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
-                    mark_safe(unicode(t.long_desc)), arp_text, arp[0], arp[1], arp[2])))
-            alternatives = []
-
-            for s in strings_to_split:
-                if s in t.name:
-                    names = t.name.split(s)
-                    for name in names[1:]:
-                        alternatives.append(name)
-
-            if t.alt_name:
-                alternatives.append(t.alt_name)
-            
-            if t.name_ga:
-                alternatives.append(t.name_ga)
-
-            if t.alt_name_ga:
-                alternatives.append(t.alt_name_ga)
-
-            for alt in alternatives:
-                # What's the sort key
-                key = alt[3:] if alt.startswith("An ") else alt
-
-                results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), t.long_desc))))
+            results.extend(t.expand_to_alternatives())
 
         results.sort()
         results = [x[1] for x in results]
