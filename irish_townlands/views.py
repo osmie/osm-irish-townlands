@@ -576,3 +576,16 @@ def activity_rss(request):
 
     return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
 
+def list(request):
+    townlands = Townland.objects.only("name")[:10]
+
+    results = []
+
+    for t in townlands:
+        results.extend(t.expand_to_alternatives())
+
+    results.sort()
+    results = [x[1] for x in results]
+
+    return render_to_response('irish_townlands/list.html', {'townlands': results},
+            context_instance=RequestContext(request))

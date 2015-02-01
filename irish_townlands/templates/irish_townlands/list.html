@@ -1,0 +1,13 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans 'Townland List' %}{% endblock %}
+{% block header %}<h1>{% trans 'Townland List' %}</h1>{% endblock %}
+
+{% block body %}
+
+{% for t in townlands %}
+    <li>{{ t }}</li>
+{% endfor %}
+
+{% endblock %}
