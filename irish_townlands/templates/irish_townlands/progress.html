@@ -1,8 +1,8 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load i18n l10n humanize cache %}
 
-{% block title %}Irish Traditional Boundaries Progress Report{% endblock %}
-{% block header %}<h1>Irish Traditional Boundaries Progress Report</h1>{% endblock %}
+{% block title %}{% trans "Irish Traditional Boundaries Progress Report" %}{% endblock %}
+{% block header %}<h1>{% trans "Irish Traditional Boundaries Progress Report" %}</h1>{% endblock %}
 
 {% block extra_headers %}
     {{ block.super }}
@@ -26,27 +26,28 @@
 {% cache 3600 progress %}
 
 <ul>
-    <li><a href="#countyprogress">Progress of each county ↓</a></li>
-    <li><a href="{% url 'duplicatenames' %}">Duplicate townland names →</a></li>
-    <li><a href="#errors">Potential conflicts with the data ↓</a></li>
-    <li><a href="{% url 'rate' %}">Rate of mapping →</a></li>
+    <li><a href="#countyprogress">{% trans "Progress of each county" %} ↓</a></li>
+    <li><a href="{% url 'duplicatenames' %}">{% trans "Duplicate townland names" %} →</a></li>
+    <li><a href="#errors">{% trans "Potential conflicts with the data" %} ↓</a></li>
+    <li><a href="{% url 'rate' %}">{% trans "Rate of mapping" %} →</a></li>
+    <li><a href="{% url 'activity' %}">{% trans "Mapping activity" %} →</a></li>
 </ul>
 
-<p>How complete is the data in Open Street Map?</p>
-<p>The data in OpenStreetMap is continuously updated. This page shows how much of each county has been mapped in townlands, baronies and civil parishes</p>
+<p>{% trans "How complete is the data in Open Street Map?" %}</p>
+<p>{% trans "The data in OpenStreetMap is continuously updated. This page shows how much of each county has been mapped in townlands, baronies and civil parishes" %}</p>
 
 <a name="countyprogress"></a>
 <table class=table id=coverage>
     <thead>
-        <td>County</td>
-        <td colspan=2>Townlands</td>
-        <td colspan=2>Electoral Divisions</td>
-        <td colspan=2>Civil Parishes</td>
-        <td colspan=2>Baronies</td>
+        <td>{% trans "County" %}</td>
+        <td colspan=2>{% trans "Townlands" %}</td>
+        <td colspan=2>{% trans "Electoral Divisions" %}</td>
+        <td colspan=2>{% trans "Civil Parishes" %}</td>
+        <td colspan=2>{% trans "Baronies" %}</td>
     </thead>
     <tbody>
         <tr>
-            <td>All Ireland</td>
+            <td>{% trans "All Ireland" %}</td>
             <td>{{ townland_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ townland_progress }}></progress></td>
             <td>{{ ed_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ ed_progress }}></progress></td>
             <td>{{ civil_parish_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ civil_parish_progress }}></progress></td>
@@ -64,19 +65,19 @@
 
     </tbody>
 </table>
-<p><a href="{% url 'rate' %}">How long will it take to finish?</a></p>
+<p><a href="{% url 'rate' %}">{% trans "How long will it take to finish?" %}</a></p>
 
 <a name="duplicatenames"></a>
-<h2>Duplicate Townland Name</h2>
-<p><a href="{% url 'duplicatenames' %}">Duplicate townland names have moved to a separate page</a></p>
+<h2>{% trans "Duplicate Townland Name" %}</h2>
+<p><a href="{% url 'duplicatenames' %}">{% trans "Duplicate townland names have moved to a separate page" %}</a></p>
 
-<h2><a name=errors></a>Potential conflicts with the data</h2>
+<h2><a name=errors></a>{% trans "Potential conflicts with the data" %}</h2>
 
 <ul>
     {% for error in errors %}
         <li>{{ error }}</li>
     {% empty %}
-        <li><i>No Errors, data is good! 😁</i></li>
+        <li><i>{% trans 'No Errors, data is good! 😁' %}</i></li>
     {% endfor %}
 </ul>
 
