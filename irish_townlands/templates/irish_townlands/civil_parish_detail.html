@@ -60,14 +60,8 @@
         There are {% with nt=civil_parish.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ civil_parish_name }}. This represents {{ civil_parish.townland_cover|floatformat:-1 }}% of all the area in {{ civil_parish_name }}.
     </p>
     <ul>
-    {% for townland in civil_parish.townlands_sorted %}
-        <li>
-            {{ townland.long_desc }}
-            <abbr title="{% trans "Area in Acres, Rods and Perches" %}">{% with arp=townland.area_acres_roods_perches %}
-                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                {% endwith %}
-            </abbr>
-        </li>
+    {% for townland in civil_parish.townlands_for_list_display %}
+        <li> {{ townland }} </li>
     {% endfor %}
     </ul>
 

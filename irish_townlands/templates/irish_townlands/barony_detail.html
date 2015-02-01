@@ -72,14 +72,8 @@
         There are {% with nt=barony.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ barony.name }}. This represents {{ barony.townland_cover|floatformat:-1 }}% of all the area in {{ barony.name }}.
     </p>
     <ul>
-    {% for townland in barony.townlands_sorted %}
-        <li>
-            {{ townland.long_desc }}
-            <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
-                {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
-                {% endwith %}
-            </abbr>
-        </li>
+    {% for townland in barony.townlands_for_list_display %}
+        <li> {{ townland }} </li>
     {% endfor %}
     </ul>
 
