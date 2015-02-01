@@ -595,9 +595,9 @@ def townland_list(request, should_group=False):
         alternatives = t.expand_to_alternatives(incl_irish=incl_irish, desc=('medium' if should_group else 'long'))
         if should_group:
             alternatives = [
-                (format_html(u"Co. {}", t.county.name) if t.county else mark_safe('<i>(County unknown)</i>'),
-                 format_html(u"Barony of {}", t.barony.name) if t.barony else mark_safe('<i>(Barony unknown)</i>'),
-                 format_html(u"{} Civil Parish", t.civil_parish.name) if t.civil_parish else mark_safe('<i>(Civil Parish unknown)</i>'),
+                (format_html(u"<span class=\"text-muted\">Co.</span> {}", t.county.name) if t.county else mark_safe('<i class=\"text-muted\">(County unknown)</i>'),
+                 format_html(u"<span class=\"text-muted\">Barony of</span> {}", t.barony.name) if t.barony else mark_safe('<i class=\"text-muted\">(Barony unknown)</i>'),
+                 format_html(u"{} <span class=\"text-muted\">Civil Parish</span>", t.civil_parish.name) if t.civil_parish else mark_safe('<i class=\"text-muted\">(Civil Parish unknown)</i>'),
                  townland_key, text) for (townland_key, text) in alternatives]
         results.extend(alternatives)
         num_townlands += 1

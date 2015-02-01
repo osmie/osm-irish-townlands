@@ -33,10 +33,10 @@ It was generated on {{ today }}.
         {% ifchanged %}
             <h2>{{ t.0 }}</h2>
         {% endifchanged %}
-        {% ifchanged %}
+        {% ifchanged t.0 %}
             <h3>{{ t.1 }}</h3>
         {% endifchanged %}
-        {% ifchanged %}
+        {% ifchanged t.0 t.1 %}
             <h4>{{ t.2 }}</h4>
         {% endifchanged %}
 
