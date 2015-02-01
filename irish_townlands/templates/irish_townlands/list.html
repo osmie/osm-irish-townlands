@@ -10,6 +10,21 @@
 This is a list of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
 
 It was generated on {{ today }}.
+
+<p>
+{% if should_group %}
+    This list is also available <a href="{% url "townland_list_alphabetical" %}">without any groupings, with all townlands alphabetical</a>.
+{% else %}
+    This list is also available <a href="{% url "townland_list_grouped" %}">grouped into counties, baronies and civil parishes</a>.
+{% endif %}
+</p>
+
+<p>
+{% if incl_irish %}
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=no">Hide Irish names</a>
+{% else %}
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=yes">Show Irish names</a>
+{% endif %}
 </p>
 
 <p><ul>

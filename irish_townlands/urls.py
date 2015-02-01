@@ -5,7 +5,9 @@ from django.conf import settings
 
 urlpatterns = patterns('irish_townlands.views',
 
-    url(r'^list(?P<grouped>/grouped)?/$', 'list', name='list' ),
+    url(r'^list/$', 'townland_list_alphabetical', name='townland_list_alphabetical' ),
+    url(r'^list/grouped/$', 'townland_list_grouped', name='townland_list_grouped' ),
+
     url(r'^taginfo.json$', 'taginfo', name='taginfo'),
     url(r'^progress/$', 'progress', name='progress' ),
     url(r'^search/$', 'search', name='search' ),
