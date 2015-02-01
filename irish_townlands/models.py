@@ -243,6 +243,14 @@ class Area(models.Model):
         else:
             return ", ".join(baronies[:-1]) + " " + and_text + " " + baronies[-1]
 
+    @property
+    def county_name(self):
+        # This is a bit of hack to do "select name from county where id = $COUNTY_ID"
+        try:
+            return County.objects.filter(id=self.county_id).values("name")[0]['name']
+        except:
+            return None
+
 
 def float_to_sexagesimal(x):
     x = abs(x)

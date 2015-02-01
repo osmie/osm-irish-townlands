@@ -3,8 +3,8 @@
 
 {% block title %}{% blocktrans %}Townlands in {{ civil_parish_name }}{% endblocktrans %}{% endblock %}
 {% block header %}<h1>
-    {% if civil_parish.county %}
-        {% blocktrans with county=civil_parish.county.name %}Civil Parish of {{ civil_parish_name }}, Co. {{ county }}{% endblocktrans %}
+    {% if civil_parish.county_name %}
+        {% blocktrans with county=civil_parish.county_name %}Civil Parish of {{ civil_parish_name }}, Co. {{ county }}{% endblocktrans %}
     {% else %}
         {% blocktrans %}Civil Parish of {{ civil_parish_name }}{% endblocktrans %}
     {% endif %}
