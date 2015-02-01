@@ -1,11 +1,10 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load  i18n l10n humanize cache %}
+{% load  i18n l10n humanize %}
 
 {% block title %}{% trans "Duplicate townland names" %} | {% trans "Irish Traditional Boundaries Progress Report" %}{% endblock %}
 {% block header %}<h1>{% trans "Duplicate names" %}</h1>{% endblock %}
 
 {% block body %}
-{% cache 3600 duplicatenames %}
 
 <ul>
     {% for group in duplicate_townland_names %}
@@ -19,5 +18,4 @@
     {% endfor %}
 </ul>
 
-{% endcache %}
 {% endblock %}

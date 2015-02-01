@@ -5,33 +5,30 @@
 
 {% block body %}
 
-{% cache 3600 index %}
+<p>{% blocktrans %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties in Ireland.{% endblocktrans %}</p>
+<p>{% trans "Click on each county to see baronies, civil parishes and townlands in the respective county." %}</p>
+<p>{% trans "This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly." %} <a href="{% url 'progress' %}">{% trans "See how much we have done and how much we have left to do" %}</a>, <a href="{% url 'rate' %}">{% trans "how long it'll take us to finish" %}</a> {% trans 'and' %} <a href="{% url 'activity' %}">{% trans 'townland mapping activity' %}</a>.</p>
+<p><a href="{% url "townland_index_alphabetical" %}"><i class="glyphicon glyphicon-list"></i> Alphabetical index of townlands</a></p>
 
-    <p>{% blocktrans %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of counties in Ireland.{% endblocktrans %}</p>
-    <p>{% trans "Click on each county to see baronies, civil parishes and townlands in the respective county." %}</p>
-    <p>{% trans "This page should be updated (roughly) daily. The OpenStreetMap community is adding more data regularly." %} <a href="{% url 'progress' %}">{% trans "See how much we have done and how much we have left to do" %}</a>, <a href="{% url 'rate' %}">{% trans "how long it'll take us to finish" %}</a> {% trans 'and' %} <a href="{% url 'activity' %}">{% trans 'townland mapping activity' %}</a>.</p>
-    <p><a href="{% url "townland_index_alphabetical" %}"><i class="glyphicon glyphicon-list"></i> Alphabetical index of townlands</a></p>
+<h2>{% trans "Ireland" %}</h2>
+<p>
+    {% blocktrans count num_baronies=num_baronies|intcomma %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
+    {% blocktrans count num_civil_parishes=num_civil_parishes|intcomma %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
+    {% blocktrans count num_eds=num_eds|intcomma %}{{ num_eds }} electoral division{% plural %}{{ num_eds }} electoral divisions{% endblocktrans %},
+    {% blocktrans count num_townlands=num_townlands|intcomma %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}
+    {% trans ' currently mapped on OpenStreetMap' %}.
+</p>
+<h2>{% trans "Counties" %}</h2>
+<ul>
+{% for county in counties %}
+    <li>
+        <a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a>.
+            {% blocktrans count numberofbaronies=county.baronies.count|intcomma %}{{ numberofbaronies }} barony{% plural %}{{ numberofbaronies }} baronies{% endblocktrans %},
+            {% blocktrans count numberofcivilparishes=county.civil_parishes.count|intcomma %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %},
+            {% blocktrans count numberofeds=county.eds.count|intcomma %}{{ numberofeds }} electoral division{% plural %}{{ numberofeds }} electoral divisions{% endblocktrans %},
+            {% blocktrans count numberoftownlands=county.townlands.count|intcomma %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}
+    </li>
+{% endfor %}
+</ul>
 
-    <h2>{% trans "Ireland" %}</h2>
-    <p>
-        {% blocktrans count num_baronies=num_baronies|intcomma %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
-        {% blocktrans count num_civil_parishes=num_civil_parishes|intcomma %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
-        {% blocktrans count num_eds=num_eds|intcomma %}{{ num_eds }} electoral division{% plural %}{{ num_eds }} electoral divisions{% endblocktrans %},
-        {% blocktrans count num_townlands=num_townlands|intcomma %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}
-        {% trans ' currently mapped on OpenStreetMap' %}.
-    </p>
-    <h2>{% trans "Counties" %}</h2>
-    <ul>
-    {% for county in counties %}
-        <li>
-            <a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a>.
-                {% blocktrans count numberofbaronies=county.baronies.count|intcomma %}{{ numberofbaronies }} barony{% plural %}{{ numberofbaronies }} baronies{% endblocktrans %},
-                {% blocktrans count numberofcivilparishes=county.civil_parishes.count|intcomma %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %},
-                {% blocktrans count numberofeds=county.eds.count|intcomma %}{{ numberofeds }} electoral division{% plural %}{{ numberofeds }} electoral divisions{% endblocktrans %},
-                {% blocktrans count numberoftownlands=county.townlands.count|intcomma %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}
-        </li>
-    {% endfor %}
-    </ul>
-
-{% endcache %}
 {% endblock body %}

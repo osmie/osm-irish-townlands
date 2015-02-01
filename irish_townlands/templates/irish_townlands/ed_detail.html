@@ -1,11 +1,10 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load i18n l10n humanize cache %}
+{% load i18n l10n humanize %}
 
 {% block title %}{{ ed.name }}{% endblock %}
 {% block header %}<h1>{{ ed.name }} Electoral Division{% if ed.county %}, Co. {{ ed.county.name }}{% endif %}</h1>{% endblock %}
 
 {% block body %}
-{% cache 3600 ed_detail ed.url_path %}
 
     <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / District Electoral Division of {{ ed.name }}.</p>
 
@@ -99,5 +98,4 @@
     {% endif %}
 
 
-{% endcache %}
 {% endblock body %}
