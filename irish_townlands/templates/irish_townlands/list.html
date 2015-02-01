@@ -1,21 +1,21 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}{% trans 'Townland List' %}{% endblock %}
-{% block header %}<h1>{% trans 'Townland List' %}</h1>{% endblock %}
+{% block title %}{% trans 'Townland Index' %}{% endblock %}
+{% block header %}<h1>{% trans 'Townland Index' %}</h1>{% endblock %}
 
 {% block body %}
 
 <p>
-This is a list of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
+This is a index of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
 
 It was generated on {{ today }}.
 
 <p>
 {% if should_group %}
-    This list is also available <a href="{% url "townland_list_alphabetical" %}">without any groupings, with all townlands alphabetical</a>.
+    This index is also available <a class="btn btn-primary btn-mini" href="{% url "townland_index_alphabetical" %}">Without any groupings, with all townlands alphabetical</a>.
 {% else %}
-    This list is also available <a href="{% url "townland_list_grouped" %}">grouped into counties, baronies and civil parishes</a>.
+    This index is also available <a class="btn btn-primary btn-mini"href="{% url "townland_index_grouped" %}">Grouped into counties, baronies and civil parishes</a>.
 {% endif %}
 </p>
 

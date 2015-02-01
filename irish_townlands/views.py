@@ -577,16 +577,16 @@ def activity_rss(request):
 
     return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
 
-def townland_list_alphabetical(request):
-    return townland_list(request, should_group=False)
+def townland_index_alphabetical(request):
+    return townland_index(request, should_group=False)
 
-def townland_list_grouped(request):
-    return townland_list(request, should_group=True)
+def townland_index_grouped(request):
+    return townland_index(request, should_group=True)
 
-def townland_list(request, should_group=False):
+def townland_index(request, should_group=False):
     incl_irish = request.GET.get("incl_irish", "yes") == "yes"
 
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")[:100]
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")[:500]
 
     results = []
 
@@ -608,7 +608,7 @@ def townland_list(request, should_group=False):
 
     results.sort()
 
-    view_name = 'townland_list_grouped' if should_group else 'townland_list_alphabetical'
+    view_name = 'townland_index_grouped' if should_group else 'townland_index_alphabetical'
 
     return render_to_response('irish_townlands/list.html', {'townlands': results, 'num_townlands': num_townlands, 'today': date.today(), 'should_group': should_group, 'incl_irish': incl_irish, 'view_name': view_name},
             context_instance=RequestContext(request))
