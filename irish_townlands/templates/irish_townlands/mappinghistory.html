@@ -1,10 +1,12 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}{% trans 'Townland Index' %}{% endblock %}
-{% block header %}<h1>{% trans 'Townland Index' %}</h1>{% endblock %}
+{% block title %}{% trans 'Townland Mapping Log' %}{% endblock %}
+{% block header %}<h1>{% trans 'Townland Mapping Log' %}</h1>{% endblock %}
 
 {% block body %}
+
+<p>{% trans 'This records the log of when people have been adding townlands to OpenStreetMap.' %}</p>
 
 <p><ol>
 {% for t in townlands %}
