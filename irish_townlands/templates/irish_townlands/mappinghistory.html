@@ -1,0 +1,25 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans 'Townland Index' %}{% endblock %}
+{% block header %}<h1>{% trans 'Townland Index' %}</h1>{% endblock %}
+
+{% block body %}
+
+<p><ol>
+{% for t in townlands %}
+    {% ifchanged %}
+        <h2>{{ t.osm_timestamp|date:"Y" }}</h2>
+    {% endifchanged %}
+    {% ifchanged t.osm_timestamp.year t.osm_timestamp.month %}
+        <h3>{{ t.osm_timestamp|date:"F" }} <span class="text-muted">{{ t.osm_timestamp|date:"Y" }}</span></h3>
+    {% endifchanged %}
+    {% ifchanged t.osm_timestamp.year t.osm_timestamp.month t.osm_timestamp.day %}
+        <h4>{{ t.osm_timestamp|date:"jS" }} <span class="text-muted">{{ t.osm_timestamp|date:"F Y" }}</span></h4>
+    {% endifchanged %}
+
+    <li><a href="{% url 'mapper_details' t.osm_user %}">{{ t.osm_user }}</a> added {{ t.long_desc }}</li>
+{% endfor %}
+</ol></p>
+
+{% endblock %}
