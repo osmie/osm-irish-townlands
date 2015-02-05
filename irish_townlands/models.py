@@ -326,6 +326,11 @@ class Area(models.Model):
         results = [x[1] for x in results]
         return results
 
+    def added_order(self):
+        klass = self.__class__
+        num_older = klass.objects.filter(osm_timestamp__lt=self.osm_timestamp).count()
+        return num_older + 1
+
 def float_to_sexagesimal(x):
     x = abs(x)
     deg = int(x)
