@@ -35,12 +35,12 @@ It was generated on {{ today }}.
             <h2>{{ t.0 }}</h2>
             <ol>
         {% endifchanged %}
-        {% ifchanged t.0 %}
+        {% ifchanged t.0 t.1 %}
             </ol>
             <h3>{{ t.1 }}</h3>
             <ol>
         {% endifchanged %}
-        {% ifchanged t.0 t.1 %}
+        {% ifchanged t.0 t.1 t.2 %}
             </ol>
             <h4>{{ t.2 }}</h4>
             <ol>
