@@ -24,6 +24,11 @@
 # obviously)
 
 # OsmType  Tag          DataType     Flags
+node  place        text         linear
+node  locality     text         linear
+node  name         text         linear
+node  name:ga      text         linear
+
 way   admin_level  text         linear
 way   area         text         # hard coded support for area=1/yes => polygon is in osm2pgsql
 way   boundary     text         linear
