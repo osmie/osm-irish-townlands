@@ -238,15 +238,15 @@ class Area(models.Model, NameableThing):
 
     @property
     def baronies_sorted(self):
-        return self.baronies.prefetch_related("townlands").order_by("name")
+        return self.baronies.only("name", "url_path", "county__name").order_by("name")
 
     @property
     def civil_parishes_sorted(self):
-        return self.civil_parishes.prefetch_related("townlands").order_by("name")
+        return self.civil_parishes.only("name", "url_path", "county__name").order_by("name")
 
     @property
     def eds_sorted(self):
-        return self.eds.prefetch_related("townlands").only("name", "url_path", "county__id").order_by("name")
+        return self.eds.only("name", "url_path", "county__id").order_by("name")
 
 
     @property
