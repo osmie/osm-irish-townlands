@@ -145,6 +145,8 @@
         {% endfor %}
         </ul>
         </p>
+    {% else %}
+        <p>{% blocktrans %}We don't know about any subtownlands in {{ townland_name }}.{% endblocktrans %}
     {% endif %}
 
     <a name="census"></a>

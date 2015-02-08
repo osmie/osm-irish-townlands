@@ -71,10 +71,15 @@ class NameableThing(object):
             if self.alt_name:
                 alt_name = format_html(u" (aka {0}) ", self.alt_name)
             
+        townland_name = ''
         civil_parish_name = ''
         barony_name = ''
         county_name = ''
         if incl_hierachies:
+            if getattr(self, 'townland', None):
+                # for sub townlands
+                townland_name = ", " + ugettext("%(townland_name)s Townland") % {'townland_name': self.townland.name }
+
             if getattr(self, 'civil_parish', None):
                 civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
 
@@ -90,10 +95,10 @@ class NameableThing(object):
                 island = ' ' + ugettext("(Island)") + ' '
 
         return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{townland_name}{civil_parish_name}{barony_name}{county_name}',
             url_path=reverse('view_area', args=[self.url_path]),
             name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
-            civil_parish_name=civil_parish_name,
+            townland_name=townland_name, civil_parish_name=civil_parish_name,
             barony_name=barony_name, county_name=county_name
         )
 
@@ -344,6 +349,14 @@ class Area(models.Model, NameableThing):
         klass = self.__class__
         num_older = klass.objects.filter(osm_timestamp__lt=self.osm_timestamp).count()
         return num_older + 1
+
+    @property
+    def subtownlands(self):
+        return Subtownland.objects.filter(townland__county=self)
+
+    @property
+    def subtownlands_sorted(self):
+        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by('name')
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
