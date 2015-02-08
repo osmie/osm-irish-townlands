@@ -60,6 +60,11 @@ class Command(BaseCommand):
             dest='verbose',
             default=False,
             help='Be verbose, and print debugging output'),
+        make_option('--quick',
+            action='store_true',
+            dest='quick',
+            default=False,
+            help='Skip some of the timeconsuming tasks'),
         )
 
 
@@ -449,7 +454,8 @@ class Command(BaseCommand):
 
             self.townlands = self.create_area_obj('townlands', "admin_level = '10'", Townland, self.cols)
 
-            self.calculate_touching_townlands()
+            if not options['quick']:
+                self.calculate_touching_townlands()
 
             self.calculate_counties()
 
@@ -470,7 +476,8 @@ class Command(BaseCommand):
 
             self.calculate_eds_in_counties()
 
-            self.calculate_not_covered()
+            if not options['quick']:
+                self.calculate_not_covered()
 
             self.calculate_unique_urls()
 
