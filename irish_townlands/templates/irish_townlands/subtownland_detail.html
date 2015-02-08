@@ -24,37 +24,41 @@
 
     <ul>
         <li><a href="#map">{% trans "Map" %} ↓</a></li>
-        <li><a href="#area">{% trans "Area" %} ↓</a></li>
-        <li><a href="#borders">{% trans "Bordering Townlands" %} ↓</a></li>
-        <li><a href="#census">{% trans "Census Search" %} ↓</a></li>
         <li><a href="#osm">{% trans "OpenStreetMap" %}↓</a></li>
     </ul>
 
     <p>
-    {% if townland.civil_parish and townland.barony and townland.county and townland.ed %}
-    {% blocktrans with civil_parish=townland.civil_parish.short_desc barony=townland.barony.short_desc county=townland.county.short_desc ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}, in Civil Parish of {{ civil_parish }}, in the Barony of {{ barony }}, in the County of {{ county }}{% endblocktrans %}
+    {% if subtownland.townland %}
+        {% blocktrans with townland_link=subtownland.townland.short_desc %}{{ subtownland_name }} is in the townland of {{ townland_link }}.{% endblocktrans %}
+        {% with townland=subtownland.townland townland_name=subtownland.townland.name %}
+            {% if townland.civil_parish and townland.barony and townland.county and townland.ed %}
+            {% blocktrans with civil_parish=townland.civil_parish.short_desc barony=townland.barony.short_desc county=townland.county.short_desc ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}, in Civil Parish of {{ civil_parish }}, in the Barony of {{ barony }}, in the County of {{ county }}{% endblocktrans %}
+            {% else %}
+                {% if townland.ed %}
+                    {% blocktrans with ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}.{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}We don't know what Electoral Division {{ townland_name }} is in.{% endblocktrans %}
+                {% endif %}
+                {% if townland.civil_parish %}
+                    {% blocktrans with civil_parish=townland.civil_parish.short_desc %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}We don't know what Civil Parish {{ townland_name }} is in.{% endblocktrans %}
+                {% endif %}
+                {% if townland.barony %}
+                    {% blocktrans with barony=townland.barony.short_desc %}{{ townland_name }} is in the Barony of {{ barony }}.{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}We don't know what Barony {{ townland_name }} is in.{% endblocktrans %}
+                {% endif %}
+                {% if townland.county %}
+                    {% url 'view_area' townland.county.url_path as county_url %}
+                    {% blocktrans with county=townland.county.name %}{{ townland_name }} is in <a href="{{ county_url }}">Co. {{ county }}</a>{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}We don't know what county {{ townland_name }} is in.{% endblocktrans %}
+                {% endif %}
+            {% endif %}
+        {% endwith %}
     {% else %}
-        {% if townland.ed %}
-            {% blocktrans with ed=townland.ed.short_desc %}{{ townland_name }} is in the Electoral Division of {{ ed }}.{% endblocktrans %}
-        {% else %}
-            {% blocktrans %}We don't know what Electoral Division {{ townland_name }} is in.{% endblocktrans %}
-        {% endif %}
-        {% if townland.civil_parish %}
-            {% blocktrans with civil_parish=townland.civil_parish.short_desc %}{{ townland_name }} is in the Civil Parish of {{ civil_parish }}.{% endblocktrans %}
-        {% else %}
-            {% blocktrans %}We don't know what Civil Parish {{ townland_name }} is in.{% endblocktrans %}
-        {% endif %}
-        {% if townland.barony %}
-            {% blocktrans with barony=townland.barony.short_desc %}{{ townland_name }} is in the Barony of {{ barony }}.{% endblocktrans %}
-        {% else %}
-            {% blocktrans %}We don't know what Barony {{ townland_name }} is in.{% endblocktrans %}
-        {% endif %}
-        {% if townland.county %}
-            {% url 'view_area' townland.county.url_path as county_url %}
-            {% blocktrans with county=townland.county.name %}{{ townland_name }} is in <a href="{{ county_url }}">Co. {{ county }}</a>{% endblocktrans %}
-        {% else %}
-            {% blocktrans %}We don't know what county {{ townland_name }} is in.{% endblocktrans %}
-        {% endif %}
+        {% blocktrans %}We don't know what townland {{ subtownland_name }} is in.{% endblocktrans %}
     {% endif %}
     </p>
 
@@ -79,7 +83,7 @@
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>
-        {% blocktrans with gps_location=townland.centre_pretty %}It is located at {{ gps_location }}.{% endblocktrans %}
+        {% blocktrans with gps_location=subtownland.centre_pretty %}It is located at {{ gps_location }}.{% endblocktrans %}
     </p>
     <div class="map" id="map" style="height: 600px; width: 800px;"></div>
     <script>
@@ -99,79 +103,52 @@
             .openOn(map);
 
     </script>
-
-    <a name="area"></a>
-    <h2>{% trans "Area" %}</h2>
-    <p>{% blocktrans with name=townland.name %}{{ name }} has an area of:{% endblocktrans %}
-        <ul>
-            <li>{% blocktrans with townland.area_m2|stringformat:"d"|intcomma as area %}{{ area }} m²{% endblocktrans %} / {% blocktrans with area=townland.area_hectares|floatformat:-2 %}{{ area }} hectares{% endblocktrans %} / {% blocktrans with area=townland.area_km2|floatformat:-4 %}{{ area }} km²{% endblocktrans %}</li>
-            <li>{% blocktrans with area=townland.area_mile2|floatformat:-2 %}{{ area }} square miles{% endblocktrans %}</li>
-            <li>{% blocktrans with area=townland.area_acres|floatformat:-2 %}{{ area }} acres{% endblocktrans %} / {{ townland.area_acres_roods_perches_textual }}</li>
-        </ul>
-    </p>
-
-    <p>{% blocktrans with rank=townland.area_rank|ordinal %}Nationwide, it is the {{ rank }} largest townland that we know about{% endblocktrans %}</p>
-    {% if townland.county %}
-        <p>{% blocktrans with county=townland.county.name county_rank=townland.area_rank_county|ordinal %}Within Co. {{ county }}, it is the {{ county_rank }} largest townland{% endblocktrans %}</p>
-    {% endif %}
-
-    <a name="borders"></a>
-    <h2>{% trans "Borders" %}</h2>
-    {% if townland.touching_townlands %}
-        <p>{% blocktrans %}{{ townland_name }} borders the following other townlands:{% endblocktrans %}
+    
+    <a name="other_subtownlands"></a>
+    <h2>{% trans "Other Subtownlands" %}</h2>
+    <p>
+        {% if not subtownland.townland %}
+            {% blocktrans %}We don't know of any other subtownlands nearby.{% endblocktrans %}
+        {% else %}
+            {% blocktrans with townland_link=subtownland.townland.short_desc %}{{ subtownland_name }} is in the townland of {{ townland_link }}, which has the following subtownlands:{% endblocktrans %}
             <ul>
-                {% for tt in townland.touching_townlands %}
-                    {% if tt.direction_words = 'north' %}
-                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the north{% endblocktrans %}</li>
-                    {% elif tt.direction_words = 'south' %}
-                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the south{% endblocktrans %}</li>
-                    {% elif tt.direction_words = 'east' %}
-                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the east{% endblocktrans %}</li>
-                    {% elif tt.direction_words = 'west' %}
-                        <li><a href="{% url 'view_area' tt.townland_b.url_path %}">{% blocktrans with townland=tt.townland_b.name %}{{ townland }}</a> to the west{% endblocktrans %}</li>
-                    {% endif %}
+                {% for subt in subtownland.townland.subtownlands.all %}
+                    <li>{{ subt.short_desc }}</li>
                 {% endfor %}
             </ul>
-        </p>
-    {% else %}
-        <p>{% blocktrans %}We don't have a record for what townlands (if any) {{ townland_name }} borders{% endblocktrans %}</p>
-    {% endif %}
-
-    <a name="subtownlands"></a>
-    <h2>{% trans "Subtownlands" %}</h2>
-    {% if townland.subtownlands.exists %}
-        <p>
-        <ul>
-        {% for subt in townland.subtownlands.all %}
-            <li>{{ subt.short_desc }}</li>
-        {% endfor %}
-        </ul>
-        </p>
-    {% endif %}
+        {% endif %}
+    </p>
 
     <a name="census"></a>
     <h2>{% trans "Census Search" %}</h2>
     <p>
-        {% blocktrans %}Interested in Geneological / ancestors who may have lived in {{ townland_name }}?{% endblocktrans %}
-        <ul>
-            <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1911&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">{% blocktrans %}Search the 1911 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
-            <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">{% blocktrans %}Search the 1901 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
-        </ul>
+        {% if subtownland.townland %}
+            {% blocktrans with townland_link=subtownland.townland.short_desc %}{{ subtownland_name }} is in the townland of {{ townland_link }}.{% endblocktrans %}
+            {% with townland=subtownland.townland townland_name=subtownland.townland.name %}
+                {% blocktrans %}Interested in Geneological / ancestors who may have lived in {{ townland_name }}?{% endblocktrans %}
+                <ul>
+                    <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1911&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">{% blocktrans %}Search the 1911 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
+                    <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&surname=&firstname=&county={{ townland.county.name }}&townland={{ townland.name }}&ded=&age=&sex=&search=Search&relationToHead=&religion=&education=&occupation=&marriageStatus=&birthplace=&language=&deafdumb=&marriageYears=&childrenBorn=&childrenLiving=">{% blocktrans %}Search the 1901 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
+                </ul>
+            {% endwith %}
+        {% else %}
+            {% blocktrans %}Since we don't know what townland {{ subtownland_name }} is in, we are unable to provide any geneological data for this place name. Please check back later, and it might have been added!{% endblocktrans %}
+        {% endif %}
     </p>
 
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if townland.osm_timestamp %}
-        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user %}{{ townland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a>. {% endwith %}{% blocktrans with order=townland.added_order %}It was the {{ order }}th townland added to OpenStreetMap{% endblocktrans %}</p>
+    {% if subtownland.osm_timestamp %}
+        <p>{% with osm_timestamp=subtownland.osm_timestamp|date:"j M Y" osm_user=subtownland.osm_user %}{{ subtownland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a>. {% endwith %}</p>
     {% else %}
-        <p>{% blocktrans %}We don't know when {{ townland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+        <p>{% blocktrans %}We don't know when {{ subtownland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
-    {% if townland.osm_id %}
+    {% if subtownland.osm_id %}
         <p>
-            <a href="{{ townland.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a href="{{ townland.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a href="{{ townland.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a href="{{ townland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
+            <a href="{{ subtownland.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
+            <a href="{{ subtownland.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
+            <a href="{{ subtownland.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
+            <a href="{{ subtownland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
         </p>
     {% endif %}
 
