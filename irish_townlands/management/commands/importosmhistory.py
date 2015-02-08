@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 miss.osm_timestamp = osm_history['osm_timestamp']
                 to_save.append(miss)
             else:
-                logger.error("Still have no data for %s", obj)
+                logger.error("Still have no data for %r", miss)
         
         logger.info("Saving %d objects.", len(to_save))
         for obj_to_save in to_save:
