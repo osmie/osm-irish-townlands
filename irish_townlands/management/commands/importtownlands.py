@@ -368,8 +368,6 @@ class Command(BaseCommand):
             all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values()) | set(self.eds.values())
             all_points = set(self.subtownlands.values())
 
-            # Subtownlands use their townland's URL, so the townland URL must be created first.
-
             for objs in [ all_areas, all_points ]:
                 for x in objs:
                     x.generate_url_path()
