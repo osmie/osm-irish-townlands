@@ -135,6 +135,18 @@
         <p>{% blocktrans %}We don't have a record for what townlands (if any) {{ townland_name }} borders{% endblocktrans %}</p>
     {% endif %}
 
+    <a name="subtownlands"></a>
+    <h2>{% trans "Subtownlands" %}</h2>
+    {% if townland.subtownlands.exists %}
+        <p>
+        <ul>
+        {% for subt in townland.subtownlands.all %}
+            <li>{{ subt.short_desc }}</li>
+        {% endfor %}
+        </ul>
+        </p>
+    {% endif %}
+
     <a name="census"></a>
     <h2>{% trans "Census Search" %}</h2>
     <p>
