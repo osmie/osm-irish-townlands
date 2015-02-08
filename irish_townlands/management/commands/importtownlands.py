@@ -391,7 +391,7 @@ class Command(BaseCommand):
     def save_all_objects(self):
         # save all now
         with printer("final objects save"):
-            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds]:
+            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds, self.subtownlands]:
                 for x in objs.values():
                     x.save()
 
