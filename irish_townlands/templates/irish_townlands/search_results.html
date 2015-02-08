@@ -85,6 +85,23 @@
     </p>
 {% endif %}
 
+{% if subtownlands_num_results > 0 %}
+    <h2>{% trans 'Subtownlands' %}</h2>
+    <p>
+        {% blocktrans count num_results=subtownlands_num_results %}
+            We found {{ num_results }} subtownland matching your search of "{{ search_term }}".
+        {% plural %}
+            We found {{ num_results }} subtownlands matching your search of "{{ search_term }}".
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% for t in subtownlands %}
+            <li>{{ t.long_desc }}</li>
+        {% endfor %}
+    </p>
+{% endif %}
+
+
 {% if counties_num_results == 0 and baronies_num_results == 0 and civil_parishes_num_results == 0 and eds_num_results == 0 and townlands_num_results == 0 %}
     <h2>{% blocktrans %}Sorry. We found nothing for "{{ search_term }}"{% endblocktrans %}</h2>
 {% endif %}

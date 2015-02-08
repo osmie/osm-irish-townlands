@@ -544,6 +544,11 @@ class Subtownland(models.Model, NameableThing):
 
     townland = models.ForeignKey(Townland, related_name='subtownlands')
 
+    # Some hacks so that long_desc will work.
+    alt_name = None
+    alt_name_ga = None
+    place = None
+
     @property
     def county(self):
         return self.townland.county if self.townland else None

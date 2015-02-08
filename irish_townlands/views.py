@@ -303,6 +303,8 @@ def search(request):
     eds_num_results = len(eds)
     townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
     townlands_num_results = len(townlands)
+    subtownlands = list(Subtownland.objects.filter(Q(name__icontains=search_term) | Q(name_ga__icontains=search_term)).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
+    subtownlands_num_results = len(subtownlands)
 
     # if there is only one, then redirect to it
     if counties_num_results + baronies_num_results + civil_parishes_num_results + eds_num_results + townlands_num_results == 1:
@@ -310,6 +312,7 @@ def search(request):
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
+        'search_term': search_term,
         'counties': counties,
         'counties_num_results': counties_num_results,
         'baronies': baronies,
@@ -320,7 +323,8 @@ def search(request):
         'eds_num_results': eds_num_results,
         'townlands': townlands,
         'townlands_num_results': townlands_num_results,
-        'search_term': search_term,
+        'subtownlands': subtownlands,
+        'subtownlands_num_results': subtownlands_num_results,
     }
 
     return render_to_response('irish_townlands/search_results.html', results,
