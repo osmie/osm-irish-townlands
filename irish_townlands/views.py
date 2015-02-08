@@ -488,11 +488,13 @@ def detailed_stats_for_period(from_date, to_date):
         cps = group_by_username(CivilParish, date)
         baronies = group_by_username(Barony, date)
         counties = group_by_username(County, date)
+        subtownlands = group_by_username(Subtownland, date)
 
         num_townlands = sum(len(l) for l in townlands.values())
         num_eds = sum(len(l) for l in eds.values())
         num_cps = sum(len(l) for l in cps.values())
         num_baronies = sum(len(l) for l in baronies.values())
+        num_subtownlands = sum(len(l) for l in subtownlands.values())
 
         summary = []
         if num_townlands > 0:
@@ -503,13 +505,15 @@ def detailed_stats_for_period(from_date, to_date):
             summary.append(ungettext("%d civil parish", "%d civil parises", num_cps) % num_cps)
         if num_baronies > 0:
             summary.append(ungettext("%d barony", "%d baronies", num_baronies) % num_baronies)
+        if num_subtownlands > 0:
+            summary.append(ungettext("%d subtownland", "%d subtownlands", num_subtownlands) % num_subtownlands)
         if len(summary) == 0:
             summary.append(ugettext("No mapping activity"))
 
         summary = " ".join(summary)
 
 
-        users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys())
+        users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys() + subtownlands.keys())
         users = sorted(list(users))
         this_date_details = {
             'date': date,
@@ -521,6 +525,7 @@ def detailed_stats_for_period(from_date, to_date):
                  'cps': cps.get(osm_user, []),
                  'baronies': baronies.get(osm_user, []),
                  'counties': counties.get(osm_user, []),
+                 'subtownlands': subtownlands.get(osm_user, []),
                 }
                 for osm_user in users]}
         result.append(this_date_details)
