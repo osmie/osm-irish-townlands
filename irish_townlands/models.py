@@ -21,11 +21,105 @@ def err_msg(msg, *args, **kwargs):
     print msg
 
 
+def location_pretty(x, y):
+    lat, lon = abs(y), abs(x)
+
+    return u"{0[0]}° {0[1]}' {0[2]}\" N, {1[0]}° {1[1]}' {1[2]}\" W".format(float_to_sexagesimal(lat), float_to_sexagesimal(lon))
+
+def float_to_sexagesimal(x):
+    x = abs(x)
+    deg = int(x)
+    min = int((x - deg) * 60)
+    sec = int((x - deg - (min/60.0))*3600)
+    return (deg, min, sec)
+
+
 class Metadata(models.Model):
     key = models.CharField(unique=True, db_index=True, max_length=50)
     value = models.CharField(max_length=255)
 
-class Area(models.Model):
+class NameableThing(object):
+
+    @property
+    def osm_browse_url(self):
+        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_josm_url(self):
+        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_potlatch_url(self):
+        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_id_url(self):
+        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
+        name = self.name
+
+        name_ga = ''
+        alt_name = ''
+        if incl_other_names:
+            if self.name_ga:
+                if self.alt_name_ga:
+                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+                else:
+                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
+
+            if self.alt_name:
+                alt_name = format_html(u" (aka {0}) ", self.alt_name)
+            
+        townland_name = ''
+        civil_parish_name = ''
+        barony_name = ''
+        county_name = ''
+        if incl_hierachies:
+            if getattr(self, 'townland', None):
+                # for sub townlands
+                townland_name = ", " + ugettext("%(townland_name)s Townland") % {'townland_name': self.townland.name }
+
+            if getattr(self, 'civil_parish', None):
+                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
+
+            if getattr(self, 'barony', None):
+                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
+
+            if getattr(self, 'county', None):
+                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+
+        island = ''
+        if incl_misc:
+            if self.place == 'island':
+                island = ' ' + ugettext("(Island)") + ' '
+
+        return format_html(
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{townland_name}{civil_parish_name}{barony_name}{county_name}',
+            url_path=reverse('view_area', args=[self.url_path]),
+            name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
+            townland_name=townland_name, civil_parish_name=civil_parish_name,
+            barony_name=barony_name, county_name=county_name
+        )
+
+    @property
+    def short_desc(self):
+        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
+
+    @property
+    def medium_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
+
+    @property
+    def long_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
+
+
+    @property
+    def osm_type(self):
+        return 'relation' if self.osm_id < 0 else 'way'
+
+class Area(models.Model, NameableThing):
 
     class Meta:
         abstract = True
@@ -97,9 +191,7 @@ class Area(models.Model):
 
     @property
     def centre_pretty(self):
-        lat, lon = abs(self.centre_y), abs(self.centre_x)
-
-        return u"{0[0]}° {0[1]}' {0[2]}\" N, {1[0]}° {1[1]}' {1[2]}\" W".format(float_to_sexagesimal(lat), float_to_sexagesimal(lon))
+        return location_pretty(x=self.centre_x, y=self.centre_y)
 
     @property
     def area_excl_water_m2(self):
@@ -146,89 +238,16 @@ class Area(models.Model):
 
     @property
     def baronies_sorted(self):
-        return self.baronies.prefetch_related("townlands").order_by("name")
+        return self.baronies.only("name", "url_path", "county__name").order_by("name")
 
     @property
     def civil_parishes_sorted(self):
-        return self.civil_parishes.prefetch_related("townlands").order_by("name")
+        return self.civil_parishes.only("name", "url_path", "county__name").order_by("name")
 
     @property
     def eds_sorted(self):
-        return self.eds.prefetch_related("townlands").only("name", "url_path", "county__id").order_by("name")
+        return self.eds.only("name", "url_path", "county__id").order_by("name")
 
-    @property
-    def osm_browse_url(self):
-        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_josm_url(self):
-        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_potlatch_url(self):
-        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_id_url(self):
-        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
-        name = self.name
-
-        name_ga = ''
-        alt_name = ''
-        if incl_other_names:
-            if self.name_ga:
-                if self.alt_name_ga:
-                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
-                else:
-                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
-
-            if self.alt_name:
-                alt_name = format_html(u" (aka {0}) ", self.alt_name)
-            
-        civil_parish_name = ''
-        barony_name = ''
-        county_name = ''
-        if incl_hierachies:
-            if getattr(self, 'civil_parish', None):
-                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
-
-            if getattr(self, 'barony', None):
-                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
-
-            if getattr(self, 'county', None):
-                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
-
-        island = ''
-        if incl_misc:
-            if self.place == 'island':
-                island = ' ' + ugettext("(Island)") + ' '
-
-        return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
-            url_path=reverse('view_area', args=[self.url_path]),
-            name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
-            civil_parish_name=civil_parish_name,
-            barony_name=barony_name, county_name=county_name
-        )
-
-    @property
-    def short_desc(self):
-        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
-
-    @property
-    def medium_desc(self):
-        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
-
-    @property
-    def long_desc(self):
-        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
-
-
-    @property
-    def osm_type(self):
-        return 'relation' if self.osm_id < 0 else 'way'
 
     @property
     def barony_list_textual(self):
@@ -331,12 +350,13 @@ class Area(models.Model):
         num_older = klass.objects.filter(osm_timestamp__lt=self.osm_timestamp).count()
         return num_older + 1
 
-def float_to_sexagesimal(x):
-    x = abs(x)
-    deg = int(x)
-    min = int((x - deg) * 60)
-    sec = int((x - deg - (min/60.0))*3600)
-    return (deg, min, sec)
+    @property
+    def subtownlands(self):
+        return Subtownland.objects.filter(townland__county=self)
+
+    @property
+    def subtownlands_sorted(self):
+        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by('name')
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
@@ -519,3 +539,73 @@ class Progress(models.Model):
 
     def __unicode__(self):
         return u"{name} was at {percent} on {when}".format(name=self.name, percent=self.percent, when=self.when)
+
+class Subtownland(models.Model, NameableThing):
+    osm_id = models.BigIntegerField()
+    osm_user = models.CharField(max_length=100, db_index=True, null=True)
+    osm_uid = models.IntegerField(null=True)
+    osm_timestamp = models.DateTimeField(db_index=True, null=True)
+
+    url_path = models.CharField(db_index=True, max_length=255)
+    unique_suffix = models.PositiveSmallIntegerField(null=True)
+
+    name = models.CharField(max_length=255, db_index=True)
+    name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
+    location_x = models.FloatField(default=0)
+    location_y = models.FloatField(default=0)
+
+    townland = models.ForeignKey(Townland, related_name='subtownlands')
+
+    # Some hacks so that long_desc will work.
+    alt_name = None
+    alt_name_ga = None
+    place = None
+
+    @property
+    def county(self):
+        return self.townland.county if self.townland else None
+
+    @property
+    def barony(self):
+        return self.townland.barony if self.townland else None
+
+    @property
+    def civil_parish(self):
+        return self.townland.civil_parish if self.townland else None
+
+    @property
+    def ed(self):
+        return self.townland.ed if self.townland else None
+
+    def generate_url_path(self):
+        name = slugify(self.name.lower())
+        def _pathify(*args):
+            return "/".join(slugify(x.name.lower()) for x in args)
+
+        if self.townland:
+            if self.county and self.barony and self.civil_parish and self.ed:
+                self.url_path = _pathify(self.county, self.barony, self.civil_parish, self.ed, self.townland, self)
+            elif self.county and self.barony and self.civil_parish:
+                self.url_path = _pathify(self.county, self.barony, self.civil_parish, self.townland, self)
+            elif self.county and self.barony:
+                self.url_path = _pathify(self.county, self.barony, self.townland, self)
+            elif self.county and self.civil_parish:
+                self.url_path = _pathify(self.county, self.civil_parish, self.townland, self)
+            elif self.county:
+                self.url_path = _pathify(self.county, self.townland, self)
+            else:
+                self.url_path = _pathify(self.townland, self)
+        else:
+            self.url_path = "{0}".format(name)
+
+        if self.unique_suffix:
+            self.url_path += str(self.unique_suffix)
+
+    @property
+    def centre_pretty(self):
+        return location_pretty(x=self.location_x, y=self.location_y)
+
+    @property
+    def osm_type(self):
+        return "node"

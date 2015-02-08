@@ -74,6 +74,18 @@
     {% endfor %}
     </ul>
 
+    <h2>{% trans "Subtownlands" %}</h2>
+    <p>
+        There are {% with nt=county.subtownlands|length %}{{ nt }} subtownland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}.
+    </p>
+    <ul>
+    {% for subtownland in county.subtownlands_sorted %}
+        <li>
+            {{ subtownland.long_desc }}
+        </li>
+    {% endfor %}
+    </ul>
+
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
     {% if county.osm_timestamp %}

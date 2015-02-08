@@ -19,7 +19,7 @@ from django.utils import feedgenerator
 from django.utils.translation import ungettext, ugettext
 from django.utils.html import format_html, mark_safe
 
-from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
+from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress, Subtownland
 from .pages import PAGES
 
 COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
@@ -127,10 +127,10 @@ def view_area(request, url_path=None):
         return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
     except County.DoesNotExist:
         pass
+
     for model, name in (
                 (Townland, 'townland'), (CivilParish, 'civil_parish'),
-                (Barony, 'barony'), 
-                (ElectoralDivision, 'ed') ):
+                (Barony, 'barony'), (ElectoralDivision, 'ed'), (Subtownland, 'subtownland') ):
         try:
             x = model.objects.select_related().get(url_path=url_path)
             return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
@@ -303,6 +303,8 @@ def search(request):
     eds_num_results = len(eds)
     townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
     townlands_num_results = len(townlands)
+    subtownlands = list(Subtownland.objects.filter(Q(name__icontains=search_term) | Q(name_ga__icontains=search_term)).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
+    subtownlands_num_results = len(subtownlands)
 
     # if there is only one, then redirect to it
     if counties_num_results + baronies_num_results + civil_parishes_num_results + eds_num_results + townlands_num_results == 1:
@@ -310,6 +312,7 @@ def search(request):
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
+        'search_term': search_term,
         'counties': counties,
         'counties_num_results': counties_num_results,
         'baronies': baronies,
@@ -320,7 +323,8 @@ def search(request):
         'eds_num_results': eds_num_results,
         'townlands': townlands,
         'townlands_num_results': townlands_num_results,
-        'search_term': search_term,
+        'subtownlands': subtownlands,
+        'subtownlands_num_results': subtownlands_num_results,
     }
 
     return render_to_response('irish_townlands/search_results.html', results,
@@ -484,11 +488,13 @@ def detailed_stats_for_period(from_date, to_date):
         cps = group_by_username(CivilParish, date)
         baronies = group_by_username(Barony, date)
         counties = group_by_username(County, date)
+        subtownlands = group_by_username(Subtownland, date)
 
         num_townlands = sum(len(l) for l in townlands.values())
         num_eds = sum(len(l) for l in eds.values())
         num_cps = sum(len(l) for l in cps.values())
         num_baronies = sum(len(l) for l in baronies.values())
+        num_subtownlands = sum(len(l) for l in subtownlands.values())
 
         summary = []
         if num_townlands > 0:
@@ -499,13 +505,15 @@ def detailed_stats_for_period(from_date, to_date):
             summary.append(ungettext("%d civil parish", "%d civil parises", num_cps) % num_cps)
         if num_baronies > 0:
             summary.append(ungettext("%d barony", "%d baronies", num_baronies) % num_baronies)
+        if num_subtownlands > 0:
+            summary.append(ungettext("%d subtownland", "%d subtownlands", num_subtownlands) % num_subtownlands)
         if len(summary) == 0:
             summary.append(ugettext("No mapping activity"))
 
         summary = " ".join(summary)
 
 
-        users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys())
+        users = set(townlands.keys() + eds.keys() + cps.keys() + baronies.keys() + counties.keys() + subtownlands.keys())
         users = sorted(list(users))
         this_date_details = {
             'date': date,
@@ -517,6 +525,7 @@ def detailed_stats_for_period(from_date, to_date):
                  'cps': cps.get(osm_user, []),
                  'baronies': baronies.get(osm_user, []),
                  'counties': counties.get(osm_user, []),
+                 'subtownlands': subtownlands.get(osm_user, []),
                 }
                 for osm_user in users]}
         result.append(this_date_details)

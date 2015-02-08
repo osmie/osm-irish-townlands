@@ -5,8 +5,7 @@ import osm_find_first
 
 from django.core.management.base import BaseCommand, CommandError
 
-#from irish_townlands.lib import importosmhistory
-from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony, County
+from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony, County, Subtownland
 
 logger = logging.getLogger(__name__)
 
@@ -39,8 +38,8 @@ class Command(BaseCommand):
         # See if the file has details for OSM obj that aren't saved on the object.
         to_save = []
         to_look_up = []
-        for klass in (Townland, ElectoralDivision, CivilParish, Barony, County):
-            missing = klass.objects.filter(osm_timestamp__isnull=True)
+        for klass in (Townland, ElectoralDivision, CivilParish, Barony, County, Subtownland):
+            missing = klass.objects.filter(osm_timestamp__isnull=True).only("osm_id")
             for miss in missing:
                 osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
                 if osm_history is not None:
@@ -78,7 +77,7 @@ class Command(BaseCommand):
                 miss.osm_timestamp = osm_history['osm_timestamp']
                 to_save.append(miss)
             else:
-                logger.error("Still have no data for %s", obj)
+                logger.error("Still have no data for %r", miss)
         
         logger.info("Saving %d objects.", len(to_save))
         for obj_to_save in to_save:

@@ -27,6 +27,12 @@
             {% blocktrans count numberofcivilparishes=county.civil_parishes.count|intcomma %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %},
             {% blocktrans count numberofeds=county.eds.count|intcomma %}{{ numberofeds }} electoral division{% plural %}{{ numberofeds }} electoral divisions{% endblocktrans %},
             {% blocktrans count numberoftownlands=county.townlands.count|intcomma %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}
+            {% with numberofsubtownlands=county.subtownlands.count %}
+                {% if numberofsubtownlands != 0 %}
+                    ,
+                    {% blocktrans count numberofsubtownlands=numberofsubtownlands %}{{ numberofsubtownlands }} subtownland{% plural %}{{ numberofsubtownlands }} subtownlands{% endblocktrans %}
+                {% endif %}
+            {% endwith %}
     </li>
 {% endfor %}
 </ul>
