@@ -474,6 +474,8 @@ class Command(BaseCommand):
 
             self.calculate_eds_in_counties()
 
+            self.save_all_objects()
+
             if not options['quick']:
                 self.calculate_not_covered()
 
