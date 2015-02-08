@@ -29,7 +29,7 @@ def printer(msg):
     yield
     duration = time.time() - start
     if DEBUG:
-        print "Finished "+msg+" in {} sec".format(duration)
+        print "Finished "+msg+" in {:.1f} sec".format(duration)
 
 
 def err_msg(msg, *args, **kwargs):
