@@ -25,7 +25,83 @@ class Metadata(models.Model):
     key = models.CharField(unique=True, db_index=True, max_length=50)
     value = models.CharField(max_length=255)
 
-class Area(models.Model):
+class NameableThing(object):
+
+    @property
+    def osm_browse_url(self):
+        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_josm_url(self):
+        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_potlatch_url(self):
+        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def edit_in_id_url(self):
+        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
+        name = self.name
+
+        name_ga = ''
+        alt_name = ''
+        if incl_other_names:
+            if self.name_ga:
+                if self.alt_name_ga:
+                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+                else:
+                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
+
+            if self.alt_name:
+                alt_name = format_html(u" (aka {0}) ", self.alt_name)
+            
+        civil_parish_name = ''
+        barony_name = ''
+        county_name = ''
+        if incl_hierachies:
+            if getattr(self, 'civil_parish', None):
+                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
+
+            if getattr(self, 'barony', None):
+                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
+
+            if getattr(self, 'county', None):
+                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+
+        island = ''
+        if incl_misc:
+            if self.place == 'island':
+                island = ' ' + ugettext("(Island)") + ' '
+
+        return format_html(
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
+            url_path=reverse('view_area', args=[self.url_path]),
+            name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
+            civil_parish_name=civil_parish_name,
+            barony_name=barony_name, county_name=county_name
+        )
+
+    @property
+    def short_desc(self):
+        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
+
+    @property
+    def medium_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
+
+    @property
+    def long_desc(self):
+        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
+
+
+    @property
+    def osm_type(self):
+        return 'relation' if self.osm_id < 0 else 'way'
+
+class Area(models.Model, NameableThing):
 
     class Meta:
         abstract = True
@@ -156,79 +232,6 @@ class Area(models.Model):
     def eds_sorted(self):
         return self.eds.prefetch_related("townlands").only("name", "url_path", "county__id").order_by("name")
 
-    @property
-    def osm_browse_url(self):
-        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_josm_url(self):
-        return "http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/{type}/{id}/full".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_potlatch_url(self):
-        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    @property
-    def edit_in_id_url(self):
-        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
-
-    def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
-        name = self.name
-
-        name_ga = ''
-        alt_name = ''
-        if incl_other_names:
-            if self.name_ga:
-                if self.alt_name_ga:
-                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
-                else:
-                    name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
-
-            if self.alt_name:
-                alt_name = format_html(u" (aka {0}) ", self.alt_name)
-            
-        civil_parish_name = ''
-        barony_name = ''
-        county_name = ''
-        if incl_hierachies:
-            if getattr(self, 'civil_parish', None):
-                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
-
-            if getattr(self, 'barony', None):
-                barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
-
-            if getattr(self, 'county', None):
-                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
-
-        island = ''
-        if incl_misc:
-            if self.place == 'island':
-                island = ' ' + ugettext("(Island)") + ' '
-
-        return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{civil_parish_name}{barony_name}{county_name}',
-            url_path=reverse('view_area', args=[self.url_path]),
-            name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
-            civil_parish_name=civil_parish_name,
-            barony_name=barony_name, county_name=county_name
-        )
-
-    @property
-    def short_desc(self):
-        return self.full_name(incl_other_names=False, incl_hierachies=False, incl_misc=False)
-
-    @property
-    def medium_desc(self):
-        return self.full_name(incl_other_names=True, incl_hierachies=False, incl_misc=True)
-
-    @property
-    def long_desc(self):
-        return self.full_name(incl_other_names=True, incl_hierachies=True, incl_misc=True)
-
-
-    @property
-    def osm_type(self):
-        return 'relation' if self.osm_id < 0 else 'way'
 
     @property
     def barony_list_textual(self):
@@ -520,7 +523,7 @@ class Progress(models.Model):
     def __unicode__(self):
         return u"{name} was at {percent} on {when}".format(name=self.name, percent=self.percent, when=self.when)
 
-class Subtownland(models.Model):
+class Subtownland(models.Model, NameableThing):
     osm_id = models.BigIntegerField()
     osm_user = models.CharField(max_length=100, db_index=True, null=True)
     osm_uid = models.IntegerField(null=True)
