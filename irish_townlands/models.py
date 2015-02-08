@@ -540,13 +540,40 @@ class Subtownland(models.Model, NameableThing):
 
     townland = models.ForeignKey(Townland, related_name='subtownlands')
 
+    @property
+    def county(self):
+        return self.townland.county if self.townland else None
+
+    @property
+    def barony(self):
+        return self.townland.barony if self.townland else None
+
+    @property
+    def civil_parish(self):
+        return self.townland.civil_parish if self.townland else None
+
+    @property
+    def ed(self):
+        return self.townland.ed if self.townland else None
+
     def generate_url_path(self):
         name = slugify(self.name.lower())
         def _pathify(*args):
             return "/".join(slugify(x.name.lower()) for x in args)
 
         if self.townland:
-            self.url_path = "{0}/{1}".format(self.townland.url_path, name)
+            if self.county and self.barony and self.civil_parish and self.ed:
+                self.url_path = _pathify(self.county, self.barony, self.civil_parish, self.ed, self.townland, self)
+            elif self.county and self.barony and self.civil_parish:
+                self.url_path = _pathify(self.county, self.barony, self.civil_parish, self.townland, self)
+            elif self.county and self.barony:
+                self.url_path = _pathify(self.county, self.barony, self.townland, self)
+            elif self.county and self.civil_parish:
+                self.url_path = _pathify(self.county, self.civil_parish, self.townland, self)
+            elif self.county:
+                self.url_path = _pathify(self.county, self.townland, self)
+            else:
+                self.url_path = _pathify(self.townland, self)
         else:
             self.url_path = "{0}".format(name)
 
