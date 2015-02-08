@@ -19,7 +19,7 @@ from django.utils import feedgenerator
 from django.utils.translation import ungettext, ugettext
 from django.utils.html import format_html, mark_safe
 
-from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress
+from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress, Subtownland
 from .pages import PAGES
 
 COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
@@ -127,10 +127,10 @@ def view_area(request, url_path=None):
         return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
     except County.DoesNotExist:
         pass
+
     for model, name in (
                 (Townland, 'townland'), (CivilParish, 'civil_parish'),
-                (Barony, 'barony'), 
-                (ElectoralDivision, 'ed') ):
+                (Barony, 'barony'), (ElectoralDivision, 'ed'), (Subtownland, 'subtownland') ):
         try:
             x = model.objects.select_related().get(url_path=url_path)
             return render_to_response('irish_townlands/'+name+'_detail.html', {name: x, name+"_name": x.name, 'last_update': last_update}, context_instance=RequestContext(request))
