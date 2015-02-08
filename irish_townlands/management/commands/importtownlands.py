@@ -172,7 +172,7 @@ class Command(BaseCommand):
 
     def calculate_subtownlands(self):
         with printer("Calculating subtownlands"):
-            self.cursor.execute("select s.osm_id, s.name, s.\"name:ga\", st_x(s.way) as x, st_y(s.way) as y, t.osm_id as townland_id from planet_osm_point as s join valid_polygon as t on (st_within(s.way, t.way)) where s.place = 'locality' and s.locality = 'subtownland' and t.admin_level = '10';")
+            self.cursor.execute("select s.osm_id, s.name, s.\"name:ga\", st_x(st_transform(s.way, 4326)) as x, st_y(st_transform(s.way, 4326)) as y, t.osm_id as townland_id from planet_osm_point as s join valid_polygon as t on (st_within(s.way, t.way)) where s.place = 'locality' and s.locality = 'subtownland' and t.admin_level = '10';")
             subtownlands = []
             for osm_id, name, name_ga, location_x, location_y, townland_id in self.cursor:
                 subtownlands.append(Subtownland(osm_id=osm_id, name=name, name_ga=name_ga, location_x=location_x, location_y=location_y, townland=self.townlands[townland_id]))
