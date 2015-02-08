@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.conf import settings
 from django.db.models import Sum
-from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland
 
 from collections import defaultdict
 import psycopg2
@@ -164,6 +164,17 @@ class Command(BaseCommand):
             missing_counties = county_names - seen_counties
             for missing in missing_counties:
                 err_msg("Could not find County {0}. Is the county boundary/relation broken?", missing)
+
+    def calculate_subtownlands(self):
+        with printer("Calculating subtownlands"):
+            self.cursor.execute("select s.osm_id, s.name, s.\"name:ga\", st_x(s.way) as x, st_y(s.way) as y, t.osm_id as townland_id from planet_osm_point as s join valid_polygon as t on (st_within(s.way, t.way)) where s.place = 'locality' and s.locality = 'subtownland' and t.admin_level = '10';")
+            subtownlands = []
+            for osm_id, name, name_ga, location_x, location_y, townland_id in self.cursor:
+                subtownlands.append(Subtownland(osm_id=osm_id, name=name, name_ga=name_ga, location_x=location_x, location_y=location_y, townland=self.townlands[townland_id]))
+            Subtownland.objects.bulk_create(subtownlands)
+            
+            return {s.osm_id: s for s in Subtownland.objects.all()}
+
 
     def clean_cp_names(self):
         # remove "Civil Parish" suffix from C.P.s
@@ -350,22 +361,26 @@ class Command(BaseCommand):
     def calculate_unique_urls(self):
         with printer("uniqifying townland urls"):
             all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values()) | set(self.eds.values())
-            for x in all_areas:
-                x.generate_url_path()
+            all_points = set(self.subtownlands.values())
 
+            # Subtownlands use their townland's URL, so the townland URL must be created first.
 
-            overlapping_url_paths = defaultdict(set)
-            for x in all_areas:
-                overlapping_url_paths[x.url_path].add(x)
-            for url_path in overlapping_url_paths:
-                if len(overlapping_url_paths[url_path]) == 1:
-                    continue
-                for x, i in zip(sorted(overlapping_url_paths[url_path], key=lambda x: x.area_m2), range(1, len(overlapping_url_paths[url_path])+1)):
-                    x.unique_suffix = i
-                    x.save()
+            for objs in [ all_areas, all_points ]:
+                for x in objs:
                     x.generate_url_path()
 
-            assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
+                overlapping_url_paths = defaultdict(set)
+                for x in objs:
+                    overlapping_url_paths[x.url_path].add(x)
+                for url_path in overlapping_url_paths:
+                    if len(overlapping_url_paths[url_path]) == 1:
+                        continue
+                    for x, i in zip(sorted(overlapping_url_paths[url_path], key=lambda x: getattr(x, 'area_m2', 0)), range(1, len(overlapping_url_paths[url_path])+1)):
+                        x.unique_suffix = i
+                        x.save()
+                        x.generate_url_path()
+
+                assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
 
 
     def save_all_objects(self):
@@ -441,6 +456,7 @@ class Command(BaseCommand):
             self.baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, self.cols)
             self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, self.cols)
             self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, self.cols)
+            self.subtownlands = self.calculate_subtownlands()
 
             self.clean_cp_names()
             self.clean_barony_names()

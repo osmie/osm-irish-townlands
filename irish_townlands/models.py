@@ -519,3 +519,33 @@ class Progress(models.Model):
 
     def __unicode__(self):
         return u"{name} was at {percent} on {when}".format(name=self.name, percent=self.percent, when=self.when)
+
+class Subtownland(models.Model):
+    osm_id = models.BigIntegerField()
+    osm_user = models.CharField(max_length=100, db_index=True, null=True)
+    osm_uid = models.IntegerField(null=True)
+    osm_timestamp = models.DateTimeField(db_index=True, null=True)
+
+    url_path = models.CharField(db_index=True, max_length=255)
+    unique_suffix = models.PositiveSmallIntegerField(null=True)
+
+    name = models.CharField(max_length=255, db_index=True)
+    name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
+    location_x = models.FloatField(default=0)
+    location_y = models.FloatField(default=0)
+
+    townland = models.ForeignKey(Townland, related_name='subtownlands')
+
+    def generate_url_path(self):
+        name = slugify(self.name.lower())
+        def _pathify(*args):
+            return "/".join(slugify(x.name.lower()) for x in args)
+
+        if self.townland:
+            self.url_path = "{0}/{1}".format(self.townland.url_path, name)
+        else:
+            self.url_path = "{0}".format(name)
+
+        if self.unique_suffix:
+            self.url_path += str(self.unique_suffix)
