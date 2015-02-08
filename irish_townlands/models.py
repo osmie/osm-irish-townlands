@@ -21,6 +21,19 @@ def err_msg(msg, *args, **kwargs):
     print msg
 
 
+def location_pretty(x, y):
+    lat, lon = abs(y), abs(x)
+
+    return u"{0[0]}° {0[1]}' {0[2]}\" N, {1[0]}° {1[1]}' {1[2]}\" W".format(float_to_sexagesimal(lat), float_to_sexagesimal(lon))
+
+def float_to_sexagesimal(x):
+    x = abs(x)
+    deg = int(x)
+    min = int((x - deg) * 60)
+    sec = int((x - deg - (min/60.0))*3600)
+    return (deg, min, sec)
+
+
 class Metadata(models.Model):
     key = models.CharField(unique=True, db_index=True, max_length=50)
     value = models.CharField(max_length=255)
@@ -173,9 +186,7 @@ class Area(models.Model, NameableThing):
 
     @property
     def centre_pretty(self):
-        lat, lon = abs(self.centre_y), abs(self.centre_x)
-
-        return u"{0[0]}° {0[1]}' {0[2]}\" N, {1[0]}° {1[1]}' {1[2]}\" W".format(float_to_sexagesimal(lat), float_to_sexagesimal(lon))
+        return location_pretty(x=self.centre_x, y=self.centre_y)
 
     @property
     def area_excl_water_m2(self):
@@ -333,13 +344,6 @@ class Area(models.Model, NameableThing):
         klass = self.__class__
         num_older = klass.objects.filter(osm_timestamp__lt=self.osm_timestamp).count()
         return num_older + 1
-
-def float_to_sexagesimal(x):
-    x = abs(x)
-    deg = int(x)
-    min = int((x - deg) * 60)
-    sec = int((x - deg - (min/60.0))*3600)
-    return (deg, min, sec)
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
@@ -579,3 +583,11 @@ class Subtownland(models.Model, NameableThing):
 
         if self.unique_suffix:
             self.url_path += str(self.unique_suffix)
+
+    @property
+    def centre_pretty(self):
+        return location_pretty(x=self.location_x, y=self.location_y)
+
+    @property
+    def osm_type(self):
+        return "node"
