@@ -112,6 +112,12 @@ class Command(BaseCommand):
                 new_obj = django_model(**kwargs)
                 new_obj.save()
 
+            #django_cursor = connection.cursor()
+            #django_cursor.execute("")
+            #('ST_AsGeoJSON(geo)', 'polygon_geojson'),
+            # set the geojson
+
+
             results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
 
         return results
