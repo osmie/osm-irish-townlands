@@ -7,7 +7,7 @@ from __future__ import division
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
 from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland
@@ -69,8 +69,13 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
-        for obj in [Townland, County, CivilParish, Barony, ElectoralDivision]:
-            obj.objects.all().delete()
+        cursor = connection.cursor()
+        cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
+        cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
+        cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
+        cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
+        cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
+        cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
 
         # Clear errors
         Error.objects.all().delete()
