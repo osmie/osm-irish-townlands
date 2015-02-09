@@ -104,6 +104,8 @@ class Command(BaseCommand):
         """Create one type of area."""
         results = {}
 
+        table = django_model._meta.db_table
+
         with printer("getting " + name):
             self.cursor.execute("select {0} from valid_polygon where {1} ;".format(", ".join(c[0] for c in cols), where_clause))
 
@@ -112,11 +114,9 @@ class Command(BaseCommand):
                 new_obj = django_model(**kwargs)
                 new_obj.save()
 
-            #django_cursor = connection.cursor()
-            #django_cursor.execute("")
-            #('ST_AsGeoJSON(geo)', 'polygon_geojson'),
-            # set the geojson
-
+            # Update the geojson separately to save memory
+            django_cursor = connection.cursor()
+            django_cursor.execute("update {table} as t set polygon_geojson = vp.geo from ( select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where} ) as vp where vp.osm_id = t.osm_id;".format(table=table, where=where_clause))
 
             results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
 
@@ -464,7 +464,6 @@ class Command(BaseCommand):
                 ('st_area(geo)', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
                 ('ST_Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
-                ('ST_AsGeoJSON(geo)', 'polygon_geojson'),
             ]
 
             self.connect_to_db()
