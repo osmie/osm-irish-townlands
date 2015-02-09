@@ -77,13 +77,13 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
-        cursor = connection.cursor()
-        cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
-        cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
-        cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
-        cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
-        cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
-        cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
+        django_cursor = connection.cursor()
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
 
         # Clear errors
         Error.objects.all().delete()
