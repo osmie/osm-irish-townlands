@@ -17,19 +17,27 @@ import psycopg2
 from contextlib import contextmanager
 import datetime, time
 import subprocess
+import resource
 
 DEBUG = False
+
+def curr_mem_usage():
+    usage = resource.getrusage(resource.RUSAGE_SELF)
+    return usage[2]*resource.getpagesize() / (1024 * 1024)
 
 @contextmanager
 def printer(msg):
     """Context statement to print when a task starts & ends."""
     start = time.time()
+    old_mem = curr_mem_usage()
     if DEBUG:
-        print "Starting "+msg
+        print "Starting {} (curr mem {}MB)".format(msg, old_mem)
     yield
     duration = time.time() - start
+    new_mem = curr_mem_usage()
+    delta_mem = new_mem - old_mem
     if DEBUG:
-        print "Finished "+msg+" in {:.1f} sec".format(duration)
+        print "Finished "+msg+" in {:.1f} sec with {:.3f}MB delta memory (curr mem {}MB)".format(duration, delta_mem, new_mem)
 
 
 def err_msg(msg, *args, **kwargs):
