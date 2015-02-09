@@ -9,7 +9,7 @@ DB_USER=$1
 DB_PASS=$2
 EXPORTED_FILES_DIR=$3
 
-POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d gis"
+POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d townlands"
 
 # In case these are still around
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon;" 2>/dev/null || true
@@ -20,7 +20,7 @@ done
 
 
 wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf
-PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf &>/dev/null
+PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --database townlands --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf #&>/dev/null
 #rm ireland-and-northern-ireland.osm.pbf
 
 # not needed anymore
@@ -60,7 +60,7 @@ function dump() {
     PREFIX=$1
     WHERE=$2
     rm -f ${PREFIX}
-    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" gis "select osm_id, name, \"name:ga\", \"name:en\", alt_name, \"alt_name:ga\", st_area(geo) as area_m2, ST_X(st_transform((ST_centroid(way)), 4326)) as latitude, ST_Y(st_transform((ST_centroid(way)), 4326)) as longitude, geo from valid_polygon where ${WHERE}" >/dev/null
+    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" townlands "select osm_id, name, \"name:ga\", \"name:en\", alt_name, \"alt_name:ga\", st_area(geo) as area_m2, ST_X(st_transform((ST_centroid(way)), 4326)) as latitude, ST_Y(st_transform((ST_centroid(way)), 4326)) as longitude, geo from valid_polygon where ${WHERE}" >/dev/null
 }
 
 
