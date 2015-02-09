@@ -7,7 +7,7 @@ from __future__ import division
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
 from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland
@@ -17,19 +17,27 @@ import psycopg2
 from contextlib import contextmanager
 import datetime, time
 import subprocess
+import resource
 
 DEBUG = False
+
+def curr_mem_usage():
+    usage = resource.getrusage(resource.RUSAGE_SELF)
+    return usage[2]*resource.getpagesize() / (1024 * 1024)
 
 @contextmanager
 def printer(msg):
     """Context statement to print when a task starts & ends."""
     start = time.time()
+    old_mem = curr_mem_usage()
     if DEBUG:
-        print "Starting "+msg
+        print "Starting {} (curr mem {}MB)".format(msg, old_mem)
     yield
     duration = time.time() - start
+    new_mem = curr_mem_usage()
+    delta_mem = new_mem - old_mem
     if DEBUG:
-        print "Finished "+msg+" in {:.1f} sec".format(duration)
+        print "Finished "+msg+" in {:.1f} sec with {:.3f}MB delta memory (curr mem {}MB)".format(duration, delta_mem, new_mem)
 
 
 def err_msg(msg, *args, **kwargs):
@@ -69,8 +77,13 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
-        for obj in [Townland, County, CivilParish, Barony, ElectoralDivision]:
-            obj.objects.all().delete()
+        django_cursor = connection.cursor()
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
+        django_cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
 
         # Clear errors
         Error.objects.all().delete()
@@ -98,6 +111,12 @@ class Command(BaseCommand):
                 kwargs = dict(zip([c[1] for c in cols], row))
                 new_obj = django_model(**kwargs)
                 new_obj.save()
+
+            #django_cursor = connection.cursor()
+            #django_cursor.execute("")
+            #('ST_AsGeoJSON(geo)', 'polygon_geojson'),
+            # set the geojson
+
 
             results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
 
