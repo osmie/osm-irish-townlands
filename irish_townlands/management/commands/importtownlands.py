@@ -31,13 +31,13 @@ def printer(msg):
     start = time.time()
     old_mem = curr_mem_usage()
     if DEBUG:
-        print "Starting {} (curr mem {}MB)".format(msg, old_mem)
+        print "Starting {} (curr mem {:.1f}MB)".format(msg, old_mem)
     yield
     duration = time.time() - start
     new_mem = curr_mem_usage()
     delta_mem = new_mem - old_mem
     if DEBUG:
-        print "Finished "+msg+" in {:.1f} sec with {:.3f}MB delta memory (curr mem {}MB)".format(duration, delta_mem, new_mem)
+        print "Finished "+msg+" in {:.1f} sec with {:.1f}MB delta memory (curr mem {:.1f}MB)".format(duration, delta_mem, new_mem)
 
 
 def err_msg(msg, *args, **kwargs):
