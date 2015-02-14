@@ -358,13 +358,19 @@ class Area(models.Model, NameableThing):
     def subtownlands_sorted(self):
         return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by('name')
 
+    @property
+    def county_name(self):
+        """Return string of the county's name. Returns None if there is no county for this object. if there is more than one county, it returns an arbitary county"""
+        raise NotImplementedError()
+
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -382,6 +388,14 @@ class Barony(Area):
             return
         self.county = counties[0]
 
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__barony=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
+
 
 
 class CivilParish(Area):
@@ -389,8 +403,9 @@ class CivilParish(Area):
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -413,6 +428,14 @@ class CivilParish(Area):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
 
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__civil_parish=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
+
 
 class County(Area):
 
@@ -433,14 +456,19 @@ class County(Area):
         name = slugify(self.name.lower())
         self.url_path = "{0}".format(name)
 
+    @property
+    def county_name(self):
+        return self.name
+
 
 class ElectoralDivision(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="eds")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -461,6 +489,14 @@ class ElectoralDivision(Area):
     def baronies(self):
         """The baronies that this ED is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__ed=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
 
 
 class Townland(Area):
@@ -507,6 +543,14 @@ class Townland(Area):
     @property
     def touching_townlands(self):
         return self.touching_as_a.order_by("townland_b__name")
+
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__townland=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
 
 class TownlandTouch(models.Model):
     class Meta:
