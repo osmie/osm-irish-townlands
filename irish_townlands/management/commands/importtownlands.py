@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
-from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon
 
 from collections import defaultdict
 import psycopg2
@@ -31,13 +31,13 @@ def printer(msg):
     start = time.time()
     old_mem = curr_mem_usage()
     if DEBUG:
-        print "Starting {} (curr mem {}MB)".format(msg, old_mem)
+        print "Starting {} (curr mem {:.1f}MB)".format(msg, old_mem)
     yield
     duration = time.time() - start
     new_mem = curr_mem_usage()
     delta_mem = new_mem - old_mem
     if DEBUG:
-        print "Finished "+msg+" in {:.1f} sec with {:.3f}MB delta memory (curr mem {}MB)".format(duration, delta_mem, new_mem)
+        print "Finished "+msg+" in {:.1f} sec with {:.1f}MB delta memory (curr mem {:.1f}MB)".format(duration, delta_mem, new_mem)
 
 
 def err_msg(msg, *args, **kwargs):
@@ -78,12 +78,9 @@ class Command(BaseCommand):
 
     def delete_all_data(self):
         django_cursor = connection.cursor()
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
+        for model in [ Townland, County, CivilParish, Barony, ElectoralDivision, Subtownland, Polygon ]:
+            table = model._meta.db_table
+            django_cursor.execute("TRUNCATE TABLE {table} CASCADE".format(table=table))
 
         # Clear errors
         Error.objects.all().delete()
@@ -105,6 +102,7 @@ class Command(BaseCommand):
         results = {}
 
         table = django_model._meta.db_table
+        polygon_table = Polygon._meta.db_table
 
         with printer("getting " + name):
             self.cursor.execute("select {0} from valid_polygon where {1} ;".format(", ".join(c[0] for c in cols), where_clause))
@@ -116,9 +114,10 @@ class Command(BaseCommand):
 
             # Update the geojson separately to save memory
             django_cursor = connection.cursor()
-            django_cursor.execute("update {table} as t set polygon_geojson = vp.geo from ( select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where} ) as vp where vp.osm_id = t.osm_id;".format(table=table, where=where_clause))
+            django_cursor.execute("insert into {polygon_table} (osm_id, polygon_geojson) select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where}".format(polygon_table=polygon_table, where=where_clause))
+            django_cursor.execute("update {table} set _polygon_geojson_id = p_id from (select t.id as t_id, p.id as p_id from {table} as t join {polygon_table} as p using (osm_id) where t._polygon_geojson_id IS NULL) as tt where id = t_id".format(table=table, polygon_table=polygon_table))
 
-            results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
+            results = dict((x.osm_id, x) for x in django_model.objects.all())
 
         return results
 
@@ -384,8 +383,8 @@ class Command(BaseCommand):
 
     def calculate_unique_urls(self):
         with printer("uniqifying townland urls"):
-            all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values()) | set(self.eds.values())
-            all_points = set(self.subtownlands.values())
+            all_areas = self.townlands.values() + self.civil_parishes.values() + self.baronies.values() + self.counties.values() + self.eds.values()
+            all_points = self.subtownlands.values()
 
             for objs in [ all_areas, all_points ]:
                 for x in objs:

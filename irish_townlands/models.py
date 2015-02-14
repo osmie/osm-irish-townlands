@@ -119,6 +119,10 @@ class NameableThing(object):
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
 
+class Polygon(models.Model):
+    osm_id = models.IntegerField()
+    polygon_geojson = models.TextField(default='')
+
 class Area(models.Model, NameableThing):
 
     class Meta:
@@ -142,7 +146,7 @@ class Area(models.Model, NameableThing):
     bbox_width = models.FloatField(default=0)
     bbox_height = models.FloatField(default=0)
 
-    polygon_geojson = models.TextField(default='')
+    _polygon_geojson = models.ForeignKey(Polygon, default=None, null=True)
 
     # When v1 was made. NULL means we don't know it yet
     osm_user = models.CharField(max_length=100, db_index=True, null=True)
@@ -151,6 +155,10 @@ class Area(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+    @property
+    def polygon_geojson(self):
+        return self._polygon_geojson.polygon_geojson
 
     @property
     def area_km2(self):
@@ -358,13 +366,19 @@ class Area(models.Model, NameableThing):
     def subtownlands_sorted(self):
         return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by('name')
 
+    @property
+    def county_name(self):
+        """Return string of the county's name. Returns None if there is no county for this object. if there is more than one county, it returns an arbitary county"""
+        raise NotImplementedError()
+
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -373,7 +387,7 @@ class Barony(Area):
 
     def calculate_county(self):
         # This logic breaks if baronies cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__barony=self).distinct())
+        counties = list(County.objects.filter(townlands__barony=self).distinct())
         if len(counties) == 0:
             err_msg("Barony {barony} has no county", barony=self)
             return
@@ -382,6 +396,14 @@ class Barony(Area):
             return
         self.county = counties[0]
 
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__barony=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
+
 
 
 class CivilParish(Area):
@@ -389,8 +411,9 @@ class CivilParish(Area):
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -399,7 +422,7 @@ class CivilParish(Area):
 
     def calculate_county(self):
         # This logic breaks if CPs cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__civil_parish=self).distinct())
+        counties = list(County.objects.filter(townlands__civil_parish=self).distinct())
         if len(counties) == 0:
             err_msg("Civil Parish {0} has no county", self)
             return
@@ -412,6 +435,14 @@ class CivilParish(Area):
     def baronies(self):
         """The baronies that this CP is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__civil_parish=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
 
 
 class County(Area):
@@ -433,14 +464,19 @@ class County(Area):
         name = slugify(self.name.lower())
         self.url_path = "{0}".format(name)
 
+    @property
+    def county_name(self):
+        return self.name
+
 
 class ElectoralDivision(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="eds")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        if self.county:
-            self.url_path = "{0}/{1}".format(self.county.name.lower(), name)
+        county_name = self.county_name
+        if county_name:
+            self.url_path = "{0}/{1}".format(county_name.lower(), name)
         else:
             self.url_path = "{0}".format(name)
 
@@ -449,7 +485,7 @@ class ElectoralDivision(Area):
 
     def calculate_county(self):
         # This logic breaks if EDs cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__ed=self).distinct())
+        counties = list(County.objects.filter(townlands__ed=self).distinct())
         if len(counties) == 0:
             err_msg("ED {0} has no county", self)
             return
@@ -461,6 +497,14 @@ class ElectoralDivision(Area):
     def baronies(self):
         """The baronies that this ED is in (might overlap)"""
         return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__ed=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
 
 
 class Townland(Area):
@@ -507,6 +551,14 @@ class Townland(Area):
     @property
     def touching_townlands(self):
         return self.touching_as_a.order_by("townland_b__name")
+
+    @property
+    def county_name(self):
+        counties = list(County.objects.filter(townlands__townland=self).values_list("name", flat=True).distinct())
+        if len(counties) == 0:
+            return None
+        else:
+            return counties[0]
 
 class TownlandTouch(models.Model):
     class Meta:
