@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
-from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon
 
 from collections import defaultdict
 import psycopg2
@@ -105,6 +105,7 @@ class Command(BaseCommand):
         results = {}
 
         table = django_model._meta.db_table
+        polygon_table = Polygon._meta.db_table
 
         with printer("getting " + name):
             self.cursor.execute("select {0} from valid_polygon where {1} ;".format(", ".join(c[0] for c in cols), where_clause))
@@ -116,9 +117,10 @@ class Command(BaseCommand):
 
             # Update the geojson separately to save memory
             django_cursor = connection.cursor()
-            django_cursor.execute("update {table} as t set polygon_geojson = vp.geo from ( select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where} ) as vp where vp.osm_id = t.osm_id;".format(table=table, where=where_clause))
+            django_cursor.execute("insert into {polygon_table} (osm_id, polygon_geojson) select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where}".format(polygon_table=polygon_table, where=where_clause))
+            django_cursor.execute("update {table} set _polygon_geojson_id = p_id from (select t.id as t_id, p.id as p_id from {table} as t join {polygon_table} as p using (osm_id) where t._polygon_geojson_id IS NULL) as tt where id = t_id".format(table=table, polygon_table=polygon_table))
 
-            results = dict((x.osm_id, x) for x in django_model.objects.all().defer("polygon_geojson"))
+            results = dict((x.osm_id, x) for x in django_model.objects.all())
 
         return results
 

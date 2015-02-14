@@ -119,6 +119,10 @@ class NameableThing(object):
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
 
+class Polygon(models.Model):
+    osm_id = models.IntegerField()
+    polygon_geojson = models.TextField(default='')
+
 class Area(models.Model, NameableThing):
 
     class Meta:
@@ -142,7 +146,7 @@ class Area(models.Model, NameableThing):
     bbox_width = models.FloatField(default=0)
     bbox_height = models.FloatField(default=0)
 
-    polygon_geojson = models.TextField(default='')
+    _polygon_geojson = models.ForeignKey(Polygon, default=None, null=True)
 
     # When v1 was made. NULL means we don't know it yet
     osm_user = models.CharField(max_length=100, db_index=True, null=True)
@@ -151,6 +155,10 @@ class Area(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+    @property
+    def polygon_geojson(self):
+        return self._polygon_geojson.polygon_geojson
 
     @property
     def area_km2(self):
@@ -379,7 +387,7 @@ class Barony(Area):
 
     def calculate_county(self):
         # This logic breaks if baronies cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__barony=self).distinct())
+        counties = list(County.objects.filter(townlands__barony=self).distinct())
         if len(counties) == 0:
             err_msg("Barony {barony} has no county", barony=self)
             return
@@ -414,7 +422,7 @@ class CivilParish(Area):
 
     def calculate_county(self):
         # This logic breaks if CPs cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__civil_parish=self).distinct())
+        counties = list(County.objects.filter(townlands__civil_parish=self).distinct())
         if len(counties) == 0:
             err_msg("Civil Parish {0} has no county", self)
             return
@@ -477,7 +485,7 @@ class ElectoralDivision(Area):
 
     def calculate_county(self):
         # This logic breaks if EDs cross county borders.
-        counties = list(County.objects.defer("polygon_geojson").filter(townlands__ed=self).distinct())
+        counties = list(County.objects.filter(townlands__ed=self).distinct())
         if len(counties) == 0:
             err_msg("ED {0} has no county", self)
             return
