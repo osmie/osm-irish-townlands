@@ -78,12 +78,9 @@ class Command(BaseCommand):
 
     def delete_all_data(self):
         django_cursor = connection.cursor()
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_townland CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_county CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_civilparish CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_barony CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_electoraldivision CASCADE")
-        django_cursor.execute("TRUNCATE TABLE irish_townlands_subtownland CASCADE")
+        for model in [ Townland, County, CivilParish, Barony, ElectoralDivision, Subtownland, Polygon ]:
+            table = model._meta.db_table
+            django_cursor.execute("TRUNCATE TABLE {table} CASCADE".format(table=table))
 
         # Clear errors
         Error.objects.all().delete()
