@@ -384,8 +384,8 @@ class Command(BaseCommand):
 
     def calculate_unique_urls(self):
         with printer("uniqifying townland urls"):
-            all_areas = set(self.townlands.values()) | set(self.civil_parishes.values()) | set(self.baronies.values()) | set(self.counties.values()) | set(self.eds.values())
-            all_points = set(self.subtownlands.values())
+            all_areas = self.townlands.values() + self.civil_parishes.values() + self.baronies.values() + self.counties.values() + self.eds.values()
+            all_points = self.subtownlands.values()
 
             for objs in [ all_areas, all_points ]:
                 for x in objs:
