@@ -10,6 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
+from django import db
 from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon
 
 from collections import defaultdict
@@ -18,6 +19,7 @@ from contextlib import contextmanager
 import datetime, time
 import subprocess
 import resource
+#from guppy import hpy
 
 DEBUG = False
 
@@ -123,12 +125,26 @@ class Command(BaseCommand):
 
     def calculate_touching_townlands(self):
         # touching
+        bucket_size = 100
+        #hp = hpy()
+        #hp.setrelheap()
+
         touching_townlands = []
         with printer("touching townlands"):
             self.cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
-            for a_osm_id, b_osm_id, length_m, direction_radians in self.cursor:
+            for idx, (a_osm_id, b_osm_id, length_m, direction_radians) in enumerate(self.cursor):
                 touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
+                if len(touching_townlands) >= bucket_size:
+                    TownlandTouch.objects.bulk_create(touching_townlands)
+                    touching_townlands = []
+                    db.reset_queries()
+
+            # save anything left
             TownlandTouch.objects.bulk_create(touching_townlands)
+            db.reset_queries()
+
+        #hh = hp.heap()
+        #import pdb ; pdb.set_trace()
 
     def water_area_m2_in_county(self, original_county_name):
         self.cursor.execute("""
