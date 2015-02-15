@@ -119,7 +119,7 @@ class Command(BaseCommand):
             django_cursor.execute("insert into {polygon_table} (osm_id, polygon_geojson) select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where}".format(polygon_table=polygon_table, where=where_clause))
             django_cursor.execute("update {table} set _polygon_geojson_id = p_id from (select t.id as t_id, p.id as p_id from {table} as t join {polygon_table} as p using (osm_id) where t._polygon_geojson_id IS NULL) as tt where id = t_id".format(table=table, polygon_table=polygon_table))
 
-            results = dict((x.osm_id, x) for x in django_model.objects.all())
+            results = dict((x.osm_id, x) for x in django_model.objects.only("osm_id", "name").all())
 
         return results
 
