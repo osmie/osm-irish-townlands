@@ -124,6 +124,11 @@ class Command(BaseCommand):
         return results
 
     def calculate_touching_townlands(self):
+        # adding townlandtouches is a lot of a SQL. Django keeps these queries
+        # around afterwards, which is a lot of strings to store, which causes
+        # the memory to increase. reset_queries clears this. django usually
+        # calls this after every HTTP request, but we don't have HTTP requests
+        # here
         # touching
         bucket_size = 100
         #hp = hpy()
