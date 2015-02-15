@@ -426,6 +426,7 @@ class Command(BaseCommand):
             for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds, self.subtownlands]:
                 for x in objs.values():
                     x.save()
+                    db.reset_queries()
 
     def record_progress(self):
         with printer("recording progress"):
