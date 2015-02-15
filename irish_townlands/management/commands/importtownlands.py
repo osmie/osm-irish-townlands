@@ -41,6 +41,9 @@ def printer(msg):
     if DEBUG:
         print "Finished "+msg+" in {:.1f} sec with {:.1f}MB delta memory (curr mem {:.1f}MB)".format(duration, delta_mem, new_mem)
 
+    # We always want to do this
+    db.reset_queries()
+
 
 def err_msg(msg, *args, **kwargs):
     """Log an error message to DB & print it. """
@@ -119,11 +122,16 @@ class Command(BaseCommand):
             django_cursor.execute("insert into {polygon_table} (osm_id, polygon_geojson) select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where}".format(polygon_table=polygon_table, where=where_clause))
             django_cursor.execute("update {table} set _polygon_geojson_id = p_id from (select t.id as t_id, p.id as p_id from {table} as t join {polygon_table} as p using (osm_id) where t._polygon_geojson_id IS NULL) as tt where id = t_id".format(table=table, polygon_table=polygon_table))
 
-            results = dict((x.osm_id, x) for x in django_model.objects.all())
+            results = dict((x.osm_id, x) for x in django_model.objects.only("osm_id", "name").all())
 
         return results
 
     def calculate_touching_townlands(self):
+        # adding townlandtouches is a lot of a SQL. Django keeps these queries
+        # around afterwards, which is a lot of strings to store, which causes
+        # the memory to increase. reset_queries clears this. django usually
+        # calls this after every HTTP request, but we don't have HTTP requests
+        # here
         # touching
         bucket_size = 100
         #hp = hpy()
@@ -426,6 +434,7 @@ class Command(BaseCommand):
             for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds, self.subtownlands]:
                 for x in objs.values():
                     x.save()
+                    db.reset_queries()
 
     def record_progress(self):
         with printer("recording progress"):
