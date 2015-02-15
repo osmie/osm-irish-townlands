@@ -133,7 +133,7 @@ class Command(BaseCommand):
         # calls this after every HTTP request, but we don't have HTTP requests
         # here
         # touching
-        bucket_size = 100
+        bucket_size = 10
         #hp = hpy()
         #hp.setrelheap()
 
