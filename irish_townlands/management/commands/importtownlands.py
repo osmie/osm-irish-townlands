@@ -41,6 +41,9 @@ def printer(msg):
     if DEBUG:
         print "Finished "+msg+" in {:.1f} sec with {:.1f}MB delta memory (curr mem {:.1f}MB)".format(duration, delta_mem, new_mem)
 
+    # We always want to do this
+    db.reset_queries()
+
 
 def err_msg(msg, *args, **kwargs):
     """Log an error message to DB & print it. """
