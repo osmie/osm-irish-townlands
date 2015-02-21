@@ -466,6 +466,12 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
+        self.townlands = {}
+        self.baronies = {}
+        self.counties = {}
+        self.civil_parishes = {}
+        self.subtownlands = {}
+        self.eds = {}
 
         if options['verbose']:
             global DEBUG
