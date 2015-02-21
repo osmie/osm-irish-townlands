@@ -534,7 +534,7 @@ class Command(BaseCommand):
             self.baronies = self.create_area_obj('baronies', "boundary = 'barony'", Barony, self.cols)
             self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, self.cols)
             self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, self.cols)
-            self.subtownlands = self.calculate_subtownlands()
+            #self.subtownlands = self.calculate_subtownlands()
 
             self.clean_cp_names()
             self.clean_barony_names()
