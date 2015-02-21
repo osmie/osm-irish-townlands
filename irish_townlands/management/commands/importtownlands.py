@@ -287,14 +287,13 @@ class Command(BaseCommand):
             self.cursor.execute("select b.osm_id, t.osm_id from valid_polygon as b join valid_polygon as t on (b.boundary = 'civil_parish' and t.admin_level = '10' and st_contains(b.way, t.way));")
 
             for cp_osm_id, townland_osm_id in self.cursor:
-                with printer("cp_osm_id = {} townland_osm_id = {}".format(cp_osm_id, townland_osm_id)):
-                    townland = self.townlands[townland_osm_id]
-                    other_cp = self.civil_parishes[cp_osm_id]
-                    if not ( townland.civil_parish is None or townland.civil_parish.osm_id == cp_osm_id ):
-                        err_msg("County {county}, Townland {td} is in civil parish {cp1} and {cp2}. Overlapping Civil Parishes?", td=townland, cp1=townland.civil_parish, cp2=other_cp, county=townland.county)
-                    else:
-                        self.townlands[townland_osm_id].civil_parish = self.civil_parishes[cp_osm_id]
-                        self.townlands[townland_osm_id].save()
+                townland = self.townlands[townland_osm_id]
+                other_cp = self.civil_parishes[cp_osm_id]
+                if not ( townland.civil_parish is None or townland.civil_parish.osm_id == cp_osm_id ):
+                    err_msg("County {county}, Townland {td} is in civil parish {cp1} and {cp2}. Overlapping Civil Parishes?", td=townland, cp1=townland.civil_parish, cp2=other_cp, county=townland.county)
+                else:
+                    self.townlands[townland_osm_id].civil_parish = self.civil_parishes[cp_osm_id]
+                    self.townlands[townland_osm_id].save()
 
     def calculate_townlands_in_eds(self):
         with printer("townlands in EDs"):
