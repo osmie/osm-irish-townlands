@@ -92,13 +92,10 @@ class Command(BaseCommand):
 
 
     def connect_to_db(self):
-        if settings.DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
-            # Development testing with sqlite
-            self.conn = psycopg2.connect("dbname='gis'")
-        else:
-            # using postgres (we presume)
-            dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
-            self.conn = psycopg2.connect(host='127.0.0.1', database="gis", user=dbuser, password=dbpass)
+        # using postgres (we presume)
+        dbuser, dbpass = settings.DATABASES['default']['USER'], settings.DATABASES['default']['PASSWORD']
+        dbname = settings.DATABASES['default']['NAME']
+        self.conn = psycopg2.connect(host='127.0.0.1', database=dbname, user=dbuser, password=dbpass)
 
         self.cursor = self.conn.cursor()
 
