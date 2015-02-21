@@ -229,7 +229,7 @@ class Command(BaseCommand):
         # remove "Barony of" suffix from baronies
         for b in self.baronies.values():
             rm_prefix(b, 'name', 'Barony of ')
-            rm_suffix(ed, ' Barony')
+            rm_suffix(b, 'name', ' Barony')
 
     def clean_ed_names(self):
         # remove "ED" suffix from EDs
