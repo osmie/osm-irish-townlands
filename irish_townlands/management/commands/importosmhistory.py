@@ -41,7 +41,7 @@ class Command(BaseCommand):
         for klass in (Townland, ElectoralDivision, CivilParish, Barony, County, Subtownland):
             missing = klass.objects.filter(osm_timestamp__isnull=True).only("osm_id")
             for miss in missing:
-                osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
+                osm_history = results.get((miss.osm_type, abs(long(miss.osm_id))), None)
                 if osm_history is not None:
                     miss.osm_user = osm_history['osm_user']
                     miss.osm_uid = osm_history['osm_uid']
@@ -57,7 +57,7 @@ class Command(BaseCommand):
         to_save = []
 
         # Construct the data structure of things we want to look up
-        to_look_up_dict = [{'osm_type': x.osm_type, 'osm_id': abs(x.osm_id)} for x in to_look_up]
+        to_look_up_dict = [{'osm_type': x.osm_type, 'osm_id': abs(long(x.osm_id))} for x in to_look_up]
 
 
         # this is where we query the OSM API
@@ -69,7 +69,7 @@ class Command(BaseCommand):
         results = {(x['osm_type'], x['osm_id']): x for x in results}
 
         for miss in to_look_up:
-            osm_history = results.get((miss.osm_type, abs(miss.osm_id)), None)
+            osm_history = results.get((miss.osm_type, abs(long(miss.osm_id))), None)
             if osm_history is not None:
                 logger.info("Found it %s", results[(miss.osm_type, abs(miss.osm_id))])
                 miss.osm_user = osm_history['osm_user']
