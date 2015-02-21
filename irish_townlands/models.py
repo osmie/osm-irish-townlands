@@ -593,7 +593,7 @@ class Progress(models.Model):
         return u"{name} was at {percent} on {when}".format(name=self.name, percent=self.percent, when=self.when)
 
 class Subtownland(models.Model, NameableThing):
-    osm_id = models.BigIntegerField()
+    osm_id = models.CharField(max_length=50)
     osm_user = models.CharField(max_length=100, db_index=True, null=True)
     osm_uid = models.IntegerField(null=True)
     osm_timestamp = models.DateTimeField(db_index=True, null=True)
