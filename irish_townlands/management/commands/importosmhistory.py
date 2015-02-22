@@ -71,7 +71,7 @@ class Command(BaseCommand):
         for miss in to_look_up:
             osm_history = results.get((miss.osm_type, abs(long(miss.osm_id))), None)
             if osm_history is not None:
-                logger.info("Found it %s", results[(miss.osm_type, abs(miss.osm_id))])
+                logger.info("Found it %s", results[(miss.osm_type, abs(long(miss.osm_id)))])
                 miss.osm_user = osm_history['osm_user']
                 miss.osm_uid = osm_history['osm_uid']
                 miss.osm_timestamp = osm_history['osm_timestamp']
