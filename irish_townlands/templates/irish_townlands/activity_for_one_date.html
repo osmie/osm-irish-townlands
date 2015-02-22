@@ -28,5 +28,6 @@
             {% blocktrans count num=mapper_details.subtownlands|length %}{{ num }} subtownland{% plural %}{{ num }} subtownlands{% endblocktrans %}:
             {% for t in mapper_details.subtownlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
         {% endif %}
+    </li>
     {% endfor %}
 </ul></p>
