@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 def clean_result_row(result):
     result['osm_id'] = int(result['osm_id'])
     result['osm_timestamp'] = iso8601.parse_date(result['osm_timestamp'])
+    result['osm_user'] = result['osm_user'].decode("utf8")
     return result
 
 class Command(BaseCommand):
