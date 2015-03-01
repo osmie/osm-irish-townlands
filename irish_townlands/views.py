@@ -502,7 +502,7 @@ def detailed_stats_for_period(from_date, to_date):
         if num_eds > 0:
             summary.append(ungettext("%d ED", "%d EDs", num_eds) % num_eds)
         if num_cps > 0:
-            summary.append(ungettext("%d civil parish", "%d civil parises", num_cps) % num_cps)
+            summary.append(ungettext("%d civil parish", "%d civil parishes", num_cps) % num_cps)
         if num_baronies > 0:
             summary.append(ungettext("%d barony", "%d baronies", num_baronies) % num_baronies)
         if num_subtownlands > 0:
