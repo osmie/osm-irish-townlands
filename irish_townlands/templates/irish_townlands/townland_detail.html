@@ -156,7 +156,7 @@
         <ul>
             <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1911&county19011911={{ townland.county.name }}&townland={{ townland.name }}&ded={{ townland.ed|default:"" }}&search=Search">{% blocktrans %}Search the 1911 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
             <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&county19011911={{ townland.county.name }}&townland={{ townland.name }}&ded={{ townland.ed|default:"" }}&search=Search">{% blocktrans %}Search the 1901 Irish Census for {{ townland_name }}{% endblocktrans %}</a></li>
-            <li><a href="http://www.askaboutireland.ie/griffith-valuation/index.xml?action=doPlaceSearch&Submit.x=51&Submit.y=16&Submit=Submit&freetext={{ townland.name }}&countyname={{ townland.county.name }}&baronyname={{ townland.barony }}&unionname=&parishname={{ townland.civil_parish }}">{% blocktrans %}Search the Griffith's Valuation (1847-1864) for {{ townland_name }}{% endblocktrans %}</a></li>
+            <li><a href="http://www.askaboutireland.ie/griffith-valuation/index.xml?action=doPlaceSearch&Submit.x=51&Submit.y=16&Submit=Submit&freetext={{ townland.name }}&countyname={{ townland.county.name }}&baronyname={{ townland.barony|default:"" }}&unionname=&parishname={{ townland.civil_parish|default:"" }}">{% blocktrans %}Search the Griffith's Valuation (1847-1864) for {{ townland_name }}{% endblocktrans %}</a></li>
         </ul>
     </p>
 
