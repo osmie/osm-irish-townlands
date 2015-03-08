@@ -397,7 +397,7 @@ class Command(BaseCommand):
                     select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})
                   ) as b
                   where
-                    a.osm_id <> b.osm_id
+                    a.osm_id < b.osm_id
                     and st_overlaps(a.way, b.way)
               )
               where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
