@@ -60,7 +60,7 @@ function dump() {
     PREFIX=$1
     WHERE=$2
     rm -f ${PREFIX}
-    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -P "${DB_PASS}" townlands "select osm_id, name, \"name:ga\", \"name:en\", alt_name, \"alt_name:ga\", st_area(geo) as area_m2, ST_X(st_transform((ST_centroid(way)), 4326)) as latitude, ST_Y(st_transform((ST_centroid(way)), 4326)) as longitude, geo from valid_polygon where ${WHERE}" >/dev/null
+    pgsql2shp -f ${PREFIX} -u "${DB_USER}" -h localhost -P "${DB_PASS}" townlands "select osm_id, name, \"name:ga\", \"name:en\", alt_name, \"alt_name:ga\", st_area(geo) as area_m2, ST_X(st_transform((ST_centroid(way)), 4326)) as latitude, ST_Y(st_transform((ST_centroid(way)), 4326)) as longitude, geo from valid_polygon where ${WHERE}" >/dev/null
 }
 
 
@@ -76,6 +76,7 @@ dump ${EXPORTED_FILES_DIR}/eds "admin_level = '9'"
 pushd ${EXPORTED_FILES_DIR} > /dev/null
 for TYPE in townlands counties baronies civil_parishes provinces eds ; do
 
+    rm -f ${TYPE}.geojson
     ogr2ogr -f "GeoJSON" ${TYPE}.geojson ${TYPE}.shp
     zip -q ${TYPE}.geojson.zip ${TYPE}.geojson
     rm -f ${TYPE}.geojson
