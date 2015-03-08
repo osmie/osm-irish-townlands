@@ -471,8 +471,10 @@ class Command(BaseCommand):
                 townland_progress = 0
             else:
                 townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+
             Progress.objects.create(percent=townland_progress, name="ireland-tds")
-            for county in County.objects.all():
+
+            for county in County.objects.only("id"):
                 Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
 
 
