@@ -429,7 +429,8 @@ class Command(BaseCommand):
                         these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
                         self.calculate_county_not_covered_for_ids(county, 'civil_parish', these_civil_parishes)
 
-                    county.save()
+                    with printer("saving {}".format(county.name)):
+                        county.save()
 
 
     def calculate_unique_urls(self):
