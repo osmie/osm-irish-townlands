@@ -397,7 +397,7 @@ class Command(BaseCommand):
                     select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})
                   ) as b
                   where
-                    a.osm_id <> b.osm_id
+                    a.osm_id < b.osm_id
                     and st_overlaps(a.way, b.way)
               )
               where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
@@ -411,22 +411,25 @@ class Command(BaseCommand):
 
     def calculate_not_covered(self):
         # County level gaps in coverage of townlands
-        with printer("finding land in county not covered by townlands"):
+        with printer("finding land in county not covered by td/bar/cp"):
             for county in self.counties.values():
-                county_osm_id = county.osm_id
-                table = county._meta.db_table
+                with printer("finding land in county {} not covered by td/bar/cp".format(county.name)):
+                    county_osm_id = county.osm_id
+                    table = county._meta.db_table
 
+                    with printer("finding land in county {} not covered by townlands".format(county.name)):
+                        these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
+                        self.calculate_county_not_covered_for_ids(county, 'townland', these_townlands)
 
-                these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
-                self.calculate_county_not_covered_for_ids(county, 'townland', these_townlands)
+                    with printer("finding land in county {} not covered by baronies".format(county.name)):
+                        these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
+                        self.calculate_county_not_covered_for_ids(county, 'barony', these_baronies)
 
-                these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
-                self.calculate_county_not_covered_for_ids(county, 'barony', these_baronies)
+                    with printer("finding land in county {} not covered by civil parishes".format(county.name)):
+                        these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
+                        self.calculate_county_not_covered_for_ids(county, 'civil_parish', these_civil_parishes)
 
-                these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
-                self.calculate_county_not_covered_for_ids(county, 'civil_parish', these_civil_parishes)
-
-                county.save()
+                    county.save()
 
 
     def calculate_unique_urls(self):
@@ -468,8 +471,10 @@ class Command(BaseCommand):
                 townland_progress = 0
             else:
                 townland_progress = ( area_of_all_townlands / area_of_ireland ) * 100
+
             Progress.objects.create(percent=townland_progress, name="ireland-tds")
-            for county in County.objects.all():
+
+            for county in County.objects.only("id"):
                 Progress.objects.create(percent=county.townland_cover, name=county.name+"-tds")
 
 
