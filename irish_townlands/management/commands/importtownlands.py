@@ -149,7 +149,6 @@ class Command(BaseCommand):
             db.reset_queries()
 
         #hh = hp.heap()
-        #import pdb ; pdb.set_trace()
 
     def water_area_m2_in_county(self, original_county_name):
         self.cursor.execute("""
@@ -401,7 +400,6 @@ class Command(BaseCommand):
                     and st_overlaps(a.way, b.way)
               )
               where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
-              #import pdb ; pdb.set_trace()
             django_cursor.execute(sql)
 
             #gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, ids)
