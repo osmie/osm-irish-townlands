@@ -378,10 +378,13 @@ class Command(BaseCommand):
         if len(ids) == 0:
             # Shortcut, there is townlands here
             django_cursor.execute("update {table} set polygon_{attr_name}_gaps = (select polygon_geojson from {polygon_table} where id = {polygon_id}) where osm_id={county_osm_id}".format(table=table, attr_name=attr_name, polygon_table=polygon_table, polygon_id=polygon_id, county_osm_id=county_osm_id))
+            db.reset_queries()
             django_cursor.execute("update {table} set polygon_{attr_name}_overlaps = '';".format(table=table, attr_name=attr_name, polygon_table=polygon_table, polygon_id=polygon_id))
+            db.reset_queries()
         else:
             sql = """update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform( st_difference(county.way, all_townlands.way) , 4326)::geography) from (select way from valid_polygon where osm_id = {county_osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids})) as all_townlands) where osm_id = {county_osm_id};""".format(county_osm_id=county_osm_id, sub_osm_ids=",".join(ids), table=table, attr_name=attr_name)
             django_cursor.execute(sql)
+            db.reset_queries()
             # overlap
             sql = """
             update {table} set polygon_{attr_name}_gaps = (
@@ -401,6 +404,7 @@ class Command(BaseCommand):
               )
               where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
             django_cursor.execute(sql)
+            db.reset_queries()
 
             #gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, ids)
 
@@ -439,6 +443,7 @@ class Command(BaseCommand):
             for objs in [ all_areas, all_points ]:
                 for x in objs:
                     x.generate_url_path()
+                    db.reset_queries()
 
                 overlapping_url_paths = defaultdict(set)
                 for x in objs:
