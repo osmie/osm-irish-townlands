@@ -398,6 +398,16 @@ def taginfo(request):
                     "key": "admin_level",
                     "value": "10",
                     "description": "Townland"
+                },
+                {
+                    "key": "place",
+                    "value": "locality",
+                    "description": "Subtownlands"
+                },
+                {
+                    "key": "locality",
+                    "value": "subtownland",
+                    "description": "Subtownlands"
                 }
             ]
         }
