@@ -19,7 +19,8 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 done
 
 
-wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf
+#wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf
+wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf
 PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --database townlands --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/osm2pgsql.style -G ireland-and-northern-ireland.osm.pbf #&>/dev/null
 #rm ireland-and-northern-ireland*.osm.pbf
 
