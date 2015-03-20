@@ -221,24 +221,36 @@ class Area(models.Model, NameableThing):
         return min((townland_cover / self.area_m2) * 100.0, 100.0)
 
     @property
+    def townland_area(self):
+        return self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
+
+    @property
     def townland_cover_excl_water(self):
-        townland_cover = self.townlands.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return min((townland_cover / self.area_excl_water_m2) * 100.0, 100.0)
+        return min((self.townland_area / self.area_excl_water_m2) * 100.0, 100.0)
+
+    @property
+    def barony_area(self):
+        return self.baronies.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
 
     @property
     def barony_cover(self):
-        cover = self.baronies.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return min((cover / self.area_m2) * 100.0, 100.0)
+        return min((self.barony_area / self.area_m2) * 100.0, 100.0)
+
+    @property
+    def civil_parish_area(self):
+        return self.civil_parishes.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
 
     @property
     def civil_parish_cover(self):
-        cover = self.civil_parishes.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return min((cover / self.area_m2) * 100.0, 100.0)
+        return min((self.civil_parish_area / self.area_m2) * 100.0, 100.0)
+
+    @property
+    def ed_area(self):
+        return self.eds.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
 
     @property
     def ed_cover(self):
-        cover = self.eds.aggregate(Sum('area_m2'))['area_m2__sum'] or 0
-        return min((cover / self.area_m2) * 100.0, 100.0)
+        return min((self.ed_area / self.area_m2) * 100.0, 100.0)
 
     @property
     def townlands_sorted(self):

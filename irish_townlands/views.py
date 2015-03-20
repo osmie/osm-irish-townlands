@@ -54,11 +54,48 @@ def progress(request):
         civil_parish_progress = ( area_of_all_civil_parishes / area_of_ireland ) * 100
         barony_progress = ( area_of_all_baronies / area_of_ireland ) * 100
 
+    groups = [
+        ('NI', ['Antrim', 'Armagh', 'Derry', 'Down', 'Fermanagh', 'Tyrone']),
+        ('ROI', [ u'Carlow', u'Cavan', u'Clare', u'Cork',
+            u'Donegal', u'Dublin', u'Galway',
+            u'Kerry', u'Kildare', u'Kilkenny', u'Laois', u'Leitrim',
+            u'Limerick', u'Longford', u'Louth', u'Mayo', u'Meath', u'Monaghan',
+            u'Offaly', u'Roscommon', u'Sligo', u'Tipperary',
+            u'Waterford', u'Westmeath', u'Wexford', u'Wicklow'] ),
+        ('Lenister', ["Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow",]),
+        ('Munster', ["Clare", "Cork", "Kerry", "Limerick", "Tipperary", "Waterford",]),
+        ('Connaght', ["Galway", "Leitrim", "Mayo", "Roscommon", "Sligo"]),
+        ('Ulster', ["Antrim", "Armagh", "Cavan", "Donegal", "Down", "Fermanagh", "Derry", "Monaghan", "Tyrone"]),
+    ]
+    group_details = []
+
+    # populate counties
+    county_details = {
+        county.name: {
+            'area_m2': county.area_m2,
+            'area_excl_water_m2': county.area_excl_water_m2,
+            'townland_area': county.townland_area,
+            'ed_area': county.ed_area,
+            'civil_parish_area': county.civil_parish_area,
+            'barony_area': county.barony_area}
+          for county in counties}
+
+
+    for groupname, thesecounties in groups:
+        group_details.append((groupname, {
+            'townland_cover': (sum(county_details[name]['townland_area'] for name in thesecounties) / sum(county_details[name]['area_m2'] for name in thesecounties)) * 100.0,
+            'barony_cover': (sum(county_details[name]['barony_area'] for name in thesecounties) / sum(county_details[name]['area_m2'] for name in thesecounties)) * 100.0,
+            'civil_parish_cover': (sum(county_details[name]['civil_parish_area'] for name in thesecounties) / sum(county_details[name]['area_m2'] for name in thesecounties)) * 100.0,
+            'ed_cover': (sum(county_details[name]['ed_area'] for name in thesecounties) / sum(county_details[name]['area_m2'] for name in thesecounties)) * 100.0,
+        }))
+
+
     return render_to_response('irish_townlands/progress.html',
         {
             'counties':counties, 'last_update':last_update, 'errors':errors,
             'townland_progress': townland_progress, 'ed_progress': ed_progress,
             'civil_parish_progress': civil_parish_progress, 'barony_progress': barony_progress,
+            'groups': group_details,
          },
         context_instance=RequestContext(request))
 

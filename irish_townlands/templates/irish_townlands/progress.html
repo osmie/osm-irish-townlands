@@ -53,6 +53,15 @@
             <td>{{ civil_parish_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ civil_parish_progress }}></progress></td>
             <td>{{ barony_progress|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ barony_progress }}></progress></td>
         </tr>
+    {% for groupname, groupdetails in groups %}
+        <tr>
+            <td>{{ groupname }}</td>
+            <td>{{ groupdetails.townland_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ groupdetails.townland_cover }}></progress></td>
+            <td>{{ groupdetails.ed_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ groupdetails.ed_cover }}></progress></td>
+            <td>{{ groupdetails.civil_parish_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ groupdetails.civil_parish_cover }}></progress></td>
+            <td>{{ groupdetails.barony_cover|floatformat:-1 }}%</td><td><progress min=0 max=100 value={{ groupdetails.barony_cover }}></progress></td>
+        </tr>
+    {% endfor %}
     {% for county in counties %}
         <tr>
             <td><a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a></td>
