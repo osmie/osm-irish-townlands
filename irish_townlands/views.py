@@ -69,7 +69,7 @@ def progress(request):
     ]
     group_details = []
 
-    county_details = {name: {'townland_cover': 0, 'area_m2': 0, 'barony_area': 0, 'ed_area': 0, 'civil_parish_area': 0} for name in COUNTIES}
+    county_details = {name: {'townland_area': 0, 'area_m2': 0, 'barony_area': 0, 'ed_area': 0, 'civil_parish_area': 0} for name in COUNTIES}
 
     # populate counties
     county_details.update({
