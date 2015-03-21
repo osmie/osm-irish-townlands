@@ -173,31 +173,30 @@ class Command(BaseCommand):
 
             self.counties = self.create_area_obj('counties', "admin_level = '6'", County, self.cols)
 
-            with printer("sanitizing counties"):
-                for c in self.counties.values():
-                    original_county_name = c.name
+            for c in self.counties.values():
+                original_county_name = c.name
 
-                    # sanitize name
-                    rm_prefix(c, 'name', 'County ')
-                    if c.name == 'Londonderry':
-                        c.name = u'Derry'
+                # sanitize name
+                rm_prefix(c, 'name', 'County ')
+                if c.name == 'Londonderry':
+                    c.name = u'Derry'
 
-                    # calculate amount of water in this county
-                    with printer("getting water are for county {}".format(c.name)):
-                        water_area_m2 = self.water_area_m2_in_county(original_county_name)
-                    c.water_area_m2 = water_area_m2
-                    if c.water_area_m2 >= c.area_m2:
-                        err_msg("County {0}, too much water?", c.name)
+                # calculate amount of water in this county
+                with printer("getting water are for county {}".format(c.name)):
+                    water_area_m2 = self.water_area_m2_in_county(original_county_name)
+                c.water_area_m2 = water_area_m2
+                if c.water_area_m2 >= c.area_m2:
+                    err_msg("County {0}, too much water?", c.name)
 
+                c.save()
+
+                if not any(c.is_name(county_name) for county_name in county_names):
+                    print "Deleting dud county ", c.name
+                    del self.counties[c.osm_id]
+                    c.delete()
+                else:
+                    c.generate_url_path()
                     c.save()
-
-                    if not any(c.is_name(county_name) for county_name in county_names):
-                        print "Deleting dud county ", c.name
-                        del self.counties[c.osm_id]
-                        c.delete()
-                    else:
-                        c.generate_url_path()
-                        c.save()
 
             seen_counties = set(c.name for c in self.counties.values())
             missing_counties = county_names - seen_counties
