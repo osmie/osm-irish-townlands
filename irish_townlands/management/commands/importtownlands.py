@@ -382,29 +382,31 @@ class Command(BaseCommand):
             django_cursor.execute("update {table} set polygon_{attr_name}_overlaps = '';".format(table=table, attr_name=attr_name, polygon_table=polygon_table, polygon_id=polygon_id))
             db.reset_queries()
         else:
-            sql = """update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform( st_difference(county.way, all_townlands.way) , 4326)::geography) from (select way from valid_polygon where osm_id = {county_osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids})) as all_townlands) where osm_id = {county_osm_id};""".format(county_osm_id=county_osm_id, sub_osm_ids=",".join(ids), table=table, attr_name=attr_name)
-            django_cursor.execute(sql)
-            db.reset_queries()
-            # overlap
-            sql = """
-            update {table} set polygon_{attr_name}_gaps = (
-              select
-                coalesce(st_AsGeoJSON(st_transform(st_union(st_intersection(st_difference(a.way, st_boundary(a.way)), st_difference(b.way, st_boundary(b.way)))), 4326)::geography), '')
-                from (
-                    select osm_id, way
-                    from valid_polygon
-                    where osm_id in ({sub_osm_ids})
-                  ) as a,
-                  (
-                    select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})
-                  ) as b
-                  where
-                    a.osm_id < b.osm_id
-                    and st_overlaps(a.way, b.way)
-              )
-              where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
-            django_cursor.execute(sql)
-            db.reset_queries()
+            with printer("Updating gaps for {name}".format(name=county.name)):
+                sql = """update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform( st_difference(county.way, all_townlands.way) , 4326)::geography) from (select way from valid_polygon where osm_id = {county_osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids})) as all_townlands) where osm_id = {county_osm_id};""".format(county_osm_id=county_osm_id, sub_osm_ids=",".join(ids), table=table, attr_name=attr_name)
+                django_cursor.execute(sql)
+                db.reset_queries()
+            with printer("Updating overlaps for {name}".format(name=county.name)):
+                # overlap
+                sql = """
+                update {table} set polygon_{attr_name}_overlaps = (
+                  select
+                    coalesce(st_AsGeoJSON(st_transform(st_union(st_intersection(st_difference(a.way, st_boundary(a.way)), st_difference(b.way, st_boundary(b.way)))), 4326)::geography), '')
+                    from (
+                        select osm_id, way
+                        from valid_polygon
+                        where osm_id in ({sub_osm_ids})
+                      ) as a,
+                      (
+                        select osm_id, way from valid_polygon where osm_id in ({sub_osm_ids})
+                      ) as b
+                      where
+                        a.osm_id < b.osm_id
+                        and st_overlaps(a.way, b.way)
+                  )
+                  where osm_id = {county_osm_id};""".format(sub_osm_ids=",".join(ids), county_osm_id=county_osm_id, table=table, attr_name=attr_name)
+                django_cursor.execute(sql)
+                db.reset_queries()
 
             #gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, ids)
 
