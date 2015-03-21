@@ -411,6 +411,16 @@ class Command(BaseCommand):
         #setattr(county, 'polygon_'+attr_name+'_gaps', gaps)
         #setattr(county, 'polygon_'+attr_name+'_overlaps', overlaps)
 
+    def calculate_county_not_covered_for_where(self, county, attr_name, where):
+        table = county._meta.db_table
+        polygon_id = county._polygon_geojson_id
+        polygon_table = Polygon._meta.db_table
+        county_osm_id = county.osm_id
+        django_cursor = connection.cursor()
+        
+        # overlaps
+
+
     def calculate_not_covered(self):
         # County level gaps in coverage of townlands
         with printer("finding land in county not covered by td/bar/cp"):
