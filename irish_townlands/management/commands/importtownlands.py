@@ -19,7 +19,6 @@ from contextlib import contextmanager
 import datetime, time
 import subprocess
 import resource
-#from guppy import hpy
 
 DEBUG = False
 
@@ -131,8 +130,6 @@ class Command(BaseCommand):
         # here
         # touching
         bucket_size = 10
-        #hp = hpy()
-        #hp.setrelheap()
 
         touching_townlands = []
         with printer("touching townlands"):
@@ -148,7 +145,6 @@ class Command(BaseCommand):
             TownlandTouch.objects.bulk_create(touching_townlands)
             db.reset_queries()
 
-        #hh = hp.heap()
 
     def water_area_m2_in_county(self, original_county_name):
         self.cursor.execute("""
@@ -264,8 +260,6 @@ class Command(BaseCommand):
                         townland.county = county
 
 
-            #townlands_not_in_counties = set(t for t in self.townlands.values() if not hasattr(t, 'county'))
-            #assert len(townlands_not_in_counties) == 0, townlands_not_in_counties
 
 
     def calculate_townlands_in_baronies(self):
@@ -408,10 +402,6 @@ class Command(BaseCommand):
                 django_cursor.execute(sql)
                 db.reset_queries()
 
-            #gaps, overlaps = self.calculate_gaps_and_overlaps(county.osm_id, ids)
-
-        #setattr(county, 'polygon_'+attr_name+'_gaps', gaps)
-        #setattr(county, 'polygon_'+attr_name+'_overlaps', overlaps)
 
     def calculate_county_not_covered_for_where(self, county, attr_name, where):
         table = county._meta.db_table
@@ -426,7 +416,6 @@ class Command(BaseCommand):
                 county_osm_id=county_osm_id, where=where, attr_name=attr_name, table=table)
             django_cursor.execute(sql)
             db.reset_queries()
-            #sql = """update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform( st_difference(county.way, all_townlands.way) , 4326)::geography) from (select way from valid_polygon where osm_id = {county_osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids})) as all_townlands) where osm_id = {county_osm_id};""".format(county_osm_id=county_osm_id, sub_osm_ids=",".join(ids), table=table, attr_name=attr_name)
 
         # overlaps
         with printer("finding overlaps for {name}".format(name=county.name)):
