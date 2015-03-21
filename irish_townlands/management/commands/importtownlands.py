@@ -420,7 +420,24 @@ class Command(BaseCommand):
         county_osm_id = county.osm_id
         django_cursor = connection.cursor()
         
+        # gaps
+        with printer("finding gaps for {name}".format(name=county.name)):
+            sql = "update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform(st_difference(st_difference(county_way, townland_way), st_boundary(county_way)), 4326)) from (select county.way as county_way, st_union(townland.way) as townland_way from (select way from valid_polygon where osm_id = {county_osm_id}) as county join (select way from valid_polygon where {where}) as townland on (county.way && townland.way) group by county.way) as t) where osm_id = {county_osm_id}".format(
+                county_osm_id=county_osm_id, where=where, attr_name=attr_name, table=table)
+            django_cursor.execute(sql)
+            db.reset_queries()
+            #sql = """update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform( st_difference(county.way, all_townlands.way) , 4326)::geography) from (select way from valid_polygon where osm_id = {county_osm_id}) as county, (select st_union(way) as way from valid_polygon where osm_id in ({sub_osm_ids})) as all_townlands) where osm_id = {county_osm_id};""".format(county_osm_id=county_osm_id, sub_osm_ids=",".join(ids), table=table, attr_name=attr_name)
+
         # overlaps
+        with printer("finding overlaps for {name}".format(name=county.name)):
+            # overlap
+            sql = """
+            update {table} set polygon_{attr_name}_overlaps = (
+                select st_AsGeoJSON(st_transform(st_union(st_intersection(townland1.way, townland2.way)), 4326)) from (select way from valid_polygon where osm_id = {county_osm_id}) as county join (select osm_id, way from valid_polygon where {where}) as townland1 on (county.way && townland1.way) join (select osm_id, way from valid_polygon where {where}) as townland2 on (st_overlaps(townland1.way, townland2.way) and townland1.osm_id < townland2.osm_id) )
+                where osm_id = {county_osm_id}""".format(
+                    county_osm_id=county_osm_id, table=table, attr_name=attr_name, where=where)
+            django_cursor.execute(sql)
+            db.reset_queries()
 
 
     def calculate_not_covered(self):
@@ -433,18 +450,17 @@ class Command(BaseCommand):
 
                     with printer("finding land in county {} not covered by townlands".format(county.name)):
                         these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
-                        self.calculate_county_not_covered_for_ids(county, 'townland', these_townlands)
+                        self.calculate_county_not_covered_for_where(county, 'townland', "admin_level = '10'")
 
                     with printer("finding land in county {} not covered by baronies".format(county.name)):
                         these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
-                        self.calculate_county_not_covered_for_ids(county, 'barony', these_baronies)
+                        self.calculate_county_not_covered_for_where(county, 'barony', "boundary = 'barony'")
 
                     with printer("finding land in county {} not covered by civil parishes".format(county.name)):
                         these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
-                        self.calculate_county_not_covered_for_ids(county, 'civil_parish', these_civil_parishes)
+                        self.calculate_county_not_covered_for_where(county, 'civil_parish', "boundary = 'civil_parish'")
 
-                    with printer("saving {}".format(county.name)):
-                        county.save()
+                    county.save()
 
 
     def calculate_unique_urls(self):
