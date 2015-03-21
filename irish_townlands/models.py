@@ -459,14 +459,14 @@ class CivilParish(Area):
 
 class County(Area):
 
-    polygon_townland_gaps = models.TextField(default='')
-    polygon_townland_overlaps = models.TextField(default='')
+    polygon_townland_gaps = models.TextField(default='', null=True)
+    polygon_townland_overlaps = models.TextField(default='', null=True)
 
-    polygon_barony_gaps = models.TextField(default='')
-    polygon_barony_overlaps = models.TextField(default='')
+    polygon_barony_gaps = models.TextField(default='', null=True)
+    polygon_barony_overlaps = models.TextField(default='', null=True)
 
-    polygon_civil_parish_gaps = models.TextField(default='')
-    polygon_civil_parish_overlaps = models.TextField(default='')
+    polygon_civil_parish_gaps = models.TextField(default='', null=True)
+    polygon_civil_parish_overlaps = models.TextField(default='', null=True)
 
     def is_name(self, other_name):
         return other_name.lower() in [self.name.lower(), 'county '+self.name.lower(), 'county london' + self.name.lower()]
