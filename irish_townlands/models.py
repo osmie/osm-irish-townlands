@@ -650,7 +650,7 @@ class Subtownland(models.Model, NameableThing):
     def generate_url_path(self):
         name = slugify(self.name.lower())
         def _pathify(*args):
-            return "/".join(slugify(name.lower()) for x in args)
+            return "/".join(slugify(x.lower()) for x in args)
 
         if self.townland:
 
