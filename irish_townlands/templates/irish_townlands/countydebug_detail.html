@@ -76,6 +76,50 @@
         <p>None of the townlands in {{ county.name }} the OpenStreetMap database overlap.</p>
     {% endif %}
 
+    <a name="unmapped_eds"></a><h3>Land & Water not covered by Electoral Divisions</h3>
+    
+    {% if county.polygon_ed_gaps %}
+        <div class="map" id="map-ed-gap" style="height: 600px; width: 800px;"></div>
+        <script>
+            var map = new L.Map('map-ed-gap');
+            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib='Map data © OpenStreetMap contributors';
+            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
+            map.addLayer(osm);
+            L.geoJson({
+                    'type':'Feature',
+                    'properties': { 'name': "Land not covered by townlands" },
+                    'geometry': {{ county.polygon_ed_gaps|safe }}
+                }).addTo(map);
+        </script>
+    {% else %}
+        <p>All of {{ county.name }} is covered by EDs in the OpenStreetMap database.</p>
+    {% endif %}
+
+    <h3>Land covered by 2 (or more) Electoral Divisions</h3>
+
+    {% if county.polygon_ed_overlaps %}
+        <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
+        
+        <div class="map" id="map-ed-overlap" style="height: 600px; width: 800px;"></div>
+        <script>
+            var map = new L.Map('map-ed-overlap');
+            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib='Map data © OpenStreetMap contributors';
+            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
+
+            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
+            map.addLayer(osm);
+            L.geoJson({
+                'type':'Feature',
+                'geometry': {{ county.polygon_ed_overlaps|safe }}
+                } ).addTo(map);
+        </script>
+    {% else %}
+        <p>None of the EDs in {{ county.name }} the OpenStreetMap database overlap.</p>
+    {% endif %}
 
     <h3>Land not covered by Civil Parishes</h3>
     

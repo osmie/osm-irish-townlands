@@ -440,6 +440,9 @@ class Command(BaseCommand):
                         these_townlands = set(str(t.osm_id) for t in self.townlands.values() if t.county == county)
                         self.calculate_county_not_covered_for_where(county, 'townland', "admin_level = '10'")
 
+                    with printer("finding land in county {} not covered by EDs".format(county.name)):
+                        self.calculate_county_not_covered_for_where(county, 'ed', "admin_level = '9'")
+
                     with printer("finding land in county {} not covered by baronies".format(county.name)):
                         these_baronies = set(str(b.osm_id) for b in self.baronies.values() if b.county == county)
                         self.calculate_county_not_covered_for_where(county, 'barony', "boundary = 'barony'")
