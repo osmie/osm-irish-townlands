@@ -7,7 +7,6 @@ BASEDIR=$(dirname $0)
 cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
-EXPORTED_FILES_DIR=$3
 
 POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d townlands"
 
