@@ -468,9 +468,11 @@ class County(Area):
     polygon_civil_parish_gaps = models.TextField(default='', null=True)
     polygon_civil_parish_overlaps = models.TextField(default='', null=True)
 
+    polygon_ed_gaps = models.TextField(default='', null=True)
+    polygon_ed_overlaps = models.TextField(default='', null=True)
+
     def is_name(self, other_name):
         return other_name.lower() in [self.name.lower(), 'county '+self.name.lower(), 'county london' + self.name.lower()]
-
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
