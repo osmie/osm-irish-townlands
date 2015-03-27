@@ -1,6 +1,6 @@
 # encoding: utf-8
 def m2_to_arp(area_m2):
-    area_acres = area_m2 / 4046.8564
+    area_acres = area_m2 / 4046.85642
 
     acres = int(area_acres)
     subacres = area_acres - acres
