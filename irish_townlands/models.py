@@ -660,17 +660,17 @@ class Subtownland(models.Model, NameableThing):
 	    ed_name = ElectoralDivision.objects.filter(id=self.townland.ed_id).values_list("name", flat=True)[0] if self.townland.ed_id else None
 
             if county_name and barony_name and civil_parish_name and ed_name:
-                self.url_path = _pathify(county_name, barony_name, civil_parish_name, ed_name, self.townland, self)
+                self.url_path = _pathify(county_name, barony_name, civil_parish_name, ed_name, self.townland.name, self)
             elif county_name and barony_name and civil_parish_name:
-                self.url_path = _pathify(county_name, barony_name, civil_parish_name, self.townland, self)
+                self.url_path = _pathify(county_name, barony_name, civil_parish_name, self.townland.name, self)
             elif county_name and barony_name:
-                self.url_path = _pathify(county_name, barony_name, self.townland, self)
+                self.url_path = _pathify(county_name, barony_name, self.townland.name, self)
             elif county_name and civil_parish_name:
-                self.url_path = _pathify(county_name, civil_parish_name, self.townland, self)
+                self.url_path = _pathify(county_name, civil_parish_name, self.townland.name, self)
             elif county_name:
-                self.url_path = _pathify(county_name, self.townland, self)
+                self.url_path = _pathify(county_name, self.townland.name, self.name)
             else:
-                self.url_path = _pathify(self.townland, self)
+                self.url_path = _pathify(self.townland.name, self)
         else:
             self.url_path = "{0}".format(name)
 
