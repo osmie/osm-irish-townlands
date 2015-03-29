@@ -74,23 +74,47 @@ PAGES = {
             <p>There are several columns per entry:
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
-                    <dd>Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more)</dd>
+                    <dd>Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more). IDs are not shared across objects (e.g. there will never be an ED and a townland with the same OSM_ID).</dd>
                     <dt>NAME<dt>
                     <dd>String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish. <i>(NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.)</i></dd>
-                    <dt>NAME:GA<dt>
+                    <dt>NAME_GA<dt>
                     <dd>String. The name of the object in Irish.</dd>
-                    <dt>NAME:EN<dt>
+                    <dt>NAME_EN<dt>
                     <dd>String. The name of the object in English. Many objects don't have this, in which case presume that NAME is the English name</dd>
                     <dt>ALT_NAME<dt>
                     <dd>String. Alternative name.</dd>
-                    <dt>ALT_NAME:G<dt>
+                    <dt>ALT_NAME_G<dt>
                     <dd>String. Alternative Irish name. (it's short for "alt_name:ga")</dd>
-                    <dt>AREA_M2<dt>
+                    <dt>AREA<dt>
                     <dd>Float. Area in square metres</dd>
                     <dt>LATITUDE<dt>
                     <dd>Float. Latitude of the centre of this area</dd>
                     <dt>LONGITUDE<dt>
                     <dd>Float. Longitude of the centre of this area.</dd>
+                    <dt>OSM_USER<dt>
+                    <dd>String. Username of the OSM user who mapped this</dd>
+                    <dt>OSM_TIMEST<dt>
+                    <dd>String. ISO formatted datetime of when the object was added to OSM</dd>
+                    <dt>epoch_tstmp<dt>
+                    <dd>Integer. <a href="https://en.wikipedia.org/wiki/Unix_time">Unix 'epoch' time</a> of when the object was added to OSM.</dd>
+                    <dt>t_ie_url<dt>
+                    <dd>String. URL of this object on <a href="www.townlands.ie">Townlands.ie</a> (this site)</dd>
+                    <dt>co_name<dt>
+                    <dd>String. Name of the county this object is in, if known. Not in 'county' files.</dd>
+                    <dt>co_osm_id<dt>
+                    <dd>Intger. OSM_ID of the county this object is in, if known. Not in 'county' files.</dd>
+                    <dt>ed_name<dt>
+                    <dd>String. Name of the ED this object is in, if known. Only in 'townland' files.</dd>
+                    <dt>ed_osm_id<dt>
+                    <dd>Intger. OSM_ID of the ED this object is in, if known. Only in 'townland' files.</dd>
+                    <dt>cp_name<dt>
+                    <dd>String. Name of the civil parish this object is in, if known. Only in 'townland' files.</dd>
+                    <dt>cp_osm_id<dt>
+                    <dd>Integer. OSM_ID of the civil parish this objet is in, if known. Only in 'townland' files.</dd>
+                    <dt>bar_name<dt>
+                    <dd>String. Name of the barony this object is in, if known. Only in 'townland' files.</dd>
+                    <dt>bar_osm_id<dt>
+                    <dd>Integer. OSM_ID of the barony this object is in, if known. Only in 'townland' files.</dd>
                 </dl>
             </p>
 
