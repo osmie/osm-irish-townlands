@@ -19,6 +19,9 @@ PAGES = {
     'download': {
         'title': 'Downloading Townlands.ie data',
         'body': """
+            <div class="alert alert-warning">
+                Warning! This data is <strong>incomplete</strong> and does not cover all of Ireland. Some counties are fully mapped, others aren't finished. Coverage is being improved on a daily basis. Please consult the <a href="/progress/">progress report</a> to find out more.
+            </div>
             <p>The data from townlands.ie is available in many formats</p>
             <table class="table">
                 <tr>
