@@ -37,6 +37,7 @@ PAGES = {
                     <td><a href="/static/downloads/townlands.geojson.zip">download GeoJSON</a></td>
                     <td><a href="/static/downloads/townlands.kmz">download KML</a></td>
                     <td><a href="/static/downloads/townlands.csv.zip">download CSV</a></td>
+                    <td><a href="/static/downloads/townlands-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
                 <tr>
                     <td>Electoral Divisions</td>
@@ -44,6 +45,7 @@ PAGES = {
                     <td><a href="/static/downloads/eds.geojson.zip">download GeoJSON</a></td>
                     <td><a href="/static/downloads/eds.kmz">download KML</a></td>
                     <td><a href="/static/downloads/eds.csv.zip">download CSV</a></td>
+                    <td><a href="/static/downloads/eds-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
                 <tr>
                     <td>Civil Parishes</td>
@@ -51,6 +53,7 @@ PAGES = {
                     <td><a href="/static/downloads/civil_parishes.geojson.zip">download GeoJSON</a></td>
                     <td><a href="/static/downloads/civil_parishes.kmz">download KML</a></td>
                     <td><a href="/static/downloads/civil_parishes.csv.zip">download CSV</a></td>
+                    <td><a href="/static/downloads/civil_parishes-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
                 <tr>
                     <td>Baronies</td>
@@ -58,6 +61,7 @@ PAGES = {
                     <td><a href="/static/downloads/baronies.geojson.zip">download GeoJSON</a></td>
                     <td><a href="/static/downloads/baronies.kmz">download KML</a></td>
                     <td><a href="/static/downloads/baronies.csv.zip">download CSV</a></td>
+                    <td><a href="/static/downloads/baronies-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
                 <tr>
                     <td>Counties</td>
@@ -65,6 +69,7 @@ PAGES = {
                     <td><a href="/static/downloads/counties.geojson.zip">download GeoJSON</a></td>
                     <td><a href="/static/downloads/counties.kmz">download KML</a></td>
                     <td><a href="/static/downloads/counties.csv.zip">download CSV</a></td>
+                    <td><a href="/static/downloads/counties-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
             </table>
 
@@ -118,11 +123,12 @@ PAGES = {
                 </dl>
             </p>
 
-            <p>The CSV file has an additional column:
+            <p>There are 2 CSV files, a normal version, and a "no-geom" version. The CSV file has an additional column:
                 <dl class="dl-horizontal">
                     <dt>WKT</dt>
                     <dd>String. <a href="//en.wikipedia.org/wiki/Well-known_text">Well-known text</a> representation of this area.</dd>
-                </dl
+                </dl>
+                The "no-geom" CSV file does not have this, and has no geometry shape data at all (it only has the LATITUDE and LONGITUDE fields). This file is suitable if you want to do some analysis on the data in a spreadsheet programme. Some spreadsheets have trouble with the long WKT field in the regular CSV version.
             </p>
 
             <h2>Copyright & Licence</h2>
