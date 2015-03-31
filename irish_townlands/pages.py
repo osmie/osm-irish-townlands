@@ -145,6 +145,22 @@ PAGES = {
             <p>We use the Ireland extracts from <a href="http://planet.openstreetmap.ie/">OSM Data for Ireland</a>.</p>
         """,
     },
+    '25k-townlands': {
+        'title': '25,000 Townlands!',
+        'body': """
+        <h2>25,000 Townlands</h2>
+        <p>The Irish OpenStreetMap community has now passed an impressive milestone. 25,000 townlands have now been mapped and added to OSM!</p>
+
+        <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/kilcroy/">Kilcroy, Co. Roscommon</a>. <i>(The web page currently can't differnciate between townlands that were added at the same time, so it only sows up as 24,999th on that page)</i>.
+
+        <h2>About the Townland mapping project</h2>
+        <p>Each townland has had to be manually traced and added to OSM. Our mappers have been working on the problem for years. We're <a href="/progress/">currently only 42% of the way through</a>, so it'll be another year before we're finished. We're adding about 100 per day <a href="/progress/activity/">at this rate</a>.</p>
+
+        <p><a href="http://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands">How to map townlands</a>.</p>
+
+        
+        """,
+    },
 
 
 }
