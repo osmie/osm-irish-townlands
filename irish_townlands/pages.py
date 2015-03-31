@@ -163,6 +163,21 @@ PAGES = {
 
         <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/kilcroy/">Kilcroy, Co. Roscommon</a>. <i>(The web page currently can't differnciate between townlands that were added at the same time, so it only sows up as 24,999th on that page)</i>.
 
+        <h2>What are townlands?</h2>
+        <p>A townland is a small geographical division of land. The townland system is of Gaelic origin, pre-dating the Norman invasion, and most have names of Irish origin. However, some townland names and boundaries come from Norman manors, plantation divisions, or later creations of the Ordnance Survey.</p>
+
+        <p>There are approx. 61,000 townlands in Ireland according to Wikipedia. Through a donation of out of copyright sheets from Trinity College Dublin, the Irish OpenStreetMap community now has a source from which to map all townlands on the island of Ireland.</p>
+        <h3>Why are they important to have?</h3>
+        <p>In Ireland, a townland is (generally) the smallest administrative division of land and they form the building blocks for higher-level administrative units such as: Civil Parishes, Electoral Divisions (in the Republic of Ireland) or Wards (in Northern Ireland), Baronies, Counties (will allow for accurate fine tuning of pre-existing data in OSM), Provinces (will allow for accurate fine tuning of pre-existing data in OSM), Local, National & European Election Constituencies, 
+        <p>The benefits of having all townland boundaries mapped in OpenStreetMap are:</p>
+        <ul>
+            <li> It will allow for geocoding of rural addresses</li>
+            <li>It will enable anyone to fully utilise and visualise Census data</li>
+            <li>Highly useful for genealogical searches for people looking into the history of family trees of immigrants down the centuries</li>
+            <li>Gives the option of using OSM data for a much higher level of statistical analysis as presently the smallest boundaries available with which to divide up Ireland are City & County boundaries.</li>
+            <li>All of the above plus the favourable terms of the ODbL license applies ensuring this data is free to use for any and all that want to make use of it, in other words, no exorbitant fee's would apply for this data.</li>
+        </ul>
+
         <h2>About the Townland mapping project</h2>
         <p>Each townland has had to be manually traced and added to OSM. Our mappers have been working on the problem for years. We're <a href="/progress/">currently only 42% of the way through</a>, so it'll be another year before we're finished. We're adding about 100 per day <a href="/progress/activity/">at this rate</a>.</p>
 
