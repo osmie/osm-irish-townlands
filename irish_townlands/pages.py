@@ -6,6 +6,16 @@ PAGES = {
         'title': 'About Townlands.ie',
         'body': 'About',
     },
+    
+    'news': {
+        'title': 'News',
+        'body': """
+        <h2>News from the Townlands Mapping Project</h2>
+        <ul>
+            <li>31st March 2015 - <a href="/page/25k-townlands/">25,000 Townlands have been mapped</a></li>
+        </ul>
+        """,
+    },
 
     'copyright': {
         'title': 'Copyright of Townlands.ie',
