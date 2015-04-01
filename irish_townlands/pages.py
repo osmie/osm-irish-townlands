@@ -21,7 +21,7 @@ PAGES = {
         'title': 'Copyright of Townlands.ie',
 
         'body': """
-            <p>Since this is derived from <a href="openstreetmap.org">OpenStreeMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
+            <p>Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
             <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
         """,
     },
@@ -117,15 +117,15 @@ PAGES = {
                     <dt>co_name<dt>
                     <dd>String. Name of the county this object is in, if known. Not in 'county' files.</dd>
                     <dt>co_osm_id<dt>
-                    <dd>Intger. OSM_ID of the county this object is in, if known. Not in 'county' files.</dd>
+                    <dd>Integer. OSM_ID of the county this object is in, if known. Not in 'county' files.</dd>
                     <dt>ed_name<dt>
                     <dd>String. Name of the ED this object is in, if known. Only in 'townland' files.</dd>
                     <dt>ed_osm_id<dt>
-                    <dd>Intger. OSM_ID of the ED this object is in, if known. Only in 'townland' files.</dd>
+                    <dd>Integer. OSM_ID of the ED this object is in, if known. Only in 'townland' files.</dd>
                     <dt>cp_name<dt>
                     <dd>String. Name of the civil parish this object is in, if known. Only in 'townland' files.</dd>
                     <dt>cp_osm_id<dt>
-                    <dd>Integer. OSM_ID of the civil parish this objet is in, if known. Only in 'townland' files.</dd>
+                    <dd>Integer. OSM_ID of the civil parish this object is in, if known. Only in 'townland' files.</dd>
                     <dt>bar_name<dt>
                     <dd>String. Name of the barony this object is in, if known. Only in 'townland' files.</dd>
                     <dt>bar_osm_id<dt>
@@ -142,7 +142,7 @@ PAGES = {
             </p>
 
             <h2>Copyright & Licence</h2>
-            <p>Since this is derived from <a href="openstreetmap.org">OpenStreeMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
+            <p>Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
             <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
 
         """,
@@ -161,7 +161,7 @@ PAGES = {
         <h2>25,000 Townlands</h2>
         <p>The Irish OpenStreetMap community has now passed an impressive milestone. 25,000 townlands have now been mapped and added to OSM!</p>
 
-        <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/kilcroy/">Kilcroy, Co. Roscommon</a>. <i>(The web page currently can't differnciate between townlands that were added at the same time, so it only sows up as 24,999th on that page)</i>.
+        <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/kilcroy/">Kilcroy, Co. Roscommon</a>. <i>(The web page currently can't differentiate between townlands that were added at the same time, so it only sows up as 24,999th on that page)</i>.
 
         <h2>What are townlands?</h2>
         <p>A townland is a small geographical division of land. The townland system is of Gaelic origin, pre-dating the Norman invasion, and most have names of Irish origin. However, some townland names and boundaries come from Norman manors, plantation divisions, or later creations of the Ordnance Survey.</p>
@@ -172,7 +172,7 @@ PAGES = {
         <p>The benefits of having all townland boundaries mapped in OpenStreetMap are:</p>
         <ul>
             <li> It will allow for geocoding of rural addresses</li>
-            <li>It will enable anyone to fully utilise and visualise Census data</li>
+            <li>It will enable anyone to fully utilize and visualize Census data</li>
             <li>Highly useful for genealogical searches for people looking into the history of family trees of immigrants down the centuries</li>
             <li>Gives the option of using OSM data for a much higher level of statistical analysis as presently the smallest boundaries available with which to divide up Ireland are City & County boundaries.</li>
             <li>All of the above plus the favourable terms of the ODbL license applies ensuring this data is free to use for any and all that want to make use of it, in other words, no exorbitant fee's would apply for this data.</li>
