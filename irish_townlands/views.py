@@ -672,7 +672,7 @@ def townland_index(request, should_group=False):
             context_instance=RequestContext(request))
 
 def mappinghistory(request, should_group=False):
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name", "osm_timestamp", "osm_user").order_by("osm_timestamp")
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name", "osm_timestamp", "osm_user").order_by("osm_timestamp", "name")
 
     return render_to_response('irish_townlands/mappinghistory.html', {'townlands': townlands},
             context_instance=RequestContext(request))
