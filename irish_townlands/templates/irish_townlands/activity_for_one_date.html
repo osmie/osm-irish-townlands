@@ -6,27 +6,27 @@
     <li><a href="{{ request.build_absolute_uri }}{% url 'mapper_details' mapper_details.osm_user %}">{{ mapper_details.osm_user }}</a> added 
         {% if mapper_details.townlands %}
             {% blocktrans count num=mapper_details.townlands|length %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %}:
-            {% for t in mapper_details.townlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.townlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
         {% if mapper_details.eds %}
             {% blocktrans count num=mapper_details.eds|length %}{{ num }} ED{% plural %}{{ num }} EDs{% endblocktrans %}:
-            {% for t in mapper_details.eds %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.eds %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
         {% if mapper_details.cps %}
             {% blocktrans count num=mapper_details.cps|length %}{{ num }} civil parish{% plural %}{{ num }} civil parishes{% endblocktrans %}:
-            {% for t in mapper_details.cps %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.cps %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
         {% if mapper_details.baronies %}
             {% blocktrans count num=mapper_details.baronies|length %}{{ num }} barony{% plural %}{{ num }} baronies{% endblocktrans %}:
-            {% for t in mapper_details.baronies %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.baronies %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
         {% if mapper_details.counties %}
             {% blocktrans count num=mapper_details.counties|length %}{{ num }} county{% plural %}{{ num }} counties{% endblocktrans %}:
-            {% for t in mapper_details.counties %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.counties %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
         {% if mapper_details.subtownlands %}
             {% blocktrans count num=mapper_details.subtownlands|length %}{{ num }} subtownland{% plural %}{{ num }} subtownlands{% endblocktrans %}:
-            {% for t in mapper_details.subtownlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            {% for t in mapper_details.subtownlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}
         {% endif %}
     </li>
     {% endfor %}
