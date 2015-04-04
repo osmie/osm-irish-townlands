@@ -161,7 +161,7 @@ PAGES = {
         <h2>25,000 Townlands</h2>
         <p>The Irish OpenStreetMap community has now passed an impressive milestone. 25,000 townlands have now been mapped and added to OSM!</p>
 
-        <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/kilcroy/">Kilcroy, Co. Roscommon</a>. <i>(The web page currently can't differentiate between townlands that were added at the same time, so it only sows up as 24,999th on that page)</i>.
+        <p>The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/corlis/">Corlis, Co. Roscommon</a>.
 
         <h2>What are townlands?</h2>
         <p>A townland is a small geographical division of land. The townland system is of Gaelic origin, pre-dating the Norman invasion, and most have names of Irish origin. However, some townland names and boundaries come from Norman manors, plantation divisions, or later creations of the Ordnance Survey.</p>
