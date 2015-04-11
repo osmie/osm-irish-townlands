@@ -1,9 +1,13 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize %}
 
+{% block meta_description %}{{ townland_name }}{% if townland.name_ga %} ({{ townland.name_ga }}){% endif %} is a townland{% if townland.ed %} in {{ townland.ed }} ED,{% endif %}{% if townland.civil_parish %} in {{ townland.civil_parish }} Civil Parish,{% endif %}{% if townland.barony %} in {{ barony }} Barony,{% endif %} in Co. {{ townland.county }}, Ireland.{% endblock %}
+
 {% block title %}
 {% if townland.county %}{% blocktrans with county_name=townland.county.name %}{{ townland_name }} Townland, Co. {{ county_name }}{% endblocktrans %}{% else %}{% blocktrans %}{{ townland_name }} Townland{% endblocktrans %}{% endif %}
 {% endblock %}
+
+
 {% block header %}
 <h1>
     {% if townland.county %}{% blocktrans with county_name=townland.county.name %}{{ townland_name }} Townland, Co. {{ county_name }}{% endblocktrans %}{% else %}{% blocktrans %}{{ townland_name }} Townland{% endblocktrans %}{% endif %}
