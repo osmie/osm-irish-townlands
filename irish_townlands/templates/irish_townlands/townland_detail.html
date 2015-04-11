@@ -15,13 +15,31 @@
 
 {% block body %}
 
-    {% if townland.county and townland.barony and townland.civil_parish and townland.ed %}
+    {% if townland.county or townland.barony or townland.civil_parish or townland.ed %}
     <p>
-        <a href="{% url 'view_area' townland.county.url_path %}">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.barony.url_path %}">{{ townland.barony.name }}</a>
-        → <a href="{% url 'view_area' townland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.ed.url_path %}">{% blocktrans with ed_name=townland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.url_path %}">{{ townland_name }}</a>
+        {% if townland.county %}
+            <span id="bc_county" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemref="bc_td">
+                <a href="{% url 'view_area' townland.county.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</span></a> →
+            </span>
+        {% endif %}
+        {% if townland.barony %}
+            <span id="bc_bar" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="bc_td">
+                <a href="{% url 'view_area' townland.barony.url_path %}" itemprop="url"><span itemprop="title">{{ townland.barony.name }}</span></a> →
+            </span>
+        {% endif %}
+        {% if townland.civil_parish %}
+            <span id="bc_cp" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="bc_td">
+                <a href="{% url 'view_area' townland.civil_parish.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</span></a> →
+            </span>
+        {% endif %}
+        {% if townland.ed %}
+            <span id="bc_ed" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="bc_td">
+                <a href="{% url 'view_area' townland.ed.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with ed_name=townland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</span></a> →
+            </span>
+        {% endif %}
+        <span id="bc_td" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+            <a href="{% url 'view_area' townland.url_path %}" itemprop="url"><span itemprop="title">{{ townland_name }}</span></a>
+        </span>
     </p>
     {% endif %}
 
