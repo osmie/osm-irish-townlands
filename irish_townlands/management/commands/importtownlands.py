@@ -81,10 +81,26 @@ class Command(BaseCommand):
 
 
     def delete_all_data(self):
+        # Deletes all existing data.
+        #
+        # NB: It's important that it's "DELETE FROM" not "TRUNCATE". When
+        # "TRUNCATE" is used, then this transaction will get a ACCESS EXCLUSIVE
+        # lock on the table (which is all tables, since we need to delete all
+        # tables). This means no other transaction will be able to read from
+        # the data (even read old data?) until after this transaction has
+        # finished (and the ACCESS EXCLUSIVE lock is released). This means that
+        # while an import is in process, townlands.ie is down. Which sucks. It
+        # also brings down a log of other sites on the same host, since the
+        # apache workers are tied up waiting for the lock to released. By using
+        # "DELETE" instead, this doesn't happen.
+        #
+        # cf. http://www.postgresql.org/docs/9.4/static/explicit-locking.html
         django_cursor = connection.cursor()
         for model in [ Townland, County, CivilParish, Barony, ElectoralDivision, Subtownland, Polygon ]:
             table = model._meta.db_table
-            django_cursor.execute("TRUNCATE TABLE {table} CASCADE".format(table=table))
+            # Doing a raw SQL rather than model.objects.all().delete() because
+            # this uses less memory
+            django_cursor.execute("DELETE FROM {table} CASCADE".format(table=table))
 
         # Clear errors
         Error.objects.all().delete()
