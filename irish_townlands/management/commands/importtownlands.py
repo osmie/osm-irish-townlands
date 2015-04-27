@@ -96,7 +96,7 @@ class Command(BaseCommand):
         #
         # cf. http://www.postgresql.org/docs/9.4/static/explicit-locking.html
         django_cursor = connection.cursor()
-        for model in [ Townland, County, CivilParish, Barony, ElectoralDivision, Subtownland, Polygon ]:
+        for model in [ Townland, County, CivilParish, Barony, ElectoralDivision, Subtownland, Polygon, TownlandTouch ]:
             table = model._meta.db_table
             # Doing a raw SQL rather than model.objects.all().delete() because
             # this uses less memory
