@@ -657,3 +657,6 @@ class Subtownland(models.Model, NameableThing):
     @property
     def osm_type(self):
         return "node"
+
+    def __unicode__(self):
+        return "{0} ({1})".format(self.name, self.osm_id)
