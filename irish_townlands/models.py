@@ -20,6 +20,9 @@ def err_msg(msg, *args, **kwargs):
     Error.objects.create(message=msg)
     print msg
 
+def pathify(*args):
+    return "/".join(slugify(x.lower()) for x in args if x is not None)
+
 
 def location_pretty(x, y):
     lat, lon = abs(y), abs(x)
@@ -389,10 +392,8 @@ class Barony(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
         county_name = self.county_name
-        if county_name:
-            self.url_path = "{0}/{1}".format(county_name.lower(), name)
-        else:
-            self.url_path = "{0}".format(name)
+
+        self.url_path = pathify(county_name, name)
 
         if self.unique_suffix:
             self.url_path += str(self.unique_suffix)
@@ -424,10 +425,7 @@ class CivilParish(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
         county_name = self.county_name
-        if county_name:
-            self.url_path = "{0}/{1}".format(county_name.lower(), name)
-        else:
-            self.url_path = "{0}".format(name)
+        self.url_path = pathify(county_name, name)
 
         if self.unique_suffix:
             self.url_path += str(self.unique_suffix)
@@ -489,10 +487,8 @@ class ElectoralDivision(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
         county_name = self.county_name
-        if county_name:
-            self.url_path = "{0}/{1}".format(county_name.lower(), name)
-        else:
-            self.url_path = "{0}".format(name)
+
+        self.url_path = pathify(county_name, name)
 
         if self.unique_suffix:
             self.url_path += str(self.unique_suffix)
@@ -529,26 +525,13 @@ class Townland(Area):
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        def _pathify(*args):
-            return "/".join(slugify(x.lower()) for x in args)
 
 	county_name = County.objects.filter(id=self.county_id).values_list("name", flat=True)[0] if self.county_id else None
 	civil_parish_name = CivilParish.objects.filter(id=self.civil_parish_id).values_list("name", flat=True)[0] if self.civil_parish_id else None
 	barony_name = Barony.objects.filter(id=self.barony_id).values_list("name", flat=True)[0] if self.barony_id else None
 	ed_name = ElectoralDivision.objects.filter(id=self.ed_id).values_list("name", flat=True)[0] if self.ed_id else None
 
-        if county_name and barony_name and civil_parish_name and ed_name:
-            self.url_path = _pathify(county_name, barony_name, civil_parish_name, ed_name, self.name)
-        elif county_name and barony_name and civil_parish_name:
-            self.url_path = _pathify(county_name, barony_name, civil_parish_name, self.name)
-        elif county_name and barony_name:
-            self.url_path = _pathify(county_name, barony_name, self.name)
-        elif county_name and civil_parish_name:
-            self.url_path = _pathify(county_name, civil_parish_name, self.name)
-        elif county_name:
-            self.url_path = _pathify(county_name, self.name)
-        else:
-            self.url_path = "{0}".format(name)
+        self.url_path = pathify(county_name, barony_name, civil_parish_name, ed_name, name)
 
         if self.unique_suffix:
             self.url_path += str(self.unique_suffix)
@@ -651,8 +634,6 @@ class Subtownland(models.Model, NameableThing):
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
-        def _pathify(*args):
-            return "/".join(slugify(x.lower()) for x in args)
 
         if self.townland:
 
@@ -661,18 +642,8 @@ class Subtownland(models.Model, NameableThing):
 	    barony_name = Barony.objects.filter(id=self.townland.barony_id).values_list("name", flat=True)[0] if self.townland.barony_id else None
 	    ed_name = ElectoralDivision.objects.filter(id=self.townland.ed_id).values_list("name", flat=True)[0] if self.townland.ed_id else None
 
-            if county_name and barony_name and civil_parish_name and ed_name:
-                self.url_path = _pathify(county_name, barony_name, civil_parish_name, ed_name, self.townland.name, self.name)
-            elif county_name and barony_name and civil_parish_name:
-                self.url_path = _pathify(county_name, barony_name, civil_parish_name, self.townland.name, self.name)
-            elif county_name and barony_name:
-                self.url_path = _pathify(county_name, barony_name, self.townland.name, self.name)
-            elif county_name and civil_parish_name:
-                self.url_path = _pathify(county_name, civil_parish_name, self.townland.name, self.name)
-            elif county_name:
-                self.url_path = _pathify(county_name, self.townland.name, self.name)
-            else:
-                self.url_path = _pathify(self.townland.name, self.name)
+            self.url_path = pathify(county_name, barony_name, civil_parish_name, ed_name, self.townland.name, name)
+
         else:
             self.url_path = "{0}".format(name)
 
