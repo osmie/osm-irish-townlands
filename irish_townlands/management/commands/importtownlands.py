@@ -559,7 +559,7 @@ class Command(BaseCommand):
                 ('"alt_name:ga"', 'alt_name_ga'),
                 ('osm_id', 'osm_id'),
                 ('place', 'place'),
-                ('source', 'source'),
+                ('"source"', 'source'),
                 ('attribution', 'attribution'),
                 ('st_area(st_transform(way, 29902))', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
