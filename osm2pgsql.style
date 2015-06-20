@@ -41,4 +41,6 @@ way   place        text         linear
 way   natural      text         polygon  # natural=coastline tags are discarded by a hard coded rule in osm2pgsql
 way   water        text         polygon
 way   waterway     text         polygon
+way   attribution  text         polygon
+way   source     text         polygon
 
