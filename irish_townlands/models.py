@@ -142,6 +142,8 @@ class Area(models.Model, NameableThing):
     water_area_m2 = models.FloatField(blank=True, null=True)
     url_path = models.CharField(db_index=True, max_length=255)
     unique_suffix = models.PositiveSmallIntegerField(null=True)
+    source = models.CharField(max_length=255, default=None, null=True)
+    attribution = models.CharField(max_length=255, default=None, null=True)
 
     centre_x = models.FloatField(default=0)
     centre_y = models.FloatField(default=0)
