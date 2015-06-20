@@ -197,6 +197,8 @@
             <a href="{{ townland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
         </p>
     {% endif %}
+    {% if townland.source %}{% blocktrans with source=townland.source %}The source for this townland is {{ source }}.{% endblocktrans %}{% endif %}
+    {% if townland.attribution %}{% blocktrans with attribution=townland.attribution %}The attribution for this townland is {{ attribution }}.{% endblocktrans %}{% endif %}
 
 
 {% endblock body %}
