@@ -1,6 +1,8 @@
 from django.conf import settings
 import subprocess
-import os
+import os, os.path
+import csv
+import psycopg2
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -37,6 +39,20 @@ def dump(directory, file_prefix, dbuser, dbpass, query):
 
     subprocess.call(["zip", "-q", file_prefix+".zip", file_prefix+".dbf", file_prefix+".prj", file_prefix+".shp", file_prefix+".shx"])
     rm(file_prefix+".dbf", file_prefix+".prj", file_prefix+".shp", file_prefix+".shx")
+
+def townland_touching(directory, dbuser, dbpass):
+    conn = psycopg2.connect(host='127.0.0.1', database="townlands", user=dbuser, password=dbpass)
+    cursor = conn.cursor()
+
+    with open(os.path.join(directory, "townlandtouch.csv"), "w") as fp:
+        csvwriter = csv.writer(fp, lineterminator="\n")
+        csvwriter.writerow(["t1_osm_id", "t2_osm_id", "direction", "length_m"])
+        cursor.execute("select t1.osm_id as t1_osm_id, t2.osm_id as t2_osm_id, tt.direction_radians * 57.2957795 as direction, tt.length_m from irish_townlands_townlandtouch as tt join irish_townlands_townland as t1 on (tt.townland_a_id = t1.id) join irish_townlands_townland as t2 on (tt.townland_b_id = t2.id);")
+        for row in cursor:
+            csvwriter.writerow(row)
+
+    zip("townlandtouch.csv")
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -154,3 +170,4 @@ class Command(BaseCommand):
             ) AS xx
         """)
 
+        townland_touching(directory, dbuser, dbpass)
