@@ -447,6 +447,10 @@ def taginfo(request):
                     "key": "locality",
                     "value": "subtownland",
                     "description": "Subtownlands"
+                },
+                {
+                    "key": "attribution",
+                    "description": "Shows the attribution of an object"
                 }
             ]
         }

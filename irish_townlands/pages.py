@@ -130,6 +130,8 @@ PAGES = {
                     <dd>String. Name of the barony this object is in, if known. Only in 'townland' files.</dd>
                     <dt>bar_osm_id<dt>
                     <dd>Integer. OSM_ID of the barony this object is in, if known. Only in 'townland' files.</dd>
+                    <dt>attributio<dt>
+                    <dd>String. Value of the 'attribution' tag (if any)</dd>
                 </dl>
             </p>
 
