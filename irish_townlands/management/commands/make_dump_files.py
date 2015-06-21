@@ -45,9 +45,13 @@ class Command(BaseCommand):
         dbpass = settings.DATABASES['default']['PASSWORD']
 
 
-        dump(directory, "townlands", dbuser, dbpass, """
-            SELECT
-                xx.*, ST_Area(xx.geom::geography) AS area,
+        # There is some weird quoting things going on, requireing me to split
+        # the query into 2 parts. If it was all """....""" then there's a
+        # postgres syntax error at 'http://'
+
+        dump(directory, "townlands", dbuser, dbpass,
+            "SELECT " +
+                """xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -70,12 +74,11 @@ class Command(BaseCommand):
                         ON (cp.id = t.civil_parish_id)
                     LEFT OUTER JOIN irish_townlands_electoraldivision AS ed
                         ON (ed.id = t.ed_id)
-                ) AS xx;
-            """)
-        return
-        dump(directory, "counties", dbuser, dbpass, """
-            SELECT
-                xx.*, ST_area(xx.geom::geography) AS area,
+                ) AS xx;""")
+
+        dump(directory, "counties", dbuser, dbpass,
+            "SELECT " +
+                """xx.*, ST_area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -90,9 +93,10 @@ class Command(BaseCommand):
                         ON (c._polygon_geojson_id = irish_townlands_polygon.id)
             ) AS xx
              """)
-        dump(directory, "baronies", dbuser, dbpass, """
-            SELECT
-                xx.*, ST_Area(xx.geom::geography) AS area, ST_Y(ST_Centroid(xx.geom)) AS latitude,
+
+        dump(directory, "baronies", dbuser, dbpass,
+            "SELECT "+
+                """xx.*, ST_Area(xx.geom::geography) AS area, ST_Y(ST_Centroid(xx.geom)) AS latitude,
                 ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -109,9 +113,10 @@ class Command(BaseCommand):
                         ON (b.county_id = c.id)
                 ) AS xx
              """)
-        dump(directory, "civil_parishes", dbuser, dbpass, """
-            SELECT
-                xx.*, ST_Area(xx.geom::geography) AS area,
+
+        dump(directory, "civil_parishes", dbuser, dbpass,
+            "SELECT "+
+                """xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -128,9 +133,10 @@ class Command(BaseCommand):
                         ON (cp.county_id = c.id)
             ) AS xx
             """)
-        dump(directory, "eds", dbuser, dbpass, """
-            SELECT
-                xx.*, ST_Area(xx.geom::geography) AS area,
+
+        dump(directory, "eds", dbuser, dbpass,
+            "SELECT "+
+                """xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
