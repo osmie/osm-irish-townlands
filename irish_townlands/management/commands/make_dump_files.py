@@ -17,7 +17,6 @@ def zip(filename, zipfile=None):
     rm(filename)
 
 def dump(directory, file_prefix, dbuser, dbpass, query):
-    os.chdir(directory)
     subprocess.call(["pgsql2shp", "-f", file_prefix, "-u", dbuser, "-h", "localhost", "-P", dbpass, "townlands", query], stdout=subprocess.PIPE)
 
     # Convert
@@ -57,6 +56,8 @@ def townland_touching(directory, dbuser, dbpass):
 class Command(BaseCommand):
     def handle(self, *args, **options):
         directory = args[0]
+        os.chdir(directory)
+
         dbuser = settings.DATABASES['default']['USER']
         dbpass = settings.DATABASES['default']['PASSWORD']
 
