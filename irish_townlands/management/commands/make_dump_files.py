@@ -45,7 +45,32 @@ class Command(BaseCommand):
         dbpass = settings.DATABASES['default']['PASSWORD']
 
 
-        dump(directory, "townlands", dbuser, dbpass, "select xx.*, st_area(xx.geom::geography) as area, st_y(st_centroid(xx.geom)) as latitude, st_x(st_centroid(xx.geom)) as longitude, extract(epoch from osm_timestamp) as epoch_tstmp from (select t.osm_id, t.name, t.name_ga, t.name_en, t.alt_name, t.alt_name_ga, t.osm_user, t.osm_timestamp, c.name as co_name, c.osm_id as co_osm_id, cp.name as cp_name, cp.osm_id as cp_osm_id, ed.name as ed_name, ed.osm_id as ed_osm_id, b.name as bar_name, b.osm_id as bar_osm_id, concat('http://www.townlands.ie/', t.url_path) as t_ie_url,  st_geomfromgeojson(irish_townlands_polygon.polygon_geojson) as geom from irish_townlands_townland as t join irish_townlands_polygon on (t._polygon_geojson_id = irish_townlands_polygon.id) left outer join irish_townlands_county as c on (t.county_id = c.id) left outer join irish_townlands_barony as b on (t.barony_id = b.id) left outer join irish_townlands_civilparish as cp on (cp.id = t.civil_parish_id) left outer join irish_townlands_electoraldivision as ed on (ed.id = t.ed_id)) as xx")
+        dump(directory, "townlands", dbuser, dbpass, """
+            SELECT
+                xx.*, ST_Area(xx.geom::geography) AS area,
+                ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
+                EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
+            FROM (
+                SELECT
+                    t.osm_id, t.name, t.name_ga, t.name_en, t.alt_name, t.alt_name_ga,
+                    t.osm_user, t.osm_timestamp, c.name AS co_name, c.osm_id AS co_osm_id,
+                    cp.name AS cp_name, cp.osm_id AS cp_osm_id, ed.name AS ed_name,
+                    ed.osm_id AS ed_osm_id, b.name AS bar_name, b.osm_id AS bar_osm_id,
+                    CONCAT('http://www.townlands.ie/', t.url_path) AS t_ie_url,
+                    ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson) AS geom
+                FROM
+                    irish_townlands_townland AS t
+                        JOIN irish_townlands_polygon ON (t._polygon_geojson_id = irish_townlands_polygon.id)
+                    LEFT OUTER JOIN irish_townlands_county AS c
+                        ON (t.county_id = c.id)
+                    LEFT OUTER JOIN irish_townlands_barony AS b
+                        ON (t.barony_id = b.id)
+                    LEFT OUTER JOIN irish_townlands_civilparish AS cp
+                        ON (cp.id = t.civil_parish_id)
+                    LEFT OUTER JOIN irish_townlands_electoraldivision AS ed
+                        ON (ed.id = t.ed_id)
+                ) AS xx
+            """)
         dump(directory, "counties", dbuser, dbpass, "select xx.*, st_area(xx.geom::geography) as area, st_y(st_centroid(xx.geom)) as latitude, st_x(st_centroid(xx.geom)) as longitude, extract(epoch from osm_timestamp) as epoch_tstmp from (select c.osm_id, c.name, c.name_ga, c.name_en, c.alt_name, c.alt_name_ga, c.osm_user, c.osm_timestamp, concat('http://www.townlands.ie/', c.url_path) as t_ie_url,  st_geomfromgeojson(irish_townlands_polygon.polygon_geojson) as geom from irish_townlands_county as c join irish_townlands_polygon on (c._polygon_geojson_id = irish_townlands_polygon.id)) as xx")
         dump(directory, "baronies", dbuser, dbpass, "select xx.*, st_area(xx.geom::geography) as area, st_y(st_centroid(xx.geom)) as latitude, st_x(st_centroid(xx.geom)) as longitude, extract(epoch from osm_timestamp) as epoch_tstmp from (select b.osm_id, b.name, b.name_ga, b.name_en, b.alt_name, b.alt_name_ga, b.osm_user, b.osm_timestamp, c.name as co_name, c.osm_id as co_osm_id, concat('http://www.townlands.ie/', b.url_path) as t_ie_url,  st_geomfromgeojson(irish_townlands_polygon.polygon_geojson) as geom from irish_townlands_barony as b join irish_townlands_polygon on (b._polygon_geojson_id = irish_townlands_polygon.id) left outer join irish_townlands_county as c on (b.county_id = c.id)) as xx")
         dump(directory, "civil_parishes", dbuser, dbpass, "select xx.*, st_area(xx.geom::geography) as area, st_y(st_centroid(xx.geom)) as latitude, st_x(st_centroid(xx.geom)) as longitude, extract(epoch from osm_timestamp) as epoch_tstmp from (select cp.osm_id, cp.name, cp.name_ga, cp.name_en, cp.alt_name, cp.alt_name_ga, cp.osm_user, cp.osm_timestamp, c.name as co_name, c.osm_id as co_osm_id, concat('http://www.townlands.ie/', cp.url_path) as t_ie_url,  st_geomfromgeojson(irish_townlands_polygon.polygon_geojson) as geom from irish_townlands_civilparish as cp join irish_townlands_polygon on (cp._polygon_geojson_id = irish_townlands_polygon.id) left outer join irish_townlands_county as c on (cp.county_id = c.id)) as xx")
