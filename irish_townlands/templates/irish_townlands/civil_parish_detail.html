@@ -26,6 +26,9 @@
             <p>{{ civil_parish_name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.barony_list_textual|safe }}.
         {% endif %}
     {% endwith %}
+    {% if civil_parish.crosses_county_border %}
+        
+    {% endif %}
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
