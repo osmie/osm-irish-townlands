@@ -267,7 +267,7 @@ class Area(models.Model, NameableThing):
 
     @property
     def civil_parishes_sorted(self):
-        return self.civil_parishes.only("name", "url_path", "county__name").order_by("name")
+        return self.civil_parishes.only("name", "url_path").order_by("name")
 
     @property
     def eds_sorted(self):
@@ -422,7 +422,7 @@ class Barony(Area):
 
 
 class CivilParish(Area):
-    county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="civil_parishes")
+    counties = models.ManyToManyField("County", null=True, db_index=True, default=None, related_name="civil_parishes")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -433,15 +433,9 @@ class CivilParish(Area):
             self.url_path += str(self.unique_suffix)
 
     def calculate_county(self):
-        # This logic breaks if CPs cross county borders.
         counties = list(County.objects.filter(townlands__civil_parish=self).distinct())
-        if len(counties) == 0:
-            err_msg("Civil Parish {0} has no county", self)
-            return
-        if len(counties) > 1:
-            err_msg("Civil Parish {cp} overlaps counties: {counties}", cp=self, counties=", ".join(x.name for x in counties))
-            return
-        self.county = counties[0]
+        for county in counties:
+            self.counties.add(county)
 
     @property
     def baronies(self):
@@ -455,6 +449,10 @@ class CivilParish(Area):
             return None
         else:
             return counties[0]
+
+    @property
+    def crosses_county_border(self):
+        return self.counties.count() > 1
 
 
 class County(Area):
