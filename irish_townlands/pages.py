@@ -94,6 +94,7 @@ PAGES = {
             <h2>Data format</h2>
             <p>The geometry is available in <a href="spatialreference.org/ref/epsg/wgs-84/">WSG 84 (aka EPSG 4326, aka "latitude and longitude")</a> projection system.</p>
 
+            <h3>Attributes</h3>
             <p>There are several columns per entry:
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
@@ -143,6 +144,7 @@ PAGES = {
                 </dl>
             </p>
 
+            <h3>Geom and no-geom version</h3>
             <p>There are 2 CSV files, a normal version, and a "no-geom" version. The CSV file has an additional column:
                 <dl class="dl-horizontal">
                     <dt>WKT</dt>
@@ -151,6 +153,7 @@ PAGES = {
                 The "no-geom" CSV file does not have this, and has no geometry shape data at all (it only has the LATITUDE and LONGITUDE fields). This file is suitable if you want to do some analysis on the data in a spreadsheet programme. Some spreadsheets have trouble with the long WKT field in the regular CSV version.
             </p>
             
+            <h3>Townland Touch</h3>
             <p>When we sync from OpenStreetMap, we calculate what townlands touch each other, and how (north/south/east/west). This allows us to have a "This townland borders the follow townlands:..." feature. The "Townland Touch" dataset contains a CSV export of this data. It has the following fields:
                 <dl class="dl-horizontal">
                     <dt>t1_osm_id</dt>
