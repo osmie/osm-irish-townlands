@@ -336,7 +336,7 @@ def search(request):
     counties_num_results = len(counties)
     baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
     baronies_num_results = len(baronies)
-    civil_parishes = list(CivilParish.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
+    civil_parishes = list(CivilParish.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
     civil_parishes_num_results = len(civil_parishes)
     eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
     eds_num_results = len(eds)
