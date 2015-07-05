@@ -464,7 +464,7 @@ class Command(BaseCommand):
                         self.calculate_county_not_covered_for_where(county, 'barony', "boundary = 'barony'")
 
                     with printer("finding land in county {} not covered by civil parishes".format(county.name)):
-                        these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if cp.county == county)
+                        these_civil_parishes = set(str(cp.osm_id) for cp in self.civil_parishes.values() if county in cp.counties.all())
                         self.calculate_county_not_covered_for_where(county, 'civil_parish', "boundary = 'civil_parish'")
 
                     county.save()
