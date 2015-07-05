@@ -11,7 +11,7 @@ from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
 from django import db
-from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon, ViceCounty
 
 from collections import defaultdict
 import psycopg2
@@ -472,7 +472,7 @@ class Command(BaseCommand):
 
     def calculate_unique_urls(self):
         with printer("uniqifying townland urls"):
-            all_areas = self.townlands.values() + self.civil_parishes.values() + self.baronies.values() + self.counties.values() + self.eds.values()
+            all_areas = self.townlands.values() + self.civil_parishes.values() + self.baronies.values() + self.counties.values() + self.eds.values() + self.vice_counties.all()
             all_points = self.subtownlands.values()
 
             for objs in [ all_areas, all_points ]:
@@ -497,7 +497,7 @@ class Command(BaseCommand):
     def save_all_objects(self):
         # save all now
         with printer("final objects save"):
-            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds, self.subtownlands]:
+            for objs in [self.townlands, self.civil_parishes, self.baronies, self.counties, self.eds, self.subtownlands, self.vice_counties]:
                 for x in objs.values():
                     x.save()
                     db.reset_queries()
@@ -579,6 +579,7 @@ class Command(BaseCommand):
             self.civil_parishes = self.create_area_obj('civil parishes', "boundary = 'civil_parish'", CivilParish, self.cols)
             self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, self.cols)
             self.subtownlands = self.calculate_subtownlands()
+            self.vice_counties = self.create_area_obj('vice counties', "boundary='vice_county'", ViceCounty, self.cols)
 
             self.clean_cp_names()
             self.clean_barony_names()

@@ -674,3 +674,6 @@ class Subtownland(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+class ViceCounty(Area):
+    county = models.ForeignKey(County, related_name='townlands', null=True, db_index=True)
