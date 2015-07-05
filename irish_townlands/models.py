@@ -619,6 +619,7 @@ class Subtownland(models.Model, NameableThing):
 
     name = models.CharField(max_length=255, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    alt_name = models.CharField(max_length=255, db_index=True)
 
     location_x = models.FloatField(default=0)
     location_y = models.FloatField(default=0)
