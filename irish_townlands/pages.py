@@ -81,11 +81,20 @@ PAGES = {
                     <td><a href="/static/downloads/counties.csv.zip">download CSV</a></td>
                     <td><a href="/static/downloads/counties-no-geom.csv.zip">download no-geom CSV</a></td>
                 </tr>
+                <tr>
+                    <td>Townland Touching</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="/static/downloads/townlandtouch.csv.zip">download no-geom CSV</a></td>
+                </tr>
             </table>
 
             <h2>Data format</h2>
             <p>The geometry is available in <a href="spatialreference.org/ref/epsg/wgs-84/">WSG 84 (aka EPSG 4326, aka "latitude and longitude")</a> projection system.</p>
 
+            <h3>Attributes</h3>
             <p>There are several columns per entry:
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
@@ -135,6 +144,7 @@ PAGES = {
                 </dl>
             </p>
 
+            <h3>Geom and no-geom version</h3>
             <p>There are 2 CSV files, a normal version, and a "no-geom" version. The CSV file has an additional column:
                 <dl class="dl-horizontal">
                     <dt>WKT</dt>
@@ -142,6 +152,22 @@ PAGES = {
                 </dl>
                 The "no-geom" CSV file does not have this, and has no geometry shape data at all (it only has the LATITUDE and LONGITUDE fields). This file is suitable if you want to do some analysis on the data in a spreadsheet programme. Some spreadsheets have trouble with the long WKT field in the regular CSV version.
             </p>
+            
+            <h3>Townland Touch</h3>
+            <p>When we sync from OpenStreetMap, we calculate what townlands touch each other, and how (north/south/east/west). This allows us to have a "This townland borders the follow townlands:..." feature. The "Townland Touch" dataset contains a CSV export of this data. It has the following fields:
+                <dl class="dl-horizontal">
+                    <dt>t1_osm_id</dt>
+                    <dd>osm_id of townland 1</dd>
+                    <dt>t2_osm_id</dt>
+                    <dd>osm_id of townland 2</dd>
+                    <dt>direction</dt>
+                    <dd>Rough direction, in degrees, in which these 2 townlands border, as seen from t1. 0 = north, 90 = east etc.</dd>
+                    <dt>lenght_m</dt>
+                    <dd>The length, in metres, of the shared border.</dd>
+                </dl>
+                For every two townlands (A & B) that touch, there will be 2 rows in this file. One where A is townland 1, the other were B is townland 1.
+            </p>
+
 
             <h2>Copyright & Licence</h2>
             <p>Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
