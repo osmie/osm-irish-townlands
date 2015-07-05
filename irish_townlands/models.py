@@ -266,6 +266,10 @@ class Area(models.Model, NameableThing):
         return self.baronies.only("name", "url_path", "county__name").order_by("name")
 
     @property
+    def counties_sorted(self):
+        return self.counties.only("name", "url_path").order_by("name")
+
+    @property
     def civil_parishes_sorted(self):
         return self.civil_parishes.only("name", "url_path").order_by("name")
 
@@ -282,6 +286,16 @@ class Area(models.Model, NameableThing):
             return "".join(baronies)
         else:
             return ", ".join(baronies[:-1]) + " " + and_text + " " + baronies[-1]
+
+    @property
+    def counties_list_textual(self):
+        counties = [b.short_desc for b in self.counties_sorted]
+        and_text = ugettext("and")
+        if len(counties) < 2:
+            return "".join(counties)
+        else:
+            return ", ".join(counties[:-1]) + " " + and_text + " " + counties[-1]
+
 
     @property
     def county_name(self):

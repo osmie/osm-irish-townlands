@@ -23,12 +23,10 @@
 
     {% with baronies=civil_parish.baronies %}
         {% if baronies %}
-            <p>{{ civil_parish_name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.barony_list_textual|safe }}.
+            <p>{{ civil_parish_name }} is in the baron{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.barony_list_textual|safe }}.</p>
         {% endif %}
     {% endwith %}
-    {% if civil_parish.crosses_county_border %}
-        
-    {% endif %}
+        <p>{{ civil_parish_name }} is in the count{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.counties_list_textual|safe }}.</p>
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
