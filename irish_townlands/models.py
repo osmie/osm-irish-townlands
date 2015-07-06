@@ -619,7 +619,7 @@ class Subtownland(models.Model, NameableThing):
 
     name = models.CharField(max_length=255, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
-    alt_name = models.CharField(max_length=255, db_index=True)
+    alt_name = models.CharField(max_length=255, db_index=True, null=True)
 
     location_x = models.FloatField(default=0)
     location_y = models.FloatField(default=0)
@@ -627,7 +627,6 @@ class Subtownland(models.Model, NameableThing):
     townland = models.ForeignKey(Townland, related_name='subtownlands')
 
     # Some hacks so that long_desc will work.
-    alt_name = None
     alt_name_ga = None
     place = None
 
