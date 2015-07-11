@@ -8,6 +8,8 @@ cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
 
+OSM2PGSQL_CACHE=200M
+
 POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d townlands"
 
 # In case these are still around
@@ -20,7 +22,7 @@ done
 
 wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
 
-PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --database townlands --cache 200M --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ireland-and-northern-ireland.osm.pbf &>/dev/null
+PGPASSWORD=${DB_PASS} osm2pgsql --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ireland-and-northern-ireland.osm.pbf &>/dev/null
 #rm ireland-and-northern-ireland*.osm.pbf
 
 # not needed anymore
