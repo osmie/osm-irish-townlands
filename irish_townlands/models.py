@@ -144,6 +144,7 @@ class Area(models.Model, NameableThing):
     unique_suffix = models.PositiveSmallIntegerField(null=True)
     source = models.CharField(max_length=255, default=None, null=True)
     attribution = models.CharField(max_length=255, default=None, null=True)
+    ref = models.CharField(max_length=255, db_index=True, null=True, default=None)
 
     centre_x = models.FloatField(default=0)
     centre_y = models.FloatField(default=0)
