@@ -561,6 +561,7 @@ class Command(BaseCommand):
                 ('place', 'place'),
                 ('"source"', 'source'),
                 ('attribution', 'attribution'),
+                ('ref', 'ref'),
                 ('st_area(st_transform(way, 29902))', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
                 ('ST_Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
