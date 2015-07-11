@@ -12,13 +12,13 @@
 {% block body %}
 
 
-    {% if townland.county and townland.barony and townland.civil_parish and townland.ed %}
+    {% if subtownland.county and subtownland.barony and subtownland.civil_parish and subtownland.ed %}
     <p>
-        <a href="{% url 'view_area' townland.county.url_path %}">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.barony.url_path %}">{{ townland.barony.name }}</a>
-        → <a href="{% url 'view_area' townland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.ed.url_path %}">{% blocktrans with ed_name=townland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' townland.url_path %}">{{ townland_name }}</a>
+        <a href="{% url 'view_area' subtownland.county.url_path %}">{% blocktrans with county_name=subtownland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' subtownland.barony.url_path %}">{{ subtownland.barony.name }}</a>
+        → <a href="{% url 'view_area' subtownland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=subtownland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' subtownland.ed.url_path %}">{% blocktrans with ed_name=subtownland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' subtownland.url_path %}">{{ subtownland_name }}</a>
     </p>
     {% endif %}
 
@@ -62,22 +62,22 @@
     {% endif %}
     </p>
 
-    {% if townland.name_ga and townland.name != townland.name_ga %}
+    {% if subtownland.name_ga and subtownland.name != subtownland.name_ga %}
         <p>
-            {% blocktrans with name=townland.name ga_name=townland.name_ga %}The Irish name for {{ name }} is {{ ga_name }}{% endblocktrans %}
-            {% if townland.alt_name_ga %}
-                {% blocktrans with name=townland.name alt_name_ga=townland.alt_name_ga %}{{ name }} is also known as {{ alt_name_ga }} in Irish.{% endblocktrans %}
+            {% blocktrans with name=subtownland.name ga_name=subtownland.name_ga %}The Irish name for {{ name }} is {{ ga_name }}{% endblocktrans %}
+            {% if subtownland.alt_name_ga %}
+                {% blocktrans with name=subtownland.name alt_name_ga=subtownland.alt_name_ga %}{{ name }} is also known as {{ alt_name_ga }} in Irish.{% endblocktrans %}
             {% endif %}
         </p>
     {% endif %}
-    {% if townland.name_en and townland.name != townland.name_en %}
-        <p>{% blocktrans with name=townland.name en_name=townland.name_en %}The English name for {{ name }} is {{ en_name }}{% endblocktrans %}</p>
+    {% if subtownland.name_en and subtownland.name != subtownland.name_en %}
+        <p>{% blocktrans with name=subtownland.name en_name=subtownland.name_en %}The English name for {{ name }} is {{ en_name }}{% endblocktrans %}</p>
     {% endif %}
-    {% if townland.alt_name %}
-        <p>{% blocktrans with name=townland.name alt_name=townland.alt_name %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
+    {% if subtownland.alt_name %}
+        <p>{% blocktrans with name=subtownland.name alt_name=subtownland.alt_name %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
     {% endif %}
-    {% if townland.place = 'island' %}
-        <p>{% blocktrans with name=townland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
+    {% if subtownland.place = 'island' %}
+        <p>{% blocktrans with name=subtownland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
     {% endif %}
 
     <a name="map"></a>
