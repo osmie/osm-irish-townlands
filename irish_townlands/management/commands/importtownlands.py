@@ -557,6 +557,8 @@ class Command(BaseCommand):
                 ('"name:en"', 'name_en'),
                 ('alt_name', 'alt_name'),
                 ('"alt_name:ga"', 'alt_name_ga'),
+                ('"name:census1901"', 'name_census1901_tag'),
+                ('"name:census1911"', 'name_census1911_tag'),
                 ('osm_id', 'osm_id'),
                 ('place', 'place'),
                 ('"source"', 'source'),

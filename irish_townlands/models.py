@@ -135,6 +135,10 @@ class Area(models.Model, NameableThing):
     name = models.CharField(max_length=255, db_index=True)
     name_en = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
+    name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     place = models.CharField(max_length=255, default=None, null=True)
@@ -402,6 +406,14 @@ class Area(models.Model, NameableThing):
     def county_name(self):
         """Return string of the county's name. Returns None if there is no county for this object. if there is more than one county, it returns an arbitary county"""
         raise NotImplementedError()
+
+    @property
+    def name_census1901(self):
+        return self.name_census1901_tag or self.name
+
+    @property
+    def name_census1911(self):
+        return self.name_census1911_tag or self.name
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")

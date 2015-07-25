@@ -452,6 +452,14 @@ def taginfo(request):
                 {
                     "key": "attribution",
                     "description": "Shows the attribution of an object"
+                },
+                {
+                    "key": "name:census1901",
+                    "description": "The name of this area recorded in the 1901 census of Ireland & NI. Used for constructing links to census records"
+                },
+                {
+                    "key": "name:census1911",
+                    "description": "The name of this area recorded in the 1911 census of Ireland & NI. Used for constructing links to census records"
                 }
             ]
         }
