@@ -409,11 +409,37 @@ class Area(models.Model, NameableThing):
 
     @property
     def name_census1901(self):
-        return self.name_census1901_tag or self.name
+        """What name should we search for when searching a 1901 census"""
+        return self.name_census1901_tag if self.has_different_name_census1901 else self.name
+
+    @property
+    def name_census1901_display(self):
+        """For a 1901 census search, returns current name if unchanged, else shows both names"""
+        if self.has_different_name_census1901:
+            return "{} ({})".format(self.name_census1901, self.name)
+        else:
+            return self.name
 
     @property
     def name_census1911(self):
-        return self.name_census1911_tag or self.name
+        """What name should we search for when searching a 1911 census"""
+        return self.name_census1911_tag if self.has_different_name_census1911 else self.name
+
+    @property
+    def name_census1911_display(self):
+        """For a 1911 census search, returns current name if unchanged, else shows both names"""
+        if self.has_different_name_census1901:
+            return "{} ({})".format(self.name_census1911, self.name)
+        else:
+            return self.name
+
+    @property
+    def has_different_name_census1901(self):
+        return self.name_census1901_tag is not None and self.name_census1901_tag != self.name
+
+    @property
+    def has_different_name_census1911(self):
+        return self.name_census1911_tag is not None and self.name_census1911_tag != self.name
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
