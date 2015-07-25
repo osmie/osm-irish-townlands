@@ -7,8 +7,14 @@ BASEDIR=$(dirname $0)
 cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
-
 OSM2PGSQL_CACHE=200M
+
+VERBOSE=$3
+if [[ $VERBOSE ]] ; then
+    set -x
+    OSM2PGSQL_CACHE=1200M
+fi
+
 
 POSTGIS_CMD="psql -q -U ${DB_USER} -h localhost -d townlands"
 
