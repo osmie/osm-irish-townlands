@@ -495,6 +495,8 @@ class County(Area):
     def county_name(self):
         return self.name
 
+class ViceCounty(Area):
+    county = models.ForeignKey(County, related_name='vice_counties', null=True, db_index=True)
 
 class ElectoralDivision(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="eds")
@@ -537,6 +539,7 @@ class Townland(Area):
     barony = models.ForeignKey(Barony, related_name='townlands', null=True)
     civil_parish = models.ForeignKey(CivilParish, related_name='townlands', null=True)
     ed = models.ForeignKey(ElectoralDivision, related_name='townlands', null=True)
+    vice_county = models.ForeignKey(ViceCounty, related_name='townlands', null=True)
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -676,5 +679,3 @@ class Subtownland(models.Model, NameableThing):
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
 
-class ViceCounty(Area):
-    county = models.ForeignKey(County, related_name='townlands', null=True, db_index=True)

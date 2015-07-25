@@ -314,6 +314,19 @@ class Command(BaseCommand):
                     self.townlands[townland_osm_id].ed = self.eds[ed_osm_id]
                     self.townlands[townland_osm_id].save()
 
+    def calculate_townlands_in_vice_counties(self):
+        with printer("townlands in Vice-Counties"):
+            self.cursor.execute("select vc.osm_id, t.osm_id from valid_polygon as vc join valid_polygon as t on (vc.boundary = 'vice_county' and t.admin_level = '10' and st_contains(vc.way, t.way));")
+
+            for vc_osm_id, townland_osm_id in self.cursor:
+                townland = self.townlands[townland_osm_id]
+                other_vc = self.vice_counties[vc_osm_id]
+                if not ( townland.vice_county is None or townland.vice_county.osm_id == vice_county_osm_id ):
+                    err_msg("County {county}, Townland {td} is in Vice Country {vc1} and {vc2}. Overlapping Vice-Counties?", td=townland, vc1=townland.vice_county, vc2=other_vc, county=townland.county)
+                else:
+                    self.townlands[townland_osm_id].vice_county = self.vice_counties[vc_osm_id]
+                    self.townlands[townland_osm_id].save()
+
 
     def calculate_baronies_in_counties(self):
         for barony in self.baronies.values():
@@ -581,6 +594,7 @@ class Command(BaseCommand):
             self.eds = self.create_area_obj('electoral_divisions', "admin_level = '9'", ElectoralDivision, self.cols)
             self.subtownlands = self.calculate_subtownlands()
             self.vice_counties = self.create_area_obj('vice counties', "boundary='vice_county'", ViceCounty, self.cols)
+            import pdb; pdb.set_trace()
 
             self.clean_cp_names()
             self.clean_barony_names()
@@ -589,6 +603,7 @@ class Command(BaseCommand):
             self.calculate_townlands_in_baronies()
             self.calculate_townlands_in_civil_parishes()
             self.calculate_townlands_in_eds()
+            self.calculate_townlands_in_vice_counties()
             self.calculate_baronies_in_counties()
             self.calculate_civil_parishes_in_counties()
 
