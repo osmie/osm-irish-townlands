@@ -312,8 +312,12 @@ class Area(models.Model, NameableThing):
 
     def expand_to_alternatives(self, incl_irish=True, desc="long"):
         assert desc in ["long", "medium", "short"]
+
+        # List of tuples. Each tuple has the key to use for sorting, and then
+        # the html content to use for that entry.
         results = []
 
+        # What description do we use for this item?
         if desc == 'long':
             this_desc = self.long_desc
         elif desc == 'medium':
@@ -323,6 +327,8 @@ class Area(models.Model, NameableThing):
         else:
             raise NotImplementedError()
 
+        # An area called "Foo or Bar" should be expanded to 2 entries, "Foo"
+        # and "Bar". This code split it that way.
         def split_string(input_string):
             strings_to_split = [" and ", " or ", " agus ", u" nó "]
             results = []
@@ -333,22 +339,28 @@ class Area(models.Model, NameableThing):
                         results.append(name)
             return results
 
+        # Given a name, convert it to sortable key
         def name_to_key(name):
             key = remove_prefixes(name, ['An t-', 'An t', 'An ', 'Na h-', 'Na h', 'Na '])
             key = remove_accents(key)
             key = key.lower()
             return key
 
+        # First: We always include the "name" as is.
         arp_text = ugettext("Area in Acres, Rods and Perches")
         arp = self.area_acres_roods_perches
         results.append((
             name_to_key(self.name),
             format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
                 mark_safe(unicode(this_desc)), arp_text, arp[0], arp[1], arp[2])))
+
+        # Then look for alternatives
         alternatives = []
 
+        # Include "Bar" part of "Foo or Bar"
         alternatives.extend(split_string(self.name))
 
+        # Include alt_name, even if alt_name is "Foo or Bar"
         if self.alt_name:
             alternatives.append(self.alt_name)
             alternatives.extend(split_string(self.alt_name))
@@ -362,6 +374,7 @@ class Area(models.Model, NameableThing):
             alternatives.extend(split_string(self.name_census1911_tag))
 
         
+        # Optional Irish name(s)
         if incl_irish:
             if self.name_ga:
                 alternatives.append(self.name_ga)
@@ -371,6 +384,7 @@ class Area(models.Model, NameableThing):
                 alternatives.append(self.alt_name_ga)
                 alternatives.extend(split_string(self.alt_name_ga))
 
+        # Construct HTML 
         for alt in alternatives:
             key = name_to_key(alt)
 
