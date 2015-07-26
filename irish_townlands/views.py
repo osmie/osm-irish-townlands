@@ -348,7 +348,7 @@ def search(request):
 
     # if there is only one, then redirect to it
     if counties_num_results + baronies_num_results + civil_parishes_num_results + eds_num_results + townlands_num_results + subtownlands_num_results == 1:
-        obj = (counties + baronies + civil_parishes + eds + townlands)[0]
+        obj = (counties + baronies + civil_parishes + eds + townlands + subtownlands)[0]
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
