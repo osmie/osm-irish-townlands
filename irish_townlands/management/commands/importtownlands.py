@@ -442,7 +442,10 @@ class Command(BaseCommand):
         with printer("finding gaps for {name}".format(name=county.name)):
             sql = "update {table} set polygon_{attr_name}_gaps = (select st_AsGeoJSON(st_transform(st_difference(st_difference(county_way, townland_way), st_boundary(county_way)), 4326)) from (select county.way as county_way, st_union(townland.way) as townland_way from (select way from valid_polygon where osm_id = {county_osm_id}) as county join (select way from valid_polygon where {where}) as townland on (county.way && townland.way) group by county.way) as t) where osm_id = {county_osm_id}".format(
                 county_osm_id=county_osm_id, where=where, attr_name=attr_name, table=table)
-            django_cursor.execute(sql)
+            try:
+                django_cursor.execute(sql)
+            except:
+                pass
             db.reset_queries()
 
         # overlaps
@@ -453,7 +456,10 @@ class Command(BaseCommand):
                 select st_AsGeoJSON(st_transform(st_union(st_intersection(townland1.way, townland2.way)), 4326)) from (select way from valid_polygon where osm_id = {county_osm_id}) as county join (select osm_id, way from valid_polygon where {where}) as townland1 on (county.way && townland1.way) join (select osm_id, way from valid_polygon where {where}) as townland2 on (st_overlaps(townland1.way, townland2.way) and townland1.osm_id < townland2.osm_id) )
                 where osm_id = {county_osm_id}""".format(
                     county_osm_id=county_osm_id, table=table, attr_name=attr_name, where=where)
-            django_cursor.execute(sql)
+            try:
+                django_cursor.execute(sql)
+            except:
+                pass
             db.reset_queries()
 
 
@@ -570,6 +576,8 @@ class Command(BaseCommand):
                 ('"name:en"', 'name_en'),
                 ('alt_name', 'alt_name'),
                 ('"alt_name:ga"', 'alt_name_ga'),
+                ('"name:census1901"', 'name_census1901_tag'),
+                ('"name:census1911"', 'name_census1911_tag'),
                 ('osm_id', 'osm_id'),
                 ('place', 'place'),
                 ('"source"', 'source'),

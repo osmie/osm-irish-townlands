@@ -93,16 +93,28 @@ class NameableThing(object):
                 county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
 
         island = ''
+        census_name = ''
         if incl_misc:
             if self.place == 'island':
                 island = ' ' + ugettext("(Island)") + ' '
 
+            if self.has_different_name_census1901 or self.has_different_name_census1911:
+                census_names = []
+                if self.has_different_name_census1901: 
+                    census_names.append(ugettext("'%(name)s' in 1901 Census") % { "name": self.name_census1901 })
+                if self.has_different_name_census1911: 
+                    census_names.append(ugettext("'%(name)s' in 1911 Census") % { "name": self.name_census1911 })
+                census_name = ' (' + ', '.join(census_names) + ')'
+
+
+
         return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{townland_name}{civil_parish_name}{barony_name}{county_name}',
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{census_name}{townland_name}{civil_parish_name}{barony_name}{county_name}',
             url_path=reverse('view_area', args=[self.url_path]),
             name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
             townland_name=townland_name, civil_parish_name=civil_parish_name,
-            barony_name=barony_name, county_name=county_name
+            barony_name=barony_name, county_name=county_name,
+            census_name=census_name
         )
 
     @property
@@ -135,6 +147,10 @@ class Area(models.Model, NameableThing):
     name = models.CharField(max_length=255, db_index=True)
     name_en = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
+    name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     place = models.CharField(max_length=255, default=None, null=True)
@@ -308,8 +324,12 @@ class Area(models.Model, NameableThing):
 
     def expand_to_alternatives(self, incl_irish=True, desc="long"):
         assert desc in ["long", "medium", "short"]
+
+        # List of tuples. Each tuple has the key to use for sorting, and then
+        # the html content to use for that entry.
         results = []
 
+        # What description do we use for this item?
         if desc == 'long':
             this_desc = self.long_desc
         elif desc == 'medium':
@@ -319,6 +339,8 @@ class Area(models.Model, NameableThing):
         else:
             raise NotImplementedError()
 
+        # An area called "Foo or Bar" should be expanded to 2 entries, "Foo"
+        # and "Bar". This code split it that way.
         def split_string(input_string):
             strings_to_split = [" and ", " or ", " agus ", u" nó "]
             results = []
@@ -329,26 +351,42 @@ class Area(models.Model, NameableThing):
                         results.append(name)
             return results
 
+        # Given a name, convert it to sortable key
         def name_to_key(name):
             key = remove_prefixes(name, ['An t-', 'An t', 'An ', 'Na h-', 'Na h', 'Na '])
             key = remove_accents(key)
             key = key.lower()
             return key
 
+        # First: We always include the "name" as is.
         arp_text = ugettext("Area in Acres, Rods and Perches")
         arp = self.area_acres_roods_perches
         results.append((
             name_to_key(self.name),
             format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
                 mark_safe(unicode(this_desc)), arp_text, arp[0], arp[1], arp[2])))
+
+        # Then look for alternatives
         alternatives = []
 
+        # Include "Bar" part of "Foo or Bar"
         alternatives.extend(split_string(self.name))
 
+        # Include alt_name, even if alt_name is "Foo or Bar"
         if self.alt_name:
             alternatives.append(self.alt_name)
             alternatives.extend(split_string(self.alt_name))
+
+        # Different names in the census
+        if self.name_census1901_tag:
+            alternatives.append(self.name_census1901_tag)
+            alternatives.extend(split_string(self.name_census1901_tag))
+        if self.name_census1911_tag:
+            alternatives.append(self.name_census1911_tag)
+            alternatives.extend(split_string(self.name_census1911_tag))
+
         
+        # Optional Irish name(s)
         if incl_irish:
             if self.name_ga:
                 alternatives.append(self.name_ga)
@@ -358,6 +396,7 @@ class Area(models.Model, NameableThing):
                 alternatives.append(self.alt_name_ga)
                 alternatives.extend(split_string(self.alt_name_ga))
 
+        # Construct HTML 
         for alt in alternatives:
             key = name_to_key(alt)
 
@@ -402,6 +441,40 @@ class Area(models.Model, NameableThing):
     def county_name(self):
         """Return string of the county's name. Returns None if there is no county for this object. if there is more than one county, it returns an arbitary county"""
         raise NotImplementedError()
+
+    @property
+    def name_census1901(self):
+        """What name should we search for when searching a 1901 census"""
+        return self.name_census1901_tag if self.has_different_name_census1901 else self.name
+
+    @property
+    def name_census1901_display(self):
+        """For a 1901 census search, returns current name if unchanged, else shows both names"""
+        if self.has_different_name_census1901:
+            return "{} ({})".format(self.name_census1901, self.name)
+        else:
+            return self.name
+
+    @property
+    def name_census1911(self):
+        """What name should we search for when searching a 1911 census"""
+        return self.name_census1911_tag if self.has_different_name_census1911 else self.name
+
+    @property
+    def name_census1911_display(self):
+        """For a 1911 census search, returns current name if unchanged, else shows both names"""
+        if self.has_different_name_census1911:
+            return "{} ({})".format(self.name_census1911, self.name)
+        else:
+            return self.name
+
+    @property
+    def has_different_name_census1901(self):
+        return self.name_census1901_tag is not None and self.name_census1901_tag != self.name
+
+    @property
+    def has_different_name_census1911(self):
+        return self.name_census1911_tag is not None and self.name_census1911_tag != self.name
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
