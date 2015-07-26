@@ -451,7 +451,7 @@ class Area(models.Model, NameableThing):
     @property
     def name_census1911_display(self):
         """For a 1911 census search, returns current name if unchanged, else shows both names"""
-        if self.has_different_name_census1901:
+        if self.has_different_name_census1911:
             return "{} ({})".format(self.name_census1911, self.name)
         else:
             return self.name
