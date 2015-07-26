@@ -93,16 +93,28 @@ class NameableThing(object):
                 county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
 
         island = ''
+        census_name = ''
         if incl_misc:
             if self.place == 'island':
                 island = ' ' + ugettext("(Island)") + ' '
 
+            if self.has_different_name_census1901 or self.has_different_name_census1911:
+                census_names = []
+                if self.has_different_name_census1901: 
+                    census_names.append(ugettext("'%(name)s' in 1901 Census") % { "name": self.name_census1901 })
+                if self.has_different_name_census1911: 
+                    census_names.append(ugettext("'%(name)s' in 1911 Census") % { "name": self.name_census1911 })
+                census_name = ' (' + ', '.join(census_names) + ')'
+
+
+
         return format_html(
-            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{townland_name}{civil_parish_name}{barony_name}{county_name}',
+            u'<a href="{url_path}">{name}</a>{name_ga}{alt_name}{island}{census_name}{townland_name}{civil_parish_name}{barony_name}{county_name}',
             url_path=reverse('view_area', args=[self.url_path]),
             name=self.name, name_ga=name_ga, alt_name=alt_name, island=island,
             townland_name=townland_name, civil_parish_name=civil_parish_name,
-            barony_name=barony_name, county_name=county_name
+            barony_name=barony_name, county_name=county_name,
+            census_name=census_name
         )
 
     @property
