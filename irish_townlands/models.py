@@ -352,6 +352,15 @@ class Area(models.Model, NameableThing):
         if self.alt_name:
             alternatives.append(self.alt_name)
             alternatives.extend(split_string(self.alt_name))
+
+        # Different names in the census
+        if self.name_census1901_tag:
+            alternatives.append(self.name_census1901_tag)
+            alternatives.extend(split_string(self.name_census1901_tag))
+        if self.name_census1911_tag:
+            alternatives.append(self.name_census1911_tag)
+            alternatives.extend(split_string(self.name_census1911_tag))
+
         
         if incl_irish:
             if self.name_ga:
