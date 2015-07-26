@@ -330,7 +330,7 @@ def search(request):
 
     search_term = search_term.replace("-", " ")
 
-    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term)
+    qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term) | Q(name_census1901_tag__contains=search_term) | Q(name_census1911_tag__contains=search_term)
 
     counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
     counties_num_results = len(counties)
