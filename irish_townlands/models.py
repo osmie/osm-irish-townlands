@@ -350,7 +350,7 @@ class Area(models.Model, NameableThing):
         # An area called "Foo or Bar" should be expanded to 2 entries, "Foo"
         # and "Bar". This code split it that way.
         def split_string(input_string):
-            strings_to_split = [" and ", " or ", " agus ", u" nó "]
+            strings_to_split = [" and ", " or ", " agus ", u" nó ", ";"]
             results = []
             for s in strings_to_split:
                 if s in input_string:
