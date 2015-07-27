@@ -83,7 +83,7 @@
         <p>
             {% blocktrans with name=townland.name ga_name=townland.name_ga %}The Irish name for {{ name }} is {{ ga_name }}{% endblocktrans %}
             {% if townland.alt_name_ga %}
-                {% blocktrans with name=townland.name alt_name_ga=townland.alt_name_ga %}{{ name }} is also known as {{ alt_name_ga }} in Irish.{% endblocktrans %}
+                {% blocktrans with name=townland.name alt_name_ga=townland.alt_name_ga_textual %}{{ name }} is also known as {{ alt_name_ga }} in Irish.{% endblocktrans %}
             {% endif %}
         </p>
     {% endif %}
@@ -91,7 +91,7 @@
         <p>{% blocktrans with name=townland.name en_name=townland.name_en %}The English name for {{ name }} is {{ en_name }}{% endblocktrans %}</p>
     {% endif %}
     {% if townland.alt_name %}
-        <p>{% blocktrans with name=townland.name alt_name=townland.alt_name %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
+        <p>{% blocktrans with name=townland.name alt_name=townland.alt_name_textual %}{{ name }} is also known as {{ alt_name }}{% endblocktrans %}</p>
     {% endif %}
     {% if townland.place = 'island' %}
         <p>{% blocktrans with name=townland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
