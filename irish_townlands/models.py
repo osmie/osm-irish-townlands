@@ -36,6 +36,22 @@ def float_to_sexagesimal(x):
     sec = int((x - deg - (min/60.0))*3600)
     return (deg, min, sec)
 
+def join_names_by_and(names):
+    and_text = ugettext("and")
+    if len(names) < 2:
+        return "".join(names)
+    else:
+        return ", ".join(names[:-1]) + " " + and_text + " " + names[-1]
+
+def alt_values_textual(value):
+    """
+    If the value of a tag has semicolons (;) to indicate alternative values,
+    then split that out and join them together by and.
+    e.g. turn 'a;b;c' into 'a, b and c'
+    """
+    splits = value.split(";")
+    splits = [x.strip() for x in splits]
+    return join_names_by_and(splits)
 
 class Metadata(models.Model):
     key = models.CharField(unique=True, db_index=True, max_length=50)
@@ -67,12 +83,12 @@ class NameableThing(object):
         if incl_other_names:
             if self.name_ga:
                 if self.alt_name_ga:
-                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga)
+                    name_ga = format_html(u" (<i>{0}</i> or <i>{1}</i>) ", self.name_ga, self.alt_name_ga_textual)
                 else:
                     name_ga = format_html(u" (<i>{0}</i>) ", self.name_ga)
 
             if self.alt_name:
-                alt_name = format_html(u" (aka {0}) ", self.alt_name)
+                alt_name = format_html(u" (aka {0}) ", self.alt_name_textual)
             
         townland_name = ''
         civil_parish_name = ''
@@ -298,20 +314,12 @@ class Area(models.Model, NameableThing):
     @property
     def barony_list_textual(self):
         baronies = [b.short_desc for b in self.baronies_sorted]
-        and_text = ugettext("and")
-        if len(baronies) < 2:
-            return "".join(baronies)
-        else:
-            return ", ".join(baronies[:-1]) + " " + and_text + " " + baronies[-1]
+        return join_names_by_and(baronies)
 
     @property
     def counties_list_textual(self):
         counties = [b.short_desc for b in self.counties_sorted]
-        and_text = ugettext("and")
-        if len(counties) < 2:
-            return "".join(counties)
-        else:
-            return ", ".join(counties[:-1]) + " " + and_text + " " + counties[-1]
+        return join_names_by_and(counties)
 
 
     @property
@@ -342,7 +350,7 @@ class Area(models.Model, NameableThing):
         # An area called "Foo or Bar" should be expanded to 2 entries, "Foo"
         # and "Bar". This code split it that way.
         def split_string(input_string):
-            strings_to_split = [" and ", " or ", " agus ", u" nó "]
+            strings_to_split = [" and ", " or ", " agus ", u" nó ", ";"]
             results = []
             for s in strings_to_split:
                 if s in input_string:
@@ -475,6 +483,18 @@ class Area(models.Model, NameableThing):
     @property
     def has_different_name_census1911(self):
         return self.name_census1911_tag is not None and self.name_census1911_tag != self.name
+
+    @property
+    def alt_name_textual(self):
+        return alt_values_textual(self.alt_name)
+
+    @property
+    def alt_name_ga_textual(self):
+        return alt_values_textual(self.alt_name_ga)
+
+    @property
+    def alt_name_textual(self):
+        return alt_values_textual(self.alt_name)
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
