@@ -496,6 +496,20 @@ class Area(models.Model, NameableThing):
     def alt_name_textual(self):
         return alt_values_textual(self.alt_name)
 
+    @property
+    def ed_name_census1911(self):
+        try:
+            return self.ed.name_census1911
+        except:
+            return ''
+
+    @property
+    def ed_name_census1901(self):
+        try:
+            return self.ed.name_census1901
+        except:
+            return ''
+
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
 
