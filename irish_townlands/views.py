@@ -62,7 +62,7 @@ def progress(request):
             u'Limerick', u'Longford', u'Louth', u'Mayo', u'Meath', u'Monaghan',
             u'Offaly', u'Roscommon', u'Sligo', u'Tipperary',
             u'Waterford', u'Westmeath', u'Wexford', u'Wicklow'] ),
-        ('Lenister', ["Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow",]),
+        ('Leinster', ["Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow",]),
         ('Munster', ["Clare", "Cork", "Kerry", "Limerick", "Tipperary", "Waterford",]),
         ('Connaght', ["Galway", "Leitrim", "Mayo", "Roscommon", "Sligo"]),
         ('Ulster', ["Antrim", "Armagh", "Cavan", "Donegal", "Down", "Fermanagh", "Derry", "Monaghan", "Tyrone"]),
