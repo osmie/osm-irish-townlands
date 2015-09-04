@@ -40,6 +40,7 @@ PAGES = {
                     <th>GeoJSON</th>
                     <th>KML</th>
                     <th>CSV</th>
+                    <th>no-geom CSV</th>
                 </tr>
                 <tr>
                     <td>Townlands</td>
