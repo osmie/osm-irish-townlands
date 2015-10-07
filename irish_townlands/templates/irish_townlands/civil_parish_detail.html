@@ -76,10 +76,10 @@
     {% if civil_parish.osm_id %}
         <p>
             <a href="{{ civil_parish.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a href="{{ civil_parish.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a href="{{ civil_parish.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a href="{{ civil_parish.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a href="{{ civil_parish.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
         </p>
     {% endif %}
 

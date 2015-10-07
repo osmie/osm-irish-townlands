@@ -198,10 +198,10 @@
     {% if townland.osm_id %}
         <p>
             <a href="{{ townland.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a href="{{ townland.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a href="{{ townland.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a href="{{ townland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a href="{{ townland.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
         </p>
     {% endif %}
     {% if townland.source %}{% blocktrans with source=townland.source %}The source for this townland is {{ source }}.{% endblocktrans %}{% endif %}
