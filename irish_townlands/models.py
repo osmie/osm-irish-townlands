@@ -737,6 +737,8 @@ class Subtownland(models.Model, NameableThing):
     # Some hacks so that long_desc will work.
     alt_name_ga = None
     place = None
+    has_different_name_census1901 = False
+    has_different_name_census1911 = False
 
     @property
     def county(self):
