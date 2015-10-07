@@ -99,6 +99,7 @@
             <a href="{{ county.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
             <a href="{{ county.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
             <a href="{{ county.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
+            <a href="{{ county.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
         </p>
     {% endif %}
     <p> <a href="{% url 'county_debug' county.url_path %}"a> {% trans "Debug</a> overlaps and coverage" %}</p>
