@@ -310,6 +310,24 @@ def rate(request):
 
     return render_to_response('irish_townlands/rate.html', results,
         context_instance=RequestContext(request))
+def _search_for(qs):
+
+    counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
+    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
+    civil_parishes = list(CivilParish.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
+    eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
+    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
+    subtownlands = list(Subtownland.objects.filter(Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
+
+    return {
+        'counties': counties, 'counties_num_results': len(counties),
+        'baronies': baronies, 'baronies_num_results': len(baronies),
+        'civil_parishes': civil_parishes, 'civil_parishes_num_results': len(civil_parishes),
+        'eds': eds, 'eds_num_results': len(eds),
+        'townlands': townlands, 'townlands_num_results': len(townlands),
+        'subtownlands': subtownlands, 'subtownlands_num_results': len(subtownlands),
+    }
+
 
 def search(request):
     search_term = request.GET.get('q', '')
@@ -329,42 +347,29 @@ def search(request):
             context_instance=RequestContext(request))
 
     search_term = search_term.replace("-", " ")
-
     qs = Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term) | Q(name_census1901_tag__contains=search_term) | Q(name_census1911_tag__contains=search_term) | Q(logainm_ref__eq=search_term)
 
-    counties = list(County.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
-    counties_num_results = len(counties)
-    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
-    baronies_num_results = len(baronies)
-    civil_parishes = list(CivilParish.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
-    civil_parishes_num_results = len(civil_parishes)
-    eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
-    eds_num_results = len(eds)
-    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
-    townlands_num_results = len(townlands)
-    subtownlands = list(Subtownland.objects.filter(Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
-    subtownlands_num_results = len(subtownlands)
-
+    search_results = _search_for(qs)
 
     # if there is only one, then redirect to it
-    if counties_num_results + baronies_num_results + civil_parishes_num_results + eds_num_results + townlands_num_results + subtownlands_num_results == 1:
-        obj = (counties + baronies + civil_parishes + eds + townlands + subtownlands)[0]
+    if search_results['counties_num_results'] + search_results['baronies_num_results'] + search_results['civil_parishes_num_results'] + search_results['eds_num_results'] + search_results['townlands_num_results'] + search_results['subtownlands_num_results'] == 1:
+        obj = (search_results['counties'] + search_results['baronies'] + search_results['civil_parishes'] + search_results['eds'] + search_results['townlands'] + search_results['subtownlands'])[0]
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
         'search_term': search_term,
-        'counties': counties,
-        'counties_num_results': counties_num_results,
-        'baronies': baronies,
-        'baronies_num_results': baronies_num_results,
-        'civil_parishes': civil_parishes,
-        'civil_parishes_num_results': civil_parishes_num_results,
-        'eds': eds,
-        'eds_num_results': eds_num_results,
-        'townlands': townlands,
-        'townlands_num_results': townlands_num_results,
-        'subtownlands': subtownlands,
-        'subtownlands_num_results': subtownlands_num_results,
+        'counties': search_results['counties'],
+        'counties_num_results': search_results['counties_num_results'],
+        'baronies': search_results['baronies'],
+        'baronies_num_results': search_results['baronies_num_results'],
+        'civil_parishes': search_results['civil_parishes'],
+        'civil_parishes_num_results': search_results['civil_parishes_num_results'],
+        'eds': search_results['eds'],
+        'eds_num_results': search_results['eds_num_results'],
+        'townlands': search_results['townlands'],
+        'townlands_num_results': search_results['townlands_num_results'],
+        'subtownlands': search_results['subtownlands'],
+        'subtownlands_num_results': search_results['subtownlands_num_results'],
     }
 
     return render_to_response('irish_townlands/search_results.html', results,
