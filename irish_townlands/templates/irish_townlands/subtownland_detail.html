@@ -138,8 +138,8 @@
 
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if subtownland.osm_timestamp %}
-        <p>{% with osm_timestamp=subtownland.osm_timestamp|date:"j M Y" osm_user=subtownland.osm_user %}{{ subtownland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a>. {% endwith %}</p>
+    {% if subtownland.osm_timestamp %}{% url 'mapper_details' osm_user as mapperurl %}
+        <p>{% with osm_timestamp=subtownland.osm_timestamp|date:"j M Y" osm_user=subtownland.osm_user %}{% blocktrans %}{{ subtownland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %}{% endwith %}</p>
     {% else %}
         <p>{% blocktrans %}We don't know when {{ subtownland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}

@@ -7,23 +7,25 @@
 {% block body %}
 
 <p>
-This is a index of Irish Townlands from the OpenStreetMap project. It has {{ num_townlands|intcomma }} townlands.
+{% blocktrans with num=num_townlands|intcomma %}This is a index of Irish Townlands from the OpenStreetMap project. It has {{ num }} townlands.{% endblocktrans %}
 
-It was generated on {{ today }}.
+{% blocktrans %}It was generated on {{ today }}.{% endblocktrans %}
 
 <p>
 {% if should_group %}
-    This index is also available <a class="btn btn-primary btn-mini" href="{% url "townland_index_alphabetical" %}">Without any groupings, with all townlands alphabetical</a>.
+    {% url "townland_index_alphabetical" as alpha %}
+    {% blocktrans %}This index is also available <a class="btn btn-primary btn-mini" href="{{ alpha }}">Without any groupings, with all townlands alphabetical</a>.{% endblocktrans %}
 {% else %}
-    This index is also available <a class="btn btn-primary btn-mini"href="{% url "townland_index_grouped" %}">Grouped into counties, baronies and civil parishes</a>.
+    {% url "townland_index_grouped" as grouped %}
+    {% blocktrans %}This index is also available <a class="btn btn-primary btn-mini"href="{{ grouped }}">Grouped into counties, baronies and civil parishes</a>.{% endblocktrans %}
 {% endif %}
 </p>
 
 <p>
 {% if incl_irish %}
-    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=no">Hide Irish names</a>
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=no">{% trans "Hide Irish names" %}</a>
 {% else %}
-    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=yes">Show Irish names</a>
+    <a class="btn btn-info btn-mini" href="{% url view_name %}?incl_irish=yes">{% trans "Show Irish names" %}</a>
 {% endif %}
 </p>
 

@@ -3,7 +3,8 @@
 <h3>{{ period.date }}: {{ period.summary }}</h2>
 <p><ul>
     {% for mapper_details in period.stats %}
-    <li><a href="{{ request.build_absolute_uri }}{% url 'mapper_details' mapper_details.osm_user %}">{{ mapper_details.osm_user }}</a> added 
+        {% url 'mapper_details' mapper_details.osm_user as mapper_url %}
+        <li>{% blocktrans url=mapper_url absurl=request.build_absolute_uri username=mapper_details.osm_user %}<a href="{{ absurl }}{{ url }}">{{ username }}</a> added{% endblocktrans %} 
         {% if mapper_details.townlands %}
             {% blocktrans count num=mapper_details.townlands|length %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %}:
             {% for t in mapper_details.townlands %}{{ t.short_desc }}{% if not forloop.last %}, {% endif %}{% endfor %}

@@ -202,8 +202,8 @@
 
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if townland.osm_timestamp %}
-        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user %}{{ townland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a>. {% endwith %}{% blocktrans with order=townland.added_order|ordinal %}It was the {{ order }} townland added to OpenStreetMap{% endblocktrans %}</p>
+    {% if townland.osm_timestamp %}{% url 'mapper_details' osm_user as mapperurl %}
+        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user %}{% blocktrans %}{{ townland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %} {% endwith %}{% blocktrans with order=townland.added_order|ordinal %}It was the {{ order }} townland added to OpenStreetMap{% endblocktrans %}</p>
     {% else %}
         <p>{% blocktrans %}We don't know when {{ townland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
