@@ -590,6 +590,36 @@ class CivilParish(Area):
     def crosses_county_border(self):
         return self.counties.count() > 1
 
+    @property
+    def county(self):
+        """
+        If this CP is in exactly one county, then return that one.
+        When calculating long_desc, it does getattr(cp, 'county', None). This
+        change means that for the vast majority of single-county CPs, they will
+        be displayed with a county name, which is better.
+        """
+        counties = self.counties.all()
+        if len(counties) == 1:
+            return counties[0]
+        else:
+            return 0
+
+    @property
+    def barony(self):
+        """
+        If this CP is in exactly one barony, then return that one.
+        Similar to county property
+        When calculating long_desc, it does getattr(cp, 'county', None). This
+        change means that for the vast majority of single-county CPs, they will
+        be displayed with a county name, which is better.
+        """
+        baronies = self.baronies.all()
+        if len(baronies) == 1:
+            return baronies[0]
+        else:
+            return 0
+
+
 
 class County(Area):
 
