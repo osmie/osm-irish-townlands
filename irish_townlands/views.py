@@ -91,13 +91,30 @@ def progress(request):
             'ed_cover': (sum(county_details[name]['ed_area'] for name in thesecounties) / sum(county_details[name]['area_m2'] for name in thesecounties)) * 100.0,
         }))
 
+    # Logainm data
+    logainm = {}
+    total_log = 0
+    total_all = 0
+    for key, klass in [ ('counties', County), ('baronies', Barony), ('civil_parishes', CivilParish), ('eds', ElectoralDivision), ('townlands', Townland)]:
+        obj_all = klass.objects.all().count()
+        has_log = klass.objects.exclude(logainm_ref=None).count()
+        logainm[key+"_done"] = has_log
+        logainm[key+"_all"] = obj_all
+        logainm[key] = (float(has_log) * 100.0) / float(obj_all)
+        total_all += obj_all
+        total_log += has_log
+
+    logainm['all'] = (float(total_log) * 100.0) / float(total_all)
+    logainm['all_done'] = total_log
+    logainm['all_all'] = total_all
+
 
     return render_to_response('irish_townlands/progress.html',
         {
             'counties':counties, 'last_update':last_update, 'errors':errors,
             'townland_progress': townland_progress, 'ed_progress': ed_progress,
             'civil_parish_progress': civil_parish_progress, 'barony_progress': barony_progress,
-            'groups': group_details,
+            'groups': group_details, 'logainm': logainm,
          },
         context_instance=RequestContext(request))
 
