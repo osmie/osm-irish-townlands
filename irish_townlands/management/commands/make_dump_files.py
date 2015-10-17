@@ -67,8 +67,7 @@ class Command(BaseCommand):
         # postgres syntax error at 'http://'
 
         dump(directory, "townlands", dbuser, dbpass,
-            "SELECT " +
-                """xx.*, ST_Area(xx.geom::geography) AS area,
+            """SELECT xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -94,8 +93,7 @@ class Command(BaseCommand):
                 ) AS xx;""")
 
         dump(directory, "counties", dbuser, dbpass,
-            "SELECT " +
-                """xx.*, ST_area(xx.geom::geography) AS area,
+            """SELECT xx.*, ST_area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -112,8 +110,8 @@ class Command(BaseCommand):
              """)
 
         dump(directory, "baronies", dbuser, dbpass,
-            "SELECT "+
-                """xx.*, ST_Area(xx.geom::geography) AS area, ST_Y(ST_Centroid(xx.geom)) AS latitude,
+            """SELECT 
+                xx.*, ST_Area(xx.geom::geography) AS area, ST_Y(ST_Centroid(xx.geom)) AS latitude,
                 ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
@@ -152,8 +150,8 @@ class Command(BaseCommand):
             """)
 
         dump(directory, "eds", dbuser, dbpass,
-            "SELECT "+
-                """xx.*, ST_Area(xx.geom::geography) AS area,
+            """SELECT 
+                xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
