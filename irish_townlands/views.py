@@ -319,7 +319,7 @@ def _search_for(qs):
     civil_parishes = list(CivilParish.objects.filter(qs).order_by("name").only("name", "name_ga", "alt_name"))
     eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name").only("name", "name_ga", "alt_name", 'county__name'))
     townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name"). only("name", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
-    #subtownlands = list(Subtownland.objects.filter(Q(name__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term)).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
+    subtownlands = list(Subtownland.objects.filter(qs).select_related("county", "barony", "civil_parish", "townland").order_by("name"). only("name", "name_ga", "townland__name"))
 
     return {
         'counties': counties, 'counties_num_results': len(counties),
@@ -327,8 +327,7 @@ def _search_for(qs):
         'civil_parishes': civil_parishes, 'civil_parishes_num_results': len(civil_parishes),
         'eds': eds, 'eds_num_results': len(eds),
         'townlands': townlands, 'townlands_num_results': len(townlands),
-        'subtownlands': [], 'subtownlands_num_results': 0,
-        #'subtownlands': subtownlands, 'subtownlands_num_results': len(subtownlands),
+        'subtownlands': subtownlands, 'subtownlands_num_results': len(subtownlands),
     }
 
 
