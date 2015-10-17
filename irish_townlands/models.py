@@ -173,6 +173,10 @@ class Area(models.Model, NameableThing):
 
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
+    offical_name_en = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    offical_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
     place = models.CharField(max_length=255, default=None, null=True)
     area_m2 = models.FloatField(db_index=True)
     water_area_m2 = models.FloatField(blank=True, null=True)
@@ -194,6 +198,8 @@ class Area(models.Model, NameableThing):
     osm_user = models.CharField(max_length=100, db_index=True, null=True)
     osm_uid = models.IntegerField(null=True)
     osm_timestamp = models.DateTimeField(db_index=True, null=True)
+
+    logainm_ref = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)

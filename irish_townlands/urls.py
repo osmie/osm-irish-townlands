@@ -26,4 +26,6 @@ urlpatterns = patterns('irish_townlands.views',
     url(r'^(?P<url_path>[-\w\d/]+)/debug/$', 'county_debug', name='county_debug' ),
     url(r'^$', 'view_area', name='view_area' ),
     url(r'^(?P<url_path>[-\w\d/]+)/$', 'view_area', name='view_area' ),
+
+    url(r'^by/logainm/(?P<logainm_ref>[\d]+)/$', 'lookup_by_logainm', name='lookup_by_logainm' ),
 )
