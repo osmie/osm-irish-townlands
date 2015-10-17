@@ -744,8 +744,11 @@ class Subtownland(models.Model, NameableThing):
 
     townland = models.ForeignKey(Townland, related_name='subtownlands')
 
-    # Some hacks so that long_desc will work.
-    alt_name_ga = None
+    # Some hacks so that long_desc and search will work.
+    alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
     place = None
     has_different_name_census1901 = False
     has_different_name_census1911 = False
