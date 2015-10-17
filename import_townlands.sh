@@ -9,6 +9,7 @@ DB_USER=$1
 DB_PASS=$2
 OSM2PGSQL_CACHE=200M
 
+VERBOSE=""
 if [[ "$#" -gt 3 ]] ; then 
     VERBOSE=$3
     if [[ $VERBOSE ]] ; then
