@@ -14,6 +14,10 @@
         <p>{% blocktrans %}We don't know what county {{ ed_name }} is in.{% endblocktrans %}</p>
     {% endif %}
 
+    {% if ed.logainm_ref %}
+        <p>{% blocktrans with name=ed.name logainm_ref=ed.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% endif %}
+
     <ul>
         <li><a href="#map">Map ↓</a></li>
         <li><a href="#area">Area ↓</a></li>

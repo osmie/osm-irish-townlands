@@ -28,6 +28,10 @@
     {% endwith %}
         <p>{{ civil_parish_name }} is in the count{{ baronies|pluralize:"y,ies" }} of {{ civil_parish.counties_list_textual|safe }}.</p>
 
+    {% if civil_parish.logainm_ref %}
+        <p>{% blocktrans with name=civil_parish.name logainm_ref=civil_parish.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% endif %}
+
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>

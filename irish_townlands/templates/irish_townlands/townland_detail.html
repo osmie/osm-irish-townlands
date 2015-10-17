@@ -96,6 +96,17 @@
     {% if townland.place = 'island' %}
         <p>{% blocktrans with name=townland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
     {% endif %}
+    {% if townland.offical_name_en or townland.offical_name_ga %}
+        {% if townland.offical_name_en and townland.offical_name_ga %}
+            <p>{% blocktrans with name=townland.name offical_name_en=townland.offical_name_en offical_name_ga=townland.offical_name_ga %}The offical English name of {{ name }} is {{ offical_name_en }}, and the offical Irish name is {{ offical_name_ga }}.{% endblocktrans %}</p>
+        {% elif townland.offical_name_en and not townland.offical_name_ga %}
+            <p>{% blocktrans with name=townland.name offical_name_en=townland.offical_name_en %}The offical English name of {{ name }} is {{ offical_name_en }}, and we don't know what the offical Irish name is.{% endblocktrans %}</p>
+        {% elif not townland.offical_name_en and townland.offical_name_ga %}
+        <p>{% blocktrans with name=townland.name offical_name_ga=townland.offical_name_en %}The offical Irish name of {{ name }} is {{ offical_name_ga }}, and we don't know what the offical English name is, but is probabaly {{ name }}.{% endblocktrans %}</p>
+    {% endif %}
+    {% if townland.logainm_ref %}
+        <p>{% blocktrans with name=townland.name logainm_ref=townland.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% endif %}
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
