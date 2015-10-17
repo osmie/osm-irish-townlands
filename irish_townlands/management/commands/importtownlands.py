@@ -245,6 +245,7 @@ class Command(BaseCommand):
         # remove "ED" suffix from EDs
         for ed in self.eds.values():
             rm_suffix(ed, 'name', ' ED')
+            rm_suffix(ed, 'name', ' DED')
 
     def calculate_townlands_in_counties(self):
         with printer("townlands in counties"):
@@ -594,6 +595,7 @@ class Command(BaseCommand):
 
             self.clean_cp_names()
             self.clean_barony_names()
+            self.clean_ed_names()
 
             self.calculate_townlands_in_counties()
             self.calculate_townlands_in_baronies()
