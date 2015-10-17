@@ -21,7 +21,7 @@ $(document).ready(function() {
     $(".map").each(function() {
         // create the map
         var dataset = $(this).data("dataset");
-        var map = new L.Map('map-'+dataset);
+        var map = new L.Map($(this).attr('id'));
         var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
