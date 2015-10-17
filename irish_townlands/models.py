@@ -551,6 +551,10 @@ class Barony(Area):
         else:
             return counties[0]
 
+    @property
+    def civil_parishes(self):
+        return CivilParish.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+
 
 
 class CivilParish(Area):

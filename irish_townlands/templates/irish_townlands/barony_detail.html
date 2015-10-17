@@ -51,15 +51,15 @@
     <h2>Area</h2>
     <p>{{ barony.name }} has an area of {{ barony.area_km2|floatformat|intcomma }} km² / {{ barony.area_acres|floatformat|intcomma }} acres / {{ barony.area_mile2|floatformat|intcomma }} square miles</p>
 
-    {% with civil_parishes=county.civil_parishes.all %}
+    {% with civil_parishes=barony.civil_parishes.all %}
     {% if civil_parishes %}
         <h2>Civil Parishes</h2>
-        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }}.</p>
+        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in {{ barony.name }}.</p>
 
         <ul>
-        {% for civil_parish in civil_parishes %}
-            <li>{{ civil_parish.name }} ({{ civil_parish.townlands.count }} townlands)</li>
-        {% endfor %}
+            {% for civil_parish in civil_parishes %}
+                <li>{{ civil_parish.short_desc }} ({{ civil_parish.townlands.count }} townlands)</li>
+            {% endfor %}
         </ul>
 
     {% endif %}
