@@ -71,6 +71,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_9 on vali
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_barony on valid_polygon using GIST (way) where boundary = 'barony';" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_cp on valid_polygon using GIST (way) where boundary = 'civil_parish';" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "analyze valid_polygon;" 2>/dev/null || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "vacuum full valid_polygon;" 2>/dev/null || true
 
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column geo geography;" 2>/dev/null || true
