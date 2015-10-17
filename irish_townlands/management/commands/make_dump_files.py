@@ -129,6 +129,7 @@ class Command(BaseCommand):
                 ) AS xx
              """)
 
+        # A minority of civil parishes overlap county borders.
         dump(directory, "civil_parishes", dbuser, dbpass,
             "SELECT "+
                 """xx.*, ST_Area(xx.geom::geography) AS area,
@@ -138,14 +139,27 @@ class Command(BaseCommand):
                 SELECT
                     cp.osm_id, cp.name, cp.name_ga, cp.name_en, cp.alt_name, cp.alt_name_ga,
                     cp.osm_user, cp.osm_timestamp, cp.attribution,
-                    c.name as co_name, c.osm_id as co_osm_id,
+                    c.c_names as co_names, c.c_osm_ids as co_osm_ids,
                     concat('http://www.townlands.ie/', cp.url_path) AS t_ie_url,
                     ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson) AS geom
                 FROM
                     irish_townlands_civilparish AS cp
                         JOIN irish_townlands_polygon ON (cp._polygon_geojson_id = irish_townlands_polygon.id)
-                    LEFT OUTER JOIN irish_townlands_county AS c
-                        ON (cp.county_id = c.id)
+                    LEFT OUTER JOIN (
+
+                        SELECT
+                            cp.id,
+                            STRING_AGG(c.name, ', ' ORDER BY c.name) AS c_names,
+                            STRING_AGG(c.osm_id::text, ', ' ORDER by c.name) AS c_osm_ids
+                        FROM
+                            irish_townlands_civilparish AS cp
+                            JOIN irish_townlands_civilparish_counties AS m2m
+                                ON (cp.id = m2m.civilparish_id)
+                            JOIN irish_townlands_county AS c
+                                ON (c.id = m2m.county_id)
+                        GROUP BY cp.id
+
+                        ) as c ON (cp.id = c.id)
             ) AS xx
             """)
 

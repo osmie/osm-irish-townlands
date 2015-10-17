@@ -125,9 +125,13 @@ PAGES = {
                     <dt>t_ie_url<dt>
                     <dd>String. URL of this object on <a href="www.townlands.ie">Townlands.ie</a> (this site)</dd>
                     <dt>co_name<dt>
-                    <dd>String. Name of the county this object is in, if known. Not in 'county' files.</dd>
+                    <dd>String. Name of the county this object is in, if known. Not in 'county' or 'civil_parish' files.</dd>
                     <dt>co_osm_id<dt>
-                    <dd>Integer. OSM_ID of the county this object is in, if known. Not in 'county' files.</dd>
+                    <dd>Integer. OSM_ID of the county this object is in, if known. Not in 'county' or 'civil_parish' files.</dd>
+                    <dt>co_names<dt>
+                    <dd>String. Comma separated list of names of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.</dd>
+                    <dt>co_osm_ids<dt>
+                    <dd>String. Comma separated list of osm_ids of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.</dd>
                     <dt>ed_name<dt>
                     <dd>String. Name of the ED this object is in, if known. Only in 'townland' files.</dd>
                     <dt>ed_osm_id<dt>
