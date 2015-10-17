@@ -4,6 +4,55 @@
 {% block title %}Data Completeness in Co. {{ county.name }}{% endblock %}
 {% block header %}<h1>Co. {{ county.name }}</h1>{% endblock %}
 
+{% block extra_headers_2 %}
+    <script>
+data = {
+    'td-gap': {{ county.polygon_townland_gaps|default:"null"|safe }},
+    'td-overlap': {{ county.polygon_townland_overlaps|default:"null"|safe }},
+    'bar-gap': {{ county.polygon_barony_gaps|default:"null"|safe }},
+    'bar-overlap': {{ county.polygon_barony_overlaps|default:"null"|safe }},
+    'cp-gap': {{ county.polygon_civil_parish_gaps|default:"null"|safe }},
+    'cp-overlap': {{ county.polygon_civil_parish_overlaps|default:"null"|safe }},
+    'ed-gap': {{ county.polygon_ed_gaps|default:"null"|safe }},
+    'ed-overlap': {{ county.polygon_ed_overlaps|default:"null"|safe }},
+}
+
+$(document).ready(function() {
+    $(".map").each(function() {
+        // create the map
+        var dataset = $(this).data("dataset");
+        var map = new L.Map($(this).attr('id'));
+        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib='Map data © OpenStreetMap contributors';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+
+        map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
+        map.addLayer(osm);
+        L.geoJson({
+                'type':'Feature',
+                'properties': {}
+                'geometry': data[dataset]
+        }).addTo(map);
+
+        // Add the 'open in JOSM button'
+        var button = $("<button>", {
+            class:"btn btn-primary",
+            html: "Open in JOSM",
+        }).on("click", function() {
+            var bounds = map.getBounds();
+            var left = bounds.getWest();
+            var right = bounds.getEast();
+            var top = bounds.getNorth();
+            var bottom = bounds.getSouth();
+            jQuery.get("http://localhost:8111/load_and_zoom?left="+left+"&right="+right+"&bottom="+bottom+"&top="+top);
+        });
+        $(this).after(button);
+    });
+});
+    </script>
+{% endblock %}
+
+
 {% block body %}
 
 {% cache 3600 county county.url_path %}
@@ -33,21 +82,7 @@
     <a name="unmapped_townlands"></a><h3>Land & Water not covered by Townlands</h3>
     
     {% if county.polygon_townland_gaps %}
-        <div class="map" id="map-td-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-td-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                    'type':'Feature',
-                    'properties': { 'name': "Land not covered by townlands" },
-                    'geometry': {{ county.polygon_townland_gaps|safe }}
-                }).addTo(map);
-        </script>
+        <div class="map" id="map-td-gap" data-dataset="td-gap" style="height: 600px; width: 800px;"></div>
         <p><a href="{% url 'rate' %}#{{ county.name }}">How long will {{ county.name }} take to be mapped?</a></p>
     {% else %}
         <p>All of {{ county.name }} is covered by townlands in the OpenStreetMap database.</p>
@@ -58,20 +93,7 @@
     {% if county.polygon_barony_overlaps %}
         <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
         
-        <div class="map" id="map-td-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'geometry': {{ county.polygon_townland_overlaps|safe }}
-                } ).addTo(map);
-        </script>
+        <div class="map" id="map-td-overlap" data-dataset="td-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>None of the townlands in {{ county.name }} the OpenStreetMap database overlap.</p>
     {% endif %}
@@ -79,21 +101,7 @@
     <a name="unmapped_eds"></a><h3>Land & Water not covered by Electoral Divisions</h3>
     
     {% if county.polygon_ed_gaps %}
-        <div class="map" id="map-ed-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-ed-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                    'type':'Feature',
-                    'properties': { 'name': "Land not covered by townlands" },
-                    'geometry': {{ county.polygon_ed_gaps|safe }}
-                }).addTo(map);
-        </script>
+        <div class="map" id="map-ed-gap" data-dataset="ed-gap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>All of {{ county.name }} is covered by EDs in the OpenStreetMap database.</p>
     {% endif %}
@@ -103,20 +111,7 @@
     {% if county.polygon_ed_overlaps %}
         <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
         
-        <div class="map" id="map-ed-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-ed-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'geometry': {{ county.polygon_ed_overlaps|safe }}
-                } ).addTo(map);
-        </script>
+        <div class="map" id="map-ed-overlap" data-dataset="ed-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>None of the EDs in {{ county.name }} the OpenStreetMap database overlap.</p>
     {% endif %}
@@ -124,21 +119,7 @@
     <h3>Land not covered by Civil Parishes</h3>
     
     {% if county.polygon_civil_parish_gaps %}
-        <div class="map" id="map-cp-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by Civil Parishes" },
-                'geometry': {{ county.polygon_civil_parish_gaps|safe }}
-                } ).addTo(map);
-        </script>
+        <div class="map" id="map-cp-gap" data-dataset="cp-gap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>All of {{ county.name }} is covered by civil parishes in the OpenStreetMap database.</p>
     {% endif %}
@@ -147,20 +128,7 @@
     
     {% if county.polygon_civil_parish_overlaps %}
         <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
-        <div class="map" id="map-cp-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-cp-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'geometry': {{ county.polygon_civil_parish_overlaps|safe }}
-                }).addTo(map);
-        </script>
+        <div class="map" id="map-cp-overlap" data-dataset="cp-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>No civil parishes overlap in {{ county.name }} in the OpenStreetMap database.</p>
     {% endif %}
@@ -169,21 +137,7 @@
     <h3>Land not covered by Baronies</h3>
     
     {% if county.polygon_barony_gaps %}
-        <div class="map" id="map-b-gap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-b-gap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'properties': { 'name': "Land not covered by townlands" },
-                'geometry': {{ county.polygon_barony_gaps|safe }}
-                }).addTo(map);
-        </script>
+        <div class="map" id="map-bar-gap" data-dataset="bar-gap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>All of {{ county.name }} is covered by baronies in the OpenStreetMap database.</p>
     {% endif %}
@@ -192,20 +146,7 @@
     
     {% if county.polygon_barony_overlaps %}
         <i>Due to a bug in the software, there will sometimes be lines following the borders that appear as "overlap". Ignore them</i>
-        <div class="map" id="map-b-overlap" style="height: 600px; width: 800px;"></div>
-        <script>
-            var map = new L.Map('map-b-overlap');
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data © OpenStreetMap contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
-
-            map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
-            map.addLayer(osm);
-            L.geoJson({
-                'type':'Feature',
-                'geometry': {{ county.polygon_barony_overlaps|safe }}
-                }).addTo(map);
-        </script>
+        <div class="map" id="map-bar-overlap" data-dataset="bar-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>None of the baronies in {{ county.name }} in the OpenStreetMap database overlap.</p>
     {% endif %}
