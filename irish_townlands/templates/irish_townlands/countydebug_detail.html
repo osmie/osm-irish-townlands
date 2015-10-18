@@ -30,7 +30,7 @@ $(document).ready(function() {
         map.addLayer(osm);
         L.geoJson({
                 'type':'Feature',
-                'properties': {}
+                'properties': {},
                 'geometry': data[dataset]
         }).addTo(map);
 
