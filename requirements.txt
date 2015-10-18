@@ -2,3 +2,4 @@ Django==1.6
 South
 iso8601
 requests
+solid_i18n
