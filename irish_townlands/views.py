@@ -484,7 +484,19 @@ def taginfo(request):
                 {
                     "key": "name:census1911",
                     "description": "The name of this area recorded in the 1911 census of Ireland & NI. Used for constructing links to census records"
-                }
+                },
+                {
+                    "key": "logainm:ref",
+                    "description": "The id of this object in Logainm, the Placename Database of Ireland."
+                },
+                {
+                    "key": "offical_name:en",
+                    "description": "The offical English language name of this area. Taken from Logainm"
+                },
+                {
+                    "key": "offical_name:ga",
+                    "description": "The offical Irish language name of this area. Taken from Logainm"
+                },
             ]
         }
     ))
@@ -716,7 +728,7 @@ def mappinghistory(request, should_group=False):
 
 
 def lookup_by_logainm(request, logainm_ref):
-    qs = Q(logainm_ref__eq=logainm_ref)
+    qs = Q(logainm_ref=logainm_ref)
 
     search_results = _search_for(qs)
 
@@ -726,7 +738,7 @@ def lookup_by_logainm(request, logainm_ref):
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
-        'search_term': search_term,
+        'search_term': logainm_ref,
         'counties': search_results['counties'],
         'counties_num_results': search_results['counties_num_results'],
         'baronies': search_results['baronies'],

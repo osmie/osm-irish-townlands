@@ -783,6 +783,8 @@ class Subtownland(models.Model, NameableThing):
     name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
+    logainm_ref = models.CharField(max_length=255, default=None, null=True, db_index=True)
+
     place = None
     has_different_name_census1901 = False
     has_different_name_census1911 = False
