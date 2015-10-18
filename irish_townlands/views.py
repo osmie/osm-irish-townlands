@@ -716,7 +716,7 @@ def mappinghistory(request, should_group=False):
 
 
 def lookup_by_logainm(request, logainm_ref):
-    qs = Q(logainm_ref__eq=logainm_ref)
+    qs = Q(logainm_ref=logainm_ref)
 
     search_results = _search_for(qs)
 

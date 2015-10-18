@@ -22,10 +22,12 @@ urlpatterns = patterns('irish_townlands.views',
     url(r'^progress/activity/rss/$', 'activity_rss', name='activity_rss' ),
     url(r'^activity/$', RedirectView.as_view(pattern_name='activity')),
     url(r'^progress/mappinghistory/$', 'mappinghistory', name='mappinghistory' ),
+    url(r'^by/logainm/(?P<logainm_ref>[0-9]+)/$', 'lookup_by_logainm', name='lookup_by_logainm' ),
 
     url(r'^(?P<url_path>[-\w\d/]+)/debug/$', 'county_debug', name='county_debug' ),
     url(r'^$', 'view_area', name='view_area' ),
+
+    # This must go at the end
     url(r'^(?P<url_path>[-\w\d/]+)/$', 'view_area', name='view_area' ),
 
-    url(r'^by/logainm/(?P<logainm_ref>[\d]+)/$', 'lookup_by_logainm', name='lookup_by_logainm' ),
 )
