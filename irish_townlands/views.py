@@ -484,7 +484,19 @@ def taginfo(request):
                 {
                     "key": "name:census1911",
                     "description": "The name of this area recorded in the 1911 census of Ireland & NI. Used for constructing links to census records"
-                }
+                },
+                {
+                    "key": "logainm:ref",
+                    "description": "The id of this object in Logainm, the Placename Database of Ireland."
+                },
+                {
+                    "key": "offical_name:en",
+                    "description": "The offical English language name of this area. Taken from Logainm"
+                },
+                {
+                    "key": "offical_name:ga",
+                    "description": "The offical Irish language name of this area. Taken from Logainm"
+                },
             ]
         }
     ))
