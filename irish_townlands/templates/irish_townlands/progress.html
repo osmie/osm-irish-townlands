@@ -96,12 +96,12 @@
 <h2><a name=logainm></a>{% trans "Logainm Status" %}</h2>
 <p>{% trans 'What is the status of Logainm data match up? How many objects have a logainm value?' %}</p>
 <p><table class=table>
-    <tr><td>{% trans 'All objects' %}</td><td>{{ logainm.all_done|intcomma }} {% trans "of" %} {{ logainm.all_all|intcomma }} ({{ logainm.all }}%)</td><td><progress min=0 max=100 value={{ logainm.all }}></progress></td></tr>
-    <tr><td>{% trans 'Counties' %}</td><td>{{ logainm.counties_done|intcomma }} {% trans "of" %} {{ logainm.counties_all|intcomma }} ({{ logainm.counties }}%)</td><td><progress min=0 max=100 value={{ logainm.counties }}></progress></td></tr>
-    <tr><td>{% trans 'Baronies' %}</td><td>{{ logainm.baronies_done|intcomma }} {% trans "of" %} {{ logainm.baronies_all|intcomma }} ({{ logainm.baronies }}%)</td><td><progress min=0 max=100 value={{ logainm.baronies }}></progress></td></tr>
-    <tr><td>{% trans 'Civil Parishes' %}</td><td>{{ logainm.civil_parishes_done|intcomma }} {% trans "of" %} {{ logainm.civil_parishes_all|intcomma }} ({{ logainm.civil_parishes }}%)</td><td><progress min=0 max=100 value={{ logainm.civil_parishes }}></progress></td></tr>
-    <tr><td>{% trans 'Electoral Divisions' %}</td><td>{{ logainm.eds_done|intcomma }} of {{ logainm.eds_all|intcomma }} ({{ logainm.eds }}%)</td><td><progress min=0 max=100 value={{ logainm.eds }}></progress></td></tr>
-    <tr><td>{% trans 'Townlands' %}</td><td>{{ logainm.townlands_done|intcomma }} of {{ logainm.townlands_all|intcomma }} ({{ logainm.townlands }}%)</td><td><progress min=0 max=100 value={{ logainm.townlands }}></progress></td></tr>
+    <tr><td>{% trans 'All objects' %}</td><td>{{ logainm.all_done|intcomma }} {% trans "of" %} {{ logainm.all_all|intcomma }} ({{ logainm.all|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.all }}></progress></td></tr>
+    <tr><td>{% trans 'Counties' %}</td><td>{{ logainm.counties_done|intcomma }} {% trans "of" %} {{ logainm.counties_all|intcomma }} ({{ logainm.counties|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.counties }}></progress></td></tr>
+    <tr><td>{% trans 'Baronies' %}</td><td>{{ logainm.baronies_done|intcomma }} {% trans "of" %} {{ logainm.baronies_all|intcomma }} ({{ logainm.baronies|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.baronies }}></progress></td></tr>
+    <tr><td>{% trans 'Civil Parishes' %}</td><td>{{ logainm.civil_parishes_done|intcomma }} {% trans "of" %} {{ logainm.civil_parishes_all|intcomma }} ({{ logainm.civil_parishes|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.civil_parishes }}></progress></td></tr>
+    <tr><td>{% trans 'Electoral Divisions' %}</td><td>{{ logainm.eds_done|intcomma }} of {{ logainm.eds_all|intcomma }} ({{ logainm.eds|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.eds }}></progress></td></tr>
+    <tr><td>{% trans 'Townlands' %}</td><td>{{ logainm.townlands_done|intcomma }} of {{ logainm.townlands_all|intcomma }} ({{ logainm.townlands|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.townlands }}></progress></td></tr>
 </table></p>
 
 {% endcache %}
