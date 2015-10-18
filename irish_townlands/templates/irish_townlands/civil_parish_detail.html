@@ -65,7 +65,7 @@
 
     <a name="area"></a>
     <h2>{% blocktrans %}Area{% endblocktrans %}</h2>
-    <p>{% blocktrans area_km2=civil_parish.area_km2|floatformat|intcomma area_acres=civil_parish.area_acres|floatformat|intcomma area_mile2=civil_parish.area_mile2|floatformat|intcomma %}{{ civil_parish_name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles.{% endblocktrans %}</p>
+    <p>{% blocktrans with area_km2=civil_parish.area_km2|floatformat|intcomma area_acres=civil_parish.area_acres|floatformat|intcomma area_mile2=civil_parish.area_mile2|floatformat|intcomma %}{{ civil_parish_name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles.{% endblocktrans %}</p>
 
     <a name="townlands"></a>
     <h2>{% trans "Townlands" %}</h2>
