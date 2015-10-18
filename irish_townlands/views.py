@@ -726,7 +726,7 @@ def lookup_by_logainm(request, logainm_ref):
         return redirect('view_area', url_path=obj.url_path)
 
     results = {
-        'search_term': search_term,
+        'search_term': logainm_ref,
         'counties': search_results['counties'],
         'counties_num_results': search_results['counties_num_results'],
         'baronies': search_results['baronies'],
