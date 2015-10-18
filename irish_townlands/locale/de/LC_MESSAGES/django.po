@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-18 15:07+0200\n"
-"PO-Revision-Date: 2015-10-18 13:47+0000\n"
+"PO-Revision-Date: 2015-10-18 15:16+0000\n"
 "Last-Translator: rory <rory@technomancy.org>\n"
 "Language-Team: German (http://www.transifex.com/irish-townlands/irish-townlands/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -89,36 +89,36 @@ msgstr ""
 #, python-format
 msgid "%d townland"
 msgid_plural "%d townlands"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Townland"
+msgstr[1] "%d Townlands"
 
 #: views.py:601
 #, python-format
 msgid "%d ED"
 msgid_plural "%d EDs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ED"
+msgstr[1] "%d ED"
 
 #: views.py:603
 #, python-format
 msgid "%d civil parish"
 msgid_plural "%d civil parishes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d politische Gemeinde"
+msgstr[1] "%d politische Gemeinden"
 
 #: views.py:605
 #, python-format
 msgid "%d barony"
 msgid_plural "%d baronies"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Herrschaft"
+msgstr[1] "%d Herrschaften"
 
 #: views.py:607
 #, python-format
 msgid "%d subtownland"
 msgid_plural "%d subtownlands"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Subtownland"
+msgstr[1] "%d Subtownlands"
 
 #: views.py:609
 msgid "No mapping activity"
