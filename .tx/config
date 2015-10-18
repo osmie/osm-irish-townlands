@@ -1,11 +1,6 @@
 [main]
 host = https://www.transifex.com
 
-[irish-townlands.irish-townlands]
-file_filter = irish_townlands/locale/<lang>/LC_MESSAGES/django.po
-source_file = irish_townlands/locale/en/LC_MESSAGES/django.po
-source_lang = en
-
 [irish-townlands.djangopo]
 file_filter = irish_townlands/locale/<lang>/LC_MESSAGES/django.po
 source_file = irish_townlands/locale/en/LC_MESSAGES/django.po

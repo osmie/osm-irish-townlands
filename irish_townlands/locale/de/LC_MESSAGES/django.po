@@ -3,61 +3,62 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# rory <rory@technomancy.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-18 15:07+0200\n"
-"PO-Revision-Date: 2015-10-18 13:25+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Irish (http://www.transifex.com/irish-townlands/irish-townlands/language/ga/)\n"
+"PO-Revision-Date: 2015-10-18 13:34+0000\n"
+"Last-Translator: rory <rory@technomancy.org>\n"
+"Language-Team: German (http://www.transifex.com/irish-townlands/irish-townlands/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ga\n"
-"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: models.py:40 templates/irish_townlands/index.html:10
 msgid "and"
-msgstr ""
+msgstr "und"
 
 #: models.py:104 templates/irish_townlands/townland_detail.html:7
 #: templates/irish_townlands/townland_detail.html:13
 #, python-format
 msgid "%(townland_name)s Townland"
-msgstr ""
+msgstr "%(townland_name)s Townland"
 
 #: models.py:107 templates/irish_townlands/subtownland_detail.html:19
 #: templates/irish_townlands/townland_detail.html:32
 #, python-format
 msgid "%(civil_parish_name)s Civil Parish"
-msgstr ""
+msgstr "%(civil_parish_name)s politische Gemeinde"
 
 #: models.py:110
 #, python-format
 msgid "Barony of %(barony_name)s"
-msgstr ""
+msgstr "Herrschaften von %(barony_name)s"
 
 #: models.py:113 templates/irish_townlands/county_detail.html:5
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
 msgid "Co. %(county_name)s"
-msgstr ""
+msgstr "Co. %(county_name)s"
 
 #: models.py:119
 msgid "(Island)"
-msgstr ""
+msgstr "(Insel)"
 
 #: models.py:124
 #, python-format
 msgid "'%(name)s' in 1901 Census"
-msgstr ""
+msgstr "'%(name)s' im 1901 Volkszählung"
 
 #: models.py:126
 #, python-format
 msgid "'%(name)s' in 1911 Census"
-msgstr ""
+msgstr "'%(name)s' in 1911 Volkszählung"
 
 #: models.py:235
 #, python-format
@@ -65,9 +66,6 @@ msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: models.py:236
 #, python-format
@@ -75,9 +73,6 @@ msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: models.py:237
 #, python-format
@@ -85,9 +80,6 @@ msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: models.py:380
 msgid "Area in Acres, Rods and Perches"
@@ -99,9 +91,6 @@ msgid "%d townland"
 msgid_plural "%d townlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: views.py:601
 #, python-format
@@ -109,9 +98,6 @@ msgid "%d ED"
 msgid_plural "%d EDs"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: views.py:603
 #, python-format
@@ -119,9 +105,6 @@ msgid "%d civil parish"
 msgid_plural "%d civil parishes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: views.py:605
 #, python-format
@@ -129,9 +112,6 @@ msgid "%d barony"
 msgid_plural "%d baronies"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: views.py:607
 #, python-format
@@ -139,9 +119,6 @@ msgid "%d subtownland"
 msgid_plural "%d subtownlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: views.py:609
 msgid "No mapping activity"
@@ -168,9 +145,6 @@ msgid "%(num)s townland"
 msgid_plural "%(num)s townlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:13
 #: templates/irish_townlands/mappers.html:21
@@ -179,9 +153,6 @@ msgid "%(num)s ED"
 msgid_plural "%(num)s EDs"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:17
 #, python-format
@@ -189,9 +160,6 @@ msgid "%(num)s civil parish"
 msgid_plural "%(num)s civil parishes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:21
 #, python-format
@@ -199,9 +167,6 @@ msgid "%(num)s barony"
 msgid_plural "%(num)s baronies"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:25
 #, python-format
@@ -209,9 +174,6 @@ msgid "%(num)s county"
 msgid_plural "%(num)s counties"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:29
 #, python-format
@@ -219,9 +181,6 @@ msgid "%(num)s subtownland"
 msgid_plural "%(num)s subtownlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/barony_detail.html:14
 #, python-format
@@ -342,9 +301,6 @@ msgid_plural ""
 "            "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/civil_parish_detail.html:33
 #, python-format
@@ -358,9 +314,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/civil_parish_detail.html:84
 #, python-format
@@ -549,9 +502,6 @@ msgid "%(num_baronies)s barony"
 msgid_plural "%(num_baronies)s baronies"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:16
 #, python-format
@@ -559,9 +509,6 @@ msgid "%(num_civil_parishes)s civil parish"
 msgid_plural "%(num_civil_parishes)s civil parishes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:17
 #, python-format
@@ -569,9 +516,6 @@ msgid "%(num_eds)s electoral division"
 msgid_plural "%(num_eds)s electoral divisions"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:18
 #, python-format
@@ -579,9 +523,6 @@ msgid "%(num_townlands)s townland"
 msgid_plural "%(num_townlands)s townlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:19
 msgid " currently mapped on OpenStreetMap"
@@ -602,9 +543,6 @@ msgid "%(numberofbaronies)s barony"
 msgid_plural "%(numberofbaronies)s baronies"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:27
 #, python-format
@@ -612,9 +550,6 @@ msgid "%(numberofcivilparishes)s civil parish"
 msgid_plural "%(numberofcivilparishes)s civil parishes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:28
 #, python-format
@@ -622,9 +557,6 @@ msgid "%(numberofeds)s electoral division"
 msgid_plural "%(numberofeds)s electoral divisions"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:29
 #, python-format
@@ -632,9 +564,6 @@ msgid "%(numberoftownlands)s townland"
 msgid_plural "%(numberoftownlands)s townlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:33
 #, python-format
@@ -642,9 +571,6 @@ msgid "%(numberofsubtownlands)s subtownland"
 msgid_plural "%(numberofsubtownlands)s subtownlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/index.html:40
 msgid "About"
@@ -727,9 +653,6 @@ msgid "%(num)s mapped."
 msgid_plural "%(num)s mapped."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/mapper_details.html:23
 #: templates/irish_townlands/mappers.html:15
@@ -770,9 +693,6 @@ msgid "%(townlands)s townland"
 msgid_plural "%(townlands)s townlands"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/mappers.html:22
 #, python-format
@@ -780,9 +700,6 @@ msgid "%(num)s Civil Parish"
 msgid_plural "%(num)s Civil Parishes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/mappers.html:23
 #, python-format
@@ -790,9 +707,6 @@ msgid "%(num)s Barony"
 msgid_plural "%(num)s Baronies"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/mappers.html:24
 #, python-format
@@ -800,9 +714,6 @@ msgid "%(num)s County"
 msgid_plural "%(num)s Counties"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/mappinghistory.html:4
 #: templates/irish_townlands/mappinghistory.html:5
@@ -957,9 +868,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:27
 #, python-format
@@ -973,9 +881,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:43
 #, python-format
@@ -989,9 +894,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:59
 #, python-format
@@ -1005,9 +907,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:75
 #, python-format
@@ -1021,9 +920,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:91
 #, python-format
@@ -1037,9 +933,6 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: templates/irish_townlands/search_results.html:106
 #, python-format
