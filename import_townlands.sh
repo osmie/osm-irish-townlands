@@ -70,12 +70,9 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_10 on val
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_9 on valid_polygon using GIST (way) where admin_level = '9';" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_barony on valid_polygon using GIST (way) where boundary = 'barony';" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create index valid_polygon__way_cp on valid_polygon using GIST (way) where boundary = 'civil_parish';" 2>/dev/null || true
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "analyze valid_polygon;" 2>/dev/null || true
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "vacuum full valid_polygon;" 2>/dev/null || true
-
-
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column geo geography;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update valid_polygon set geo = st_transform(way, 4326)::geography;"
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "vacuum full valid_polygon;" 2>/dev/null || true
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table water_polygon add column geo geography;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_transform(way, 4326)::geography;" 2>/dev/null || true
