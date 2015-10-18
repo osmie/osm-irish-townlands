@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-18 15:07+0200\n"
-"PO-Revision-Date: 2015-10-18 13:34+0000\n"
+"PO-Revision-Date: 2015-10-18 13:47+0000\n"
 "Last-Translator: rory <rory@technomancy.org>\n"
 "Language-Team: German (http://www.transifex.com/irish-townlands/irish-townlands/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -815,7 +815,7 @@ msgstr ""
 #: templates/irish_townlands/rate.html:9
 #: templates/irish_townlands/townland_base.html:19
 msgid "Irish Townlands"
-msgstr ""
+msgstr "Irische Townlands"
 
 #: templates/irish_townlands/rate.html:9
 msgid "Progress"
