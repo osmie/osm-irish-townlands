@@ -10,9 +10,9 @@ DB_PASS=$2
 OSM2PGSQL_CACHE=200M
 
 VERBOSE=""
-if [[ "$#" -gt 3 ]] ; then 
+if [[ "$#" -ge 3 ]] ; then 
     VERBOSE=$3
-    if [[ $VERBOSE ]] ; then
+    if [[ ! -z $VERBOSE ]] ; then
         set -x
         OSM2PGSQL_CACHE=1200M
     fi
