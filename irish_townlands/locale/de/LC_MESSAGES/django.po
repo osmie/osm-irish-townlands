@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 16:22+0200\n"
+"POT-Creation-Date: 2015-10-20 19:13+0200\n"
 "PO-Revision-Date: 2015-10-20 12:29+0000\n"
 "Last-Translator: Matze <matze.list@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/openstreetmap/irish-"
@@ -30,10 +30,12 @@ msgstr "und"
 msgid "%(townland_name)s Townland"
 msgstr "%(townland_name)s Townland"
 
-#: models.py:107
-#, python-format
-msgid "%(civil_parish_name)s Civil Parish"
-msgstr "%(civil_parish_name)s politische Gemeinde"
+#: models.py:107 templates/irish_townlands/duplicatenames.html:14
+#: templates/irish_townlands/subtownland_detail.html:19
+#: templates/irish_townlands/townland_detail.html:32
+#, fuzzy, python-format
+msgid "%(name)s Civil Parish"
+msgstr "%(civilparishname)s politische Gemeinde"
 
 #: models.py:110
 #, python-format
@@ -41,6 +43,7 @@ msgid "Barony of %(barony_name)s"
 msgstr "Herrschaften von %(barony_name)s"
 
 #: models.py:113 templates/irish_townlands/county_detail.html:5
+#: templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
@@ -434,21 +437,9 @@ msgid "in"
 msgstr "in"
 
 #: templates/irish_townlands/duplicatenames.html:14
-#: templates/irish_townlands/subtownland_detail.html:19
-#: templates/irish_townlands/townland_detail.html:32
-#, fuzzy, python-format
-msgid "%(name)s Civil Parish"
-msgstr "%(civilparishname)s politische Gemeinde"
-
-#: templates/irish_townlands/duplicatenames.html:14
 #, python-format
 msgid "%(baronyname)s Barony"
 msgstr "%(baronyname)s Herrschaft"
-
-#: templates/irish_townlands/duplicatenames.html:14
-#, python-format
-msgid "Co. %(countyname)s"
-msgstr "Co. %(countyname)s"
 
 #: templates/irish_townlands/index.html:4
 msgid "Townlands in Ireland"
@@ -1243,6 +1234,12 @@ msgstr ""
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
 msgstr ""
+
+#~ msgid "%(civil_parish_name)s Civil Parish"
+#~ msgstr "%(civil_parish_name)s politische Gemeinde"
+
+#~ msgid "Co. %(countyname)s"
+#~ msgstr "Co. %(countyname)s"
 
 #~ msgid "%(numberofeds)s electoral division"
 #~ msgid_plural "%(numberofeds)s electoral divisions"

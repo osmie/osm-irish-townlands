@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 16:22+0200\n"
+"POT-Creation-Date: 2015-10-20 19:13+0200\n"
 "PO-Revision-Date: 2015-10-19 11:55+0000\n"
 "Last-Translator: IrlJIdel <donal.diamond@gmail.com>\n"
 "Language-Team: Irish (http://www.transifex.com/openstreetmap/irish-townlands/"
@@ -30,10 +30,12 @@ msgstr "agus"
 msgid "%(townland_name)s Townland"
 msgstr ""
 
-#: models.py:107
-#, python-format
-msgid "%(civil_parish_name)s Civil Parish"
-msgstr ""
+#: models.py:107 templates/irish_townlands/duplicatenames.html:14
+#: templates/irish_townlands/subtownland_detail.html:19
+#: templates/irish_townlands/townland_detail.html:32
+#, fuzzy, python-format
+msgid "%(name)s Civil Parish"
+msgstr "Paróiste Dlí"
 
 #: models.py:110
 #, python-format
@@ -41,6 +43,7 @@ msgid "Barony of %(barony_name)s"
 msgstr ""
 
 #: models.py:113 templates/irish_townlands/county_detail.html:5
+#: templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
@@ -482,20 +485,8 @@ msgid "in"
 msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:14
-#: templates/irish_townlands/subtownland_detail.html:19
-#: templates/irish_townlands/townland_detail.html:32
-#, fuzzy, python-format
-msgid "%(name)s Civil Parish"
-msgstr "Paróiste Dlí"
-
-#: templates/irish_townlands/duplicatenames.html:14
 #, python-format
 msgid "%(baronyname)s Barony"
-msgstr ""
-
-#: templates/irish_townlands/duplicatenames.html:14
-#, python-format
-msgid "Co. %(countyname)s"
 msgstr ""
 
 #: templates/irish_townlands/index.html:4

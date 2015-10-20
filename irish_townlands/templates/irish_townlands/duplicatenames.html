@@ -11,7 +11,7 @@
     <li>{{ group.name }}: {{ group.count }}
         <ul>
             {% for townland in group.townlands %}
-            <li><a href="{% url 'view_area' townland.url_path %}">{{ group.name }}</a> {% trans "in" %} {% if townland.civil_parish__name %}{% blocktrans with name=townland.civil_parish__name %}{{ name }} Civil Parish{% endblocktrans %},{% endif %} {% if townland.barony__name %}{% blocktrans with baronyname=townland.barony__name %}{{ baronyname }} Barony{% endblocktrans %},{% endif %} {% blocktrans with countyname=townland.county__name %}Co. {{ countyname }}{% endblocktrans %}</li>
+            <li><a href="{% url 'view_area' townland.url_path %}">{{ group.name }}</a> {% trans "in" %} {% if townland.civil_parish__name %}{% blocktrans with name=townland.civil_parish__name %}{{ name }} Civil Parish{% endblocktrans %},{% endif %} {% if townland.barony__name %}{% blocktrans with baronyname=townland.barony__name %}{{ baronyname }} Barony{% endblocktrans %},{% endif %} {% blocktrans with county_name=townland.county__name %}Co. {{ county_name }}{% endblocktrans %}</li>
             {% endfor %}
         </ul>
     </li>

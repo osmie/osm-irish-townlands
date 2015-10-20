@@ -104,7 +104,7 @@ class NameableThing(object):
                 townland_name = ", " + ugettext("%(townland_name)s Townland") % {'townland_name': self.townland.name }
 
             if getattr(self, 'civil_parish', None):
-                civil_parish_name = ", " + ugettext("%(civil_parish_name)s Civil Parish") % {'civil_parish_name': self.civil_parish.name}
+                civil_parish_name = ", " + ugettext("%(name)s Civil Parish") % {'name': self.civil_parish.name}
 
             if getattr(self, 'barony', None):
                 barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
