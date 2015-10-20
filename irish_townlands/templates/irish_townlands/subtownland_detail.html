@@ -16,7 +16,7 @@
     <p>
         <a href="{% url 'view_area' subtownland.county.url_path %}">{% blocktrans with county_name=subtownland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
         → <a href="{% url 'view_area' subtownland.barony.url_path %}">{{ subtownland.barony.name }}</a>
-        → <a href="{% url 'view_area' subtownland.civil_parish.url_path %}">{% blocktrans with civil_parish_name=subtownland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' subtownland.civil_parish.url_path %}">{% blocktrans with name=subtownland.civil_parish.name %}{{ name }} Civil Parish{% endblocktrans %}</a>
         → <a href="{% url 'view_area' subtownland.ed.url_path %}">{% blocktrans with ed_name=subtownland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</a>
         → <a href="{% url 'view_area' subtownland.url_path %}">{{ subtownland_name }}</a>
     </p>
@@ -139,9 +139,9 @@
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
     {% if subtownland.osm_timestamp %}{% url 'mapper_details' osm_user as mapperurl %}
-        <p>{% with osm_timestamp=subtownland.osm_timestamp|date:"j M Y" osm_user=subtownland.osm_user %}{% blocktrans %}{{ subtownland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %}{% endwith %}</p>
+        <p>{% with osm_timestamp=subtownland.osm_timestamp|date:"j M Y" osm_user=subtownland.osm_user name=subtownland_name %}{% blocktrans %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %}{% endwith %}</p>
     {% else %}
-        <p>{% blocktrans %}We don't know when {{ subtownland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=subtownland_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
     {% if subtownland.osm_id %}
         <p>

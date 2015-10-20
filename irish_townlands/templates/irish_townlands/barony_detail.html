@@ -83,9 +83,9 @@
     <a name="osm"></a>
     <h2>OpenStreetMap</h2>
     {% if barony.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=barony.osm_timestamp|date:"j M Y" osm_user=barony.osm_user %}{{ barony_name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
+        <p>{% blocktrans with osm_timestamp=barony.osm_timestamp|date:"j M Y" osm_user=barony.osm_user name=barony_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
     {% else %}
-        <p>{% blocktrans %}We don't know when {{ barony_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=barony_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
     {% if barony.osm_id %}
         <p>

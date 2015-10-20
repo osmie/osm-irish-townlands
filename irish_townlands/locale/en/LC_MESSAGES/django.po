@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 15:07+0200\n"
+"POT-Creation-Date: 2015-10-20 14:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,8 +28,7 @@ msgstr ""
 msgid "%(townland_name)s Townland"
 msgstr ""
 
-#: models.py:107 templates/irish_townlands/subtownland_detail.html:19
-#: templates/irish_townlands/townland_detail.html:32
+#: models.py:107
 #, python-format
 msgid "%(civil_parish_name)s Civil Parish"
 msgstr ""
@@ -140,6 +139,9 @@ msgid "<a href=\"%(absurl)s%(url)s\">%(username)s</a> added"
 msgstr ""
 
 #: templates/irish_townlands/activity_for_one_date.html:9
+#: templates/irish_townlands/index.html:18
+#: templates/irish_townlands/index.html:29
+#: templates/irish_townlands/mappers.html:20
 #, python-format
 msgid "%(num)s townland"
 msgid_plural "%(num)s townlands"
@@ -155,6 +157,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:17
+#: templates/irish_townlands/index.html:16
+#: templates/irish_townlands/index.html:27
 #, python-format
 msgid "%(num)s civil parish"
 msgid_plural "%(num)s civil parishes"
@@ -162,6 +166,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:21
+#: templates/irish_townlands/index.html:15
+#: templates/irish_townlands/index.html:26
 #, python-format
 msgid "%(num)s barony"
 msgid_plural "%(num)s baronies"
@@ -176,6 +182,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/irish_townlands/activity_for_one_date.html:29
+#: templates/irish_townlands/index.html:33
 #, python-format
 msgid "%(num)s subtownland"
 msgid_plural "%(num)s subtownlands"
@@ -199,15 +206,22 @@ msgid ""
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:86
+#: templates/irish_townlands/civil_parish_detail.html:84
+#: templates/irish_townlands/county_detail.html:96
+#: templates/irish_townlands/ed_detail.html:91
 #, python-format
 msgid ""
-"%(barony_name)s was added to OpenStreetMap on %(osm_timestamp)s by "
-"%(osm_user)s."
+"%(name)s was added to OpenStreetMap on %(osm_timestamp)s by %(osm_user)s."
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:88
+#: templates/irish_townlands/civil_parish_detail.html:86
+#: templates/irish_townlands/county_detail.html:98
+#: templates/irish_townlands/ed_detail.html:93
+#: templates/irish_townlands/subtownland_detail.html:144
+#: templates/irish_townlands/townland_detail.html:208
 #, python-format
-msgid "We don't know when %(barony_name)s was added to OpenStreetMap."
+msgid "We don't know when %(name)s was added to OpenStreetMap."
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:94
@@ -317,16 +331,16 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/irish_townlands/civil_parish_detail.html:84
+#: templates/irish_townlands/civil_parish_detail.html:46
 #, python-format
-msgid ""
-"%(civil_parish_name)s was added to OpenStreetMap on %(osm_timestamp)s by "
-"%(osm_user)s."
+msgid "It is located at %(centre)s."
 msgstr ""
 
-#: templates/irish_townlands/civil_parish_detail.html:86
+#: templates/irish_townlands/civil_parish_detail.html:68
 #, python-format
-msgid "We don't know when %(civil_parish_name)s was added to OpenStreetMap."
+msgid ""
+"%(civil_parish_name)s has an area of %(area_km2)s km² / %(area_acres)s "
+"acres / %(area_mile2)s square miles."
 msgstr ""
 
 #: templates/irish_townlands/civil_parish_detail.html:90
@@ -388,18 +402,6 @@ msgstr ""
 msgid "Subtownlands"
 msgstr ""
 
-#: templates/irish_townlands/county_detail.html:96
-#, python-format
-msgid ""
-"%(county_name)s was added to OpenStreetMap on %(osm_timestamp)s by "
-"%(osm_user)s."
-msgstr ""
-
-#: templates/irish_townlands/county_detail.html:98
-#, python-format
-msgid "We don't know when %(county_name)s was added to OpenStreetMap."
-msgstr ""
-
 #: templates/irish_townlands/county_detail.html:110
 #, python-format
 msgid "How long will it take OSM to finish %(county_name)s?"
@@ -425,8 +427,10 @@ msgid "in"
 msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:14
+#: templates/irish_townlands/subtownland_detail.html:19
+#: templates/irish_townlands/townland_detail.html:32
 #, python-format
-msgid "%(civilparishname)s Civil Parish"
+msgid "%(name)s Civil Parish"
 msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:14
@@ -442,17 +446,6 @@ msgstr ""
 #: templates/irish_townlands/ed_detail.html:14
 #, python-format
 msgid "We don't know what county %(ed_name)s is in."
-msgstr ""
-
-#: templates/irish_townlands/ed_detail.html:91
-#, python-format
-msgid ""
-"%(ed_name)s was added to OpenStreetMap on %(osm_timestamp)s by %(osm_user)s."
-msgstr ""
-
-#: templates/irish_townlands/ed_detail.html:93
-#, python-format
-msgid "We don't know when %(ed_name)s was added to OpenStreetMap."
 msgstr ""
 
 #: templates/irish_townlands/index.html:4
@@ -498,31 +491,11 @@ msgstr ""
 msgid "Ireland"
 msgstr ""
 
-#: templates/irish_townlands/index.html:15
-#, python-format
-msgid "%(num_baronies)s barony"
-msgid_plural "%(num_baronies)s baronies"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:16
-#, python-format
-msgid "%(num_civil_parishes)s civil parish"
-msgid_plural "%(num_civil_parishes)s civil parishes"
-msgstr[0] ""
-msgstr[1] ""
-
 #: templates/irish_townlands/index.html:17
+#: templates/irish_townlands/index.html:28
 #, python-format
-msgid "%(num_eds)s electoral division"
-msgid_plural "%(num_eds)s electoral divisions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:18
-#, python-format
-msgid "%(num_townlands)s townland"
-msgid_plural "%(num_townlands)s townlands"
+msgid "%(num)s electoral division"
+msgid_plural "%(num)s electoral divisions"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -538,41 +511,6 @@ msgstr ""
 #: templates/irish_townlands/search_results.html:9
 msgid "Counties"
 msgstr ""
-
-#: templates/irish_townlands/index.html:26
-#, python-format
-msgid "%(numberofbaronies)s barony"
-msgid_plural "%(numberofbaronies)s baronies"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:27
-#, python-format
-msgid "%(numberofcivilparishes)s civil parish"
-msgid_plural "%(numberofcivilparishes)s civil parishes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:28
-#, python-format
-msgid "%(numberofeds)s electoral division"
-msgid_plural "%(numberofeds)s electoral divisions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:29
-#, python-format
-msgid "%(numberoftownlands)s townland"
-msgid_plural "%(numberoftownlands)s townlands"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/irish_townlands/index.html:33
-#, python-format
-msgid "%(numberofsubtownlands)s subtownland"
-msgid_plural "%(numberofsubtownlands)s subtownlands"
-msgstr[0] ""
-msgstr[1] ""
 
 #: templates/irish_townlands/index.html:40
 msgid "About"
@@ -691,13 +629,6 @@ msgstr ""
 #: templates/irish_townlands/mappers.html:11
 msgid "Username"
 msgstr ""
-
-#: templates/irish_townlands/mappers.html:20
-#, python-format
-msgid "%(townlands)s townland"
-msgid_plural "%(townlands)s townlands"
-msgstr[0] ""
-msgstr[1] ""
 
 #: templates/irish_townlands/mappers.html:22
 #, python-format
@@ -1110,15 +1041,11 @@ msgid ""
 msgstr ""
 
 #: templates/irish_townlands/subtownland_detail.html:142
+#: templates/irish_townlands/townland_detail.html:206
 #, python-format
 msgid ""
-"%(subtownland_name)s was added to OpenStreetMap on %(osm_timestamp)s by <a "
-"href=\"%(mapperurl)s\">%(osm_user)s</a>."
-msgstr ""
-
-#: templates/irish_townlands/subtownland_detail.html:144
-#, python-format
-msgid "We don't know when %(subtownland_name)s was added to OpenStreetMap."
+"%(name)s was added to OpenStreetMap on %(osm_timestamp)s by <a href="
+"\"%(mapperurl)s\">%(osm_user)s</a>."
 msgstr ""
 
 #: templates/irish_townlands/townland_base.html:23
@@ -1314,19 +1241,7 @@ msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:206
 #, python-format
-msgid ""
-"%(townland_name)s was added to OpenStreetMap on %(osm_timestamp)s by <a href="
-"\"%(mapperurl)s\">%(osm_user)s</a>."
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:206
-#, python-format
 msgid "It was the %(order)s townland added to OpenStreetMap"
-msgstr ""
-
-#: templates/irish_townlands/townland_detail.html:208
-#, python-format
-msgid "We don't know when %(townland_name)s was added to OpenStreetMap."
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:219

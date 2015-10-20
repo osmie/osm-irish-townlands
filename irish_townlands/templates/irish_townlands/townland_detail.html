@@ -29,7 +29,7 @@
         {% endif %}
         {% if townland.civil_parish %}
             <span id="bc_cp" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="bc_td">
-                <a href="{% url 'view_area' townland.civil_parish.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with civil_parish_name=townland.civil_parish.name %}{{ civil_parish_name }} Civil Parish{% endblocktrans %}</span></a> →
+                <a href="{% url 'view_area' townland.civil_parish.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with name=townland.civil_parish.name %}{{ name }} Civil Parish{% endblocktrans %}</span></a> →
             </span>
         {% endif %}
         {% if townland.ed %}
@@ -203,9 +203,9 @@
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
     {% if townland.osm_timestamp %}{% url 'mapper_details' osm_user as mapperurl %}
-        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user %}{% blocktrans %}{{ townland_name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %} {% endwith %}{% blocktrans with order=townland.added_order|ordinal %}It was the {{ order }} townland added to OpenStreetMap{% endblocktrans %}</p>
+        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user name=townland_name %}{% blocktrans %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %} {% endwith %}{% blocktrans with order=townland.added_order|ordinal %}It was the {{ order }} townland added to OpenStreetMap{% endblocktrans %}</p>
     {% else %}
-        <p>{% blocktrans %}We don't know when {{ townland_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=townland_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
     {% if townland.osm_id %}
         <p>

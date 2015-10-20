@@ -81,9 +81,9 @@
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
     {% if civil_parish.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=civil_parish.osm_timestamp|date:"j M Y" osm_user=civil_parish.osm_user %}{{ civil_parish_name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
+        <p>{% blocktrans with osm_timestamp=civil_parish.osm_timestamp|date:"j M Y" osm_user=civil_parish.osm_user name=civil_parish_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
     {% else %}
-        <p>{% blocktrans %}We don't know when {{ civil_parish_name }} was added to OpenStreetMap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=civil_parish_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
     {% endif %}
     {% if civil_parish.osm_id %}
         <p>

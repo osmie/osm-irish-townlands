@@ -12,10 +12,10 @@
 
 <h2>{% trans "Ireland" %}</h2>
 <p>
-    {% blocktrans count num_baronies=num_baronies|intcomma %}{{ num_baronies }} barony{% plural %}{{ num_baronies }} baronies{% endblocktrans %},
-    {% blocktrans count num_civil_parishes=num_civil_parishes|intcomma %}{{ num_civil_parishes }} civil parish{% plural %}{{ num_civil_parishes }} civil parishes{% endblocktrans %},
-    {% blocktrans count num_eds=num_eds|intcomma %}{{ num_eds }} electoral division{% plural %}{{ num_eds }} electoral divisions{% endblocktrans %},
-    {% blocktrans count num_townlands=num_townlands|intcomma %}{{ num_townlands }} townland{% plural %}{{ num_townlands }} townlands{% endblocktrans %}
+    {% blocktrans count num=num_baronies|intcomma %}{{ num }} barony{% plural %}{{ num }} baronies{% endblocktrans %},
+    {% blocktrans count num=num_civil_parishes|intcomma %}{{ num }} civil parish{% plural %}{{ num_ }} civil parishes{% endblocktrans %},
+    {% blocktrans count num=num_eds|intcomma %}{{ num }} electoral division{% plural %}{{ num }} electoral divisions{% endblocktrans %},
+    {% blocktrans count num=num_townlands|intcomma %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %}
     {% trans ' currently mapped on OpenStreetMap' %}.
 </p>
 <h2>{% trans "Counties" %}</h2>
@@ -23,14 +23,14 @@
 {% for county in counties %}
     <li>
         <a href="{% url 'view_area' county.url_path %}">{{ county.name }}</a>.
-            {% blocktrans count numberofbaronies=county.baronies.count|intcomma %}{{ numberofbaronies }} barony{% plural %}{{ numberofbaronies }} baronies{% endblocktrans %},
-            {% blocktrans count numberofcivilparishes=county.civil_parishes.count|intcomma %}{{ numberofcivilparishes }} civil parish{% plural %}{{ numberofcivilparishes }} civil parishes{% endblocktrans %},
-            {% blocktrans count numberofeds=county.eds.count|intcomma %}{{ numberofeds }} electoral division{% plural %}{{ numberofeds }} electoral divisions{% endblocktrans %},
-            {% blocktrans count numberoftownlands=county.townlands.count|intcomma %}{{ numberoftownlands }} townland{% plural %}{{ numberoftownlands }} townlands{% endblocktrans %}
+            {% blocktrans count num=county.baronies.count|intcomma %}{{ num }} barony{% plural %}{{ num }} baronies{% endblocktrans %},
+            {% blocktrans count num=county.civil_parishes.count|intcomma %}{{ num }} civil parish{% plural %}{{ num }} civil parishes{% endblocktrans %},
+            {% blocktrans count num=county.eds.count|intcomma %}{{ num }} electoral division{% plural %}{{ num }} electoral divisions{% endblocktrans %},
+            {% blocktrans count num=county.townlands.count|intcomma %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %}
             {% with numberofsubtownlands=county.subtownlands.count %}
                 {% if numberofsubtownlands != 0 %}
                     ,
-                    {% blocktrans count numberofsubtownlands=numberofsubtownlands %}{{ numberofsubtownlands }} subtownland{% plural %}{{ numberofsubtownlands }} subtownlands{% endblocktrans %}
+                    {% blocktrans count num=numberofsubtownlands %}{{ num }} subtownland{% plural %}{{ num }} subtownlands{% endblocktrans %}
                 {% endif %}
             {% endwith %}
     </li>
