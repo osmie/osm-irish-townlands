@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 16:17+0200\n"
+"POT-Creation-Date: 2015-10-20 16:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -335,6 +335,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/irish_townlands/civil_parish_detail.html:46
+#: templates/irish_townlands/subtownland_detail.html:86
+#: templates/irish_townlands/townland_detail.html:115
 #, python-format
 msgid "It is located at %(centre)s."
 msgstr ""
@@ -980,12 +982,6 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:97
 #, python-format
 msgid "%(name)s is an island."
-msgstr ""
-
-#: templates/irish_townlands/subtownland_detail.html:86
-#: templates/irish_townlands/townland_detail.html:115
-#, python-format
-msgid "It is located at %(gps_location)s."
 msgstr ""
 
 #: templates/irish_townlands/subtownland_detail.html:108

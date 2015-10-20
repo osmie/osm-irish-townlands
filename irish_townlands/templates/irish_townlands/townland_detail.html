@@ -112,7 +112,7 @@
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>
-        {% blocktrans with gps_location=townland.centre_pretty %}It is located at {{ gps_location }}.{% endblocktrans %}
+        {% blocktrans with centre=townland.centre_pretty %}It is located at {{ centre }}.{% endblocktrans %}
     </p>
     <div class="map" id="map" style="height: 600px; width: 800px;"></div>
     <script>
