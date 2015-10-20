@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:13+0200\n"
+"POT-Creation-Date: 2015-10-20 19:27+0200\n"
 "PO-Revision-Date: 2015-10-19 11:55+0000\n"
 "Last-Translator: IrlJIdel <donal.diamond@gmail.com>\n"
 "Language-Team: Irish (http://www.transifex.com/openstreetmap/irish-townlands/"
@@ -96,6 +96,48 @@ msgstr[4] ""
 
 #: models.py:380
 msgid "Area in Acres, Rods and Perches"
+msgstr ""
+
+#: pages.py:7
+msgid "About Townlands.ie"
+msgstr ""
+
+#: pages.py:8 templates/irish_townlands/index.html:40
+msgid "About"
+msgstr ""
+
+#: pages.py:22
+msgid "Copyright of Townlands.ie"
+msgstr ""
+
+#: pages.py:25
+msgid ""
+"Since this is derived from <a href=\"openstreetmap.org\">OpenStreetMap</a> "
+"data, it's under the same licence as that. Namely the <a href=\"http://"
+"opendatacommons.org/licenses/odbl/\">Open Data Commons Open Database License "
+"(ODbL)</a>."
+msgstr ""
+
+#: pages.py:26
+msgid ""
+"Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap "
+"Copyright</a> guide for more informatiom."
+msgstr ""
+
+#: pages.py:31
+msgid "Downloading Townlands.ie data"
+msgstr ""
+
+#: pages.py:34
+msgid ""
+"Warning! This data is <strong>incomplete</strong> and does not cover all of "
+"Ireland. Some counties are fully mapped, others aren't finished. Coverage is "
+"being improved on a daily basis. Please consult the <a href=\"/progress/"
+"\">progress report</a> to find out more."
+msgstr ""
+
+#: pages.py:36
+msgid "The data from townlands.ie is available in many formats"
 msgstr ""
 
 #: views.py:599
@@ -554,10 +596,6 @@ msgstr ""
 #: templates/irish_townlands/search.html:9
 #: templates/irish_townlands/search_results.html:9
 msgid "Counties"
-msgstr ""
-
-#: templates/irish_townlands/index.html:40
-msgid "About"
 msgstr ""
 
 #: templates/irish_townlands/index.html:41

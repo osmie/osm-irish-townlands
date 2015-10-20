@@ -1,10 +1,11 @@
 """
 Simple, non-DB, flatpage like feature
 """
+from django.utils.translation import ugettext_lazy as _
 PAGES = {
     'about': {
-        'title': 'About Townlands.ie',
-        'body': 'About',
+        'title': _('About Townlands.ie'),
+        'body': _('About'),
     },
     
     'news': {
@@ -18,30 +19,30 @@ PAGES = {
     },
 
     'copyright': {
-        'title': 'Copyright of Townlands.ie',
+        'title': _('Copyright of Townlands.ie'),
 
         'body': """
-            <p>Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
-            <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
+            <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
+            <p>"""+_("""Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.""")+"""</p>
         """,
     },
 
     'download': {
-        'title': 'Downloading Townlands.ie data',
-        'body': """
+        'title': _('Downloading Townlands.ie data'),
+        'body': ( """
             <div class="alert alert-warning">
-                Warning! This data is <strong>incomplete</strong> and does not cover all of Ireland. Some counties are fully mapped, others aren't finished. Coverage is being improved on a daily basis. Please consult the <a href="/progress/">progress report</a> to find out more.
+                """+_("""Warning! This data is <strong>incomplete</strong> and does not cover all of Ireland. Some counties are fully mapped, others aren't finished. Coverage is being improved on a daily basis. Please consult the <a href="/progress/">progress report</a> to find out more.""")+"""
             </div>
-            <p>The data from townlands.ie is available in many formats</p>
+            <p>"""+_("The data from townlands.ie is available in many formats")+"""</p>
             <table class="table">
-                <tr>
-                    <th>Type of Data</th>
-                    <th>Shapefile</th>
-                    <th>GeoJSON</th>
-                    <th>KML</th>
-                    <th>CSV</th>
-                    <th>no-geom CSV</th>
-                </tr>
+                <tr>"""
+                    "<th>Type of Data</th>"
+                    "<th>Shapefile</th>"
+                    "<th>GeoJSON</th>"
+                    "<th>KML</th>"
+                    "<th>CSV</th>"
+                    "<th>no-geom CSV</th>"
+                """</tr>
                 <tr>
                     <td>Townlands</td>
                     <td><a href="/static/downloads/townlands.zip">download shapefile</a></td>
