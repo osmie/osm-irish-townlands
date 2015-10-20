@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 14:29+0200\n"
+"POT-Creation-Date: 2015-10-20 16:17+0200\n"
 "PO-Revision-Date: 2015-10-20 12:29+0000\n"
 "Last-Translator: Matze <matze.list@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/openstreetmap/irish-"
@@ -192,9 +192,12 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/irish_townlands/barony_detail.html:14
-#, python-format
-msgid "We don't know what county %(barony_name)s is in."
-msgstr ""
+#: templates/irish_townlands/ed_detail.html:14
+#: templates/irish_townlands/subtownland_detail.html:56
+#: templates/irish_townlands/townland_detail.html:77
+#, fuzzy, python-format
+msgid "We don't know what county %(name)s is in."
+msgstr "Wir kennen nicht, welche County %(ed_name)s is in."
 
 #: templates/irish_townlands/barony_detail.html:18
 #: templates/irish_townlands/civil_parish_detail.html:40
@@ -444,11 +447,6 @@ msgstr "%(baronyname)s Herrschaft"
 #, python-format
 msgid "Co. %(countyname)s"
 msgstr "Co. %(countyname)s"
-
-#: templates/irish_townlands/ed_detail.html:14
-#, python-format
-msgid "We don't know what county %(ed_name)s is in."
-msgstr "Wir kennen nicht, welche County %(ed_name)s is in."
 
 #: templates/irish_townlands/index.html:4
 msgid "Townlands in Ireland"
@@ -949,12 +947,6 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:75
 #, python-format
 msgid "%(townland_name)s is in <a href=\"%(county_url)s\">Co. %(county)s</a>"
-msgstr ""
-
-#: templates/irish_townlands/subtownland_detail.html:56
-#: templates/irish_townlands/townland_detail.html:77
-#, python-format
-msgid "We don't know what county %(townland_name)s is in."
 msgstr ""
 
 #: templates/irish_townlands/subtownland_detail.html:61

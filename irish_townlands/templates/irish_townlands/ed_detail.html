@@ -11,7 +11,7 @@
     {% if ed.county %}
         <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
     {% else %}
-        <p>{% blocktrans %}We don't know what county {{ ed_name }} is in.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=ed_name %}We don't know what county {{ name }} is in.{% endblocktrans %}</p>
     {% endif %}
 
     {% if ed.logainm_ref %}

@@ -74,7 +74,7 @@
             {% url 'view_area' townland.county.url_path as county_url %}
             {% blocktrans with county=townland.county.name %}{{ townland_name }} is in <a href="{{ county_url }}">Co. {{ county }}</a>{% endblocktrans %}
         {% else %}
-            {% blocktrans %}We don't know what county {{ townland_name }} is in.{% endblocktrans %}
+            {% blocktrans with name=townland_name %}We don't know what county {{ name }} is in.{% endblocktrans %}
         {% endif %}
     {% endif %}
     </p>
