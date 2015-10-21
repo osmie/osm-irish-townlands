@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-21 14:34+0200\n"
+"POT-Creation-Date: 2015-10-21 17:06+0200\n"
 "PO-Revision-Date: 2015-10-20 12:29+0000\n"
 "Last-Translator: Matze <matze.list@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/openstreetmap/irish-"
@@ -131,6 +131,88 @@ msgstr ""
 
 #: pages.py:36
 msgid "The data from townlands.ie is available in many formats"
+msgstr ""
+
+#: pages.py:39
+msgid "Type of Data"
+msgstr ""
+
+#: pages.py:40
+msgid "Shapefile<"
+msgstr ""
+
+#: pages.py:41
+msgid "GeoJSON<"
+msgstr ""
+
+#: pages.py:42
+msgid "KML"
+msgstr ""
+
+#: pages.py:43
+msgid "CSV"
+msgstr ""
+
+#: pages.py:44
+msgid "no-geom CSV"
+msgstr ""
+
+#: pages.py:47 templates/irish_townlands/civil_parish_detail.html:20
+#: templates/irish_townlands/civil_parish_detail.html:71
+#: templates/irish_townlands/county_detail.html:66
+#: templates/irish_townlands/mapper_details.html:53
+#: templates/irish_townlands/mappers.html:12
+#: templates/irish_townlands/progress.html:44
+#: templates/irish_townlands/progress.html:104
+#: templates/irish_townlands/search.html:30
+#: templates/irish_townlands/search_results.html:73
+msgid "Townlands"
+msgstr "Townlands"
+
+#: pages.py:48 pages.py:56 pages.py:64 pages.py:72
+msgid "download shapefile"
+msgstr ""
+
+#: pages.py:49 pages.py:57 pages.py:65
+msgid "download GeoJSON"
+msgstr ""
+
+#: pages.py:50 pages.py:58 pages.py:66
+#, fuzzy
+msgid "download KML"
+msgstr "%d Townland"
+
+#: pages.py:51 pages.py:59 pages.py:67
+#, fuzzy
+msgid "download CSV"
+msgstr "%d Townland"
+
+#: pages.py:52 pages.py:60 pages.py:68
+msgid "download no-geom CSV"
+msgstr ""
+
+#: pages.py:55 templates/irish_townlands/mapper_details.html:43
+#: templates/irish_townlands/mappers.html:13
+#: templates/irish_townlands/progress.html:45
+#: templates/irish_townlands/progress.html:103
+#: templates/irish_townlands/search_results.html:57
+msgid "Electoral Divisions"
+msgstr "Wahlbezirke"
+
+#: pages.py:63 templates/irish_townlands/mapper_details.html:33
+#: templates/irish_townlands/mappers.html:14
+#: templates/irish_townlands/progress.html:46
+#: templates/irish_townlands/progress.html:102
+msgid "Civil Parishes"
+msgstr ""
+
+#: pages.py:71 templates/irish_townlands/mapper_details.html:23
+#: templates/irish_townlands/mappers.html:15
+#: templates/irish_townlands/progress.html:47
+#: templates/irish_townlands/progress.html:101
+#: templates/irish_townlands/search.html:16
+#: templates/irish_townlands/search_results.html:25
+msgid "Baronies"
 msgstr ""
 
 #: views.py:599
@@ -332,18 +414,6 @@ msgstr "Karte"
 #: templates/irish_townlands/townland_detail.html:136
 msgid "Area"
 msgstr "Bereich"
-
-#: templates/irish_townlands/civil_parish_detail.html:20
-#: templates/irish_townlands/civil_parish_detail.html:71
-#: templates/irish_townlands/county_detail.html:66
-#: templates/irish_townlands/mapper_details.html:53
-#: templates/irish_townlands/mappers.html:12
-#: templates/irish_townlands/progress.html:44
-#: templates/irish_townlands/progress.html:104
-#: templates/irish_townlands/search.html:30
-#: templates/irish_townlands/search_results.html:73
-msgid "Townlands"
-msgstr "Townlands"
 
 #: templates/irish_townlands/civil_parish_detail.html:21
 #: templates/irish_townlands/civil_parish_detail.html:82
@@ -629,30 +699,6 @@ msgid "%(num)s mapped."
 msgid_plural "%(num)s mapped."
 msgstr[0] ""
 msgstr[1] ""
-
-#: templates/irish_townlands/mapper_details.html:23
-#: templates/irish_townlands/mappers.html:15
-#: templates/irish_townlands/progress.html:47
-#: templates/irish_townlands/progress.html:101
-#: templates/irish_townlands/search.html:16
-#: templates/irish_townlands/search_results.html:25
-msgid "Baronies"
-msgstr ""
-
-#: templates/irish_townlands/mapper_details.html:33
-#: templates/irish_townlands/mappers.html:14
-#: templates/irish_townlands/progress.html:46
-#: templates/irish_townlands/progress.html:102
-msgid "Civil Parishes"
-msgstr ""
-
-#: templates/irish_townlands/mapper_details.html:43
-#: templates/irish_townlands/mappers.html:13
-#: templates/irish_townlands/progress.html:45
-#: templates/irish_townlands/progress.html:103
-#: templates/irish_townlands/search_results.html:57
-msgid "Electoral Divisions"
-msgstr "Wahlbezirke"
 
 #: templates/irish_townlands/mappers.html:4
 #: templates/irish_townlands/mappers.html:5
