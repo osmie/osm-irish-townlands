@@ -29,9 +29,9 @@
     {% endif %}
     {% if ireland.since_last_month != None %}
         <li>{% if ireland.since_last_month.days_left == None %}
-                If we take the rate since last month ({{ ireland.since_last_month.initial_date }}) of {{ ireland.since_last_month.rate }}% per day, we'll never finish
+                {% blocktrans with initial_date=ireland.since_last_month.initial_date rate=ireland.since_last_month.rate %}If we take the rate since last month ({{ initial_date }}) of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
             {% else %}
-                If we take the rate since last month ({{ ireland.since_last_month.initial_date }}) of {{ ireland.since_last_month.rate }}% per day, we'll be finished on {{ ireland.since_last_month.end_date }} (only {{ ireland.since_last_month.human_readable_time_left }} left).
+                {% blocktrans with initial_date=ireland.since_last_month.initial_date rate=ireland.since_last_month.rate end_date=ireland.since_last_month.end_date length=ireland.since_last_month.human_readable_time_left %}If we take the rate since last month ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
             {% endif %}
             </li>
     {% endif %}
@@ -61,8 +61,8 @@
         <p><b>{% trans "Done!" %}</b> {% blocktrans %}All the townlands in {{ countyname }} are in OpenStreetMap!{% endblocktrans %}</p>
     {% else %}
 
-        <p>There is {{ countyrates.amount_left|floatformat:2 }}% to be mapped.</p>
-        <p>Based on...
+        <p>{% blocktrans with percent=countyrates.amount_left|floatformat:2 %}There is {{ percent }}% to be mapped.{% endblocktrans %}</p>
+        <p>{% trans "Based on..." %}
             <ul>
                 <li>{% if countyrates.since_start.days_left == None %}
                     the rate since {{ countyrates.since_start.initial_date }} ({{ countyrates.since_start.rate }}% per day), we'll never finish
