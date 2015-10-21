@@ -14,16 +14,16 @@
 
 <ul>
     <li>{% if ireland.since_start.days_left == None %}
-            If we take the rate since {{ ireland.since_start.initial_date }} of {{ ireland.since_start.rate }}% per day, we'll never finish.
+            {% blocktrans with initial_date=ireland.since_start.initial_date rate=ireland.since_start.rate %}If we take the rate since {{ initial_date }} of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
         {% else %}
-            If we take the rate since {{ ireland.since_start.initial_date }} of {{ ireland.since_start.rate }}% per day, we'll be finished on {{ ireland.since_start.end_date }} (only {{ ireland.since_start.human_readable_time_left }} left).
+            {% blocktrans with initial_date=ireland.since_start.initial_date rate=ireland.since_start.rate enddate=ireland.since_start.end_date length=ireland.since_start.human_readable_time_left %}If we take the rate since {{ initial_date }} of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
         {% endif %}
     </li>
     {% if ireland.since_90_days != None %}
         <li>{% if ireland.since_90_days.days_left == None %}
-                If we take the rate since 90 days ago ({{ ireland.since_90_days.initial_date }}) of {{ ireland.since_90_days.rate }}% per day, we'll never finish
+                {% blocktrans with initial_date=ireland.since_90_days.initial_date rate=ireland.since_90_days.rate %}If we take the rate since 90 days ago ({{ initial_date }}) of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
             {% else %}
-                If we take the rate since 90 days ago ({{ ireland.since_90_days.initial_date }}) of {{ ireland.since_90_days.rate }}% per day, we'll be finished on {{ ireland.since_90_days.end_date }} (only {{ ireland.since_90_days.human_readable_time_left }} left).
+                {% blocktrans with initial_date=ireland.since_90_days.initial_date rate=ireland.since_90_days.rate end_date=ireland.since_90_days.end_date length=ireland.since_90_days.human_readable_time_left %}If we take the rate since 90 days ago ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
             {% endif %}
             </li>
     {% endif %}

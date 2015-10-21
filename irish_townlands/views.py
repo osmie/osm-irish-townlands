@@ -205,13 +205,13 @@ def days_to_string(days):
     weeks, days = divmod(days, 7)
     output = ""
     if years > 0:
-        output += "%d years" % years
+        output += ungettext("%d year", "%d years, years) % years
     if months > 0:
-        output += " %d months" % months
+        output += " " + ungettext("%d month", "%d months", months) % months
     if weeks > 0:
-        output += " %d weeks" % weeks
+        output += " " + ungettext("%d week", "%d weeks", weeks) % weeks
     if days > 0:
-        output += " %d days" % days
+        output += " " + ungettext("%d day", "%d days", days) "% days
 
     return output
 
