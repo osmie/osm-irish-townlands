@@ -2,14 +2,15 @@
 {% load i18n l10n humanize %}
 
 {% block title %}{{ ed.name }}{% endblock %}
-{% block header %}<h1>{{ ed.name }} Electoral Division{% if ed.county %}, Co. {{ ed.county.name }}{% endif %}</h1>{% endblock %}
+{% block header %}<h1>{% blocktrans with name=ed.name %}{{ name }} Electoral Division{% endblocktrans %}{% if ed.county %}, {% blocktrans with name=ed.county.name  %}Co. {{ name }}{% endblocktrans %}{% endif %}</h1>{% endblock %}
 
 {% block body %}
 
-    <p>Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / District Electoral Division of {{ ed.name }}.</p>
+    <p>{% blocktrans with name=ed.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the Electoral Division / ED / District Electoral Division of {{ name }}.{% endblocktrans %}</p>
 
     {% if ed.county %}
-        <p>{{ ed.name }} is in <a href="{% url 'view_area' ed.county.url_path %}">Co. {{ ed.county.name }}</a></p>
+        {% url 'view_area' ed.county.url_path as countyurl %}
+        <p>{% blocktrans with name=ed.name %}{{ name }} is in <a href="{{ countyurl }}">Co. {{ ed.county.name }}{% endblocktrans %}</a></p>
     {% else %}
         <p>{% blocktrans with name=ed_name %}We don't know what county {{ name }} is in.{% endblocktrans %}</p>
     {% endif %}
@@ -19,16 +20,16 @@
     {% endif %}
 
     <ul>
-        <li><a href="#map">Map ↓</a></li>
-        <li><a href="#area">Area ↓</a></li>
-        <li><a href="#townlands">Townlands ↓</a></li>
-        <li><a href="#osm">OpenStreetMap↓</a></li>
+        <li><a href="#map">{% trans "Map" %} ↓</a></li>
+        <li><a href="#area">{% trans "Area" %} ↓</a></li>
+        <li><a href="#townlands">{% trans "Townlands" %} ↓</a></li>
+        <li><a href="#osm">{% trans "OpenStreetMap" %} ↓</a></li>
     </ul>
 
     <a name="map"></a>
-    <h2>Map</h2>
+    <h2>{% trans "Map" %}</h2>
     <p>
-        It is located at {{ ed.centre_pretty }}.
+        {% blocktrans with centre=ed.centre_pretty %}It is located at {{ centre }}.{% endblocktrans %}
     </p>
     <div id="map" style="height: 500px; width: 600px;"></div>
     <script>
@@ -51,17 +52,18 @@
 
 
     <a name="area"></a>
-    <h2>Area</h2>
-    <p>{{ ed.name }} has an area of {{ ed.area_km2|floatformat|intcomma }} km² / {{ ed.area_acres|floatformat|intcomma }} acres / {{ ed.area_mile2|floatformat|intcomma }} square miles</p>
+    <h2>{% trans "Area" %}</h2>
+    <p>{% blocktrans with area_km2=ed.area_km2|floatformat|intcomma area_acres=ed.area_acres|floatformat|intcomma area_mile2=ed.area_mile2|floatformat|intcomma name=ed.name %}{{ name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles.{% endblocktrans %}</p>
 
     {% with civil_parishes=county.civil_parishes.all %}
     {% if civil_parishes %}
-        <h2>Civil Parishes</h2>
-        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }}.</p>
+        <h2>{% trans "Civil Parishes" %}</h2>
+        <p>
+            {% blocktrans with num=civil_parishes|length name=county.name %}There is {{ num }} civil parish in Co. {{ name }}.{% plural %}There are {{ num }} civil parishes in Co. {{ name }}.{% endblocktrans %}</p>
 
         <ul>
         {% for civil_parish in civil_parishes %}
-            <li>{{ civil_parish.name }} ({{ civil_parish.townlands.count }} townlands)</li>
+            <li>{% blocktrans with name=civil_parish_name num=civil_parish.townlands.count %}{{ name }} ({{ num }} townlands){% endblocktrans %}</li>
         {% endfor %}
         </ul>
 
@@ -69,15 +71,20 @@
     {% endwith %}
 
     <a name="townlands"></a>
-    <h2>Townlands</h2>
+    <h2>{% trans "Townlands" %}</h2>
     <p>
-        There are {% with nt=ed.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ ed.name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ ed.name }}.
+        {% with num=ed.townlands.all|length ed.townland_cover|floatformat:-1 %}
+        {% blocktrans count num %}
+            There is {{ num }} townland that we know about in {{ name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ name }}.
+        {% plural %}
+            There are {{ num }} townlands that we know about in {{ name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ name }}.
+        {% endblocktrans %}
     </p>
     <ul>
     {% for townland in ed.townlands_sorted %}
         <li>
             <a href="{% url 'view_area' townland.url_path %}">{{ townland.name }}</a>
-                <abbr title="Area in Acres, Rods and Perches">{% with arp=townland.area_acres_roods_perches %}
+                <abbr title="{% trans "Area in Acres, Rods and Perches" %}">{% with arp=townland.area_acres_roods_perches %}
                     {{ arp.0 }} A, {{ arp.1 }} R, {{ arp.2 }} P
                     {% endwith %}
                 </abbr>
@@ -86,7 +93,7 @@
     </ul>
 
     <a name="osm"></a>
-    <h2>OpenStreetMap</h2>
+    <h2>{% trans "OpenStreetMap" %}</h2>
     {% if ed.osm_timestamp %}
         <p>{% blocktrans with osm_timestamp=ed.osm_timestamp|date:"j M Y" osm_user=ed.osm_user name=ed_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
     {% else %}
@@ -94,10 +101,10 @@
     {% endif %}
     {% if ed.osm_id %}
         <p>
-            <a href="{{ ed.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
+            <a href="{{ ed.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
+            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
             <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_potlatch_url }}">Edit in Potlatch</a>
+            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
             <a class="btn btn-primary" target="_blank" href="{{ e.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
         </p>
     {% endif %}
