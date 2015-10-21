@@ -1,7 +1,7 @@
 """
 Simple, non-DB, flatpage like feature
 """
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 PAGES = {
     'about': {
         'title': _('About Townlands.ie'),
@@ -179,7 +179,7 @@ PAGES = {
             <p>Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.</p>
             <p>Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.</p>
 
-        """,
+        """, )
     },
 
     'data_freshness': {
