@@ -37,7 +37,7 @@
         {% endblocktrans %}</p>
 
     {% if civil_parish.logainm_ref %}
-        <p>{% blocktrans with name=civil_parish.name logainm_ref=civil_parish.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=civil_parish.name logainm_ref=civil_parish.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
     {% endif %}
 
     <a name="map"></a>
