@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:27+0200\n"
+"POT-Creation-Date: 2015-10-21 14:34+0200\n"
 "PO-Revision-Date: 2015-10-20 11:07+0000\n"
 "Last-Translator: Vincent de Phily <vincent.dephily@mobile-devices.fr>\n"
 "Language-Team: French (http://www.transifex.com/openstreetmap/irish-"
@@ -1176,30 +1176,30 @@ msgid "Records Search"
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:101
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The offical English name of %(name)s is %(offical_name_en)s, and the offical "
-"Irish name is %(offical_name_ga)s."
+"The official English name of %(name)s is %(official_name_en)s, and the "
+"official Irish name is %(official_name_ga)s."
 msgstr ""
-"Le nom officiel anglais de %(name)s est %(offical_name_en)s, et le nom "
-"officiel irlandais est %(offical_name_ga)s."
+"Le nom officiel anglais de %(name)s est %(official_name_en)s, et le nom "
+"officiel irlandais est %(official_name_ga)s."
 
 #: templates/irish_townlands/townland_detail.html:103
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The offical English name of %(name)s is %(offical_name_en)s, and we don't "
-"know what the offical Irish name is."
+"The official English name of %(name)s is %(official_name_en)s, and we don't "
+"know what the official Irish name is."
 msgstr ""
-"Le nom officiel anglais de %(name)s est %(offical_name_en)s, et nous ne "
+"Le nom officiel anglais de %(name)s est %(official_name_en)s, et nous ne "
 "savons pas quel est le nom officiel irlandais."
 
 #: templates/irish_townlands/townland_detail.html:105
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The offical Irish name of %(name)s is %(offical_name_ga)s, and we don't know "
-"what the offical English name is, but is probabaly %(name)s."
+"The official Irish name of %(name)s is %(official_name_ga)s, and we don't "
+"know what the official English name is, but is probabaly %(name)s."
 msgstr ""
-"Le nom officiel irlandais de %(name)s est %(offical_name_ga)s, et nous ne "
+"Le nom officiel irlandais de %(name)s est %(official_name_ga)s, et nous ne "
 "savons pas quel est le nom officiel anglais mais c'est probablement %(name)s."
 
 #: templates/irish_townlands/townland_detail.html:137

@@ -490,12 +490,12 @@ def taginfo(request):
                     "description": "The id of this object in Logainm, the Placename Database of Ireland."
                 },
                 {
-                    "key": "offical_name:en",
-                    "description": "The offical English language name of this area. Taken from Logainm"
+                    "key": "official_name:en",
+                    "description": "The official English language name of this area. Taken from Logainm"
                 },
                 {
-                    "key": "offical_name:ga",
-                    "description": "The offical Irish language name of this area. Taken from Logainm"
+                    "key": "official_name:ga",
+                    "description": "The official Irish language name of this area. Taken from Logainm"
                 },
             ]
         }

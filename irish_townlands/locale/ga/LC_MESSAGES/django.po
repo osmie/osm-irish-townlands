@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:27+0200\n"
+"POT-Creation-Date: 2015-10-21 14:34+0200\n"
 "PO-Revision-Date: 2015-10-19 11:55+0000\n"
 "Last-Translator: IrlJIdel <donal.diamond@gmail.com>\n"
 "Language-Team: Irish (http://www.transifex.com/openstreetmap/irish-townlands/"
@@ -1203,22 +1203,22 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:101
 #, python-format
 msgid ""
-"The offical English name of %(name)s is %(offical_name_en)s, and the offical "
-"Irish name is %(offical_name_ga)s."
+"The official English name of %(name)s is %(official_name_en)s, and the "
+"official Irish name is %(official_name_ga)s."
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:103
 #, python-format
 msgid ""
-"The offical English name of %(name)s is %(offical_name_en)s, and we don't "
-"know what the offical Irish name is."
+"The official English name of %(name)s is %(official_name_en)s, and we don't "
+"know what the official Irish name is."
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:105
 #, python-format
 msgid ""
-"The offical Irish name of %(name)s is %(offical_name_ga)s, and we don't know "
-"what the offical English name is, but is probabaly %(name)s."
+"The official Irish name of %(name)s is %(official_name_ga)s, and we don't "
+"know what the official English name is, but is probabaly %(name)s."
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:137
