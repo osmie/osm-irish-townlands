@@ -38,17 +38,17 @@
     {% if ireland.since_last_week != None %}
         <li>
             {% if ireland.since_last_week.days_left == None %}
-                If we take the rate since this day last week ({{ ireland.since_last_week.initial_date }}) of {{ ireland.since_last_week.rate }}% per day, we'll never finish
+                {% blocktrans with initial_date=ireland.since_last_week.initial_date rate=ireland.since_last_week.rate %}If we take the rate since this day last week ({{ initial_date }}) of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
             {% else %}
-                If we take the rate since this day last week ({{ ireland.since_last_week.initial_date }}) of {{ ireland.since_last_week.rate }}% per day, we'll be finished on {{ ireland.since_last_week.end_date }} (only {{ ireland.since_last_week.human_readable_time_left }} left).
+                {% blocktrans with initial_date=ireland.since_last_week.initial_date ireland.since_last_week.rate end_date=ireland.since_last_week.end_date length=ireland.since_last_week.human_readable_time_left %}If we take the rate since this day last week ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
             {% endif %}
             </li>
     {% endif %}
     {% if ireland.since_yesterday != None %}
         <li>{% if ireland.since_yesterday.days_left == None %}
-                If we take the rate since yesterday ({{ ireland.since_yesterday.initial_date }}) of {{ ireland.since_yesterday.rate }}% per day, we'll never finish
+                {% blocktrans with initial_date=ireland.since_yesterday.initial_date rate=ireland.since_yesterday.rate %}If we take the rate since yesterday ({{ initial_date }}) of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
             {% else %}
-                If we take the rate since yesterday ({{ ireland.since_yesterday.initial_date }}) of {{ ireland.since_yesterday.rate }}% per day, we'll be finished on {{ ireland.since_yesterday.end_date }} (only {{ ireland.since_yesterday.human_readable_time_left }} left).
+                {% blocktrans with initial_date=ireland.since_yesterday.initial_date rate=ireland.since_yesterday.rate end_date=ireland.since_yesterday.end_date length=ireland.since_yesterday.human_readable_time_left %}If we take the rate since yesterday ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
             {% endif %}
             </li>
     {% endif %}
@@ -65,25 +65,24 @@
         <p>{% trans "Based on..." %}
             <ul>
                 <li>{% if countyrates.since_start.days_left == None %}
-                    the rate since {{ countyrates.since_start.initial_date }} ({{ countyrates.since_start.rate }}% per day), we'll never finish
+                    {% blocktrans with initial_date=countyrates.since_start.initial_date rate=countyrates.since_start.rate %}the rate since {{ initial_date }} ({{ rate }}% per day), we'll never finish{% endblocktrans %}
                 {% else %}
-                    the rate since {{ countyrates.since_start.initial_date }} ({{ countyrates.since_start.rate }}% per day), we'll be finished on {{ countyrates.since_start.end_date }} (only {{ countyrates.since_start.human_readable_time_left }} left)
+                    {% blocktrans with initial_date=countyrates.since_start.initial_datei rate=countyrates.since_start.rate end_date=countyrates.since_start.rate end_date=countyrates.since_start.end_date length=countyrates.since_start.human_readable_time_left %}the rate since {{ initial_date }} ({{ rate }}% per day), we'll be finished on {{ end_date }} (only {{ length }} left){% endblocktrans %}
                 {% endif %}
                 </li>
                 {% if countyrates.since_90_days != None %}
                     <li>{% if countyrates.since_90_days.days_left == None %}
-                            If we take the rate since 90 days ago ({{ countyrates.since_90_days.initial_date }}) of {{ countyrates.since_90_days.rate }}% per day, we'll never finish
+                            {% blocktrans with initial_date=countyrates.since_90_days.initial_date rate=countyrates.since_90_days.rate %}If we take the rate since 90 days ago ({{ initial_date }}) of {{ rate }}% per day, we'll never finish{% endblocktrans %}
                         {% else %}
-                            If we take the rate since 90 days ago ({{ countyrates.since_90_days.initial_date }}) of {{ countyrates.since_90_days.rate }}% per day, we'll be finished on {{ countyrates.since_90_days.end_date }} (only {{ countyrates.since_90_days.human_readable_time_left }} left).
+                            {% blocktrans with initial_date=countyrates.since_90_days.initial_date rate=countyrates.since_90_days.rate end_date=countyrates.since_90_days.end_date length=countyrates.since_90_days.human_readable_time_left %}If we take the rate since 90 days ago ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
                             {% endif %}
                         </li>
                 {% endif %}
                 {% if countyrates.since_last_month != None %}
-                    <li>the rate since last month ({{ countyrates.since_last_month.initial_date }}) of {{ countyrates.since_last_month.rate }}% per day,
-                        {% if countyrates.since_last_month.days_left == None %}
-                            we'll never finish
+                    <li>{% if countyrates.since_last_month.days_left == None %}
+                            {% blocktrans with initial_date=countyrates.since_last_month.initial_date rate=countyrates.since_last_month.rate %}the rate since last month ({{ initial_date }}) of {{ rate }}% per day, we'll never finish{% endblocktrans %}
                         {% else %}
-                            we'll be finished on {{ countyrates.since_last_month.end_date }} (only {{ countyrates.since_last_month.human_readable_time_left }} left).
+                            the rate since last month ({{ countyrates.since_last_month.initial_date }}) of {{ countyrates.since_last_month.rate }}% per day, we'll be finished on {{ countyrates.since_last_month.end_date }} (only {{ countyrates.since_last_month.human_readable_time_left }} left).
                         {% endif %}
                         </li>
                 {% endif %}
