@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-21 18:24+0200\n"
+"POT-Creation-Date: 2015-10-22 17:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,7 +188,8 @@ msgstr ""
 msgid "download no-geom CSV"
 msgstr ""
 
-#: pages.py:55 templates/irish_townlands/mapper_details.html:43
+#: pages.py:55 templates/irish_townlands/county_detail.html:53
+#: templates/irish_townlands/mapper_details.html:43
 #: templates/irish_townlands/mappers.html:13
 #: templates/irish_townlands/progress.html:45
 #: templates/irish_townlands/progress.html:103
@@ -197,6 +198,8 @@ msgid "Electoral Divisions"
 msgstr ""
 
 #: pages.py:63 templates/irish_townlands/barony_detail.html:60
+#: templates/irish_townlands/county_detail.html:36
+#: templates/irish_townlands/countydebug_detail.html:67
 #: templates/irish_townlands/ed_detail.html:60
 #: templates/irish_townlands/mapper_details.html:33
 #: templates/irish_townlands/mappers.html:14
@@ -205,7 +208,9 @@ msgstr ""
 msgid "Civil Parishes"
 msgstr ""
 
-#: pages.py:71 templates/irish_townlands/mapper_details.html:23
+#: pages.py:71 templates/irish_townlands/county_detail.html:20
+#: templates/irish_townlands/countydebug_detail.html:66
+#: templates/irish_townlands/mapper_details.html:23
 #: templates/irish_townlands/mappers.html:15
 #: templates/irish_townlands/progress.html:47
 #: templates/irish_townlands/progress.html:101
@@ -936,6 +941,121 @@ msgstr ""
 msgid "How long will it take OSM to finish %(county_name)s?"
 msgstr ""
 
+#: templates/irish_townlands/countydebug_detail.html:4
+#, python-format
+msgid "Data Completeness in Co. %(name)s"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:5
+#: templates/irish_townlands/ed_detail.html:5
+#, python-format
+msgid "Co. %(name)s"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:60
+msgid "Data Completeness"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:63
+#: templates/irish_townlands/progress.html:43
+msgid "County"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:64
+msgid "Townlands (excl water)"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:65
+msgid "Townlands (incl water)"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:81
+msgid "Area Coverage"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:82
+msgid "Land & Water not covered by Townlands"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:86
+#, python-format
+msgid "How long will %(name)s take to be mapped?"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:88
+#, python-format
+msgid "All of %(name)s is covered by townlands in the OpenStreetMap database."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:91
+msgid "Land covered by 2 (or more) Townlands"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:94
+#: templates/irish_townlands/countydebug_detail.html:112
+#: templates/irish_townlands/countydebug_detail.html:130
+#: templates/irish_townlands/countydebug_detail.html:148
+msgid ""
+"Due to a bug in the software, there will sometimes be lines following the "
+"borders that appear as \\"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:98
+#, python-format
+msgid "None of the townlands in %(name)s the OpenStreetMap database overlap."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:106
+#, python-format
+msgid "All of %(name)s is covered by EDs in the OpenStreetMap database."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:109
+msgid "Land covered by 2 (or more) Electoral Divisions"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:116
+#, python-format
+msgid "None of the EDs in %(name)s the OpenStreetMap database overlap."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:119
+msgid "Land not covered by Civil Parishes"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:124
+#, python-format
+msgid ""
+"All of %(name)s is covered by civil parishes in the OpenStreetMap database."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:127
+msgid "Land covered by 2 (or more) Civil Parishes"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:133
+#, python-format
+msgid "No civil parishes overlap in %(name)s in the OpenStreetMap database."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:137
+msgid "Land not covered by Baronies"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:142
+#, python-format
+msgid "All of %(name)s is covered by baronies in the OpenStreetMap database."
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:145
+msgid "Land covered by 2 (or more) Baronies"
+msgstr ""
+
+#: templates/irish_townlands/countydebug_detail.html:151
+#, python-format
+msgid "None of the baronies in %(name)s in the OpenStreetMap database overlap."
+msgstr ""
+
 #: templates/irish_townlands/duplicatenames.html:4
 #: templates/irish_townlands/progress.html:30
 msgid "Duplicate townland names"
@@ -963,11 +1083,6 @@ msgstr ""
 #: templates/irish_townlands/ed_detail.html:5
 #, python-format
 msgid "%(name)s Electoral Division"
-msgstr ""
-
-#: templates/irish_townlands/ed_detail.html:5
-#, python-format
-msgid "Co. %(name)s"
 msgstr ""
 
 #: templates/irish_townlands/ed_detail.html:9
@@ -1235,10 +1350,6 @@ msgid ""
 "of each county has been mapped in townlands, baronies and civil parishes"
 msgstr ""
 
-#: templates/irish_townlands/progress.html:43
-msgid "County"
-msgstr ""
-
 #: templates/irish_townlands/progress.html:51
 msgid "All Ireland"
 msgstr ""
@@ -1274,6 +1385,10 @@ msgid "All objects"
 msgstr ""
 
 #: templates/irish_townlands/progress.html:99
+#, python-format
+msgid "%(done)s of %(total)s"
+msgstr ""
+
 #: templates/irish_townlands/progress.html:100
 #: templates/irish_townlands/progress.html:101
 #: templates/irish_townlands/progress.html:102
@@ -1323,6 +1438,7 @@ msgid ""
 msgstr ""
 
 #: templates/irish_townlands/rate.html:26
+#: templates/irish_townlands/rate.html:77
 #, python-format
 msgid ""
 "If we take the rate since 90 days ago (%(initial_date)s) of %(rate)s%% per "
@@ -1340,6 +1456,34 @@ msgstr ""
 #, python-format
 msgid ""
 "If we take the rate since last month (%(initial_date)s) of %(rate)s%% per "
+"day, we'll be finished on %(end_date)s (only %(length)s left)."
+msgstr ""
+
+#: templates/irish_townlands/rate.html:41
+#, python-format
+msgid ""
+"If we take the rate since this day last week (%(initial_date)s) of %(rate)s"
+"%% per day, we'll never finish."
+msgstr ""
+
+#: templates/irish_townlands/rate.html:43
+#, python-format
+msgid ""
+"If we take the rate since this day last week (%(initial_date)s) of %(rate)s"
+"%% per day, we'll be finished on %(end_date)s (only %(length)s left)."
+msgstr ""
+
+#: templates/irish_townlands/rate.html:49
+#, python-format
+msgid ""
+"If we take the rate since yesterday (%(initial_date)s) of %(rate)s%% per "
+"day, we'll never finish."
+msgstr ""
+
+#: templates/irish_townlands/rate.html:51
+#, python-format
+msgid ""
+"If we take the rate since yesterday (%(initial_date)s) of %(rate)s%% per "
 "day, we'll be finished on %(end_date)s (only %(length)s left)."
 msgstr ""
 
@@ -1361,7 +1505,34 @@ msgstr ""
 msgid "Based on..."
 msgstr ""
 
-#: templates/irish_townlands/rate.html:109
+#: templates/irish_townlands/rate.html:68
+#, python-format
+msgid ""
+"the rate since %(initial_date)s (%(rate)s%% per day), we'll never finish"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:70
+#, python-format
+msgid ""
+"the rate since %(initial_date)s (%(rate)s%% per day), we'll be finished on "
+"%(end_date)s (only %(length)s left)"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:75
+#, python-format
+msgid ""
+"If we take the rate since 90 days ago (%(initial_date)s) of %(rate)s%% per "
+"day, we'll never finish"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:83
+#, python-format
+msgid ""
+"the rate since last month (%(initial_date)s) of %(rate)s%% per day, we'll "
+"never finish"
+msgstr ""
+
+#: templates/irish_townlands/rate.html:108
 #, python-format
 msgid "Unmapped area in %(countyname)s"
 msgstr ""
