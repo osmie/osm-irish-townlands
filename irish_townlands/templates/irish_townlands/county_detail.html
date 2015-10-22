@@ -17,7 +17,7 @@
     <p>{{ county.name }} has a total water area of {{ county.water_area_m2|floatformat|intcomma }} m², which is {{ county.water_percent|floatformat }}% of the total area</p>
 
     {% with baronies=county.baronies_sorted %}
-        <h2>Baronies</h2>
+        <h2>{% trans "Baronies" %}</h2>
         <p>There {{ baronies|pluralize:"is,are" }} {{ baronies|length }} baron{{ baronies|pluralize:"y,ies" }} in Co. {{ county.name }} that we know about.</p>
         <p>
             <a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
@@ -33,7 +33,7 @@
     {% endwith %}
 
     {% with civil_parishes=county.civil_parishes_sorted %}
-        <h2>Civil Parishes</h2>
+        <h2>{% trans "Civil Parishes" %}</h2>
         <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
         <p>
             <a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>
@@ -50,7 +50,7 @@
     {% endwith %}
 
     {% with eds=county.eds_sorted %}
-        <h2>Electoral Divisions</h2>
+        <h2>{% trans "Electoral Divisions" %}</h2>
         <p>There {{ eds|pluralize:"is,are" }} {{ eds|length }} electoral division{{ eds|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
 
         {% if eds %}
@@ -106,7 +106,7 @@
             <a class="btn btn-primary" target="_blank" href="{{ county.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
         </p>
     {% endif %}
-    <p> <a href="{% url 'county_debug' county.url_path %}"a> {% trans "Debug</a> overlaps and coverage" %}</p>
+    <p> <a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %}</p>
     <p> <a href="{% url 'rate' %}#{{ county.name }}">{% blocktrans with county_name=county.name %}How long will it take OSM to finish {{ county_name }}?{% endblocktrans %}</a></p>
 
 {% endblock body %}
