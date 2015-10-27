@@ -27,9 +27,7 @@
                             {% if code == CURRENT_LANGAUGE %}
                                 {{ languagename }}
                             {% else %}
-                                {% language code %}
-                                    <a href="{% translate_url code %}">{{ languagename }}</a>
-                                {% endlanguage %}
+                                <a href="{% change_lang code %}">{{ languagename }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}
