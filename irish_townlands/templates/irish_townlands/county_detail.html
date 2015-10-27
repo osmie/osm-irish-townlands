@@ -32,7 +32,7 @@
         {% if baronies %}
             <ul>
             {% for barony in baronies %}
-                <li><a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a> ({% blocktrans with num=barony.townlands.count count num %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %})</li>
+                <li><a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a> ({% blocktrans with num=barony.townlands.count count num=num %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %})</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -54,7 +54,7 @@
         {% if civil_parishes %}
             <ul>
             {% for civil_parish in civil_parishes %}
-                <li>{{ civil_parish.short_desc }} ({% blocktrans with num=civil_parish.townlands.count count num %}{{ num }} townlands{% endblocktrans %})</li>
+            <li>{{ civil_parish.short_desc }} ({% blocktrans with num=civil_parish.townlands.count count num=num %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %})</li>
             {% endfor %}
             </ul>
         {% endif %}
