@@ -59,7 +59,7 @@
     {% if civil_parishes %}
         <h2>{% trans "Civil Parishes" %}</h2>
         <p>
-            {% blocktrans with num=civil_parishes|length name=county.name %}There is {{ num }} civil parish in Co. {{ name }}.{% plural %}There are {{ num }} civil parishes in Co. {{ name }}.{% endblocktrans %}</p>
+            {% blocktrans with name=county.name count num=civil_parishes|length %}There is {{ num }} civil parish in Co. {{ name }}.{% plural %}There are {{ num }} civil parishes in Co. {{ name }}.{% endblocktrans %}</p>
 
         <ul>
         {% for civil_parish in civil_parishes %}
