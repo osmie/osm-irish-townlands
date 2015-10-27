@@ -73,11 +73,11 @@
     <a name="townlands"></a>
     <h2>{% trans "Townlands" %}</h2>
     <p>
-        {% with num=ed.townlands.all|length ed.townland_cover|floatformat:-1 %}
+        {% with num=ed.townlands.all|length td_cover=ed.townland_cover|floatformat:-1 %}
         {% blocktrans count num %}
-            There is {{ num }} townland that we know about in {{ name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ name }}.
+            There is {{ num }} townland that we know about in {{ name }}. This represents {{ td_cover }}% of all the area in {{ name }}.
         {% plural %}
-            There are {{ num }} townlands that we know about in {{ name }}. This represents {{ ed.townland_cover|floatformat:-1 }}% of all the area in {{ name }}.
+            There are {{ num }} townlands that we know about in {{ name }}. This represents {{ td_cover }}% of all the area in {{ name }}.
         {% endblocktrans %}
     </p>
     <ul>
