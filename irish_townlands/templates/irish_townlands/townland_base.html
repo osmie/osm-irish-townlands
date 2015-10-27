@@ -24,7 +24,7 @@
                     <ul class="list-unstyled">
                     {% for code, languagename in LANGUAGES %}
                         <li>
-                            {% if code == CURRENT_LANGAUGE %}
+                            {% if code|slice:":2" == CURRENT_LANGAUGE|slice:":2" %}
                                 {{ languagename }}
                             {% else %}
                                 <a href="{% change_lang code %}">{{ languagename }}</a>
