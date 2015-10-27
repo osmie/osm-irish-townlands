@@ -6,19 +6,25 @@
 
 {% block body %}
 
-    <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(<a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
+    <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(</i><a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
 
     {% if county.logainm_ref %}
         <p>{% blocktrans with name=county.name logainm_ref=county.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
     {% endif %}
 
     <h2>{% trans "Area" %}</h2>
-    <p>{{ county.name }} has an area of {{ county.area_km2|floatformat|intcomma }} km² / {{ county.area_acres|floatformat|intcomma }} acres / {{ county.area_mile2|floatformat|intcomma }} square miles</p>
-    <p>{{ county.name }} has a total water area of {{ county.water_area_m2|floatformat|intcomma }} m², which is {{ county.water_percent|floatformat }}% of the total area</p>
+    <p>{% blocktrans with name=county.name area_km2=county.area_km2|floatformat|intcomma area_acres=county.area_acres|floatformat|intcomma area_mile2=county.area_mile2|floatformat|intcomma %}{{ name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles{% endblocktrans %}</p>
+    <p>{% blocktrans with name=county.name water_area_m2=county.water_area_m2|floatformat|intcomma water_percent=county.water_percent|floatformat %}{{ name }} has a total water area of {{ county.water_area_m2|floatformat|intcomma }} m², which is {{ county.water_percent|floatformat }}% of the total area{% endblocktrans %}</p>
 
     {% with baronies=county.baronies_sorted %}
         <h2>{% trans "Baronies" %}</h2>
-        <p>There {{ baronies|pluralize:"is,are" }} {{ baronies|length }} baron{{ baronies|pluralize:"y,ies" }} in Co. {{ county.name }} that we know about.</p>
+        <p>
+            {% blocktrans with count num=baronies|length name=county.name %}
+                There is {{ num }} barony in Co. {{ name }} that we know about.
+            {% plural %}
+                There are {{ num }} baronies in Co. {{ name }} that we know about.
+            {% endblocktrans }
+</p>
         <p>
             <a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
         </p>
@@ -26,7 +32,7 @@
         {% if baronies %}
             <ul>
             {% for barony in baronies %}
-                <li><a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a> ({{ barony.townlands.count }} townlands)</li>
+                <li><a href="{% url 'view_area' barony.url_path %}">{{ barony.name }}</a> ({% blocktrans with count num=barony.townlands.count %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %})</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -34,7 +40,13 @@
 
     {% with civil_parishes=county.civil_parishes_sorted %}
         <h2>{% trans "Civil Parishes" %}</h2>
-        <p>There {{ civil_parishes|pluralize:"is,are" }} {{ civil_parishes|length }} civil parish{{ civil_parishes|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
+        <p>
+            {% blocktrans with count num=civil_parishes|length name=county.name %}
+                There is {{ num }} civil parish in Co. {{ name }} that we know about.
+            {% plural %}
+                There are {{ num }} civil parishes in Co. {{ name }} that we know about.
+            {% endblocktrans %}
+        </p>
         <p>
             <a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>
         </p>
