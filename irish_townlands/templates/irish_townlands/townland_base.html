@@ -27,7 +27,8 @@
                             {% if code|slice:":2" == CURRENT_LANGAUGE|slice:":2" %}
                                 {{ languagename }}
                             {% else %}
-                                <a href="{% change_lang code %}">{{ languagename }}</a>
+                                {% get_language_info for code as lang %}
+                                <a href="{% change_lang code %}">{{ lang.name_local }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}
