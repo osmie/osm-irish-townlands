@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n staticfiles %}
+{% load i18n staticfiles translate_url %}
 
 {% block extra_headers %}
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -16,7 +16,26 @@
     <div class="row vertical-align">
         <div class="brand col-md-2"><a href="/"><img class="img-responsive" src="{% static 'logo.png' %}"></a></div>
         <div class="col-md-10">
-            <h1>{% block header %}{% trans "Irish Townlands" %}{% endblock %}</h1>
+            <div class="row">
+                <div class="col-md-8"><h1>{% block header %}{% trans "Irish Townlands" %}{% endblock %}</h1></div>
+                <div class="col-md-4">
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_current_language as CURRENT_LANGAUGE %}
+                    <ul class="list-unstyled">
+                    {% for code, languagename in LANGUAGES %}
+                        <li>
+                            {% if code == CURRENT_LANGAUGE %}
+                                {{ languagename }}
+                            {% else %}
+                                {% language code %}
+                                    <a href="{% translate_url code %}">{{ languagename }}</a>
+                                {% endlanguage %}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
             <p>
                 <form role=form method=GET action="{% url 'search' %}" class="form">
                     <div class="input-group">
