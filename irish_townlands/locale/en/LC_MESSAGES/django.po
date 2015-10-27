@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-27 12:03+0100\n"
+"POT-Creation-Date: 2015-10-27 12:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgid ""
 msgstr ""
 
 #: pages.py:36
-msgid "The data from townlands.ie is available in many formats"
+msgid "The data from Townlands.ie is available in many formats"
 msgstr ""
 
 #: pages.py:39
