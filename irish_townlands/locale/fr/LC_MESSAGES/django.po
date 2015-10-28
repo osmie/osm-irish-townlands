@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 19:51+0100\n"
+"POT-Creation-Date: 2015-10-28 19:57+0100\n"
 "PO-Revision-Date: 2015-10-27 11:16+0000\n"
 "Last-Translator: Rory McCann <rory@technomancy.org>\n"
 "Language-Team: French (http://www.transifex.com/openstreetmap/irish-"
@@ -268,12 +268,13 @@ msgid "There are several columns per entry:"
 msgstr "Chaque entrée consiste en plusieur colones:"
 
 #: pages.py:103
+#, fuzzy
 msgid ""
 "Integer. The id of the object in the OSM database. If it's positive, it's a "
 "way; if it's negative, it's a relation. (Consult the <a href=\"http://wiki."
-"openstreetmap.org/wiki/Elements\">OSM data model</a> for more). IDs are not "
-"shared across objects (e.g. there will never be an ED and a townland with "
-"the same OSM_ID)."
+"openstreetmap.org/wiki/Elements\">OSM data model</a> for more information). "
+"IDs are not shared across objects (e.g. there will never be an ED and a "
+"townland with the same OSM_ID)."
 msgstr ""
 "Entier. L'id de l'objet dans la base de données OSM. S'il est positif, c'est "
 "une ligne; s'il est négatif, c'est une relation (consultez le <a href="
@@ -460,9 +461,10 @@ msgid "Geom and no-geom version"
 msgstr "Versions avec et sans géométrie"
 
 #: pages.py:154
+#, fuzzy
 msgid ""
-"There are 2 CSV files, a normal version, and a \"no-geom\" version. The CSV "
-"file has an additional column:"
+"There are two CSV files, a normal version, and a \"no-geom\" version. The "
+"normal CSV file has an additional column:"
 msgstr ""
 "Il y a deux fichiers CSV, une version normale et une version sans géométrie. "
 "Le fichier CSV normal a une colone de plus :"
@@ -844,7 +846,7 @@ msgstr ""
 #: templates/irish_townlands/county_detail.html:110
 #: templates/irish_townlands/ed_detail.html:101
 #: templates/irish_townlands/subtownland_detail.html:144
-#: templates/irish_townlands/townland_detail.html:208
+#: templates/irish_townlands/townland_detail.html:209
 #, python-format
 msgid "We don't know when %(name)s was added to OpenStreetMap."
 msgstr "Nous ne savons pas quand %(name)s a été ajouté à OpenStreetMap."
@@ -854,7 +856,7 @@ msgstr "Nous ne savons pas quand %(name)s a été ajouté à OpenStreetMap."
 #: templates/irish_townlands/county_detail.html:116
 #: templates/irish_townlands/ed_detail.html:107
 #: templates/irish_townlands/subtownland_detail.html:150
-#: templates/irish_townlands/townland_detail.html:214
+#: templates/irish_townlands/townland_detail.html:215
 msgid "Edit in iD"
 msgstr "Éditer avec iD"
 
@@ -863,7 +865,7 @@ msgstr "Éditer avec iD"
 #: templates/irish_townlands/county_detail.html:118
 #: templates/irish_townlands/ed_detail.html:109
 #: templates/irish_townlands/subtownland_detail.html:152
-#: templates/irish_townlands/townland_detail.html:216
+#: templates/irish_townlands/townland_detail.html:217
 msgid "Edit in Level0"
 msgstr "Éditer avec Level0"
 
@@ -911,7 +913,7 @@ msgstr "Carte"
 #: templates/irish_townlands/subtownland_detail.html:27
 #: templates/irish_townlands/subtownland_detail.html:140
 #: templates/irish_townlands/townland_detail.html:51
-#: templates/irish_townlands/townland_detail.html:204
+#: templates/irish_townlands/townland_detail.html:205
 msgid "OpenStreetMap"
 msgstr "OpenStreetMap"
 
@@ -977,7 +979,7 @@ msgstr ""
 #: templates/irish_townlands/county_detail.html:114
 #: templates/irish_townlands/ed_detail.html:105
 #: templates/irish_townlands/subtownland_detail.html:148
-#: templates/irish_townlands/townland_detail.html:212
+#: templates/irish_townlands/townland_detail.html:213
 msgid "Show on OpenStreetMap.org"
 msgstr "Voir sur OpenStreetMap.org"
 
@@ -985,7 +987,7 @@ msgstr "Voir sur OpenStreetMap.org"
 #: templates/irish_townlands/county_detail.html:115
 #: templates/irish_townlands/ed_detail.html:106
 #: templates/irish_townlands/subtownland_detail.html:149
-#: templates/irish_townlands/townland_detail.html:213
+#: templates/irish_townlands/townland_detail.html:214
 msgid "Edit in JOSM"
 msgstr "Éditer avec JOSM"
 
@@ -993,7 +995,7 @@ msgstr "Éditer avec JOSM"
 #: templates/irish_townlands/county_detail.html:117
 #: templates/irish_townlands/ed_detail.html:108
 #: templates/irish_townlands/subtownland_detail.html:151
-#: templates/irish_townlands/townland_detail.html:215
+#: templates/irish_townlands/townland_detail.html:216
 msgid "Edit in Potlatch"
 msgstr "Éditer avec Potlatch"
 
@@ -1078,7 +1080,7 @@ msgstr "Liste des townlands de %(county_name)s de Wikipedia."
 
 #: templates/irish_townlands/county_detail.html:93
 #: templates/irish_townlands/search_results.html:89
-#: templates/irish_townlands/townland_detail.html:173
+#: templates/irish_townlands/townland_detail.html:174
 msgid "Subtownlands"
 msgstr "Soustownland"
 
@@ -1494,8 +1496,9 @@ msgid "Mapping activity"
 msgstr "Activité cartographique"
 
 #: templates/irish_townlands/progress.html:34
-msgid "Logainm status"
-msgstr "Status Logainm"
+#: templates/irish_townlands/progress.html:96
+msgid "Logainm Status"
+msgstr ""
 
 #: templates/irish_townlands/progress.html:37
 msgid "How complete is the data in Open Street Map?"
@@ -1530,14 +1533,11 @@ msgstr "Les noms de townland dupliqués sont désormais sur une page séparée."
 msgid "No Errors, data is good! 😁"
 msgstr "Aucune erreur, les données sont bonnes ! 😁"
 
-#: templates/irish_townlands/progress.html:96
-msgid "Logainm Status"
-msgstr ""
-
 #: templates/irish_townlands/progress.html:97
+#, fuzzy
 msgid ""
 "What is the status of Logainm data match up? How many objects have a logainm "
-"value?"
+"ref?"
 msgstr ""
 "Quel est le status de la correspondance avec Logainm ? Combien d'objets ont "
 "une valeur Logainm ?"
@@ -1954,7 +1954,7 @@ msgstr ""
 "de revenir plus tard, ça aura peut-être été ajouté !"
 
 #: templates/irish_townlands/subtownland_detail.html:142
-#: templates/irish_townlands/townland_detail.html:206
+#: templates/irish_townlands/townland_detail.html:207
 #, python-format
 msgid ""
 "%(name)s was added to OpenStreetMap on %(osm_timestamp)s by <a href="
@@ -2081,89 +2081,92 @@ msgstr "Frontières"
 msgid "%(townland_name)s borders the following other townlands:"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:157
-#, python-format
-msgid "%(townland)s</a> to the north"
-msgstr ""
+#: templates/irish_townlands/townland_detail.html:158
+#, fuzzy, python-format
+msgid "<a href=\"%(url)s\">%(name)s</a> to the north"
+msgstr "<a href=\"%(absurl)s%(url)s\">%(username)s</a> a ajouté"
 
-#: templates/irish_townlands/townland_detail.html:159
-#, python-format
-msgid "%(townland)s</a> to the south"
-msgstr ""
+#: templates/irish_townlands/townland_detail.html:160
+#, fuzzy, python-format
+msgid "<a href=\"%(url)s\">%(name)s</a> to the south"
+msgstr "<a href=\"%(absurl)s%(url)s\">%(username)s</a> a ajouté"
 
-#: templates/irish_townlands/townland_detail.html:161
-#, python-format
-msgid "%(townland)s</a> to the east"
-msgstr ""
+#: templates/irish_townlands/townland_detail.html:162
+#, fuzzy, python-format
+msgid "<a href=\"%(url)s\">%(name)s</a> to the east"
+msgstr "<a href=\"%(absurl)s%(url)s\">%(username)s</a> a ajouté"
 
-#: templates/irish_townlands/townland_detail.html:163
-#, python-format
-msgid "%(townland)s</a> to the west"
-msgstr ""
+#: templates/irish_townlands/townland_detail.html:164
+#, fuzzy, python-format
+msgid "<a href=\"%(url)s\">%(name)s</a> to the west"
+msgstr "<a href=\"%(absurl)s%(url)s\">%(username)s</a> a ajouté"
 
-#: templates/irish_townlands/townland_detail.html:169
+#: templates/irish_townlands/townland_detail.html:170
 #, python-format
 msgid ""
 "We don't have a record for what townlands (if any) %(townland_name)s borders"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:183
+#: templates/irish_townlands/townland_detail.html:184
 #, python-format
 msgid "We don't know about any subtownlands in %(townland_name)s."
 msgstr "Nous ne connaissons aucun soustownland dans %(townland_name)s."
 
-#: templates/irish_townlands/townland_detail.html:187
+#: templates/irish_townlands/townland_detail.html:188
 msgid "Geneology / Ancestry / Records Search"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:189
+#: templates/irish_townlands/townland_detail.html:190
 #, python-format
 msgid ""
 "Curious to see who lived in %(townland_name)s in the past? Maybe even seeing "
 "scans of their handwritten census returns?"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:191
+#: templates/irish_townlands/townland_detail.html:192
 #, python-format
 msgid ""
 "In the 1901 Census, %(townland_name)s was recorded as %(name_census1901)s."
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:194
+#: templates/irish_townlands/townland_detail.html:195
 #, python-format
 msgid ""
 "In the 1911 Census, %(townland_name)s was recorded as %(name_census1911)s."
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:197
+#: templates/irish_townlands/townland_detail.html:198
 #, python-format
 msgid "Search the 1911 Irish Census for %(name_census1911)s"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:198
+#: templates/irish_townlands/townland_detail.html:199
 #, python-format
 msgid "Search the 1901 Irish Census for %(name_census1901)s"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:199
+#: templates/irish_townlands/townland_detail.html:200
 #, python-format
 msgid "Search the Griffith's Valuation (1847-1864) for %(townland_name)s"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:206
+#: templates/irish_townlands/townland_detail.html:207
 #, python-format
 msgid "It was the %(order)s townland added to OpenStreetMap"
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:219
+#: templates/irish_townlands/townland_detail.html:220
 #, python-format
 msgid "The source for this townland is %(source)s."
 msgstr ""
 
-#: templates/irish_townlands/townland_detail.html:220
+#: templates/irish_townlands/townland_detail.html:221
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
 msgstr ""
+
+#~ msgid "Logainm status"
+#~ msgstr "Status Logainm"
 
 #~ msgid "Counties<"
 #~ msgstr "Comtés"
