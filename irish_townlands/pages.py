@@ -37,8 +37,8 @@ PAGES = {
             <table class="table">
                 <tr>
                     <th>"""+_("""Type of Data""")+"""</th>
-                    <th>"""+_("""Shapefile<""")+"""/th>
-                    <th>"""+_("""GeoJSON<""")+"""/th>
+                    <th>"""+_("""Shapefile""")+"""</th>
+                    <th>"""+_("""GeoJSON""")+"""</th>
                     <th>"""+_("""KML""")+"""</th>
                     <th>"""+_("""CSV""")+"""</th>
                     <th>"""+_("""no-geom CSV""")+"""</th>
@@ -76,9 +76,9 @@ PAGES = {
                     <td><a href="/static/downloads/baronies-no-geom.csv.zip">"""+_("""download no-geom CSV""")+"""</a></td>
                 </tr>
                 <tr>
-                    <td>"""+_("""Counties<""")+"""/td>
+                    <td>"""+_("""Counties""")+"""</td>
                     <td><a href="/static/downloads/counties.zip">"""+_("""download shapefile""")+"""</a></td>
-                    <td><a href="/static/downloads/counties.geojson.zip">"""+_("""download GeoJSON<""")+"""/a></td>
+                    <td><a href="/static/downloads/counties.geojson.zip">"""+_("""download GeoJSON""")+"""</a></td>
                     <td><a href="/static/downloads/counties.kmz">"""+_("""download KML""")+"""</a></td>
                     <td><a href="/static/downloads/counties.csv.zip">"""+_("""download CSV""")+"""</a></td>
                     <td><a href="/static/downloads/counties-no-geom.csv.zip">"""+_("""download no-geom CSV""")+"""</a></td>
@@ -96,7 +96,7 @@ PAGES = {
             <h2>"""+_("""Data format""")+"""</h2>
             <p>"""+_("""The geometry is available in <a href="spatialreference.org/ref/epsg/wgs-84/">WSG 84 (aka EPSG 4326, aka "latitude and longitude")</a> projection system.""")+"""</p>
 
-            <h3>"""+_("""Attributes<""")+"""/h3>
+            <h3>"""+_("""Attributes""")+"""</h3>
             <p>"""+_("""There are several columns per entry:""")+"""
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
@@ -122,44 +122,44 @@ PAGES = {
                     <dt>OSM_TIMEST<dt>
                     <dd>"""+_("""String. ISO formatted datetime of when the object was added to OSM""")+"""</dd>
                     <dt>epoch_tstmp<dt>
-                    <dd>"""+_("""Integer. <a href="https://en.wikipedia.org/wiki/Unix_time">Unix 'epoch' time</a> of when the object was added to OSM.<""")+"""/dd>
+                    <dd>"""+_("""Integer. <a href="https://en.wikipedia.org/wiki/Unix_time">Unix 'epoch' time</a> of when the object was added to OSM.""")+"""</dd>
                     <dt>t_ie_url<dt>
-                    <dd>"""+_("""String. URL of this object on <a href="www.townlands.ie">Townlands.ie</a> (this site)<""")+"""/dd>
+                    <dd>"""+_("""String. URL of this object on <a href="www.townlands.ie">Townlands.ie</a> (this site)""")+"""</dd>
                     <dt>co_name<dt>
                     <dd>"""+_("""String. Name of the county this object is in, if known. Not in 'county' or 'civil_parish' files.""")+"""</dd>
                     <dt>co_osm_id<dt>
-                    <dd>"""+_("""Integer. OSM_ID of the county this object is in, if known. Not in 'county' or 'civil_parish' files.<""")+"""/dd>
+                    <dd>"""+_("""Integer. OSM_ID of the county this object is in, if known. Not in 'county' or 'civil_parish' files.""")+"""</dd>
                     <dt>co_names<dt>
-                    <dd>"""+_("""String. Comma separated list of names of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.<""")+"""/dd>
+                    <dd>"""+_("""String. Comma separated list of names of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.""")+"""</dd>
                     <dt>co_osm_ids<dt>
-                    <dd>"""+_("""String. Comma separated list of osm_ids of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.<""")+"""/dd>
+                    <dd>"""+_("""String. Comma separated list of osm_ids of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.""")+"""</dd>
                     <dt>ed_name<dt>
-                    <dd>"""+_("""String. Name of the ED this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""String. Name of the ED this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>ed_osm_id<dt>
-                    <dd>"""+_("""Integer. OSM_ID of the ED this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""Integer. OSM_ID of the ED this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>cp_name<dt>
-                    <dd>"""+_("""String. Name of the civil parish this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""String. Name of the civil parish this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>cp_osm_id<dt>
-                    <dd>"""+_("""Integer. OSM_ID of the civil parish this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""Integer. OSM_ID of the civil parish this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>bar_name<dt>
-                    <dd>"""+_("""String. Name of the barony this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""String. Name of the barony this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>bar_osm_id<dt>
-                    <dd>"""+_("""Integer. OSM_ID of the barony this object is in, if known. Only in 'townland' files.<""")+"""/dd>
+                    <dd>"""+_("""Integer. OSM_ID of the barony this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>attributio<dt>
-                    <dd>"""+_("""String. Value of the 'attribution' tag (if any)<""")+"""/dd>
+                    <dd>"""+_("""String. Value of the 'attribution' tag (if any)""")+"""</dd>
                 </dl>
             </p>
 
-            <h3>"""+_("""Geom and no-geom version<""")+"""/h3>
+            <h3>"""+_("""Geom and no-geom version""")+"""</h3>
             <p>"""+_("""There are 2 CSV files, a normal version, and a "no-geom" version. The CSV file has an additional column:""")+"""
                 <dl class="dl-horizontal">
                     <dt>WKT</dt>
-                    <dd>"""+_("""String. <a href="//en.wikipedia.org/wiki/Well-known_text">Well-known text</a> representation of this area.<""")+"""/dd>
+                    <dd>"""+_("""String. <a href="//en.wikipedia.org/wiki/Well-known_text">Well-known text</a> representation of this area.""")+"""</dd>
                 </dl>
                 """+_("""The "no-geom" CSV file does not have this, and has no geometry shape data at all (it only has the LATITUDE and LONGITUDE fields). This file is suitable if you want to do some analysis on the data in a spreadsheet programme. Some spreadsheets have trouble with the long WKT field in the regular CSV version.""")+"""
             </p>
             
-            <h3>"""+_("""Townland Touch<""")+"""/h3>
+            <h3>"""+_("""Townland Touch""")+"""</h3>
             <p>"""+_("""When we sync from OpenStreetMap, we calculate what townlands touch each other, and how (north/south/east/west). This allows us to have a "This townland borders the follow townlands:..." feature. The "Townland Touch" dataset contains a CSV export of this data. It has the following fields:""")+"""
                 <dl class="dl-horizontal">
                     <dt>t1_osm_id</dt>
@@ -167,9 +167,9 @@ PAGES = {
                     <dt>t2_osm_id</dt>
                     <dd>"""+_("""osm_id of townland 2""")+"""</dd>
                     <dt>direction</dt>
-                    <dd>"""+_("""Rough direction, in degrees, in which these 2 townlands border, as seen from t1. 0 = north, 90 = east etc.<""")+"""/dd>
+                    <dd>"""+_("""Rough direction, in degrees, in which these 2 townlands border, as seen from t1. 0 = north, 90 = east etc.""")+"""</dd>
                     <dt>lenght_m</dt>
-                    <dd>"""+_("""The length, in metres, of the shared border.<""")+"""/dd>
+                    <dd>"""+_("""The length, in metres, of the shared border.""")+"""</dd>
                 </dl>
                 """+_("""For every two townlands (A & B) that touch, there will be 2 rows in this file. One where A is townland 1, the other were B is townland 1.""")+"""
             </p>
