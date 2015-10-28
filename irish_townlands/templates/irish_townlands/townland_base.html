@@ -25,10 +25,14 @@
                     {% for code, languagename in LANGUAGES %}
                         <li>
                             {% if code|slice:":2" == CURRENT_LANGAUGE|slice:":2" %}
-                                {{ languagename }}
+                                {% with 'img/langflags/'|add:code|add:'.png' as image_static %}
+                                    <img height=16 src="{% static image_static %}">{{ languagename }}
+                                {% endwith %}
                             {% else %}
                                 {% get_language_info for code as lang %}
-                                <a href="{% change_lang code %}">{{ lang.name_local }}</a>
+                                {% with 'img/langflags/'|add:code|add:'.png' as image_static %}
+                                    <a href="{% change_lang code %}"><img height=16 src="{% static image_static %}">{{ lang.name_local }}</a>
+                                {% endwith %}
                             {% endif %}
                         </li>
                     {% endfor %}
