@@ -5,13 +5,14 @@
 # Translators:
 # Lancet <gabriel.beecham@gmail.com>, 2015
 # IrlJIdel <donal.diamond@gmail.com>, 2015
+# rip in pizza <finghinl@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-27 12:12+0100\n"
-"PO-Revision-Date: 2015-10-27 11:16+0000\n"
-"Last-Translator: Rory McCann <rory@technomancy.org>\n"
+"PO-Revision-Date: 2015-10-28 13:20+0000\n"
+"Last-Translator: rip in pizza <finghinl@gmail.com>\n"
 "Language-Team: Irish (http://www.transifex.com/openstreetmap/irish-townlands/language/ga/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,12 +35,12 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:32
 #, python-format
 msgid "%(name)s Civil Parish"
-msgstr ""
+msgstr "%(name)s Paróiste Sibhialta"
 
 #: models.py:110
 #, python-format
 msgid "Barony of %(barony_name)s"
-msgstr ""
+msgstr "Barúntacht %(barony_name)s"
 
 #: models.py:113 templates/irish_townlands/county_detail.html:5
 #: templates/irish_townlands/duplicatenames.html:14
@@ -47,7 +48,7 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
 msgid "Co. %(county_name)s"
-msgstr ""
+msgstr "Co. na %(county_name)s"
 
 #: models.py:119
 msgid "(Island)"
@@ -67,47 +68,47 @@ msgstr "'%(name)s' i nDaonáireamh 1911"
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "%d acra"
+msgstr[1] "%d acraí"
+msgstr[2] "%d acraí"
+msgstr[3] "%d acraí"
+msgstr[4] "%d acra"
 
 #: models.py:236
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "%d ceathrú-acra"
+msgstr[1] "%d ceathrú-acraí"
+msgstr[2] "%d ceathrú-acraí"
+msgstr[3] "%d ceathrú-acraí"
+msgstr[4] "%d ceathrú-acra"
 
 #: models.py:237
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
+msgstr[0] "%d perch"
+msgstr[1] "%d percheanna"
+msgstr[2] "%d percheanna"
+msgstr[3] "%d percheanna"
+msgstr[4] "%d percheanna"
 
 #: models.py:380 templates/irish_townlands/ed_detail.html:87
 msgid "Area in Acres, Rods and Perches"
-msgstr ""
+msgstr "Limistéar in acraí, ceathrú-acraí agus percheanna"
 
 #: pages.py:7
 msgid "About Townlands.ie"
-msgstr ""
+msgstr "Eolas ar Townlands.ie"
 
 #: pages.py:8 templates/irish_townlands/index.html:40
 msgid "About"
-msgstr ""
+msgstr "Eolas"
 
 #: pages.py:22
 msgid "Copyright of Townlands.ie"
-msgstr ""
+msgstr "Cóipcheart Townlands.ie"
 
 #: pages.py:25 pages.py:179
 msgid ""
@@ -115,17 +116,17 @@ msgid ""
 "data, it's under the same licence as that. Namely the <a "
 "href=\"http://opendatacommons.org/licenses/odbl/\">Open Data Commons Open "
 "Database License (ODbL)</a>."
-msgstr ""
+msgstr "Mar atá sé seo bunaithe ar eolas <a href=\"openstreetmap.org\">OpenStreetMap</a>, tá sé faoin gceadúnaigh céanna mar sin (an <a href=\"http://opendatacommons.org/licenses/odbl/\">Open Data Commons Open Database License (ODbL)</a>, is ea é sin)"
 
 #: pages.py:26
 msgid ""
 "Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap"
 " Copyright</a> guide for more informatiom."
-msgstr ""
+msgstr "Féach ar an seoladh <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap Copyright</a> chun tuilleadh eolas a fháil."
 
 #: pages.py:31
 msgid "Downloading Townlands.ie data"
-msgstr ""
+msgstr "Ag síoslódáil eolas Townlands.ie"
 
 #: pages.py:34
 msgid ""
@@ -133,35 +134,35 @@ msgid ""
 "Ireland. Some counties are fully mapped, others aren't finished. Coverage is"
 " being improved on a daily basis. Please consult the <a "
 "href=\"/progress/\">progress report</a> to find out more."
-msgstr ""
+msgstr "Fógra: tá an eolas seo <strong>míchríochnaithe</strong> agus ní oibríonn sé le hÉireann go léir. Tá cuid na gcuntaetha mapáilte ar fad, tá cuid eile míchríochnaithe. Bíonn an mapa ag éirí níos maith ó lá go lá. Le do thoil, féach ar an <a href=\"/progress/\">bileog imeacht</a> chun tuilleadh eolas a fháil."
 
 #: pages.py:36
 msgid "The data from Townlands.ie is available in many formats"
-msgstr ""
+msgstr "Tá an eolas ó Townlands.ie ar fáil i gcuid mhór caíonna."
 
 #: pages.py:39
 msgid "Type of Data"
-msgstr ""
+msgstr "Saghas Eolais"
 
 #: pages.py:40
 msgid "Shapefile<"
-msgstr ""
+msgstr "Shapefile<"
 
 #: pages.py:41
 msgid "GeoJSON<"
-msgstr ""
+msgstr "GeoJSON"
 
 #: pages.py:42
 msgid "KML"
-msgstr ""
+msgstr "KML"
 
 #: pages.py:43
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: pages.py:44
 msgid "no-geom CSV"
-msgstr ""
+msgstr "no-geom CSV"
 
 #: pages.py:47 templates/irish_townlands/barony_detail.html:73
 #: templates/irish_townlands/civil_parish_detail.html:20
@@ -176,27 +177,27 @@ msgstr ""
 #: templates/irish_townlands/search.html:30
 #: templates/irish_townlands/search_results.html:73
 msgid "Townlands"
-msgstr ""
+msgstr "Ceannbhailte"
 
 #: pages.py:48 pages.py:56 pages.py:64 pages.py:72 pages.py:80
 msgid "download shapefile"
-msgstr ""
+msgstr "síoslódáil shapefile"
 
 #: pages.py:49 pages.py:57 pages.py:65 pages.py:73
 msgid "download GeoJSON"
-msgstr ""
+msgstr "síoslódáil GeoJSON"
 
 #: pages.py:50 pages.py:58 pages.py:66 pages.py:74 pages.py:82
 msgid "download KML"
-msgstr ""
+msgstr "síoslódáil KML"
 
 #: pages.py:51 pages.py:59 pages.py:67 pages.py:75 pages.py:83
 msgid "download CSV"
-msgstr ""
+msgstr "síoslódáil CSV"
 
 #: pages.py:52 pages.py:60 pages.py:68 pages.py:76 pages.py:84 pages.py:92
 msgid "download no-geom CSV"
-msgstr ""
+msgstr "síoslódáil no-geom CSV"
 
 #: pages.py:55 templates/irish_townlands/county_detail.html:65
 #: templates/irish_townlands/mapper_details.html:43
@@ -205,7 +206,7 @@ msgstr ""
 #: templates/irish_townlands/progress.html:103
 #: templates/irish_townlands/search_results.html:57
 msgid "Electoral Divisions"
-msgstr ""
+msgstr "Dáilcheantair"
 
 #: pages.py:63 templates/irish_townlands/barony_detail.html:60
 #: templates/irish_townlands/county_detail.html:42
@@ -216,7 +217,7 @@ msgstr ""
 #: templates/irish_townlands/progress.html:46
 #: templates/irish_townlands/progress.html:102
 msgid "Civil Parishes"
-msgstr ""
+msgstr "Paróistí Sibhíalta"
 
 #: pages.py:71 templates/irish_townlands/county_detail.html:20
 #: templates/irish_townlands/countydebug_detail.html:66
@@ -227,38 +228,38 @@ msgstr ""
 #: templates/irish_townlands/search.html:16
 #: templates/irish_townlands/search_results.html:25
 msgid "Baronies"
-msgstr ""
+msgstr "Barúntacht"
 
 #: pages.py:79
 msgid "Counties<"
-msgstr ""
+msgstr "Contaetha<"
 
 #: pages.py:81
 msgid "download GeoJSON<"
-msgstr ""
+msgstr "síoslódáil GeoJSON"
 
 #: pages.py:87
 msgid "Townland Touching"
-msgstr ""
+msgstr "Ceannbhailte in aice le"
 
 #: pages.py:96
 msgid "Data format"
-msgstr ""
+msgstr "Saghas eolais"
 
 #: pages.py:97
 msgid ""
 "The geometry is available in <a "
 "href=\"spatialreference.org/ref/epsg/wgs-84/\">WSG 84 (aka EPSG 4326, aka "
 "\"latitude and longitude\")</a> projection system."
-msgstr ""
+msgstr "Tá an ghéoméadracht ar fáil i <a href=\"spatialreference.org/ref/epsg/wgs-84/\">WSG 84 (aka EPSG 4326, aka \"latitude and longitude\")</a> córas projection."
 
 #: pages.py:99
 msgid "Attributes<"
-msgstr ""
+msgstr "Cáilíochta<"
 
 #: pages.py:100
 msgid "There are several columns per entry:"
-msgstr ""
+msgstr "Tá cúpla columnaí i ngach ceann:"
 
 #: pages.py:103
 msgid ""
@@ -273,17 +274,17 @@ msgstr ""
 msgid ""
 "String. The name of the object. Should be the \"common name\". Almost "
 "certainly in English, but may be in Irish."
-msgstr ""
+msgstr "String. An t-ainm atá ar an rud. Tá air a bheith \"an t-ainm gnáthach\". Beag nach gan dabht as Béarla, ach b'fhéidir go bhfuil sé as Gaeilge."
 
 #: pages.py:105
 msgid ""
 "NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. "
 "Suggestions welcome for how to fix this."
-msgstr ""
+msgstr "NB: Sa líomhán KML/KMZ, is é seo NAME2 mar a dheanann ogr2ogr rudaí. Tá fáilte romhaibh comhairlí a thabhairt dúinn chun é seo a dheanamh i gceart."
 
 #: pages.py:107
 msgid "String. The name of the object in Irish."
-msgstr ""
+msgstr "String. An t-ainm atá ar an rud as Gaeilge."
 
 #: pages.py:109
 msgid ""
