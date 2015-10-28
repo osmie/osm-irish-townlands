@@ -554,7 +554,8 @@ def mappers(request):
     all_mappers = [(osm_user, stats_for_user(osm_user)) for osm_user in all_mappers]
     all_mappers.sort(key=lambda x: x[1]['total'], reverse=True)
 
-    return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers})
+    return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers},
+            context_instance=RequestContext(request))
 
 def group_by_username(model, start_date):
     next_date = start_date + timedelta(days=1)
@@ -660,7 +661,9 @@ def activity(request):
 
     stats = detailed_stats_for_period(from_date, to_date)
 
-    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats})
+    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats},
+            context_instance=RequestContext(request))
+
 
 def activity_rss(request):
     to_date = date.today() - timedelta(days=1)
