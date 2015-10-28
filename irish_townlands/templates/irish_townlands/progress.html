@@ -94,7 +94,7 @@
 </ul>
 
 <h2><a name=logainm></a>{% trans "Logainm Status" %}</h2>
-<p>{% trans 'What is the status of Logainm data match up? How many objects have a logainm value?' %}</p>
+<p>{% trans 'What is the status of Logainm data match up? How many objects have a logainm ref?' %}</p>
 <p><table class=table>
     <tr><td>{% trans 'All objects' %}</td><td>{% blocktrans with done=logainm.all_done|intcomma total=logainm.all_all %}{{ done }} of {{ total }}{% endblocktrans %}({{ logainm.all|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.all }}></progress></td></tr>
     <tr><td>{% trans 'Counties' %}</td><td>{{ logainm.counties_done|intcomma }} {% trans "of" %} {{ logainm.counties_all|intcomma }} ({{ logainm.counties|floatformat:"0" }}%)</td><td><progress min=0 max=100 value={{ logainm.counties }}></progress></td></tr>
