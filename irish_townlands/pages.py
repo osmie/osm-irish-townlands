@@ -151,7 +151,7 @@ PAGES = {
             </p>
 
             <h3>"""+_("""Geom and no-geom version""")+"""</h3>
-            <p>"""+_("""There are 2 CSV files, a normal version, and a "no-geom" version. The CSV file has an additional column:""")+"""
+            <p>"""+_("""There are two CSV files, a normal version, and a "no-geom" version. The normal CSV file has an additional column:""")+"""
                 <dl class="dl-horizontal">
                     <dt>WKT</dt>
                     <dd>"""+_("""String. <a href="//en.wikipedia.org/wiki/Well-known_text">Well-known text</a> representation of this area.""")+"""</dd>
