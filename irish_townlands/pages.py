@@ -100,7 +100,7 @@ PAGES = {
             <p>"""+_("""There are several columns per entry:""")+"""
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
-                    <dd>"""+_("""Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more). IDs are not shared across objects (e.g. there will never be an ED and a townland with the same OSM_ID).""")+"""</dd>
+                    <dd>"""+_("""Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more information). IDs are not shared across objects (e.g. there will never be an ED and a townland with the same OSM_ID).""")+"""</dd>
                     <dt>NAME<dt>
                     <dd>"""+_("""String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish.""")+""" <i>("""+_("""NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.""")+""")</i></dd>
                     <dt>NAME_GA<dt>
