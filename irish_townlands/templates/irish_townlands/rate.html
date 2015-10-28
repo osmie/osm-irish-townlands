@@ -40,7 +40,7 @@
             {% if ireland.since_last_week.days_left == None %}
                 {% blocktrans with initial_date=ireland.since_last_week.initial_date rate=ireland.since_last_week.rate %}If we take the rate since this day last week ({{ initial_date }}) of {{ rate }}% per day, we'll never finish.{% endblocktrans %}
             {% else %}
-                {% blocktrans with initial_date=ireland.since_last_week.initial_date ireland.since_last_week.rate end_date=ireland.since_last_week.end_date length=ireland.since_last_week.human_readable_time_left %}If we take the rate since this day last week ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
+                {% blocktrans with initial_date=ireland.since_last_week.initial_date rate=ireland.since_last_week.rate end_date=ireland.since_last_week.end_date length=ireland.since_last_week.human_readable_time_left %}If we take the rate since this day last week ({{ initial_date }}) of {{ rate }}% per day, we'll be finished on {{ end_date }} (only {{ length }} left).{% endblocktrans %}
             {% endif %}
             </li>
     {% endif %}
