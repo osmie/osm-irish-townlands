@@ -520,7 +520,8 @@ def mapper_details(request, osm_user):
     tmpl_data['eds'] = ElectoralDivision.objects.select_related('county').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by('name')
     tmpl_data['townlands'] = Townland.objects.select_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').filter(osm_user=osm_user).order_by('name')
 
-    return render_to_response('irish_townlands/mapper_details.html', tmpl_data)
+    return render_to_response('irish_townlands/mapper_details.html', tmpl_data,
+            context_instance=RequestContext(request))
 
 def stats_for_user(osm_user):
     results = {}
