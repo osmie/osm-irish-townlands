@@ -308,23 +308,23 @@ class Area(models.Model, NameableThing):
 
     @property
     def townlands_sorted(self):
-        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name", 'name_ga', 'alt_name', 'alt_name_ga', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name', "place").order_by('name')
+        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name_tag", 'name_ga', 'alt_name', 'alt_name_ga', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name', "place").order_by("name_tag")
 
     @property
     def baronies_sorted(self):
-        return self.baronies.only("name", "url_path", "county__name").order_by("name")
+        return self.baronies.only("name_tag", "url_path", "county__name").order_by("name_tag")
 
     @property
     def counties_sorted(self):
-        return self.counties.only("name", "url_path").order_by("name")
+        return self.counties.only("name_tag", "url_path").order_by("name_tag")
 
     @property
     def civil_parishes_sorted(self):
-        return self.civil_parishes.only("name", "url_path").order_by("name")
+        return self.civil_parishes.only("name_tag", "url_path").order_by("name_tag")
 
     @property
     def eds_sorted(self):
-        return self.eds.only("name", "url_path", "county__id").order_by("name")
+        return self.eds.only("name_tag", "url_path", "county__id").order_by("name_tag")
 
 
     @property
@@ -342,7 +342,7 @@ class Area(models.Model, NameableThing):
     def county_name(self):
         # This is a bit of hack to do "select name from county where id = $COUNTY_ID"
         try:
-            return County.objects.filter(id=self.county_id).values("name")[0]['name']
+            return County.objects.filter(id=self.county_id).values("name_tag")[0]["name_tag"]
         except:
             return None
 
@@ -459,7 +459,7 @@ class Area(models.Model, NameableThing):
 
     @property
     def subtownlands_sorted(self):
-        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by('name')
+        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name_tag", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by("name_tag")
 
     @property
     def county_name(self):
@@ -551,7 +551,7 @@ class Barony(Area):
 
     @property
     def county_name(self):
-        counties = list(County.objects.filter(townlands__barony=self).values_list("name", flat=True).distinct())
+        counties = list(County.objects.filter(townlands__barony=self).values_list("name_tag", flat=True).distinct())
         if len(counties) == 0:
             return None
         else:
@@ -559,7 +559,7 @@ class Barony(Area):
 
     @property
     def civil_parishes(self):
-        return CivilParish.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+        return CivilParish.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name_tag")
 
 
 
@@ -582,11 +582,11 @@ class CivilParish(Area):
     @property
     def baronies(self):
         """The baronies that this CP is in (might overlap)"""
-        return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+        return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name_tag")
 
     @property
     def county_name(self):
-        counties = list(County.objects.filter(townlands__civil_parish=self).values_list("name", flat=True).distinct())
+        counties = list(County.objects.filter(townlands__civil_parish=self).values_list("name_tag", flat=True).distinct())
         if len(counties) == 0:
             return None
         else:
@@ -678,11 +678,11 @@ class ElectoralDivision(Area):
 
     def baronies(self):
         """The baronies that this ED is in (might overlap)"""
-        return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name")
+        return Barony.objects.filter(townlands__in=self.townlands.all()).distinct().order_by("name_tag")
 
     @property
     def county_name(self):
-        counties = list(County.objects.filter(townlands__ed=self).values_list("name", flat=True).distinct())
+        counties = list(County.objects.filter(townlands__ed=self).values_list("name_tag", flat=True).distinct())
         if len(counties) == 0:
             return None
         else:
@@ -698,10 +698,10 @@ class Townland(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
 
-	county_name = County.objects.filter(id=self.county_id).values_list("name", flat=True)[0] if self.county_id else None
-	civil_parish_name = CivilParish.objects.filter(id=self.civil_parish_id).values_list("name", flat=True)[0] if self.civil_parish_id else None
-	barony_name = Barony.objects.filter(id=self.barony_id).values_list("name", flat=True)[0] if self.barony_id else None
-	ed_name = ElectoralDivision.objects.filter(id=self.ed_id).values_list("name", flat=True)[0] if self.ed_id else None
+	county_name = County.objects.filter(id=self.county_id).values_list("name_tag", flat=True)[0] if self.county_id else None
+	civil_parish_name = CivilParish.objects.filter(id=self.civil_parish_id).values_list("name_tag", flat=True)[0] if self.civil_parish_id else None
+	barony_name = Barony.objects.filter(id=self.barony_id).values_list("name_tag", flat=True)[0] if self.barony_id else None
+	ed_name = ElectoralDivision.objects.filter(id=self.ed_id).values_list("name_tag", flat=True)[0] if self.ed_id else None
 
         self.url_path = pathify(county_name, barony_name, civil_parish_name, ed_name, name)
 
@@ -728,7 +728,7 @@ class Townland(Area):
 
     @property
     def county_name(self):
-        counties = list(County.objects.filter(townlands__townland=self).values_list("name", flat=True).distinct())
+        counties = list(County.objects.filter(townlands__townland=self).values_list("name_tag", flat=True).distinct())
         if len(counties) == 0:
             return None
         else:
@@ -820,10 +820,10 @@ class Subtownland(models.Model, NameableThing):
 
         if self.townland:
 
-	    county_name = County.objects.filter(id=self.townland.county_id).values_list("name", flat=True)[0] if self.townland.county_id else None
-	    civil_parish_name = CivilParish.objects.filter(id=self.townland.civil_parish_id).values_list("name", flat=True)[0] if self.townland.civil_parish_id else None
-	    barony_name = Barony.objects.filter(id=self.townland.barony_id).values_list("name", flat=True)[0] if self.townland.barony_id else None
-	    ed_name = ElectoralDivision.objects.filter(id=self.townland.ed_id).values_list("name", flat=True)[0] if self.townland.ed_id else None
+	    county_name = County.objects.filter(id=self.townland.county_id).values_list("name_tag", flat=True)[0] if self.townland.county_id else None
+	    civil_parish_name = CivilParish.objects.filter(id=self.townland.civil_parish_id).values_list("name_tag", flat=True)[0] if self.townland.civil_parish_id else None
+	    barony_name = Barony.objects.filter(id=self.townland.barony_id).values_list("name_tag", flat=True)[0] if self.townland.barony_id else None
+	    ed_name = ElectoralDivision.objects.filter(id=self.townland.ed_id).values_list("name_tag", flat=True)[0] if self.townland.ed_id else None
 
             self.url_path = pathify(county_name, barony_name, civil_parish_name, ed_name, self.townland.name, name)
 
