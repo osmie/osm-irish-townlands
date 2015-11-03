@@ -454,7 +454,7 @@ class Area(models.Model, NameableThing):
 
     def added_order(self):
         klass = self.__class__
-        num_older = klass.objects.filter(Q(osm_timestamp__lt=self.osm_timestamp) | (Q(osm_timestamp=self.osm_timestamp) & Q(name__lt=self.name))).count()
+        num_older = klass.objects.filter(Q(osm_timestamp__lt=self.osm_timestamp) | (Q(osm_timestamp=self.osm_timestamp) & Q(name_tag__lt=self.name))).count()
         return num_older + 1
 
     @property
