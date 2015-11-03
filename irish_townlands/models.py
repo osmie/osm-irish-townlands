@@ -164,7 +164,9 @@ class Area(models.Model, NameableThing):
         abstract = True
 
     osm_id = models.IntegerField(unique=True)
-    name = models.CharField(max_length=255, db_index=True)
+
+    # The name tag
+    name_tag = models.CharField(max_length=255, db_index=True)
     name_en = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
@@ -203,6 +205,10 @@ class Area(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+    @property
+    def name(self):
+        return self.name_tag
 
     @property
     def polygon_geojson(self):
@@ -769,7 +775,7 @@ class Subtownland(models.Model, NameableThing):
     url_path = models.CharField(db_index=True, max_length=255)
     unique_suffix = models.PositiveSmallIntegerField(null=True)
 
-    name = models.CharField(max_length=255, db_index=True)
+    name_tag = models.CharField(max_length=255, db_index=True)
     name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name = models.CharField(max_length=255, db_index=True, null=True)
 
@@ -788,6 +794,10 @@ class Subtownland(models.Model, NameableThing):
     place = None
     has_different_name_census1901 = False
     has_different_name_census1911 = False
+
+    @property
+    def name(self):
+        return self.name_tag
 
     @property
     def county(self):
