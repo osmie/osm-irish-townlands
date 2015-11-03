@@ -314,13 +314,13 @@ msgstr "Chaine de caractères. Date au format ISO d'ajout de l'objet dans OSM."
 msgid ""
 "Integer. <a href=\"https://en.wikipedia.org/wiki/Unix_time\">Unix 'epoch' "
 "time</a> of when the object was added to OSM."
-msgstr ""
+msgstr "Entier. Date au format <a href=\"https://en.wikipedia.org/wiki/Unix_time\"> 'epoch' unix</a> d'ajout de l'objet dans OSM."
 
 #: pages.py:127
 msgid ""
 "String. URL of this object on <a href=\"www.townlands.ie\">Townlands.ie</a> "
 "(this site)"
-msgstr ""
+msgstr "Chaine de caractères. URL de l'objet sur <a href=\"www.townlands.ie\">Townlands.ie</a> (ce site)."
 
 #: pages.py:129
 msgid ""
@@ -332,19 +332,19 @@ msgstr "Chaine de caractères. Le nom du comté dont fait partie cet objet, s'il
 msgid ""
 "Integer. OSM_ID of the county this object is in, if known. Not in 'county' "
 "or 'civil_parish' files."
-msgstr ""
+msgstr "Entier. Id OSM du compté auquel appartiens cet objet, s'il est connu. Non présent dans les fichiers 'county' ni 'civil_parish'."
 
 #: pages.py:133
 msgid ""
 "String. Comma separated list of names of the counties this object is in, if "
 "known. Orderd by the county's osm_id. Only in the 'civil_parish' files."
-msgstr ""
+msgstr "Chaine de caractères. Liste séparée par des virgules des noms des comtés auxquels appartiens cet objet, s'ils sont connus. Trié par osm_id du comté. Seulement présent dans les fichiers 'civil_parish'."
 
 #: pages.py:135
 msgid ""
 "String. Comma separated list of osm_ids of the counties this object is in, "
 "if known. Orderd by the county's osm_id. Only in the 'civil_parish' files."
-msgstr ""
+msgstr "Chaine de caractères. Liste séparée par des virgules des id OSM des comtés dont fait partie cet objet, s'ils sont connu. Trié par osm_id du comté. Seulement présent dans les fichiers 'civil_parish'."
 
 #: pages.py:137
 msgid ""
@@ -388,19 +388,19 @@ msgstr ""
 
 #: pages.py:153
 msgid "Geom and no-geom version"
-msgstr ""
+msgstr "Versions avec et sans géométrie"
 
 #: pages.py:154
 msgid ""
 "There are two CSV files, a normal version, and a \"no-geom\" version. The "
 "normal CSV file has an additional column:"
-msgstr ""
+msgstr "Il y a deux fichiers CSV, une version normale et une version sans géométrie. Le fichier CSV normal a une colone de plus :"
 
 #: pages.py:157
 msgid ""
 "String. <a href=\"//en.wikipedia.org/wiki/Well-known_text\">Well-known "
 "text</a> representation of this area."
-msgstr ""
+msgstr "Chaine de caractères. Géométrie de l'objet au format <a href=\"//fr.wikipedia.org/wiki/Well-known_text\">Well-known text</a>."
 
 #: pages.py:159
 msgid ""
@@ -449,7 +449,7 @@ msgstr ""
 
 #: pages.py:178
 msgid "Copyright & Licence"
-msgstr ""
+msgstr "Copyright et License"
 
 #: pages.py:180
 msgid ""
@@ -459,13 +459,13 @@ msgstr ""
 
 #: pages.py:186 templates/irish_townlands/townland_base.html:61
 msgid "How up-to-date is Townlands.ie?"
-msgstr ""
+msgstr "Quand est mis à jour Townlands.ie ?"
 
 #: pages.py:188
 msgid ""
 "Townlands.ie is updated every day. At the bottom of the page, you can see "
 "the date and time of the last import of data."
-msgstr ""
+msgstr "Townlands.ie est mis à jour une fois par jour. Au bas de la page vous pouvez voir la date et l'heure du dernier import de données."
 
 #: pages.py:189
 msgid ""
@@ -475,11 +475,11 @@ msgstr ""
 
 #: pages.py:193
 msgid "25,000 Townlands!"
-msgstr ""
+msgstr "25 000 Townlands !"
 
 #: pages.py:195
 msgid "25,000 Townlands"
-msgstr ""
+msgstr "25 000 Townlands"
 
 #: pages.py:196
 msgid ""
@@ -584,8 +584,8 @@ msgstr "Comment cartographier les townlands"
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d an"
+msgstr[1] "%d ans"
 
 #: views.py:210
 #, python-format
@@ -1023,16 +1023,16 @@ msgstr "Terres et eaux non couvertes par des townlands"
 #: templates/irish_townlands/countydebug_detail.html:86
 #, python-format
 msgid "How long will %(name)s take to be mapped?"
-msgstr ""
+msgstr "Combien de temps pour cartographier %(name)s ?"
 
 #: templates/irish_townlands/countydebug_detail.html:88
 #, python-format
 msgid "All of %(name)s is covered by townlands in the OpenStreetMap database."
-msgstr ""
+msgstr "Tout %(name)s est couvert par des townlands dans la base de données OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:91
 msgid "Land covered by 2 (or more) Townlands"
-msgstr ""
+msgstr "Surface couverte par 2 townlands ou plus"
 
 #: templates/irish_townlands/countydebug_detail.html:94
 #: templates/irish_townlands/countydebug_detail.html:112
@@ -1041,7 +1041,7 @@ msgstr ""
 msgid ""
 "Due to a bug in the software, there will sometimes be lines following the "
 "borders that appear as \\"
-msgstr ""
+msgstr "À cause d'un bug logiciel, il y a parfois après les frontières des lignes avec un \\"
 
 #: templates/irish_townlands/countydebug_detail.html:98
 #, python-format
@@ -1358,7 +1358,7 @@ msgstr "Potentiels conflits dans les données"
 #: templates/irish_townlands/progress.html:32
 #: templates/irish_townlands/rate.html:5 templates/irish_townlands/rate.html:9
 msgid "Rate of mapping"
-msgstr "Rythme de cartographie"
+msgstr "Rythme de progression"
 
 #: templates/irish_townlands/progress.html:33
 msgid "Mapping activity"
@@ -1427,7 +1427,7 @@ msgstr ""
 #: templates/irish_townlands/rate.html:9
 #: templates/irish_townlands/townland_base.html:20
 msgid "Irish Townlands"
-msgstr ""
+msgstr "Townlands irlandais"
 
 #: templates/irish_townlands/rate.html:9
 msgid "Progress"
@@ -1569,7 +1569,7 @@ msgstr ""
 #: templates/irish_townlands/search_results.html:5
 #: templates/irish_townlands/townland_base.html:48
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: templates/irish_townlands/search.html:23
 #: templates/irish_townlands/search_results.html:41
@@ -1810,12 +1810,12 @@ msgstr ""
 
 #: templates/irish_townlands/townland_base.html:45
 msgid "Search for a townland, subtownland, civil parish, barony or county"
-msgstr ""
+msgstr "Rechercher un townland, soustownland, paroisse civile, baronnie, ou comté"
 
 #: templates/irish_townlands/townland_base.html:46
 msgid ""
 "Search for a townland, civil parish, barony, electoral division or county"
-msgstr ""
+msgstr "Rechercher un townland, paroisse civile, division électorale, ou comté"
 
 #: templates/irish_townlands/townland_base.html:59
 msgid "Copyright"
@@ -1823,7 +1823,7 @@ msgstr "Copyright"
 
 #: templates/irish_townlands/townland_base.html:60
 msgid "Download Data"
-msgstr ""
+msgstr "Télécharger les données"
 
 #: templates/irish_townlands/townland_base.html:62
 msgid "Who's mapping townlands?"
@@ -1840,7 +1840,7 @@ msgstr ""
 #: templates/irish_townlands/townland_base.html:66
 #, python-format
 msgid "Last update: %(update_date)s"
-msgstr ""
+msgstr "Dernière mise à jour : %(update_date)s"
 
 #: templates/irish_townlands/townland_detail.html:7
 #: templates/irish_townlands/townland_detail.html:13
