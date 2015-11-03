@@ -150,16 +150,17 @@ def get_last_update():
 
 def county_debug(request, url_path):
     last_update = get_last_update()
+    # strip debug from url to get county
+    url_path = re.sub('debug/$', '', url_path)
 
     # County debug page
     try:
-        # strip debug from url to get county
-        url_path = re.sub('debug/$', '', url_path)
         x = County.objects.select_related().get(url_path=url_path)
-        return render_to_response('irish_townlands/countydebug_detail.html', {'county': x, 'last_update': last_update}, context_instance=RequestContext(request))
     except:
         # Couldn't find county
         raise Http404("County not found")
+
+    return render_to_response('irish_townlands/countydebug_detail.html', {'county': x, 'last_update': last_update}, context_instance=RequestContext(request))
 
 def view_area(request, url_path=None):
     last_update = get_last_update()

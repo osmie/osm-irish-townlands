@@ -1,5 +1,5 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load l10n humanize cache %}
+{% load l10n humanize cache i18n %}
 
 {% block title %}{% blocktrans with name=county.name %}Data Completeness in Co. {{ name }}{% endblocktrans %}{% endblock %}
 {% block header %}<h1>{% blocktrans with name=county.name %}Co. {{ name }}{% endblocktrans %}</h1>{% endblock %}
