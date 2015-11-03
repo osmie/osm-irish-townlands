@@ -8,103 +8,21 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'ElectoralDivision.name'
-        db.delete_column(u'irish_townlands_electoraldivision', 'name')
-
-        # Adding field 'ElectoralDivision.name_tag'
-        db.add_column(u'irish_townlands_electoraldivision', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Townland.name'
-        db.delete_column(u'irish_townlands_townland', 'name')
-
-        # Adding field 'Townland.name_tag'
-        db.add_column(u'irish_townlands_townland', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'CivilParish.name'
-        db.delete_column(u'irish_townlands_civilparish', 'name')
-
-        # Adding field 'CivilParish.name_tag'
-        db.add_column(u'irish_townlands_civilparish', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Barony.name'
-        db.delete_column(u'irish_townlands_barony', 'name')
-
-        # Adding field 'Barony.name_tag'
-        db.add_column(u'irish_townlands_barony', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'County.name'
-        db.delete_column(u'irish_townlands_county', 'name')
-
-        # Adding field 'County.name_tag'
-        db.add_column(u'irish_townlands_county', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Subtownland.name'
-        db.delete_column(u'irish_townlands_subtownland', 'name')
-
-        # Adding field 'Subtownland.name_tag'
-        db.add_column(u'irish_townlands_subtownland', 'name_tag',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
+        db.rename_column(u'irish_townlands_electoraldivision', 'name', 'name_tag')
+        db.rename_column(u'irish_townlands_townland', 'name', 'name_tag')
+        db.rename_column(u'irish_townlands_civilparish', 'name', 'name_tag')
+        db.rename_column(u'irish_townlands_barony', 'name', 'name_tag')
+        db.rename_column(u'irish_townlands_county', 'name', 'name_tag')
+        db.rename_column(u'irish_townlands_subtownland', 'name', 'name_tag')
 
 
     def backwards(self, orm):
-        # Adding field 'ElectoralDivision.name'
-        db.add_column(u'irish_townlands_electoraldivision', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'ElectoralDivision.name_tag'
-        db.delete_column(u'irish_townlands_electoraldivision', 'name_tag')
-
-        # Adding field 'Townland.name'
-        db.add_column(u'irish_townlands_townland', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Townland.name_tag'
-        db.delete_column(u'irish_townlands_townland', 'name_tag')
-
-        # Adding field 'CivilParish.name'
-        db.add_column(u'irish_townlands_civilparish', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'CivilParish.name_tag'
-        db.delete_column(u'irish_townlands_civilparish', 'name_tag')
-
-        # Adding field 'Barony.name'
-        db.add_column(u'irish_townlands_barony', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Barony.name_tag'
-        db.delete_column(u'irish_townlands_barony', 'name_tag')
-
-        # Adding field 'County.name'
-        db.add_column(u'irish_townlands_county', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'County.name_tag'
-        db.delete_column(u'irish_townlands_county', 'name_tag')
-
-        # Adding field 'Subtownland.name'
-        db.add_column(u'irish_townlands_subtownland', 'name',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=255, db_index=True),
-                      keep_default=False)
-
-        # Deleting field 'Subtownland.name_tag'
-        db.delete_column(u'irish_townlands_subtownland', 'name_tag')
+        db.rename_column(u'irish_townlands_electoraldivision', 'name_tag', 'name')
+        db.rename_column(u'irish_townlands_townland', 'name_tag', 'name')
+        db.rename_column(u'irish_townlands_civilparish', 'name_tag', 'name')
+        db.rename_column(u'irish_townlands_barony', 'name_tag', 'name')
+        db.rename_column(u'irish_townlands_county', 'name_tag', 'name')
+        db.rename_column(u'irish_townlands_subtownland', 'name_tag', 'name')
 
 
     models = {
