@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
 from django.utils.translation import ungettext, ugettext
+from django.utils import translation
 from django.utils.html import format_html, mark_safe
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -208,7 +209,10 @@ class Area(models.Model, NameableThing):
 
     @property
     def name(self):
-        return self.name_tag
+        if translation.get_language() == 'ga':
+            return self.name_ga or self.name_tag
+        else:
+            return self.name_tag
 
     @property
     def polygon_geojson(self):
@@ -797,7 +801,10 @@ class Subtownland(models.Model, NameableThing):
 
     @property
     def name(self):
-        return self.name_tag
+        if translation.get_language() == 'ga':
+            return self.name_ga or self.name_tag
+        else:
+            return self.name_tag
 
     @property
     def county(self):
