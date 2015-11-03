@@ -125,7 +125,7 @@ def duplicatenames(request):
     duplicate_names = Townland.objects.all().values("name_tag").annotate(count=Count("name_tag")).filter(count__gte=2).order_by('-count', "name_tag")
     for item in duplicate_names:
         townland_name, townland_count = item["name_tag"], item['count']
-        townlands = Townland.objects.filter(name=townland_name).order_by("county__name", "barony__name", "civil_parish__name").values('url_path', 'county__name', 'barony__name', 'civil_parish__name')
+        townlands = Townland.objects.filter(name=townland_name).order_by("county__name_tag", "barony__name_tag", "civil_parish__name_tag").values('url_path', 'county__name_tag', 'barony__name_tag', 'civil_parish__name_tag')
         duplicate_townland_names.append({"name_tag": townland_name, 'count': townland_count, 'townlands': townlands})
 
     return render_to_response('irish_townlands/duplicatenames.html',
@@ -333,11 +333,11 @@ def rate(request):
 def _search_for(qs):
 
     counties = list(County.objects.filter(qs).order_by("name_tag").only("name_tag", "name_ga", "alt_name"))
-    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name_tag").only("name_tag", "name_ga", "alt_name", 'county__name'))
+    baronies = list(Barony.objects.filter(qs).select_related("county").order_by("name_tag").only("name_tag", "name_ga", "alt_name", 'county__name_tag'))
     civil_parishes = list(CivilParish.objects.filter(qs).order_by("name_tag").only("name_tag", "name_ga", "alt_name"))
-    eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name_tag").only("name_tag", "name_ga", "alt_name", 'county__name'))
-    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name_tag"). only("name_tag", "name_ga", "alt_name", "county__name", "barony__name", "civil_parish__name"))
-    subtownlands = list(Subtownland.objects.filter(qs).select_related("county", "barony", "civil_parish", "townland").order_by("name_tag"). only("name_tag", "name_ga", "townland__name"))
+    eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name_tag").only("name_tag", "name_ga", "alt_name", 'county__name_tag'))
+    townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name_tag"). only("name_tag", "name_ga", "alt_name", "county__name_tag", "barony__name_tag", "civil_parish__name_tag"))
+    subtownlands = list(Subtownland.objects.filter(qs).select_related("county", "barony", "civil_parish", "townland").order_by("name_tag"). only("name_tag", "name_ga", "townland__name_tag"))
 
     return {
         'counties': counties, 'counties_num_results': len(counties),
@@ -516,10 +516,10 @@ def page(request, url_path):
 def mapper_details(request, osm_user):
     tmpl_data = {'osm_user': osm_user}
     tmpl_data['counties'] = County.objects.filter(osm_user=osm_user).order_by("name_tag")
-    tmpl_data['baronies'] = Barony.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by("name_tag")
-    tmpl_data['civil_parishes'] = CivilParish.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by("name_tag")
-    tmpl_data['eds'] = ElectoralDivision.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name').filter(osm_user=osm_user).order_by("name_tag")
-    tmpl_data['townlands'] = Townland.objects.select_related('county', 'barony', 'civil_parish').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name', 'barony__name', 'civil_parish__name').filter(osm_user=osm_user).order_by("name_tag")
+    tmpl_data['baronies'] = Barony.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name_tag').filter(osm_user=osm_user).order_by("name_tag")
+    tmpl_data['civil_parishes'] = CivilParish.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name_tag').filter(osm_user=osm_user).order_by("name_tag")
+    tmpl_data['eds'] = ElectoralDivision.objects.select_related('county').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name_tag').filter(osm_user=osm_user).order_by("name_tag")
+    tmpl_data['townlands'] = Townland.objects.select_related('county', 'barony', 'civil_parish').only("name_tag", 'name_ga', 'alt_name', 'url_path', 'county__name_tag', 'barony__name_tag', 'civil_parish__name_tag').filter(osm_user=osm_user).order_by("name_tag")
 
     return render_to_response('irish_townlands/mapper_details.html', tmpl_data,
             context_instance=RequestContext(request))
@@ -698,7 +698,7 @@ def townland_index_grouped(request):
 def townland_index(request, should_group=False):
     incl_irish = request.GET.get("incl_irish", "yes") == "yes"
 
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name_tag", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name")
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name_tag", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name_tag", "county__name_tag", "civil_parish__name_tag")
 
     results = []
 
@@ -726,7 +726,7 @@ def townland_index(request, should_group=False):
             context_instance=RequestContext(request))
 
 def mappinghistory(request, should_group=False):
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name_tag", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name", "county__name", "civil_parish__name", "osm_timestamp", "osm_user").order_by("osm_timestamp", "name_tag")
+    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name_tag", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name_tag", "county__name_tag", "civil_parish__name_tag", "osm_timestamp", "osm_user").order_by("osm_timestamp", "name_tag")
 
     return render_to_response('irish_townlands/mappinghistory.html', {'townlands': townlands},
             context_instance=RequestContext(request))
