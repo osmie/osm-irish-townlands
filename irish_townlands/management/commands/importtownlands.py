@@ -48,7 +48,6 @@ def err_msg(msg, *args, **kwargs):
     """Log an error message to DB & print it. """
     msg = msg.format(*args, **kwargs)
     Error.objects.create(message=msg)
-    print msg
 
 
 def rm_suffix(obj, attr, bad_suffix):
