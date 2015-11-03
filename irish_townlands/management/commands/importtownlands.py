@@ -133,7 +133,7 @@ class Command(BaseCommand):
             django_cursor.execute("insert into {polygon_table} (osm_id, polygon_geojson) select osm_id, ST_AsGeoJSON(geo) as geo from valid_polygon where {where}".format(polygon_table=polygon_table, where=where_clause))
             django_cursor.execute("update {table} set _polygon_geojson_id = p_id from (select t.id as t_id, p.id as p_id from {table} as t join {polygon_table} as p using (osm_id) where t._polygon_geojson_id IS NULL) as tt where id = t_id".format(table=table, polygon_table=polygon_table))
 
-            results = dict((x.osm_id, x) for x in django_model.objects.only("osm_id", "name").all())
+            results = dict((x.osm_id, x) for x in django_model.objects.only("osm_id", "name_tag").all())
 
         return results
 
@@ -189,12 +189,12 @@ class Command(BaseCommand):
             self.counties = self.create_area_obj('counties', "admin_level = '6'", County, self.cols)
 
             for c in self.counties.values():
-                original_county_name = c.name
+                original_county_name = c.name_tag
 
                 # sanitize name
-                rm_prefix(c, 'name', 'County ')
-                if c.name == 'Londonderry':
-                    c.name = u'Derry'
+                rm_prefix(c, 'name_tag', 'County ')
+                if c.name_tag == 'Londonderry':
+                    c.name_tag = u'Derry'
 
                 # calculate amount of water in this county
                 with printer("getting water are for county {}".format(c.name)):
@@ -232,19 +232,19 @@ class Command(BaseCommand):
     def clean_cp_names(self):
         # remove "Civil Parish" suffix from C.P.s
         for cp in self.civil_parishes.values():
-            rm_suffix(cp, 'name', ' Civil Parish')
+            rm_suffix(cp, 'name_tag', ' Civil Parish')
 
     def clean_barony_names(self):
         # remove "Barony of" suffix from baronies
         for b in self.baronies.values():
-            rm_prefix(b, 'name', 'Barony of ')
-            rm_suffix(b, 'name', ' Barony')
+            rm_prefix(b, 'name_tag', 'Barony of ')
+            rm_suffix(b, 'name_tag', ' Barony')
 
     def clean_ed_names(self):
         # remove "ED" suffix from EDs
         for ed in self.eds.values():
-            rm_suffix(ed, 'name', ' ED')
-            rm_suffix(ed, 'name', ' DED')
+            rm_suffix(ed, 'name_tag', ' ED')
+            rm_suffix(ed, 'name_tag', ' DED')
 
     def calculate_townlands_in_counties(self):
         with printer("townlands in counties"):
@@ -558,7 +558,7 @@ class Command(BaseCommand):
                 self.delete_all_data()
 
             self.cols = [
-                ('name', 'name'),
+                ('name', 'name_tag'),
                 ('"name:ga"', 'name_ga'),
                 ('"name:en"', 'name_en'),
                 ('alt_name', 'alt_name'),
