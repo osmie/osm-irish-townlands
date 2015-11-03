@@ -312,11 +312,11 @@ class Area(models.Model, NameableThing):
 
     @property
     def townlands_sorted(self):
-        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name_tag", 'name_ga', 'alt_name', 'alt_name_ga', 'area_m2', 'url_path', 'county__name', 'barony__name', 'civil_parish__name', "place").order_by("name_tag")
+        return self.townlands.prefetch_related('county', 'barony', 'civil_parish').only("name_tag", 'name_ga', 'alt_name', 'alt_name_ga', 'area_m2', 'url_path', 'county__name_tag', 'barony__name_tag', 'civil_parish__name_tag', "place").order_by("name_tag")
 
     @property
     def baronies_sorted(self):
-        return self.baronies.only("name_tag", "url_path", "county__name").order_by("name_tag")
+        return self.baronies.only("name_tag", "url_path", "county__name_tag").order_by("name_tag")
 
     @property
     def counties_sorted(self):
@@ -463,7 +463,7 @@ class Area(models.Model, NameableThing):
 
     @property
     def subtownlands_sorted(self):
-        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name_tag", 'name_ga', 'url_path', 'townland__county__name', 'townland__barony__name', 'townland__civil_parish__name', "townland__name").order_by("name_tag")
+        return self.subtownlands.prefetch_related('townland__county', 'townland__barony', 'townland__civil_parish', 'townland').only("name_tag", 'name_ga', 'url_path', 'townland__county__name_tag', 'townland__barony__name_tag', 'townland__civil_parish__name_tag', "townland__name_tag").order_by("name_tag")
 
     @property
     def county_name(self):
@@ -728,7 +728,7 @@ class Townland(Area):
 
     @property
     def touching_townlands(self):
-        return self.touching_as_a.order_by("townland_b__name")
+        return self.touching_as_a.order_by("townland_b__name_tag")
 
     @property
     def county_name(self):
