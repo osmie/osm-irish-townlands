@@ -371,8 +371,14 @@ def search(request):
 
     search_results = _search_for(qs)
 
-    # if there is only one, then redirect to it
-    if search_results['counties_num_results'] + search_results['baronies_num_results'] + search_results['civil_parishes_num_results'] + search_results['eds_num_results'] + search_results['townlands_num_results'] + search_results['subtownlands_num_results'] == 1:
+    num_results = search_results['counties_num_results'] + search_results['baronies_num_results'] + search_results['civil_parishes_num_results'] + search_results['eds_num_results'] + search_results['townlands_num_results'] + search_results['subtownlands_num_results']
+
+    if num_results == 0:
+        # look for a user
+        if Townland.objects.filter(osm_user=search_term).exists():
+            return redirect("mapper_details", osm_user=search_term)
+    elif num_results == 1:
+        # if there is only one, then redirect to it
         obj = (search_results['counties'] + search_results['baronies'] + search_results['civil_parishes'] + search_results['eds'] + search_results['townlands'] + search_results['subtownlands'])[0]
         return redirect('view_area', url_path=obj.url_path)
 
