@@ -125,7 +125,7 @@ def duplicatenames(request):
     duplicate_names = Townland.objects.all().values("name_tag").annotate(count=Count("name_tag")).filter(count__gte=2).order_by('-count', "name_tag")
     for item in duplicate_names:
         townland_name, townland_count = item["name_tag"], item['count']
-        townlands = Townland.objects.filter(name=townland_name).order_by("county__name_tag", "barony__name_tag", "civil_parish__name_tag").values('url_path', 'county__name_tag', 'barony__name_tag', 'civil_parish__name_tag')
+        townlands = Townland.objects.filter(name_tag=townland_name).order_by("county__name_tag", "barony__name_tag", "civil_parish__name_tag").values('url_path', 'county__name_tag', 'barony__name_tag', 'civil_parish__name_tag')
         duplicate_townland_names.append({"name_tag": townland_name, 'count': townland_count, 'townlands': townlands})
 
     return render_to_response('irish_townlands/duplicatenames.html',
