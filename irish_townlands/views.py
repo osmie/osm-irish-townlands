@@ -73,7 +73,7 @@ def progress(request):
 
     # populate counties
     county_details.update({
-        county.name: {
+        county.name_tag: {
             'area_m2': county.area_m2,
             'area_excl_water_m2': county.area_excl_water_m2,
             'townland_area': county.townland_area,
