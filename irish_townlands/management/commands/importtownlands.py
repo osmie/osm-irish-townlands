@@ -193,6 +193,7 @@ class Command(BaseCommand):
 
                 # sanitize name
                 rm_prefix(c, 'name_tag', 'County ')
+                rm_prefix(c, 'name_ga', 'Contae  ')
                 if c.name_tag == 'Londonderry':
                     c.name_tag = u'Derry'
 
