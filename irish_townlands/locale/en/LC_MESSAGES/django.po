@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 19:57+0100\n"
+"POT-Creation-Date: 2015-11-05 21:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:40 templates/irish_townlands/index.html:10
+#: models.py:41 templates/irish_townlands/index.html:10
 msgid "and"
 msgstr ""
 
-#: models.py:104 templates/irish_townlands/townland_detail.html:7
+#: models.py:105 templates/irish_townlands/townland_detail.html:7
 #: templates/irish_townlands/townland_detail.html:13
 #, python-format
 msgid "%(townland_name)s Townland"
 msgstr ""
 
-#: models.py:107 templates/irish_townlands/duplicatenames.html:14
+#: models.py:108 templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:19
 #: templates/irish_townlands/townland_detail.html:32
 #, python-format
 msgid "%(name)s Civil Parish"
 msgstr ""
 
-#: models.py:110
+#: models.py:111
 #, python-format
 msgid "Barony of %(barony_name)s"
 msgstr ""
 
-#: models.py:113 templates/irish_townlands/county_detail.html:5
+#: models.py:114 templates/irish_townlands/county_detail.html:5
 #: templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
@@ -48,42 +48,42 @@ msgstr ""
 msgid "Co. %(county_name)s"
 msgstr ""
 
-#: models.py:119
+#: models.py:120
 msgid "(Island)"
 msgstr ""
 
-#: models.py:124
+#: models.py:125
 #, python-format
 msgid "'%(name)s' in 1901 Census"
 msgstr ""
 
-#: models.py:126
+#: models.py:127
 #, python-format
 msgid "'%(name)s' in 1911 Census"
 msgstr ""
 
-#: models.py:235
+#: models.py:245
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:236
+#: models.py:246
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:237
+#: models.py:247
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:380 templates/irish_townlands/ed_detail.html:88
+#: models.py:390 templates/irish_townlands/ed_detail.html:88
 msgid "Area in Acres, Rods and Perches"
 msgstr ""
 
@@ -502,7 +502,9 @@ msgid ""
 "A townland is a small geographical division of land. The townland system is "
 "of Gaelic origin, pre-dating the Norman invasion, and most have names of "
 "Irish origin. However, some townland names and boundaries come from Norman "
-"manors, plantation divisions, or later creations of the Ordnance Survey."
+"manors, <a href=\"https://en.wikipedia.org/wiki/Plantations_of_Ireland"
+"\">plantation divisions</a>, or later creations of the <a href=\"https://fr."
+"wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</a>."
 msgstr ""
 
 #: pages.py:203
@@ -579,75 +581,76 @@ msgstr ""
 msgid "How to map townlands"
 msgstr ""
 
-#: views.py:208
+#: views.py:209
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:210
+#: views.py:211
 #, python-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:212
+#: views.py:213
 #, python-format
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:214
+#: views.py:215
 #, python-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:600
+#: views.py:608
 #, python-format
 msgid "%d townland"
 msgid_plural "%d townlands"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:602
+#: views.py:610
 #, python-format
 msgid "%d ED"
 msgid_plural "%d EDs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:604
+#: views.py:612
 #, python-format
 msgid "%d civil parish"
 msgid_plural "%d civil parishes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:606
+#: views.py:614
 #, python-format
 msgid "%d barony"
 msgid_plural "%d baronies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:608
+#: views.py:616
 #, python-format
 msgid "%d subtownland"
 msgid_plural "%d subtownlands"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:610
+#: views.py:618
 msgid "No mapping activity"
 msgstr ""
 
 #: templates/irish_townlands/activity.html:4
 #: templates/irish_townlands/activity.html:5
+#: templates/irish_townlands/progress.html:33
 msgid "Mapping Activity"
 msgstr ""
 
@@ -870,6 +873,7 @@ msgid "It is located at %(centre)s."
 msgstr ""
 
 #: templates/irish_townlands/civil_parish_detail.html:68
+#: templates/irish_townlands/county_detail.html:16
 #: templates/irish_townlands/ed_detail.html:56
 #, python-format
 msgid ""
@@ -916,13 +920,6 @@ msgstr ""
 #: templates/irish_townlands/county_detail.html:9
 #: templates/irish_townlands/county_detail.html:121
 msgid "Debug</a> overlaps and coverage"
-msgstr ""
-
-#: templates/irish_townlands/county_detail.html:16
-#, python-format
-msgid ""
-"%(name)s has an area of %(area_km2)s km² / %(area_acres)s acres / "
-"%(area_mile2)s square miles"
 msgstr ""
 
 #: templates/irish_townlands/county_detail.html:17
@@ -1116,10 +1113,6 @@ msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:5
 msgid "Duplicate names"
-msgstr ""
-
-#: templates/irish_townlands/duplicatenames.html:14
-msgid "in"
 msgstr ""
 
 #: templates/irish_townlands/duplicatenames.html:14
@@ -1366,10 +1359,6 @@ msgstr ""
 #: templates/irish_townlands/progress.html:32
 #: templates/irish_townlands/rate.html:5 templates/irish_townlands/rate.html:9
 msgid "Rate of mapping"
-msgstr ""
-
-#: templates/irish_townlands/progress.html:33
-msgid "Mapping activity"
 msgstr ""
 
 #: templates/irish_townlands/progress.html:34
