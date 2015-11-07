@@ -1,246 +1,315 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import irish_townlands.models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Metadata'
-        db.create_table('irish_townlands_metadata', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=50, db_index=True)),
-            ('value', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal('irish_townlands', ['Metadata'])
+    dependencies = [
+    ]
 
-        # Adding model 'Barony'
-        db.create_table('irish_townlands_barony', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('osm_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('name_ga', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('alt_name', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('area_m2', self.gf('django.db.models.fields.FloatField')(db_index=True)),
-            ('url_path', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('unique_suffix', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True)),
-            ('centre_x', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('centre_y', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_width', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_height', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('polygon_geojson', self.gf('django.db.models.fields.TextField')(default='')),
-            ('county', self.gf('django.db.models.fields.related.ForeignKey')(default=None, related_name='baronies', null=True, to=orm['irish_townlands.County'])),
-        ))
-        db.send_create_signal('irish_townlands', ['Barony'])
-
-        # Adding model 'CivilParish'
-        db.create_table('irish_townlands_civilparish', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('osm_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('name_ga', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('alt_name', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('area_m2', self.gf('django.db.models.fields.FloatField')(db_index=True)),
-            ('url_path', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('unique_suffix', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True)),
-            ('centre_x', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('centre_y', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_width', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_height', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('polygon_geojson', self.gf('django.db.models.fields.TextField')(default='')),
-            ('county', self.gf('django.db.models.fields.related.ForeignKey')(default=None, related_name='civil_parishes', null=True, to=orm['irish_townlands.County'])),
-        ))
-        db.send_create_signal('irish_townlands', ['CivilParish'])
-
-        # Adding model 'County'
-        db.create_table('irish_townlands_county', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('osm_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('name_ga', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('alt_name', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('area_m2', self.gf('django.db.models.fields.FloatField')(db_index=True)),
-            ('url_path', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('unique_suffix', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True)),
-            ('centre_x', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('centre_y', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_width', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_height', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('polygon_geojson', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_townland_gaps', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_townland_overlaps', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_barony_gaps', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_barony_overlaps', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_civil_parish_gaps', self.gf('django.db.models.fields.TextField')(default='')),
-            ('polygon_civil_parish_overlaps', self.gf('django.db.models.fields.TextField')(default='')),
-        ))
-        db.send_create_signal('irish_townlands', ['County'])
-
-        # Adding model 'Townland'
-        db.create_table('irish_townlands_townland', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('osm_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('name_ga', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('alt_name', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True)),
-            ('area_m2', self.gf('django.db.models.fields.FloatField')(db_index=True)),
-            ('url_path', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
-            ('unique_suffix', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True)),
-            ('centre_x', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('centre_y', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_width', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('bbox_height', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('polygon_geojson', self.gf('django.db.models.fields.TextField')(default='')),
-            ('county', self.gf('django.db.models.fields.related.ForeignKey')(related_name='townlands', null=True, to=orm['irish_townlands.County'])),
-            ('barony', self.gf('django.db.models.fields.related.ForeignKey')(related_name='townlands', null=True, to=orm['irish_townlands.Barony'])),
-            ('civil_parish', self.gf('django.db.models.fields.related.ForeignKey')(related_name='townlands', null=True, to=orm['irish_townlands.CivilParish'])),
-        ))
-        db.send_create_signal('irish_townlands', ['Townland'])
-
-        # Adding model 'TownlandTouch'
-        db.create_table('irish_townlands_townlandtouch', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('townland_a', self.gf('django.db.models.fields.related.ForeignKey')(related_name='touching_as_a', to=orm['irish_townlands.Townland'])),
-            ('townland_b', self.gf('django.db.models.fields.related.ForeignKey')(related_name='touching_as_b', to=orm['irish_townlands.Townland'])),
-            ('length_m', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('direction_radians', self.gf('django.db.models.fields.FloatField')()),
-        ))
-        db.send_create_signal('irish_townlands', ['TownlandTouch'])
-
-        # Adding unique constraint on 'TownlandTouch', fields ['townland_a', 'townland_b']
-        db.create_unique('irish_townlands_townlandtouch', ['townland_a_id', 'townland_b_id'])
-
-        # Adding model 'Error'
-        db.create_table('irish_townlands_error', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('message', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('irish_townlands', ['Error'])
-
-
-    def backwards(self, orm):
-        # Removing unique constraint on 'TownlandTouch', fields ['townland_a', 'townland_b']
-        db.delete_unique('irish_townlands_townlandtouch', ['townland_a_id', 'townland_b_id'])
-
-        # Deleting model 'Metadata'
-        db.delete_table('irish_townlands_metadata')
-
-        # Deleting model 'Barony'
-        db.delete_table('irish_townlands_barony')
-
-        # Deleting model 'CivilParish'
-        db.delete_table('irish_townlands_civilparish')
-
-        # Deleting model 'County'
-        db.delete_table('irish_townlands_county')
-
-        # Deleting model 'Townland'
-        db.delete_table('irish_townlands_townland')
-
-        # Deleting model 'TownlandTouch'
-        db.delete_table('irish_townlands_townlandtouch')
-
-        # Deleting model 'Error'
-        db.delete_table('irish_townlands_error')
-
-
-    models = {
-        'irish_townlands.barony': {
-            'Meta': {'object_name': 'Barony'},
-            'alt_name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'area_m2': ('django.db.models.fields.FloatField', [], {'db_index': 'True'}),
-            'bbox_height': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'bbox_width': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_x': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_y': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'county': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'related_name': "'baronies'", 'null': 'True', 'to': "orm['irish_townlands.County']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'name_ga': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'osm_id': ('django.db.models.fields.IntegerField', [], {}),
-            'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'irish_townlands.civilparish': {
-            'Meta': {'object_name': 'CivilParish'},
-            'alt_name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'area_m2': ('django.db.models.fields.FloatField', [], {'db_index': 'True'}),
-            'bbox_height': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'bbox_width': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_x': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_y': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'county': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'related_name': "'civil_parishes'", 'null': 'True', 'to': "orm['irish_townlands.County']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'name_ga': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'osm_id': ('django.db.models.fields.IntegerField', [], {}),
-            'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'irish_townlands.county': {
-            'Meta': {'object_name': 'County'},
-            'alt_name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'area_m2': ('django.db.models.fields.FloatField', [], {'db_index': 'True'}),
-            'bbox_height': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'bbox_width': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_x': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_y': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'name_ga': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'osm_id': ('django.db.models.fields.IntegerField', [], {}),
-            'polygon_barony_gaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_barony_overlaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_civil_parish_gaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_civil_parish_overlaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_townland_gaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'polygon_townland_overlaps': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'irish_townlands.error': {
-            'Meta': {'object_name': 'Error'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'message': ('django.db.models.fields.TextField', [], {})
-        },
-        'irish_townlands.metadata': {
-            'Meta': {'object_name': 'Metadata'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'value': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
-        'irish_townlands.townland': {
-            'Meta': {'object_name': 'Townland'},
-            'alt_name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'area_m2': ('django.db.models.fields.FloatField', [], {'db_index': 'True'}),
-            'barony': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'townlands'", 'null': 'True', 'to': "orm['irish_townlands.Barony']"}),
-            'bbox_height': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'bbox_width': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_x': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'centre_y': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'civil_parish': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'townlands'", 'null': 'True', 'to': "orm['irish_townlands.CivilParish']"}),
-            'county': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'townlands'", 'null': 'True', 'to': "orm['irish_townlands.County']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'name_ga': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'null': 'True'}),
-            'osm_id': ('django.db.models.fields.IntegerField', [], {}),
-            'polygon_geojson': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'unique_suffix': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'url_path': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
-        },
-        'irish_townlands.townlandtouch': {
-            'Meta': {'unique_together': "[('townland_a', 'townland_b')]", 'object_name': 'TownlandTouch'},
-            'direction_radians': ('django.db.models.fields.FloatField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'length_m': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'townland_a': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'touching_as_a'", 'to': "orm['irish_townlands.Townland']"}),
-            'townland_b': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'touching_as_b'", 'to': "orm['irish_townlands.Townland']"})
-        }
-    }
-
-    complete_apps = ['irish_townlands']
+    operations = [
+        migrations.CreateModel(
+            name='Barony',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField(unique=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('place', models.CharField(default=None, max_length=255, null=True)),
+                ('area_m2', models.FloatField(db_index=True)),
+                ('water_area_m2', models.FloatField(null=True, blank=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('source', models.CharField(default=None, max_length=255, null=True)),
+                ('attribution', models.CharField(default=None, max_length=255, null=True)),
+                ('ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('centre_x', models.FloatField(default=0)),
+                ('centre_y', models.FloatField(default=0)),
+                ('bbox_width', models.FloatField(default=0)),
+                ('bbox_height', models.FloatField(default=0)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='CivilParish',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField(unique=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('place', models.CharField(default=None, max_length=255, null=True)),
+                ('area_m2', models.FloatField(db_index=True)),
+                ('water_area_m2', models.FloatField(null=True, blank=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('source', models.CharField(default=None, max_length=255, null=True)),
+                ('attribution', models.CharField(default=None, max_length=255, null=True)),
+                ('ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('centre_x', models.FloatField(default=0)),
+                ('centre_y', models.FloatField(default=0)),
+                ('bbox_width', models.FloatField(default=0)),
+                ('bbox_height', models.FloatField(default=0)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='County',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField(unique=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('place', models.CharField(default=None, max_length=255, null=True)),
+                ('area_m2', models.FloatField(db_index=True)),
+                ('water_area_m2', models.FloatField(null=True, blank=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('source', models.CharField(default=None, max_length=255, null=True)),
+                ('attribution', models.CharField(default=None, max_length=255, null=True)),
+                ('ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('centre_x', models.FloatField(default=0)),
+                ('centre_y', models.FloatField(default=0)),
+                ('bbox_width', models.FloatField(default=0)),
+                ('bbox_height', models.FloatField(default=0)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('polygon_townland_gaps', models.TextField(default=b'', null=True)),
+                ('polygon_townland_overlaps', models.TextField(default=b'', null=True)),
+                ('polygon_barony_gaps', models.TextField(default=b'', null=True)),
+                ('polygon_barony_overlaps', models.TextField(default=b'', null=True)),
+                ('polygon_civil_parish_gaps', models.TextField(default=b'', null=True)),
+                ('polygon_civil_parish_overlaps', models.TextField(default=b'', null=True)),
+                ('polygon_ed_gaps', models.TextField(default=b'', null=True)),
+                ('polygon_ed_overlaps', models.TextField(default=b'', null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='ElectoralDivision',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField(unique=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('place', models.CharField(default=None, max_length=255, null=True)),
+                ('area_m2', models.FloatField(db_index=True)),
+                ('water_area_m2', models.FloatField(null=True, blank=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('source', models.CharField(default=None, max_length=255, null=True)),
+                ('attribution', models.CharField(default=None, max_length=255, null=True)),
+                ('ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('centre_x', models.FloatField(default=0)),
+                ('centre_y', models.FloatField(default=0)),
+                ('bbox_width', models.FloatField(default=0)),
+                ('bbox_height', models.FloatField(default=0)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='Error',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('message', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Metadata',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('key', models.CharField(unique=True, max_length=50, db_index=True)),
+                ('value', models.CharField(max_length=255)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Polygon',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField()),
+                ('polygon_geojson', models.TextField(default=b'')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Progress',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('when', models.DateField(auto_now=True)),
+                ('percent', models.FloatField()),
+                ('name', models.CharField(max_length=50)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Subtownland',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.CharField(unique=True, max_length=50)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(max_length=255, null=True, db_index=True)),
+                ('location_x', models.FloatField(default=0)),
+                ('location_y', models.FloatField(default=0)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+            ],
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='Townland',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('osm_id', models.IntegerField(unique=True)),
+                ('name_tag', models.CharField(max_length=255, db_index=True)),
+                ('name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1901_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('name_census1911_tag', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('alt_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_en', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('official_name_ga', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('place', models.CharField(default=None, max_length=255, null=True)),
+                ('area_m2', models.FloatField(db_index=True)),
+                ('water_area_m2', models.FloatField(null=True, blank=True)),
+                ('url_path', models.CharField(max_length=255, db_index=True)),
+                ('unique_suffix', models.PositiveSmallIntegerField(null=True)),
+                ('source', models.CharField(default=None, max_length=255, null=True)),
+                ('attribution', models.CharField(default=None, max_length=255, null=True)),
+                ('ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('centre_x', models.FloatField(default=0)),
+                ('centre_y', models.FloatField(default=0)),
+                ('bbox_width', models.FloatField(default=0)),
+                ('bbox_height', models.FloatField(default=0)),
+                ('osm_user', models.CharField(max_length=100, null=True, db_index=True)),
+                ('osm_uid', models.IntegerField(null=True)),
+                ('osm_timestamp', models.DateTimeField(null=True, db_index=True)),
+                ('logainm_ref', models.CharField(default=None, max_length=255, null=True, db_index=True)),
+                ('_polygon_geojson', models.ForeignKey(default=None, to='irish_townlands.Polygon', null=True)),
+                ('barony', models.ForeignKey(related_name='townlands', to='irish_townlands.Barony', null=True)),
+                ('civil_parish', models.ForeignKey(related_name='townlands', to='irish_townlands.CivilParish', null=True)),
+                ('county', models.ForeignKey(related_name='townlands', to='irish_townlands.County', null=True)),
+                ('ed', models.ForeignKey(related_name='townlands', to='irish_townlands.ElectoralDivision', null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model, irish_townlands.models.NameableThing),
+        ),
+        migrations.CreateModel(
+            name='TownlandTouch',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('length_m', models.FloatField(default=0)),
+                ('direction_radians', models.FloatField()),
+                ('townland_a', models.ForeignKey(related_name='touching_as_a', to='irish_townlands.Townland')),
+                ('townland_b', models.ForeignKey(related_name='touching_as_b', to='irish_townlands.Townland')),
+            ],
+        ),
+        migrations.AddField(
+            model_name='subtownland',
+            name='townland',
+            field=models.ForeignKey(related_name='subtownlands', to='irish_townlands.Townland'),
+        ),
+        migrations.AddField(
+            model_name='electoraldivision',
+            name='_polygon_geojson',
+            field=models.ForeignKey(default=None, to='irish_townlands.Polygon', null=True),
+        ),
+        migrations.AddField(
+            model_name='electoraldivision',
+            name='county',
+            field=models.ForeignKey(related_name='eds', default=None, to='irish_townlands.County', null=True),
+        ),
+        migrations.AddField(
+            model_name='county',
+            name='_polygon_geojson',
+            field=models.ForeignKey(default=None, to='irish_townlands.Polygon', null=True),
+        ),
+        migrations.AddField(
+            model_name='civilparish',
+            name='_polygon_geojson',
+            field=models.ForeignKey(default=None, to='irish_townlands.Polygon', null=True),
+        ),
+        migrations.AddField(
+            model_name='civilparish',
+            name='counties',
+            field=models.ManyToManyField(default=None, related_name='civil_parishes', null=True, to='irish_townlands.County', db_index=True),
+        ),
+        migrations.AddField(
+            model_name='barony',
+            name='_polygon_geojson',
+            field=models.ForeignKey(default=None, to='irish_townlands.Polygon', null=True),
+        ),
+        migrations.AddField(
+            model_name='barony',
+            name='county',
+            field=models.ForeignKey(related_name='baronies', default=None, to='irish_townlands.County', null=True),
+        ),
+        migrations.AlterUniqueTogether(
+            name='townlandtouch',
+            unique_together=set([('townland_a', 'townland_b')]),
+        ),
+    ]
