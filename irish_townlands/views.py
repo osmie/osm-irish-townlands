@@ -337,7 +337,7 @@ def _search_for(qs):
     civil_parishes = list(CivilParish.objects.filter(qs).order_by("name_tag").only("name_tag", "name_ga", "alt_name"))
     eds = list(ElectoralDivision.objects.filter(qs).select_related("county").order_by("name_tag").only("name_tag", "name_ga", "alt_name", 'county__name_tag'))
     townlands = list(Townland.objects.filter(qs).select_related("county", "barony", "civil_parish").order_by("name_tag"). only("name_tag", "name_ga", "alt_name", "county__name_tag", "barony__name_tag", "civil_parish__name_tag"))
-    subtownlands = list(Subtownland.objects.filter(qs).select_related("county", "barony", "civil_parish", "townland").order_by("name_tag"). only("name_tag", "name_ga", "townland__name_tag"))
+    subtownlands = list(Subtownland.objects.filter(qs).select_related("townland").order_by("name_tag"). only("name_tag", "name_ga", "townland__name_tag"))
 
     return {
         'counties': counties, 'counties_num_results': len(counties),
