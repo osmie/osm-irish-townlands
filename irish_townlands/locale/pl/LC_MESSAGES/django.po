@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-08 15:18+0100\n"
+"POT-Creation-Date: 2015-11-08 15:23+0100\n"
 "PO-Revision-Date: 2015-11-05 22:13+0000\n"
 "Last-Translator: Leopold Chmielewski <leopold.chmielewski@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/openstreetmap/irish-"
@@ -43,11 +43,13 @@ msgid "Barony of %(barony_name)s"
 msgstr ""
 
 #: models.py:114 templates/irish_townlands/county_detail.html:5
+#: templates/irish_townlands/countydebug_detail.html:5
 #: templates/irish_townlands/duplicatenames.html:14
+#: templates/irish_townlands/ed_detail.html:5
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
-msgid "Co. %(county_name)s"
+msgid "Co. %(name)s"
 msgstr ""
 
 #: models.py:120
@@ -933,7 +935,7 @@ msgstr "Edytuj w Potlatch"
 
 #: templates/irish_townlands/county_detail.html:4
 #, python-format
-msgid "Townlands in Co. %(county_name)s"
+msgid "Townlands in Co. %(name)s"
 msgstr ""
 
 #: templates/irish_townlands/county_detail.html:9
@@ -1015,12 +1017,6 @@ msgstr ""
 #: templates/irish_townlands/countydebug_detail.html:4
 #, python-format
 msgid "Data Completeness in Co. %(name)s"
-msgstr ""
-
-#: templates/irish_townlands/countydebug_detail.html:5
-#: templates/irish_townlands/ed_detail.html:5
-#, python-format
-msgid "Co. %(name)s"
 msgstr ""
 
 #: templates/irish_townlands/countydebug_detail.html:60
@@ -1148,6 +1144,8 @@ msgid "%(baronyname)s Barony"
 msgstr ""
 
 #: templates/irish_townlands/ed_detail.html:5
+#: templates/irish_townlands/subtownland_detail.html:20
+#: templates/irish_townlands/townland_detail.html:37
 #, python-format
 msgid "%(name)s Electoral Division"
 msgstr ""
@@ -1705,12 +1703,6 @@ msgstr[2] ""
 #: templates/irish_townlands/search_results.html:106
 #, python-format
 msgid "Sorry. We found nothing for \"%(search_term)s\""
-msgstr ""
-
-#: templates/irish_townlands/subtownland_detail.html:20
-#: templates/irish_townlands/townland_detail.html:37
-#, python-format
-msgid "%(ed_name)s Electoral Division"
 msgstr ""
 
 #: templates/irish_townlands/subtownland_detail.html:32

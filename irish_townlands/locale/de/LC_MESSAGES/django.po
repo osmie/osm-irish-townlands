@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-08 15:18+0100\n"
+"POT-Creation-Date: 2015-11-08 15:23+0100\n"
 "PO-Revision-Date: 2015-11-05 09:29+0000\n"
 "Last-Translator: Nakaner\n"
 "Language-Team: German (http://www.transifex.com/openstreetmap/irish-"
@@ -45,12 +45,14 @@ msgid "Barony of %(barony_name)s"
 msgstr "Baronie %(barony_name)s"
 
 #: models.py:114 templates/irish_townlands/county_detail.html:5
+#: templates/irish_townlands/countydebug_detail.html:5
 #: templates/irish_townlands/duplicatenames.html:14
+#: templates/irish_townlands/ed_detail.html:5
 #: templates/irish_townlands/subtownland_detail.html:17
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
-msgid "Co. %(county_name)s"
-msgstr "Grafschaft %(county_name)s"
+msgid "Co. %(name)s"
+msgstr "Grafschaft %(name)s"
 
 #: models.py:120
 msgid "(Island)"
@@ -1037,8 +1039,8 @@ msgid "Edit in Potlatch"
 msgstr "in Potlatch bearbeiten"
 
 #: templates/irish_townlands/county_detail.html:4
-#, python-format
-msgid "Townlands in Co. %(county_name)s"
+#, fuzzy, python-format
+msgid "Townlands in Co. %(name)s"
 msgstr "Townlands in Co. %(county_name)s"
 
 #: templates/irish_townlands/county_detail.html:9
@@ -1140,12 +1142,6 @@ msgstr "Wie lange wird es dauern bis %(county_name)s fertig ist?"
 #, python-format
 msgid "Data Completeness in Co. %(name)s"
 msgstr "Vollständigkeit der Daten der Grafschaft %(name)s"
-
-#: templates/irish_townlands/countydebug_detail.html:5
-#: templates/irish_townlands/ed_detail.html:5
-#, python-format
-msgid "Co. %(name)s"
-msgstr "Grafschaft %(name)s"
 
 #: templates/irish_townlands/countydebug_detail.html:60
 msgid "Data Completeness"
@@ -1285,6 +1281,8 @@ msgid "%(baronyname)s Barony"
 msgstr "Baronie %(baronyname)s "
 
 #: templates/irish_townlands/ed_detail.html:5
+#: templates/irish_townlands/subtownland_detail.html:20
+#: templates/irish_townlands/townland_detail.html:37
 #, python-format
 msgid "%(name)s Electoral Division"
 msgstr "Wahlbezirk %(name)s"
@@ -1926,12 +1924,6 @@ msgstr ""
 "Es wurde leider nichts gefunden, was ihrer Suche nach \"%(search_term)s\" "
 "entspricht."
 
-#: templates/irish_townlands/subtownland_detail.html:20
-#: templates/irish_townlands/townland_detail.html:37
-#, python-format
-msgid "%(ed_name)s Electoral Division"
-msgstr "Wahlbezirk %(ed_name)s "
-
 #: templates/irish_townlands/subtownland_detail.html:32
 #: templates/irish_townlands/subtownland_detail.html:126
 #, python-format
@@ -2295,6 +2287,12 @@ msgstr "Die Quelle für dieses Townland ist %(source)s."
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
 msgstr "Die Zuschreibung für dieses Townland ist %(attribution)s."
+
+#~ msgid "Co. %(county_name)s"
+#~ msgstr "Grafschaft %(county_name)s"
+
+#~ msgid "%(ed_name)s Electoral Division"
+#~ msgstr "Wahlbezirk %(ed_name)s "
 
 #~ msgid "in"
 #~ msgstr "in"
