@@ -513,10 +513,6 @@ class Area(models.Model, NameableThing):
         return alt_values_textual(self.alt_name_ga)
 
     @property
-    def alt_name_textual(self):
-        return alt_values_textual(self.alt_name)
-
-    @property
     def ed_name_census1911(self):
         try:
             return self.ed.name_census1911
