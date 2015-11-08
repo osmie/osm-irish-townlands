@@ -693,7 +693,7 @@ def activity_rss(request):
             pubdate=period['date'],
             description=content)
 
-    return HttpResponse(feed.writeString('UTF-8'), mimetype='application/rss+xml')
+    return HttpResponse(feed.writeString('UTF-8'), content_type='application/rss+xml')
 
 def townland_index_alphabetical(request):
     return townland_index(request, should_group=False)
