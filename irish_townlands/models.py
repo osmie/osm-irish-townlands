@@ -565,7 +565,7 @@ class Barony(Area):
 
 
 class CivilParish(Area):
-    counties = models.ManyToManyField("County", null=True, db_index=True, default=None, related_name="civil_parishes")
+    counties = models.ManyToManyField("County", db_index=True, default=None, related_name="civil_parishes")
 
     def generate_url_path(self):
         name = slugify(self.name.lower())

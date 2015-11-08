@@ -20,7 +20,7 @@ urlpatterns = patterns('irish_townlands.views',
 
     url(r'^progress/activity/$', 'activity', name='activity' ),
     url(r'^progress/activity/rss/$', 'activity_rss', name='activity_rss' ),
-    url(r'^activity/$', RedirectView.as_view(pattern_name='activity')),
+    url(r'^activity/$', RedirectView.as_view(pattern_name='activity', permanent=True)),
     url(r'^progress/mappinghistory/$', 'mappinghistory', name='mappinghistory' ),
     url(r'^by/logainm/(?P<logainm_ref>[0-9]+)/$', 'lookup_by_logainm', name='lookup_by_logainm' ),
 
