@@ -155,6 +155,14 @@ class NameableThing(object):
     def osm_type(self):
         return 'relation' if self.osm_id < 0 else 'way'
 
+    @property
+    def alt_name_textual(self):
+        return alt_values_textual(self.alt_name)
+
+    @property
+    def alt_name_ga_textual(self):
+        return alt_values_textual(self.alt_name_ga)
+
 class Polygon(models.Model):
     osm_id = models.IntegerField()
     polygon_geojson = models.TextField(default='')
@@ -504,13 +512,6 @@ class Area(models.Model, NameableThing):
     def has_different_name_census1911(self):
         return self.name_census1911_tag is not None and self.name_census1911_tag != self.name
 
-    @property
-    def alt_name_textual(self):
-        return alt_values_textual(self.alt_name)
-
-    @property
-    def alt_name_ga_textual(self):
-        return alt_values_textual(self.alt_name_ga)
 
     @property
     def ed_name_census1911(self):
