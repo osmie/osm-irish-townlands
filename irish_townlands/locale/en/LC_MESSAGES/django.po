@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-05 21:02+0100\n"
+"POT-Creation-Date: 2015-11-08 15:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,28 +62,28 @@ msgstr ""
 msgid "'%(name)s' in 1911 Census"
 msgstr ""
 
-#: models.py:245
+#: models.py:253
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:246
+#: models.py:254
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:247
+#: models.py:255
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:390 templates/irish_townlands/ed_detail.html:88
+#: models.py:398 templates/irish_townlands/ed_detail.html:88
 msgid "Area in Acres, Rods and Perches"
 msgstr ""
 
@@ -925,9 +925,8 @@ msgstr ""
 #: templates/irish_townlands/county_detail.html:17
 #, python-format
 msgid ""
-"%(name)s has a total water area of "
-"%(county.water_area_m2|floatformat|intcomma)s m², which is "
-"%(county.water_percent|floatformat)s%% of the total area"
+"%(name)s has a total water area of %(water_area_m2)s m², which is "
+"%(water_percent)s%% of the total area"
 msgstr ""
 
 #: templates/irish_townlands/county_detail.html:22

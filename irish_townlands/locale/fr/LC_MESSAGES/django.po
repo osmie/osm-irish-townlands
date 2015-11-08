@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-05 21:02+0100\n"
-"PO-Revision-Date: 2015-11-05 11:50+0000\n"
+"POT-Creation-Date: 2015-11-08 15:18+0100\n"
+"PO-Revision-Date: 2015-11-07 18:52+0000\n"
 "Last-Translator: Vincent de Phily <vincent.dephily@mobile-devices.fr>\n"
 "Language-Team: French (http://www.transifex.com/openstreetmap/irish-"
 "townlands/language/fr/)\n"
@@ -63,28 +63,28 @@ msgstr "'%(name)s' au recenssement de 1901 "
 msgid "'%(name)s' in 1911 Census"
 msgstr "'%(name)s' au recenssement de 1911"
 
-#: models.py:245
+#: models.py:253
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] "%d acre"
 msgstr[1] "%d acres"
 
-#: models.py:246
+#: models.py:254
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] "%d rood"
 msgstr[1] "%d roods"
 
-#: models.py:247
+#: models.py:255
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] "%d perch"
 msgstr[1] "%d perches"
 
-#: models.py:390 templates/irish_townlands/ed_detail.html:88
+#: models.py:398 templates/irish_townlands/ed_detail.html:88
 msgid "Area in Acres, Rods and Perches"
 msgstr "Superficie en Acres, Roods et Perches"
 
@@ -558,7 +558,6 @@ msgid "What are townlands?"
 msgstr "Qu'est-ce qu'un townland ?"
 
 #: pages.py:201
-#, fuzzy
 msgid ""
 "A townland is a small geographical division of land. The townland system is "
 "of Gaelic origin, pre-dating the Norman invasion, and most have names of "
@@ -567,13 +566,6 @@ msgid ""
 "\">plantation divisions</a>, or later creations of the <a href=\"https://fr."
 "wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</a>."
 msgstr ""
-"Un townland est une petite division géographique terrienne. Le système des "
-"townland est d'origine gaélique et prédate l'invasion normande. La plupart "
-"des noms sont d'origine irlandaise, cependant quelques noms et frontières de "
-"townland viennent de manoir normans, de <a href=\"https://en.wikipedia.org/"
-"wiki/Plantations_of_Ireland\">plantations</a>, ou de création récente par "
-"l'<a href=\"https://fr.wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</"
-"a>."
 
 #: pages.py:203
 msgid ""
@@ -1016,11 +1008,10 @@ msgid "Debug</a> overlaps and coverage"
 msgstr "Débug des chevauchements et de la couverture</a>"
 
 #: templates/irish_townlands/county_detail.html:17
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"%(name)s has a total water area of "
-"%(county.water_area_m2|floatformat|intcomma)s m², which is "
-"%(county.water_percent|floatformat)s%% of the total area"
+"%(name)s has a total water area of %(water_area_m2)s m², which is "
+"%(water_percent)s%% of the total area"
 msgstr ""
 "%(name)s a une superficie immergée de "
 "%(county.water_area_m2|floatformat|intcomma)s m², soit "
@@ -1308,8 +1299,8 @@ msgid ""
 "This page should be updated (roughly) daily. The OpenStreetMap community is "
 "adding more data regularly."
 msgstr ""
-"Cette page est mise à jour (à peu près) quotidiennement. La communauté "
-"OpenStreetMap ajoute régulièrement plsu de données."
+"Cette page est normalement mise à jour quotidiennement. La communauté "
+"OpenStreetMap ajoute régulièrement plus de données."
 
 #: templates/irish_townlands/index.html:10
 msgid "See how much we have done and how much we have left to do"
@@ -2175,13 +2166,3 @@ msgstr "La source de ce townland est %(source)s."
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
 msgstr "L'attribution de ce townland est %(attribution)s."
-
-#~ msgid ""
-#~ "%(name)s has an area of %(area_km2)s km² / %(area_acres)s acres / "
-#~ "%(area_mile2)s square miles"
-#~ msgstr ""
-#~ "%(name)s a une superficie de %(area_km2)s km² / %(area_acres)s acres / "
-#~ "%(area_mile2)s miles carrés."
-
-#~ msgid "Mapping activity"
-#~ msgstr "Activité cartographique"

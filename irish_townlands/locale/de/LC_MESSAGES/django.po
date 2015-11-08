@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-05 21:02+0100\n"
+"POT-Creation-Date: 2015-11-08 15:18+0100\n"
 "PO-Revision-Date: 2015-11-05 09:29+0000\n"
 "Last-Translator: Nakaner\n"
 "Language-Team: German (http://www.transifex.com/openstreetmap/irish-"
@@ -66,28 +66,28 @@ msgstr "'%(name)s' im 1901 Volkszählung"
 msgid "'%(name)s' in 1911 Census"
 msgstr "'%(name)s' in 1911 Volkszählung"
 
-#: models.py:245
+#: models.py:253
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] "%d Acre"
 msgstr[1] "%d Acres"
 
-#: models.py:246
+#: models.py:254
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] "%d Rood"
 msgstr[1] "%d Roods"
 
-#: models.py:247
+#: models.py:255
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] "%d Perch"
 msgstr[1] "%d Perches"
 
-#: models.py:390 templates/irish_townlands/ed_detail.html:88
+#: models.py:398 templates/irish_townlands/ed_detail.html:88
 msgid "Area in Acres, Rods and Perches"
 msgstr "Fläche in Acres, Rods und Perches"
 
@@ -1057,11 +1057,10 @@ msgid "Debug</a> overlaps and coverage"
 msgstr "Debug</a> Überschneidungen und Abdeckung"
 
 #: templates/irish_townlands/county_detail.html:17
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"%(name)s has a total water area of "
-"%(county.water_area_m2|floatformat|intcomma)s m², which is "
-"%(county.water_percent|floatformat)s%% of the total area"
+"%(name)s has a total water area of %(water_area_m2)s m², which is "
+"%(water_percent)s%% of the total area"
 msgstr ""
 "%(name)s enthällt Wasserflächen von "
 "%(county.water_area_m2|floatformat|intcomma)s m², welches "
