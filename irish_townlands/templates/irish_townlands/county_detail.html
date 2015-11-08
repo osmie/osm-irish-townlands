@@ -19,11 +19,7 @@
     {% with baronies=county.baronies_sorted %}
         <h2>{% trans "Baronies" %}</h2>
         <p>
-            {% blocktrans with name=county.name count num=baronies|length  %}
-                There is {{ num }} barony in Co. {{ name }} that we know about.
-            {% plural %}
-                There are {{ num }} baronies in Co. {{ name }} that we know about.
-            {% endblocktrans %}
+            {% blocktrans with name=county.name count num=baronies|length %}There is {{ num }} barony in Co. {{ name }} that we know about.{% plural %}There are {{ num }} baronies in Co. {{ name }} that we know about.{% endblocktrans %}
 </p>
         <p>
             <a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
@@ -41,11 +37,7 @@
     {% with civil_parishes=county.civil_parishes_sorted %}
         <h2>{% trans "Civil Parishes" %}</h2>
         <p>
-            {% blocktrans with name=county.name count num=civil_parishes|length  %}
-                There is {{ num }} civil parish in Co. {{ name }} that we know about.
-            {% plural %}
-                There are {{ num }} civil parishes in Co. {{ name }} that we know about.
-            {% endblocktrans %}
+            {% blocktrans with name=county.name count num=civil_parishes|length  %}There is {{ num }} civil parish in Co. {{ name }} that we know about.{% plural %}There are {{ num }} civil parishes in Co. {{ name }} that we know about.{% endblocktrans %}
         </p>
         <p>
             <a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>

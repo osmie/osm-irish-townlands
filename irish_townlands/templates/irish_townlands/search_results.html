@@ -8,11 +8,7 @@
 {% if counties_num_results > 0 %}
     <h2>{% trans 'Counties' %}</h2>
     <p>
-        {% blocktrans count num_results=counties_num_results %}
-            We found {{ num_results }} county matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} counties matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=counties_num_results %}We found {{ num_results }} county matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} counties matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for c in counties %}
@@ -24,11 +20,7 @@
 {% if baronies_num_results > 0 %}
     <h2>{% trans 'Baronies' %}</h2>
     <p>
-        {% blocktrans count num_results=baronies_num_results %}
-            We found {{ num_results }} barony matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} baronies matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=baronies_num_results %}We found {{ num_results }} barony matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} baronies matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for b in baronies %}
@@ -40,11 +32,7 @@
 {% if civil_parishes_num_results > 0 %}
     <h2>{% trans 'Civil Parish' %}</h2>
     <p>
-        {% blocktrans count num_results=civil_parishes_num_results %}
-            We found {{ num_results }} civil parish matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} civil parishes matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=civil_parishes_num_results %}We found {{ num_results }} civil parish matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} civil parishes matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for cp in civil_parishes %}
@@ -56,11 +44,7 @@
 {% if eds_num_results > 0 %}
     <h2>{% trans 'Electoral Divisions' %}</h2>
     <p>
-        {% blocktrans count num_results=eds_num_results %}
-            We found {{ num_results }} ED matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} EDs matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=eds_num_results %}We found {{ num_results }} ED matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} EDs matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for ed in eds %}
@@ -72,11 +56,7 @@
 {% if townlands_num_results > 0 %}
     <h2>{% trans 'Townlands' %}</h2>
     <p>
-        {% blocktrans count num_results=townlands_num_results %}
-            We found {{ num_results }} townland matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} townlands matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=townlands_num_results %}We found {{ num_results }} townland matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} townlands matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for t in townlands %}
@@ -88,11 +68,7 @@
 {% if subtownlands_num_results > 0 %}
     <h2>{% trans 'Subtownlands' %}</h2>
     <p>
-        {% blocktrans count num_results=subtownlands_num_results %}
-            We found {{ num_results }} subtownland matching your search of "{{ search_term }}".
-        {% plural %}
-            We found {{ num_results }} subtownlands matching your search of "{{ search_term }}".
-        {% endblocktrans %}
+        {% blocktrans count num_results=subtownlands_num_results trimmed %}We found {{ num_results }} subtownland matching your search of "{{ search_term }}".{% plural %}We found {{ num_results }} subtownlands matching your search of "{{ search_term }}".{% endblocktrans %}
     </p>
     <p>
         {% for t in subtownlands %}
