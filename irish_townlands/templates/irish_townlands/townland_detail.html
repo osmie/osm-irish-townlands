@@ -19,7 +19,7 @@
     <p>
         {% if townland.county %}
             <span id="bc_county" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemref="bc_td">
-                <a href="{% url 'view_area' townland.county.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with county_name=townland.county.name %}Co. {{ county_name }}{% endblocktrans %}</span></a> →
+                <a href="{% url 'view_area' townland.county.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with name=townland.county.name %}Co. {{ name }}{% endblocktrans %}</span></a> →
             </span>
         {% endif %}
         {% if townland.barony %}
@@ -34,7 +34,7 @@
         {% endif %}
         {% if townland.ed %}
             <span id="bc_ed" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="bc_td">
-                <a href="{% url 'view_area' townland.ed.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with ed_name=townland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</span></a> →
+                <a href="{% url 'view_area' townland.ed.url_path %}" itemprop="url"><span itemprop="title">{% blocktrans with name=townland.ed.name %}{{ name }} Electoral Division{% endblocktrans %}</span></a> →
             </span>
         {% endif %}
         <span id="bc_td" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">

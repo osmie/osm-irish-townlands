@@ -14,10 +14,10 @@
 
     {% if subtownland.county and subtownland.barony and subtownland.civil_parish and subtownland.ed %}
     <p>
-        <a href="{% url 'view_area' subtownland.county.url_path %}">{% blocktrans with county_name=subtownland.county.name %}Co. {{ county_name }}{% endblocktrans %}</a>
+        <a href="{% url 'view_area' subtownland.county.url_path %}">{% blocktrans with name=subtownland.county.name %}Co. {{ name }}{% endblocktrans %}</a>
         → <a href="{% url 'view_area' subtownland.barony.url_path %}">{{ subtownland.barony.name }}</a>
         → <a href="{% url 'view_area' subtownland.civil_parish.url_path %}">{% blocktrans with name=subtownland.civil_parish.name %}{{ name }} Civil Parish{% endblocktrans %}</a>
-        → <a href="{% url 'view_area' subtownland.ed.url_path %}">{% blocktrans with ed_name=subtownland.ed.name %}{{ ed_name }} Electoral Division{% endblocktrans %}</a>
+        → <a href="{% url 'view_area' subtownland.ed.url_path %}">{% blocktrans with name=subtownland.ed.name %}{{ name }} Electoral Division{% endblocktrans %}</a>
         → <a href="{% url 'view_area' subtownland.url_path %}">{{ subtownland_name }}</a>
     </p>
     {% endif %}

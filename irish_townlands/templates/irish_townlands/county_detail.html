@@ -1,8 +1,8 @@
 {% extends 'irish_townlands/townland_base.html' %}
 {% load i18n l10n humanize cache %}
 
-{% block title %}{% blocktrans with county_name=county.name %}Townlands in Co. {{ county_name }}{% endblocktrans %}{% endblock %}
-{% block header %}<h1>{% blocktrans with county_name=county.name %}Co. {{ county_name }}{% endblocktrans %}</h1>{% endblock %}
+{% block title %}{% blocktrans with name=county.name %}Townlands in Co. {{ name }}{% endblocktrans %}{% endblock %}
+{% block header %}<h1>{% blocktrans with name=county.name %}Co. {{ name }}{% endblocktrans %}</h1>{% endblock %}
 
 {% block body %}
 

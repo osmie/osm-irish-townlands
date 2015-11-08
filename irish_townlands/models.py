@@ -111,7 +111,7 @@ class NameableThing(object):
                 barony_name = ", " + ugettext("Barony of %(barony_name)s") % {'barony_name': self.barony.name}
 
             if getattr(self, 'county', None):
-                county_name = ", " + ugettext("Co. %(county_name)s") % {'county_name': self.county.name}
+                county_name = ", " + ugettext("Co. %(name)s") % {'name': self.county.name}
 
         island = ''
         census_name = ''
