@@ -15,8 +15,11 @@ def clean_result_row(result):
     return result
 
 class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument("csv_filename")
+
     def handle(self, *args, **options):
-        csv_filename = args[0]
+        csv_filename = options['csv_filename']
 
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
