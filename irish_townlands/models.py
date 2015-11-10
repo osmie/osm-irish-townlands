@@ -1,6 +1,8 @@
 # encoding: utf-8
 from __future__ import division
 
+from collections import defaultdict
+
 from django.db import models
 from django.db.models import Sum, Q
 from django.template.defaultfilters import slugify
@@ -625,6 +627,30 @@ class CivilParish(Area):
             return baronies[0]
         else:
             return 0
+
+    @property
+    def townlands_for_list_display(self):
+        """
+        Returns a list of strings that can be used to show a list of townlands.
+        A townland can be entered more than once if there's an altname, namega,
+        altnamega, or an " or " or an " and " in the name.
+
+        It's then sorted by a sensible key for manual searching.
+        """
+
+        townlands = self.townlands_sorted
+        results = defaultdict(list)
+
+        for t in townlands:
+            results[t.county.name].extend(t.expand_to_alternatives())
+
+        for countyname in results:
+            results[countyname].sort()
+            results[countyname] = [x[1] for x in results[countyname]]
+
+        results = results.items()
+
+        return results
 
 
 

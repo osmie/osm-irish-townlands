@@ -65,9 +65,21 @@
         There are {% with nt=civil_parish.townlands.all|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in {{ civil_parish_name }}. This represents {{ civil_parish.townland_cover|floatformat:-1 }}% of all the area in {{ civil_parish_name }}.
     </p>
     <ul>
-    {% for townland in civil_parish.townlands_for_list_display %}
-        <li> {{ townland }} </li>
-    {% endfor %}
+        {% with townland_list=civil_parish.townlands_for_list_display %}
+            {% if townland_list|length == 1 %}
+                {# Only in one county #}
+                {% for townland in townland_list.0.1 %}
+                    <li> {{ townland }} </li>
+                {% endfor %}
+            {% else %}
+                {% for county_name, townlands in townland_list %}
+                    <h3>{{ county_name }}</h3>
+                    {% for townland in townlands %}
+                        <li> {{ townland }} </li>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </ul>
 
     <a name="osm"></a>
