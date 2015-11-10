@@ -13,7 +13,7 @@
 <h2>{% trans "Ireland" %}</h2>
 <p>
     {% blocktrans count num=num_baronies|intcomma %}{{ num }} barony{% plural %}{{ num }} baronies{% endblocktrans %},
-    {% blocktrans count num=num_civil_parishes|intcomma %}{{ num }} civil parish{% plural %}{{ num_ }} civil parishes{% endblocktrans %},
+    {% blocktrans count num=num_civil_parishes|intcomma %}{{ num }} civil parish{% plural %}{{ num }} civil parishes{% endblocktrans %},
     {% blocktrans count num=num_eds|intcomma %}{{ num }} electoral division{% plural %}{{ num }} electoral divisions{% endblocktrans %},
     {% blocktrans count num=num_townlands|intcomma %}{{ num }} townland{% plural %}{{ num }} townlands{% endblocktrans %}
     {% trans 'currently mapped on OpenStreetMap' %}.
