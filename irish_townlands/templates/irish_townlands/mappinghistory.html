@@ -21,7 +21,7 @@
     {% endifchanged %}
 
     {% url 'mapper_details' t.osm_user as mapper_url %}
-    <li>{% blocktrans username=t.owm_user desc=t.long_desc %}<a href="{{ mapper_url }}">{{ username }}</a> added {{ desc }}{% endblocktrans %}</li>
+    <li>{% blocktrans with username=t.owm_user desc=t.long_desc %}<a href="{{ mapper_url }}">{{ username }}</a> added {{ desc }}{% endblocktrans %}</li>
 {% endfor %}
 </ol></p>
 
