@@ -553,7 +553,7 @@ class Command(BaseCommand):
             DEBUG = True
 
         # delete old
-        with transaction.commit_on_success():
+        with transaction.atomic():
 
             with printer("deleting all old data"):
                 self.delete_all_data()
