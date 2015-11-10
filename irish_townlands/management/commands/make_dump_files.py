@@ -54,8 +54,11 @@ def townland_touching(directory, dbuser, dbpass):
 
 
 class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument("directory")
+
     def handle(self, *args, **options):
-        directory = args[0]
+        directory = options['directory']
         os.chdir(directory)
 
         dbuser = settings.DATABASES['default']['USER']
