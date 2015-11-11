@@ -642,7 +642,7 @@ class CivilParish(Area):
         results = defaultdict(list)
 
         for t in townlands:
-            results[t.county.name].extend(t.expand_to_alternatives())
+            results[t.county.name if t.county else ugettext("Unkown County")].extend(t.expand_to_alternatives())
 
         for countyname in results:
             results[countyname].sort()
