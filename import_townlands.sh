@@ -7,7 +7,7 @@ BASEDIR=$(dirname $0)
 cd ${BASEDIR}
 DB_USER=$1
 DB_PASS=$2
-OSM2PGSQL_CACHE=200M
+OSM2PGSQL_CACHE=1000M
 
 VERBOSE=""
 if [[ "$#" -ge 3 ]] ; then 
