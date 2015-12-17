@@ -101,6 +101,10 @@ class Command(BaseCommand):
             # this uses less memory
             django_cursor.execute("DELETE FROM {table} CASCADE".format(table=table))
 
+        # Some extra things to delete
+        for table in ['irish_townlands_civilparish_counties']:
+            django_cursor.execute("DELETE FROM {table} CASCADE".format(table=table))
+
         # Clear errors
         Error.objects.all().delete()
 
