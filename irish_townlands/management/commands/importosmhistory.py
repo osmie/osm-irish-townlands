@@ -7,7 +7,6 @@ from django.core.management.base import BaseCommand, CommandError
 
 from irish_townlands.models import Townland, ElectoralDivision, CivilParish, Barony, County, Subtownland
 
-logger = logging.getLogger(__name__)
 
 def clean_result_row(result):
     result['osm_id'] = long(result['osm_id'])
@@ -25,8 +24,9 @@ class Command(BaseCommand):
         ch.setLevel(logging.DEBUG)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         ch.setFormatter(formatter)
+        logger = logging.getLogger("")
         logger.addHandler(ch)
-        logger.setLevel(logging.DEBUG)
+        logger.setLevel(logging.WARNING)
 
         with open(csv_filename) as fp:
             csv_reader = csv.DictReader(fp)
