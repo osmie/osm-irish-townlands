@@ -21,7 +21,6 @@ from .utils import m2_to_arp, remove_prefixes, remove_accents
 def err_msg(msg, *args, **kwargs):
     msg = msg.format(*args, **kwargs)
     Error.objects.create(message=msg)
-    print msg
 
 def pathify(*args):
     return "/".join(slugify(x.lower()) for x in args if x is not None)
