@@ -213,7 +213,7 @@ PAGES = {
         </ul>
 
         <h2>"""+_("""About the Townland mapping project""")+"""</h2>
-        <p>"""+_("""Each townland has had to be manually traced and added to OSM. Our mappers have been working on the problem for years. We're <a href="/progress/">currently only 42% of the way through</a>, so it'll be another year before we're finished. We're adding about 100 per day <a href="/progress/activity/">at this rate</a>.""")+"""</p>
+        <p>"""+_("""Each townland has had to be manually traced and added to OSM. Our mappers have been working on the problem for years. We're <a href="/progress/">currently only 42%% of the way through</a>, so it'll be another year before we're finished. We're adding about 100 per day <a href="/progress/activity/">at this rate</a>.""")+"""</p>
 
         <p><a href="http://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands">"""+_("""How to map townlands""")+"""</a>.</p>
 
