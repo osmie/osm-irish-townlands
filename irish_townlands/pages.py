@@ -84,7 +84,7 @@ PAGES = {
                     <td><a href="/static/downloads/counties-no-geom.csv.zip">"""+_("""download no-geom CSV""")+"""</a></td>
                 </tr>
                 <tr>
-                    <td>"""+_("""Townland Touching""")+"""</td>
+                    <td>"""+_("""Townland Touch""")+"""</td>
                     <td></td>
                     <td></td>
                     <td></td>
