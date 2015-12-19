@@ -195,7 +195,7 @@ PAGES = {
         <h2>"""+_("""25,000 Townlands""")+"""</h2>
         <p>"""+_("""The Irish OpenStreetMap community has now passed an impressive milestone. 25,000 townlands have now been mapped and added to OSM!""")+"""</p>
 
-        <p>"""+_("""The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/corlis/">Corlis, Co. Roscommon""")+"""</a>.
+        <p>"""+_("""The 25,000th townland was added by <a href="/mapper/NoelB">NoelB</a>. On the 29th March 2015, they uploaded 3 townlands, one of which was the magic 25,000, <a href="/roscommon/corlis/">Corlis, Co. Roscommon</a>.""")+"""
 
         <h2>"""+_("""What are townlands?""")+"""</h2>
         <p>"""+_("""A townland is a small geographical division of land. The townland system is of Gaelic origin, pre-dating the Norman invasion, and most have names of Irish origin. However, some townland names and boundaries come from Norman manors, <a href="https://en.wikipedia.org/wiki/Plantations_of_Ireland">plantation divisions</a>, or later creations of the <a href="https://fr.wikipedia.org/wiki/Ordnance_Survey">Ordnance Survey</a>.""")+"""</p>
