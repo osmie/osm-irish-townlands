@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-19 14:02+0100\n"
+"POT-Creation-Date: 2015-12-19 14:07+0100\n"
 "PO-Revision-Date: 2015-11-14 21:51+0000\n"
 "Last-Translator: Leopold Chmielewski <leopold.chmielewski@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/openstreetmap/irish-"
@@ -249,8 +249,8 @@ msgstr ""
 msgid "Counties"
 msgstr ""
 
-#: pages.py:87
-msgid "Townland Touching"
+#: pages.py:87 pages.py:162
+msgid "Townland Touch"
 msgstr ""
 
 #: pages.py:96
@@ -434,10 +434,6 @@ msgid ""
 "regular CSV version."
 msgstr ""
 
-#: pages.py:162
-msgid "Townland Touch"
-msgstr ""
-
 #: pages.py:163
 msgid ""
 "When we sync from OpenStreetMap, we calculate what townlands touch each "
@@ -518,7 +514,7 @@ msgstr ""
 msgid ""
 "The 25,000th townland was added by <a href=\"/mapper/NoelB\">NoelB</a>. On "
 "the 29th March 2015, they uploaded 3 townlands, one of which was the magic "
-"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon"
+"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon</a>."
 msgstr ""
 
 #: pages.py:200

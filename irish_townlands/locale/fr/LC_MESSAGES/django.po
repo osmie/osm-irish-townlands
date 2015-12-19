@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-19 14:02+0100\n"
+"POT-Creation-Date: 2015-12-19 14:07+0100\n"
 "PO-Revision-Date: 2015-12-18 13:01+0000\n"
 "Last-Translator: Vincent de Phily <vincent.dephily@mobile-devices.fr>\n"
 "Language-Team: French (http://www.transifex.com/openstreetmap/irish-"
@@ -246,8 +246,8 @@ msgstr "Baronnies"
 msgid "Counties"
 msgstr "Comtés"
 
-#: pages.py:87
-msgid "Townland Touching"
+#: pages.py:87 pages.py:162
+msgid "Townland Touch"
 msgstr "Townlands adjacents"
 
 #: pages.py:96
@@ -479,10 +479,6 @@ msgstr ""
 "suffisant si vous voulez analyser les données dans un tableur. Certains "
 "tableurs ont du mal avec le long champ WKT du CSV normal."
 
-#: pages.py:162
-msgid "Townland Touch"
-msgstr "Townlands adjacents"
-
 #: pages.py:163
 msgid ""
 "When we sync from OpenStreetMap, we calculate what townlands touch each "
@@ -574,10 +570,11 @@ msgstr ""
 "25.000 townlands ont été tracés et ajouté à OSM !"
 
 #: pages.py:198
+#, fuzzy
 msgid ""
 "The 25,000th townland was added by <a href=\"/mapper/NoelB\">NoelB</a>. On "
 "the 29th March 2015, they uploaded 3 townlands, one of which was the magic "
-"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon"
+"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon</a>."
 msgstr ""
 "Le 25.000<sup>ième</sup> townland  a été ajouté par <a href=\"/mapper/NoelB"
 "\">NoelB</a>.  Le 29 mars 2015, il a envoyé 3 townlands, dont le "
@@ -2146,3 +2143,6 @@ msgstr "La source de ce townland est %(source)s."
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
 msgstr "L'attribution de ce townland est %(attribution)s."
+
+#~ msgid "Townland Touching"
+#~ msgstr "Townlands adjacents"
