@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-08 15:30+0100\n"
+"POT-Creation-Date: 2015-12-19 14:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:41 templates/irish_townlands/index.html:10
+#: models.py:42 templates/irish_townlands/index.html:10
 msgid "and"
 msgstr ""
 
-#: models.py:105 templates/irish_townlands/townland_detail.html:7
+#: models.py:106 templates/irish_townlands/townland_detail.html:7
 #: templates/irish_townlands/townland_detail.html:13
 #, python-format
 msgid "%(townland_name)s Townland"
 msgstr ""
 
-#: models.py:108 templates/irish_townlands/duplicatenames.html:14
+#: models.py:109 templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:19
 #: templates/irish_townlands/townland_detail.html:32
 #, python-format
 msgid "%(name)s Civil Parish"
 msgstr ""
 
-#: models.py:111
+#: models.py:112
 #, python-format
 msgid "Barony of %(barony_name)s"
 msgstr ""
 
-#: models.py:114 templates/irish_townlands/county_detail.html:5
+#: models.py:115 templates/irish_townlands/county_detail.html:5
 #: templates/irish_townlands/countydebug_detail.html:5
 #: templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/ed_detail.html:5
@@ -50,43 +50,47 @@ msgstr ""
 msgid "Co. %(name)s"
 msgstr ""
 
-#: models.py:120
+#: models.py:121
 msgid "(Island)"
 msgstr ""
 
-#: models.py:125
+#: models.py:126
 #, python-format
 msgid "'%(name)s' in 1901 Census"
 msgstr ""
 
-#: models.py:127
+#: models.py:128
 #, python-format
 msgid "'%(name)s' in 1911 Census"
 msgstr ""
 
-#: models.py:253
+#: models.py:254
 #, python-format
 msgid "%d acre"
 msgid_plural "%d acres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:254
+#: models.py:255
 #, python-format
 msgid "%d rood"
 msgid_plural "%d roods"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:255
+#: models.py:256
 #, python-format
 msgid "%d perch"
 msgid_plural "%d perches"
 msgstr[0] ""
 msgstr[1] ""
 
-#: models.py:398 templates/irish_townlands/ed_detail.html:84
+#: models.py:399 templates/irish_townlands/ed_detail.html:84
 msgid "Area in Acres, Rods and Perches"
+msgstr ""
+
+#: models.py:644
+msgid "Unkown County"
 msgstr ""
 
 #: pages.py:7
@@ -574,7 +578,7 @@ msgstr ""
 msgid ""
 "Each townland has had to be manually traced and added to OSM. Our mappers "
 "have been working on the problem for years. We're <a href=\"/progress/"
-"\">currently only 42% of the way through</a>, so it'll be another year "
+"\">currently only 42%% of the way through</a>, so it'll be another year "
 "before we're finished. We're adding about 100 per day <a href=\"/progress/"
 "activity/\">at this rate</a>."
 msgstr ""
@@ -757,7 +761,7 @@ msgid "Area"
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:86
-#: templates/irish_townlands/civil_parish_detail.html:76
+#: templates/irish_townlands/civil_parish_detail.html:88
 #: templates/irish_townlands/county_detail.html:100
 #: templates/irish_townlands/ed_detail.html:95
 #, python-format
@@ -766,7 +770,7 @@ msgid ""
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:88
-#: templates/irish_townlands/civil_parish_detail.html:78
+#: templates/irish_townlands/civil_parish_detail.html:90
 #: templates/irish_townlands/county_detail.html:102
 #: templates/irish_townlands/ed_detail.html:97
 #: templates/irish_townlands/subtownland_detail.html:144
@@ -776,7 +780,7 @@ msgid "We don't know when %(name)s was added to OpenStreetMap."
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:94
-#: templates/irish_townlands/civil_parish_detail.html:84
+#: templates/irish_townlands/civil_parish_detail.html:96
 #: templates/irish_townlands/county_detail.html:108
 #: templates/irish_townlands/ed_detail.html:103
 #: templates/irish_townlands/subtownland_detail.html:150
@@ -785,7 +789,7 @@ msgid "Edit in iD"
 msgstr ""
 
 #: templates/irish_townlands/barony_detail.html:96
-#: templates/irish_townlands/civil_parish_detail.html:86
+#: templates/irish_townlands/civil_parish_detail.html:98
 #: templates/irish_townlands/county_detail.html:110
 #: templates/irish_townlands/ed_detail.html:105
 #: templates/irish_townlands/subtownland_detail.html:152
@@ -827,7 +831,7 @@ msgid "Map"
 msgstr ""
 
 #: templates/irish_townlands/civil_parish_detail.html:21
-#: templates/irish_townlands/civil_parish_detail.html:74
+#: templates/irish_townlands/civil_parish_detail.html:86
 #: templates/irish_townlands/county_detail.html:98
 #: templates/irish_townlands/ed_detail.html:26
 #: templates/irish_townlands/ed_detail.html:93
@@ -869,7 +873,7 @@ msgid ""
 "%(area_mile2)s square miles."
 msgstr ""
 
-#: templates/irish_townlands/civil_parish_detail.html:82
+#: templates/irish_townlands/civil_parish_detail.html:94
 #: templates/irish_townlands/county_detail.html:106
 #: templates/irish_townlands/ed_detail.html:101
 #: templates/irish_townlands/subtownland_detail.html:148
@@ -877,7 +881,7 @@ msgstr ""
 msgid "Show on OpenStreetMap.org"
 msgstr ""
 
-#: templates/irish_townlands/civil_parish_detail.html:83
+#: templates/irish_townlands/civil_parish_detail.html:95
 #: templates/irish_townlands/county_detail.html:107
 #: templates/irish_townlands/ed_detail.html:102
 #: templates/irish_townlands/subtownland_detail.html:149
@@ -885,7 +889,7 @@ msgstr ""
 msgid "Edit in JOSM"
 msgstr ""
 
-#: templates/irish_townlands/civil_parish_detail.html:85
+#: templates/irish_townlands/civil_parish_detail.html:97
 #: templates/irish_townlands/county_detail.html:109
 #: templates/irish_townlands/ed_detail.html:104
 #: templates/irish_townlands/subtownland_detail.html:151
