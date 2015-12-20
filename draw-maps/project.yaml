@@ -7,9 +7,9 @@ bounds:
     - -5.173362
     - 55.605689
 center:
-    - 53.285
-    - -7.844
-    - 6
+    - -7.767
+    - 53.236
+    - 7
 format: "png"
 minzoom: 0
 maxzoom: 20
