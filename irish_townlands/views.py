@@ -18,6 +18,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils import feedgenerator
 from django.utils.translation import ungettext, ugettext
 from django.utils.html import format_html, mark_safe
+from django.db import connection
 
 from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress, Subtownland
 from .pages import PAGES
@@ -561,7 +562,17 @@ def mappers(request):
     all_mappers = [(osm_user, stats_for_user(osm_user)) for osm_user in all_mappers]
     all_mappers.sort(key=lambda x: x[1]['total'], reverse=True)
 
-    return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers},
+    sql = "select c.name_tag, t.osm_user, count(*) as count from irish_townlands_townland as t  join irish_townlands_county as c on (t.county_id = c.id) group by c.name_tag, t.osm_user order by c.name_tag, count desc, t.osm_user"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    per_county_mappers_raw = cursor.fetchall()
+    per_county_mappers = defaultdict(list)
+    for county_name, osm_user, count in per_county_mappers_raw:
+        per_county_mappers[county_name].append((osm_user, count))
+    per_county_mappers = [(k, per_county_mappers[k]) for k in sorted(per_county_mappers.keys())]
+    print per_county_mappers
+
+    return render_to_response('irish_townlands/mappers.html', {'all_mappers': all_mappers, 'per_county_mappers': per_county_mappers},
             context_instance=RequestContext(request))
 
 def group_by_username(model, start_date):

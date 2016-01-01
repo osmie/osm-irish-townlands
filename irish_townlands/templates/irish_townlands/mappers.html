@@ -6,6 +6,7 @@
 
 {% block body %}
 <p>
+<h2>{% trans 'All Ireland' %}</h2>
 <table class="table table-striped table-hover">
         <tr>
             <th>{% trans "Username" %}</th>
@@ -25,6 +26,19 @@
         </tr>
     {% endfor %}
 </table>
+</p>
+
+<p>
+<h2>{% trans 'Per County Breakdown' %}</h2>
+    <p>{% trans 'How many townlands each mapper has added in each county.' %}</p>
+    {% for county_name, data in per_county_mappers %}
+        <h3>{{ county_name }}</h3>
+        <table class="table table-striped" style="width: auto">
+            {% for osm_user, count in data %}
+            <tr><td><a href="{% url 'mapper_details' osm_user %}">{{ osm_user }}</a></td><td>{{ count|intcomma }}</td></tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
 </p>
 
 {% endblock %}
