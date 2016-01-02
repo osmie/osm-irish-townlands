@@ -80,6 +80,12 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "update water_polygon set geo = st_transfo
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "analyze water_polygon;" 2> /dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "cluster water_polygon using water_polygon__way;" 2> /dev/null || true
 
+# Calculate the coastline
+rm -f coastline.db
+osmcoastline -s 3857 -o coastline.db ireland-and-northern-ireland.osm.pbf
+ogr2ogr -f PostgreSQL PG:"dbname=townlands" coastline.db land_polygons -overwrite
+ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons
+rm -f coastline.db
 
 
 cd ${BASEDIR}
