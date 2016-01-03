@@ -226,7 +226,18 @@ PAGES = {
         'body': """
         <p>Townlands.ie provides several maps based on townlands.</p>
         <h2>When were townlands mapped</h2>
-        <div id="townlandage" class="map" style="width:500px; height:500px;"></div>
+        <div id="townlandage" class="map" style="width:100%; height:700px;"></div>
+        <p>Legend:
+            <span style="width: 10px; height: 10px; background-color: #9e0142; display: inline-block"> </span> Today or Yesterday
+            <span style="width: 10px; height: 10px; background-color: #d53e4f; display: inline-block"> </span> Last 3 days
+            <span style="width: 10px; height: 10px; background-color: #f46d43; display: inline-block"> </span> Last 4 days
+            <span style="width: 10px; height: 10px; background-color: #fdae61; display: inline-block"> </span> Last 5 days
+            <span style="width: 10px; height: 10px; background-color: #fee08b; display: inline-block"> </span> Last 6 days
+            <span style="width: 10px; height: 10px; background-color: #e6f598; display: inline-block"> </span> Last 7 days
+            <span style="width: 10px; height: 10px; background-color: #abdda4; display: inline-block"> </span> Last 30 days
+            <span style="width: 10px; height: 10px; background-color: #66c2a5; display: inline-block"> </span> Last 6 months
+            <span style="width: 10px; height: 10px; background-color: #5e4fa2; display: inline-block"> </span> Older
+        </p>
 
         <script>
             $(document).ready(function() {
