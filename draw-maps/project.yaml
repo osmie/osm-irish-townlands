@@ -1,0 +1,78 @@
+scale: 1
+metatile: 1
+name: "The World"
+bounds:
+    - -11.161157
+    - 51.236087
+    - -5.173362
+    - 55.605689
+center:
+    - -7.767
+    - 53.236
+    - 7
+format: "png"
+minzoom: 0
+maxzoom: 20
+srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+Stylesheet:
+  - "style.mss"
+Layer:
+  - id: "land"
+    name: "land"
+    geometry: "polygon"
+    extent:
+        - -11.161157
+        - 51.236087
+        - -5.173362
+        - 55.605689
+    srs-name: "4326"
+    srs: '+proj=longlat +datum=WGS84 +no_defs'
+    Datasource:
+      file: "land.shp"
+      type: "shape"
+    advanced: {}
+  - id: "counties"
+    name: "counties"
+    class: ".counties"
+    geometry: "polygon"
+    extent:
+        - -11.161157
+        - 51.236087
+        - -5.173362
+        - 55.605689
+    srs-name: "4326"
+    srs: '+proj=longlat +datum=WGS84 +no_defs'
+    Datasource:
+      file: "counties/counties.shp"
+      type: "shape"
+    advanced: {}
+  - id: "civil_parishes"
+    name: "civil_parishes"
+    class: ".civil_parishes"
+    geometry: "polygon"
+    extent:
+        - -11.161157
+        - 51.236087
+        - -5.173362
+        - 55.605689
+    srs-name: "4326"
+    srs: '+proj=longlat +datum=WGS84 +no_defs'
+    Datasource:
+      file: "civil_parishes/civil_parishes.shp"
+      type: "shape"
+    advanced: {}
+  - id: "baronies"
+    name: "baronies"
+    class: ".baronies"
+    geometry: "polygon"
+    extent:
+        - -11.161157
+        - 51.236087
+        - -5.173362
+        - 55.605689
+    srs-name: "4326"
+    srs: '+proj=longlat +datum=WGS84 +no_defs'
+    Datasource:
+      file: "baronies/baronies.shp"
+      type: "shape"
+    advanced: {}

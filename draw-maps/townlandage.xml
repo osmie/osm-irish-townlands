@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over" background-color="#ffffffff" maximum-extent="-20037508.34,-20037508.34,20037508.34,20037508.34">
+
+<Parameters>
+  <Parameter name="bounds">-11.2061,51.1518,-4.8779,55.6032</Parameter>
+  <Parameter name="center">-7.9761,53.4161,7</Parameter>
+  <Parameter name="format">png24</Parameter>
+  <Parameter name="minzoom">0</Parameter>
+  <Parameter name="maxzoom">22</Parameter>
+  <Parameter name="scale">1</Parameter>
+  <Parameter name="metatile">2</Parameter>
+  <Parameter name="id"><![CDATA[TieTownlandAge]]></Parameter>
+  <Parameter name="_updated">1451831227000</Parameter>
+  <Parameter name="tilejson"><![CDATA[2.0.0]]></Parameter>
+  <Parameter name="scheme"><![CDATA[xyz]]></Parameter>
+</Parameters>
+
+
+<Style name="age-age" filter-mode="first">
+  <Rule>
+    <Filter>([age] = 'ancient')</Filter>
+    <PolygonSymbolizer fill="#5e4fa2" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '6months')</Filter>
+    <PolygonSymbolizer fill="#3288bd" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '30days')</Filter>
+    <PolygonSymbolizer fill="#66c2a5" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '14days')</Filter>
+    <PolygonSymbolizer fill="#abdda4" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '7days')</Filter>
+    <PolygonSymbolizer fill="#e6f598" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '6days')</Filter>
+    <PolygonSymbolizer fill="#fee08b" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '5days')</Filter>
+    <PolygonSymbolizer fill="#fdae61" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '4days')</Filter>
+    <PolygonSymbolizer fill="#f46d43" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = '3days')</Filter>
+    <PolygonSymbolizer fill="#d53e4f" />
+  </Rule>
+  <Rule>
+    <Filter>([age] = 'todayyesterday')</Filter>
+    <PolygonSymbolizer fill="#9e0142" />
+  </Rule>
+</Style>
+<Style name="age-border" filter-mode="first">
+  <Rule>
+    <LineSymbolizer stroke-width="1" stroke="#000000" />
+  </Rule>
+</Style>
+<Layer name="age"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName>age-border</StyleName>
+    <StyleName>age-age</StyleName>
+    <Datasource>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="table"><![CDATA[(select osm_id, osm_timestamp, case when osm_timestamp > 'today'::timestamp - interval '1 day' then 'todayyesterday'  when osm_timestamp > 'today'::timestamp - interval '3 days' then '3days' when osm_timestamp > 'today'::timestamp - interval '4 days' then '4days' when osm_timestamp > 'today'::timestamp - interval '5 days' then '5days' when osm_timestamp > 'today'::timestamp - interval '6 days' then '6days' when osm_timestamp > 'today'::timestamp - interval '7 days' then '7days'  when osm_timestamp > 'today'::timestamp - interval '14 days' then '14days'  when osm_timestamp > 'today'::timestamp - interval '30 days' then '30days' when osm_timestamp > 'today'::timestamp - interval '6 months' then '6months' else 'ancient' end as age,  valid_polygon.way from valid_polygon join  irish_townlands_townland using (osm_id)) as townlands]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[way]]></Parameter>
+       <Parameter name="extent_cache"><![CDATA[auto]]></Parameter>
+       <Parameter name="extent"><![CDATA[-1791809.75,6136884.18,-565256.06,7699046.87]]></Parameter>
+       <Parameter name="dbname"><![CDATA[townlands]]></Parameter>
+       <Parameter name="id"><![CDATA[age]]></Parameter>
+       <Parameter name="project"><![CDATA[TieTownlandAge]]></Parameter>
+       <Parameter name="srs"><![CDATA[+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over]]></Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>
