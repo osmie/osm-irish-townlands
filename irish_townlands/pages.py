@@ -221,6 +221,44 @@ PAGES = {
         
         """,
     },
+    'maps': {
+        'title': _('Townlands.ie Maps'),
+        'body': """
+        <p>Townlands.ie provides several maps based on townlands.</p>
+        <h2>When were townlands mapped</h2>
+        <div id="townlandage" class="map" style="width:500px; height:500px;"></div>
 
+        <script>
+            $(document).ready(function() {
+                $(".map").each(function() {
+                    // create the map
+                    //var dataset = $(this).data("dataset");
+                    var map = new L.Map($(this).attr('id'));
+                    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                    var osmAttrib='Map data © OpenStreetMap contributors';
+                    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+                    var townlandage = new L.TileLayer("http://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png", {minZoom: 0, maxZoom: 18, attribution: osmAttrib});
 
+                    map.setView(new L.LatLng( 53.4357, -7.7124), 7 );
+                    map.addLayer(osm);
+                    map.addLayer(townlandage);
+
+                    // Add the 'open in JOSM button'
+                    var button = $("<button>", {
+                        class:"btn btn-primary",
+                        html: "Open in JOSM",
+                    }).on("click", function() {
+                        var bounds = map.getBounds();
+                        var left = bounds.getWest();
+                        var right = bounds.getEast();
+                        var top = bounds.getNorth();
+                        var bottom = bounds.getSouth();
+                        jQuery.get("http://localhost:8111/load_and_zoom?left="+left+"&right="+right+"&bottom="+bottom+"&top="+top);
+                    });
+                    $(this).after(button);
+                });
+            });
+        </script>
+        """,
+    },
 }
