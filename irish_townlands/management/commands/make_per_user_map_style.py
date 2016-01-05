@@ -36,7 +36,7 @@ class Command(BaseCommand):
         # Create mapnik template
         users = list(Townland.objects.values_list("osm_user", flat=True).distinct())
         usercolours = [(user.replace("'", "\\'"), colour_for_user(user)) for user in users]
-        new_template = django.template.loader.get_template("irish_townlands/mapnik_styles/townlanduser.xml").render({'usercolours': usercolours, 'shapefile': shapefile})
+        new_template = django.template.loader.get_template("irish_townlands/townlanduser.xml").render({'usercolours': usercolours, 'shapefile': shapefile})
 
         with open(output_file, 'w') as fp:
             fp.write(new_template)
