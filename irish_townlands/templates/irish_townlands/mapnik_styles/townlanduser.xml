@@ -17,27 +17,20 @@
 </Parameters>
 
 
-<Style name="tt" filter-mode="first">
-  <Rule>
-    <Filter>([OSM_USER] = 'KDDA')</Filter>
-    <PolygonSymbolizer fill="#5452ff" />
-    <TextSymbolizer face-name="DejaVu Sans Book" size="12" placement="interior" halo-fill="#ffffff" halo-radius="2" ><![CDATA[[OSM_USER]]]></TextSymbolizer>
-  </Rule>
-  <Rule>
-    <Filter>([OSM_USER] = 'rorym')</Filter>
-    <PolygonSymbolizer fill="#ff6352" />
-    <TextSymbolizer face-name="DejaVu Sans Book" size="12" placement="interior" halo-fill="#ffffff" halo-radius="2" ><![CDATA[[OSM_USER]]]></TextSymbolizer>
-  </Rule>
-  <Rule>
-    <PolygonSymbolizer fill="#008000" />
-    <TextSymbolizer face-name="DejaVu Sans Book" size="12" placement="interior" halo-fill="#ffffff" halo-radius="2" ><![CDATA[[OSM_USER]]]></TextSymbolizer>
-  </Rule>
+<Style name="users" filter-mode="first">
+  {% for user, colour in usercolours %}
+      <Rule>
+        <Filter>([OSM_USER] = '{{ user }}')</Filter>
+        <PolygonSymbolizer fill="{{ colour }}" />
+        <TextSymbolizer face-name="DejaVu Sans Book" size="12" placement="interior" halo-fill="#ffffff" halo-radius="2" ><![CDATA[[OSM_USER]]]></TextSymbolizer>
+      </Rule>
+  {% endfor %}
 </Style>
 <Layer name="tt"
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
-    <StyleName>tt</StyleName>
+    <StyleName>users</StyleName>
     <Datasource>
-       <Parameter name="file"><![CDATA[/home/rory/Documents/MapBox/project/TownlandsByUser/layers/tt/usermappings.shp]]></Parameter>
+        <Parameter name="file"><![CDATA[{{ shapefile }}]]></Parameter>
        <Parameter name="id"><![CDATA[tt]]></Parameter>
        <Parameter name="project"><![CDATA[TownlandsByUser]]></Parameter>
        <Parameter name="srs"><![CDATA[]]></Parameter>
