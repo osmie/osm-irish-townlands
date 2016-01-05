@@ -104,8 +104,8 @@ split-large-polygons  -d townlands -t water_polygon_split -c geom -i gid -a 0.00
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
 pgsql2shp -f water_polygon.shp townlands water_polygon_split 2>/dev/null
 
-pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" 2>/dev/null
-pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" 2>/dev/null
+pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
+pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
 
 # Land not covered by counties
 difference-polygons -l land_polygons.shp  -r counties_split.shp -o not_counties.shp
