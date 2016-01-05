@@ -89,10 +89,20 @@ rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-
 rm -f coastline.db
 
 # Make the split table
+# Split polygons
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table valid_polygon_split (gid serial primary key, admin_level text, osm_id bigint, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into valid_polygon_split (admin_level, osm_id, geom) select admin_level, osm_id, St_multi(way) from valid_polygon;" 2> /dev/null || true
 split-large-polygons  -d townlands -t valid_polygon_split -c geom -i gid -a 0.001 -s 4326
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
+
+# Split water
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table water_polygon_split (gid serial primary key, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into water_polygon_split (geom) select way from water_polygon;" 2> /dev/null || true
+split-large-polygons  -d townlands -t water_polygon_split -c geom -i gid -a 0.001 -s 4326
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
+pgsql2shp -f water_polygon.shp townlands water_polygon_split 2>/dev/null
 
 pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" 2>/dev/null
 pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" 2>/dev/null
