@@ -37,7 +37,7 @@
     <StyleName>notcounties-polygons</StyleName>
     <StyleName>notcounties-lines</StyleName>
     <Datasource>
-        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/draw-maps/not_counties.shp]]></Parameter>
+        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/not_counties.shp]]></Parameter>
        <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>
