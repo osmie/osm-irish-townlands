@@ -6,3 +6,10 @@ ireland-and-northern-ireland-latest.osm.pbf
 ireland-and-northern-ireland.osm.pbf
 build/*
 coastline.db
+
+# Ignore shapefiles
+*.shp
+*.shx
+*.prj
+*.cpg
+*.dbf
