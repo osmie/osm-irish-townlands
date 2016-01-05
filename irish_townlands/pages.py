@@ -226,7 +226,7 @@ PAGES = {
         'body': """
         <p>Townlands.ie provides several maps based on townlands.</p>
         <h2>When were townlands mapped</h2>
-        <div id="townlandage" class="map" style="width:100%; height:700px;"></div>
+        <div id="townlandage" data-mapurl="http://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
         <p>Legend:
             <span style="width: 10px; height: 10px; background-color: #9e0142; display: inline-block"> </span> Today or Yesterday
             <span style="width: 10px; height: 10px; background-color: #d53e4f; display: inline-block"> </span> Last 3 days
@@ -239,16 +239,20 @@ PAGES = {
             <span style="width: 10px; height: 10px; background-color: #5e4fa2; display: inline-block"> </span> Older
         </p>
 
+        <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <p>Legend:
+        </p>
+
         <script>
             $(document).ready(function() {
                 $(".map").each(function() {
                     // create the map
-                    //var dataset = $(this).data("dataset");
                     var map = new L.Map($(this).attr('id'));
                     var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                     var osmAttrib='Map data © OpenStreetMap contributors';
                     var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
-                    var townlandage = new L.TileLayer("http://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png", {minZoom: 0, maxZoom: 18, attribution: osmAttrib});
+                    var mapurl = $(this).data("mapurl");
+                    var townlandage = new L.TileLayer(mapurl, {minZoom: 0, maxZoom: 18, attribution: osmAttrib});
 
                     map.setView(new L.LatLng( 53.4357, -7.7124), 7 );
                     map.addLayer(osm);
