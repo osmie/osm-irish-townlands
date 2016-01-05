@@ -108,7 +108,8 @@ pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split wh
 pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
 
 # Land not covered by counties
-difference-polygons -l land_polygons.shp  -r counties_split.shp -o not_counties.shp
+difference-polygons -l land_polygons.shp  -r counties_split.shp -o not_counties.shp -a 1e-09
+difference-polygons -l land_polygons.shp  -r townlands_split.shp -r water_polygon.shp -o not_townlands.shp -a 1e-09
 
 cd ${BASEDIR}
 #./screenshot-townlands.sh
