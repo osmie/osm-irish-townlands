@@ -252,25 +252,12 @@ PAGES = {
                     var osmAttrib='Map data © OpenStreetMap contributors';
                     var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
                     var mapurl = $(this).data("mapurl");
-                    var townlandage = new L.TileLayer(mapurl, {minZoom: 0, maxZoom: 18, attribution: osmAttrib});
+                    var layer = new L.TileLayer(mapurl, {minZoom: 0, maxZoom: 18, attribution: osmAttrib});
 
                     map.setView(new L.LatLng( 53.4357, -7.7124), 7 );
                     map.addLayer(osm);
-                    map.addLayer(townlandage);
+                    map.addLayer(layer);
 
-                    // Add the 'open in JOSM button'
-                    var button = $("<button>", {
-                        class:"btn btn-primary",
-                        html: "Open in JOSM",
-                    }).on("click", function() {
-                        var bounds = map.getBounds();
-                        var left = bounds.getWest();
-                        var right = bounds.getEast();
-                        var top = bounds.getNorth();
-                        var bottom = bounds.getSouth();
-                        jQuery.get("http://localhost:8111/load_and_zoom?left="+left+"&right="+right+"&bottom="+bottom+"&top="+top);
-                    });
-                    $(this).after(button);
                 });
             });
         </script>
