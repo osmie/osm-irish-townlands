@@ -48,7 +48,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon;" 2>/dev/null ||
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table if not exists valid_polygon (like planet_osm_polygon);" 2>/dev/null
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into valid_polygon select * from planet_osm_polygon where name IS NOT NULL and st_isvalid(way) and not st_isempty(way) and (admin_level is not null or boundary is not null)";
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "alter table valid_polygon add column gid serial not null primary key;"
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "GRANT SELECT ON valid_polygon TO tirex;"
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "GRANT SELECT ON valid_polygon TO tirex;" || true
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table if not exists water_polygon (way geometry(MultiPolygon, 4326), geo geography);" 2>/dev/null
