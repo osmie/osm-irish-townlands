@@ -13,7 +13,7 @@ urlpatterns = patterns('irish_townlands.views',
     url(r'^search/$', 'search', name='search' ),
     url(r'^mappers/$', 'mappers', name='mappers' ),
     url(r'^mapper/(?P<osm_user>.+)/$', 'mapper_details', name='mapper_details' ),
-    url(r'^page/(?P<url_path>[-\w\d/]+)/$', 'page', name='page' ),
+    url(r'^pages?/(?P<url_path>[-\w\d/]+)/$', 'page', name='page' ),
 
     url(r'^progress/duplicatenames/$', 'duplicatenames', name='duplicatenames' ),
     url(r'^progress/rate/$', 'rate', name='rate' ),
