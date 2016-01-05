@@ -31,7 +31,7 @@ class Command(BaseCommand):
         output_file = options['write_mapnik_to']
 
         # create shapefile
-        subprocess.call(["pgsql2shp", "-f", shapefile, "townlands", "select osm_user, (st_dump(geom)).geom as geom from  (select osm_user, st_union(way) as geom from irish_townlands_townland join valid_polygon using (osm_id) group by osm_user) as t;"])
+        subprocess.call(["pgsql2shp", "-f", shapefile, "townlands", "select osm_user, (st_dump(geom)).geom as geom from  (select osm_user, st_union(way) as geom from irish_townlands_townland join valid_polygon using (osm_id) group by osm_user) as t;"], stdout=subprocess.PIPE)
 
         # Create mapnik template
         users = list(Townland.objects.values_list("osm_user", flat=True).distinct())
