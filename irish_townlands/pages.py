@@ -239,9 +239,8 @@ PAGES = {
             <span style="width: 10px; height: 10px; background-color: #5e4fa2; display: inline-block"> </span> Older
         </p>
 
+        <h2>Who has mapped townlands</h2>
         <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
-        <p>Legend:
-        </p>
 
         <script>
             $(document).ready(function() {
