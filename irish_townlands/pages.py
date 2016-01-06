@@ -243,7 +243,7 @@ PAGES = {
         <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any county</h2>
-        <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="not_counties" data-mapurl="http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <script>
             $(document).ready(function() {
