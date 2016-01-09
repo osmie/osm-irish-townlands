@@ -152,7 +152,9 @@ class Command(BaseCommand):
 
         touching_townlands = []
         with printer("touching townlands"):
-            self.cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.geo, b.geo)), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
+            # Sometimes st_intersection(a.geo, b.geo) causes a topology
+            # exception, but st_intersection(a.way, b.way)::geography doesn't. 
+            self.cursor.execute("select a.osm_id, b.osm_id, ST_length(st_intersection(a.way, b.way)::geography), ST_Azimuth(st_centroid(a.way), st_centroid(st_intersection(a.way, b.way))) from valid_polygon as a inner join valid_polygon as b on st_touches(a.way, b.way) where a.admin_level = '10' and b.admin_level = '10' and a.osm_id <> b.osm_id;")
             for idx, (a_osm_id, b_osm_id, length_m, direction_radians) in enumerate(self.cursor):
                 touching_townlands.append(TownlandTouch(townland_a=self.townlands[a_osm_id], townland_b=self.townlands[b_osm_id], length_m=length_m, direction_radians=direction_radians))
                 if len(touching_townlands) >= bucket_size:
