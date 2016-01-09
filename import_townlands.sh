@@ -111,6 +111,3 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/
 # Land not covered by counties
 difference-polygons -q -l land_polygons.shp  -r counties_split.shp -o not_counties.shp -a 1e-09
 difference-polygons -q -l land_polygons.shp  -r townlands_split.shp -r water_polygon.shp -o not_townlands.shp -a 1e-09
-
-cd ${BASEDIR}
-#./screenshot-townlands.sh
