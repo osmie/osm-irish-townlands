@@ -86,7 +86,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "cluster water_polygon using water_polygon
 # to remove the old land_polygons shapefiles if that command doesn't succeed,
 # so abuse bash this way
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table land_polygons;" 4> /dev/null || true
-rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && pgsql2shp townlands land_polygons
+rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && pgsql2shp townlands land_polygons >/dev/null
 rm -f coastline.db
 
 # Make the split table
