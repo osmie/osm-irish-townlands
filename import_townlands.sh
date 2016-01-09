@@ -85,7 +85,8 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "cluster water_polygon using water_polygon
 # Long line in case osmcoastline segfaults (has happened to me), I don't want
 # to remove the old land_polygons shapefiles if that command doesn't succeed,
 # so abuse bash this way
-rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf  && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons && split-large-polygons  -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && pgsql2shp townlands land_polygons
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table land_polygons;" 4> /dev/null || true
+rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf  && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && pgsql2shp townlands land_polygons
 rm -f coastline.db
 
 # Make the split table
@@ -93,16 +94,16 @@ rm -f coastline.db
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table valid_polygon_split (gid serial primary key, admin_level text, osm_id bigint, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into valid_polygon_split (admin_level, osm_id, geom) select admin_level, osm_id, St_multi(way) from valid_polygon;" 2> /dev/null || true
-split-large-polygons  -d townlands -t valid_polygon_split -c geom -i gid -a 0.001 -s 4326
+split-large-polygons -q -d townlands -t valid_polygon_split -c geom -i gid -a 0.001 -s 4326
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 
 # Split water
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table water_polygon_split (gid serial primary key, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into water_polygon_split (geom) select way from water_polygon;" 2> /dev/null || true
-split-large-polygons  -d townlands -t water_polygon_split -c geom -i gid -a 0.001 -s 4326
+split-large-polygons -q -d townlands -t water_polygon_split -c geom -i gid -a 0.001 -s 4326
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
-pgsql2shp -f water_polygon.shp townlands water_polygon_split 2>/dev/null
+pgsql2shp -f water_polygon.shp townlands water_polygon_split >/dev/null
 
 pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
 pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
