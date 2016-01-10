@@ -224,7 +224,7 @@ PAGES = {
     'maps': {
         'title': _('Townlands.ie Maps'),
         'body': """
-        <p>Townlands.ie provides several maps based on townlands.</p>
+        <p>Townlands.ie provides several maps based on townlands. In accordance with the current <a href="/page/data_freshness/">update process</a>, it is updated once per day.</p>
         <h2>When were townlands mapped</h2>
         <div id="townlandage" data-mapurl="http://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
         <p>Legend:
@@ -243,6 +243,7 @@ PAGES = {
         <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any county</h2>
+        <p>This map shows land that is not in any county. It is available in JOSM preset images as "OSMIE T.ie Land not in Counties". If you would like to use it in your own application, the tile URL is <pre>http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png</pre></p>
         <div id="not_counties" data-mapurl="http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <script>
