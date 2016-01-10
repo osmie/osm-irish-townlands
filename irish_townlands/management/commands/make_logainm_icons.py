@@ -15,7 +15,7 @@ def logainm_id_to_path(lid):
 def get_existing_logainm_ids():
     results = set()
     for klass in [ County, Barony, CivilParish, ElectoralDivision, Townland]:
-        results.extend(klass.objects.exclude(logainm_ref=None).values_list('logainm_ref', flat=True))
+        results.update(klass.objects.exclude(logainm_ref=None).values_list('logainm_ref', flat=True))
 
     return results
 
@@ -24,13 +24,13 @@ class Command(BaseCommand):
         parser.add_argument("--icons-directory")
 
     def handle(self, *args, **options):
-        directory = options['icons-directory']
+        directory = options['icons_directory']
         existing_logainm_ids = get_existing_logainm_ids()
         yes_icon = os.path.join(directory, "green_check.png")
         no_icon = os.path.join(directory, "red_cross.png")
 
         for logainm_id in range(1, 119001):
-            print "logainm_id"
+            logainm_id = str(logainm_id)
 
             icon_dir, icon_name = logainm_id_to_path(logainm_id)
             icon_dir = os.path.join(directory, icon_dir)
@@ -39,7 +39,12 @@ class Command(BaseCommand):
             if not os.path.exists(icon_dir):
                 os.makedirs(icon_dir)
 
+            if os.path.exists(icon_filename):
+                os.remove(icon_filename)
+
             if logainm_id in existing_logainm_ids:
-                os.symlink(yes_icon, icon_filename)
+                icon = yes_icon
             else:
-                os.symlink(no_icon, icon_filename)
+                icon = no_icon
+
+            os.symlink(icon, icon_filename)
