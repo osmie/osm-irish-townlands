@@ -103,10 +103,18 @@ split-large-polygons -q -d townlands -t water_polygon_split -c geom -i gid -a 0.
 pgsql2shp -f water_polygon.shp townlands water_polygon_split >/dev/null
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
 
-pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
 pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
+pgsql2shp -f baronies_split.shp townlands "select * from valid_polygon_split where boundary = 'barony'" >/dev/null
+pgsql2shp -f civil_parishes_split.shp townlands "select * from valid_polygon_split where boundary = 'civil_parish'" >/dev/null
+pgsql2shp -f eds_split.shp townlands "select * from valid_polygon_split where admin_level = '9'" >/dev/null
+pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 
-# Land not covered by counties
+# Land not covered by...
 difference-polygons -q -l land_polygons.shp  -r counties_split.shp -o not_counties.shp -a 1e-09
+difference-polygons -q -l land_polygons.shp  -r baronies_split.shp -o not_baronies.shp -a 1e-09
+difference-polygons -q -l land_polygons.shp  -r civil_parishes_split.shp -o not_civil_parishes.shp -a 1e-09
+difference-polygons -q -l land_polygons.shp  -r eds_split.shp -o not_eds.shp -a 1e-09
+
+# Not covered by townlands. NB unlike the previous boundaries, townlands traditionally don't include water areas
 difference-polygons -q -l land_polygons.shp  -r townlands_split.shp -r water_polygon.shp -o not_townlands.shp -a 1e-09
