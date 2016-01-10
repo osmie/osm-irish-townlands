@@ -92,7 +92,7 @@ rm -f coastline.db
 # Split polygons
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table valid_polygon_split (gid serial primary key, admin_level text, boundary text, osm_id bigint, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into valid_polygon_split (admin_level, osm_id, geom) select admin_level, boundary, osm_id, St_multi(way) from valid_polygon;" 2> /dev/null || true
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into valid_polygon_split (admin_level, boundary, osm_id, geom) select admin_level, boundary, osm_id, St_multi(way) from valid_polygon;" 2> /dev/null || true
 split-large-polygons -q -d townlands -t valid_polygon_split -c geom -i gid -a 0.001 -s 4326
 
 # Split water
