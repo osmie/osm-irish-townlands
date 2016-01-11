@@ -76,11 +76,11 @@ class Command(BaseCommand):
             FROM (
                 SELECT
                     t.osm_id, t.name_tag, t.name_ga, t.name_en, t.alt_name, t.alt_name_ga,
-                    t.osm_user, t.osm_timestamp, t.attribution,
-                    c.name_tag AS co_name, c.osm_id AS co_osm_id,
-                    cp.name_tag AS cp_name, cp.osm_id AS cp_osm_id,
-                    ed.name_tag AS ed_name, ed.osm_id AS ed_osm_id,
-                    b.name_tag AS bar_name, b.osm_id AS bar_osm_id,
+                    t.osm_user, t.osm_timestamp, t.attribution, t.logainm_ref,
+                    c.name_tag AS co_name, c.osm_id AS co_osm_id, c.logainm_ref as co_logainm_ref,
+                    cp.name_tag AS cp_name, cp.osm_id AS cp_osm_id, cp.logainm_ref as cp_logainm_ref,
+                    ed.name_tag AS ed_name, ed.osm_id AS ed_osm_id, ed.logainm_ref as ed_logainm_ref,
+                    b.name_tag AS bar_name, b.osm_id AS bar_osm_id, b.logainm_ref as bar_logainm_ref,
                     concat('http://www.townlands.ie/', t.url_path) AS t_ie_url,
                     ST_SetSRID(ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson), 4326) AS geom
                 FROM
@@ -102,7 +102,7 @@ class Command(BaseCommand):
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
                 SELECT
-                    c.osm_id, c.name_tag, c.name_ga, c.name_en, c.alt_name, c.alt_name_ga,
+                    c.osm_id, c.name_tag, c.name_ga, c.name_en, c.alt_name, c.alt_name_ga, c.logainm_ref,
                     c.osm_user, c.osm_timestamp, c.attribution,
                     concat('http://www.townlands.ie/', c.url_path) AS t_ie_url,
                     ST_SetSRID(ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson), 4326) AS geom
@@ -120,7 +120,7 @@ class Command(BaseCommand):
                 EXTRACT(epoch FROM osm_timestamp) AS epoch_tstmp
             FROM (
                 SELECT
-                    b.osm_id, b.name_tag, b.name_ga, b.name_en, b.alt_name,
+                    b.osm_id, b.name_tag, b.name_ga, b.name_en, b.alt_name, b.logainm_ref,
                     b.alt_name_ga, b.osm_user, b.osm_timestamp, b.attribution,
                     c.name_tag AS co_name, c.osm_id AS co_osm_id,
                     concat('http://www.townlands.ie/', b.url_path) AS t_ie_url,
@@ -142,7 +142,7 @@ class Command(BaseCommand):
             FROM (
                 SELECT
                     cp.osm_id, cp.name_tag, cp.name_ga, cp.name_en, cp.alt_name, cp.alt_name_ga,
-                    cp.osm_user, cp.osm_timestamp, cp.attribution,
+                    cp.osm_user, cp.osm_timestamp, cp.attribution, cp.logainm_ref,
                     c.c_names as co_names, c.c_osm_ids as co_osm_ids,
                     concat('http://www.townlands.ie/', cp.url_path) AS t_ie_url,
                     ST_SetSRID(ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson), 4326) AS geom
@@ -175,7 +175,7 @@ class Command(BaseCommand):
             FROM (
                 SELECT
                     ed.osm_id, ed.name_tag, ed.name_ga, ed.name_en, ed.alt_name, ed.alt_name_ga,
-                    ed.osm_user, ed.osm_timestamp, ed.attribution,
+                    ed.osm_user, ed.osm_timestamp, ed.attribution, ed.logainm_ref,
                     c.name_tag as co_name, c.osm_id AS co_osm_id,
                     concat('http://www.townlands.ie/', ed.url_path) AS t_ie_url,
                     ST_SetSRID(ST_GeomFromGeoJSON(irish_townlands_polygon.polygon_geojson), 4326) AS geom

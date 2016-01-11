@@ -126,6 +126,8 @@ PAGES = {
                     <dd>"""+_("""Integer. <a href="https://en.wikipedia.org/wiki/Unix_time">Unix 'epoch' time</a> of when the object was added to OSM.""")+"""</dd>
                     <dt>t_ie_url<dt>
                     <dd>"""+_("""String. URL of this object on <a href="www.townlands.ie">Townlands.ie</a> (this site)""")+"""</dd>
+                    <dt>LOGAINM_RE<dt>
+                    <dd>"""+_("""String. Value of logainm:ref tag. Logainm ID of this object.""")+"""</dd>
                     <dt>co_name<dt>
                     <dd>"""+_("""String. Name of the county this object is in, if known. Not in 'county' or 'civil_parish' files.""")+"""</dd>
                     <dt>co_osm_id<dt>
@@ -134,18 +136,26 @@ PAGES = {
                     <dd>"""+_("""String. Comma separated list of names of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.""")+"""</dd>
                     <dt>co_osm_ids<dt>
                     <dd>"""+_("""String. Comma separated list of osm_ids of the counties this object is in, if known. Orderd by the county's osm_id. Only in the 'civil_parish' files.""")+"""</dd>
+                    <dt>co_logainm<dt>
+                    <dd>"""+_("""String. Logainm ref of the county.""")+"""</dd>
                     <dt>ed_name<dt>
                     <dd>"""+_("""String. Name of the ED this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>ed_osm_id<dt>
                     <dd>"""+_("""Integer. OSM_ID of the ED this object is in, if known. Only in 'townland' files.""")+"""</dd>
+                    <dt>ed_logainm<dt>
+                    <dd>"""+_("""String. Logainm ref of the ED.""")+"""</dd>
                     <dt>cp_name<dt>
                     <dd>"""+_("""String. Name of the civil parish this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>cp_osm_id<dt>
                     <dd>"""+_("""Integer. OSM_ID of the civil parish this object is in, if known. Only in 'townland' files.""")+"""</dd>
+                    <dt>cp_logainm<dt>
+                    <dd>"""+_("""String. Logainm ref of the civil parish.""")+"""</dd>
                     <dt>bar_name<dt>
                     <dd>"""+_("""String. Name of the barony this object is in, if known. Only in 'townland' files.""")+"""</dd>
                     <dt>bar_osm_id<dt>
                     <dd>"""+_("""Integer. OSM_ID of the barony this object is in, if known. Only in 'townland' files.""")+"""</dd>
+                    <dt>bar_logain<dt>
+                    <dd>"""+_("""String. Logainm ref of the barony this object is in.""")+"""</dd>
                     <dt>attributio<dt>
                     <dd>"""+_("""String. Value of the 'attribution' tag (if any)""")+"""</dd>
                 </dl>
