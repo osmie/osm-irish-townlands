@@ -1845,7 +1845,7 @@ msgstr ""
 #: templates/irish_townlands/subtownland_detail.html:128
 #, python-format
 msgid ""
-"Interested in Geneological / ancestors who may have lived in "
+"Interested in Genealogical / ancestors who may have lived in "
 "%(townland_name)s?"
 msgstr ""
 
@@ -1863,7 +1863,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Since we don't know what townland %(subtownland_name)s is in, we are unable "
-"to provide any geneological data for this place name. Please check back "
+"to provide any genealogical data for this place name. Please check back "
 "later, and it might have been added!"
 msgstr ""
 
@@ -2025,7 +2025,7 @@ msgid "We don't know about any subtownlands in %(townland_name)s."
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:188
-msgid "Geneology / Ancestry / Records Search"
+msgid "Genealogy / Ancestry / Records Search"
 msgstr ""
 
 #: templates/irish_townlands/townland_detail.html:190
