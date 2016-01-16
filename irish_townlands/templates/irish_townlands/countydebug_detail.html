@@ -95,7 +95,7 @@ $(document).ready(function() {
         
         <div class="map" id="map-td-overlap" data-dataset="td-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the townlands in {{ name }} the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No townlands overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
     <a name="unmapped_eds"></a><h3>Land & Water not covered by Electoral Divisions</h3>
@@ -113,7 +113,7 @@ $(document).ready(function() {
         
         <div class="map" id="map-ed-overlap" data-dataset="ed-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the EDs in {{ name }} the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No EDs overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
     <h3>{% trans "Land not covered by Civil Parishes" %}</h3>
@@ -148,7 +148,7 @@ $(document).ready(function() {
         <i>{% trans "Due to a bug in the software, there will sometimes be lines following the borders that appear as \"overlap\". Ignore them" %}</i>
         <div class="map" id="map-bar-overlap" data-dataset="bar-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the baronies in {{ name }} in the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No baronies overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
 
