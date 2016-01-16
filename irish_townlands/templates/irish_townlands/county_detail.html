@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(</i><a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
+    <p>{% blocktrans with county_name=county.name %}Here are some details about Co. {{ county_name }} based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>.{% endblocktrans %} <i>(</i><a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
 
     {% if county.logainm_ref %}
         <p>{% blocktrans with name=county.name logainm_ref=county.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
