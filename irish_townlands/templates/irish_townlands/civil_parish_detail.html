@@ -28,8 +28,12 @@
     {% endwith %}
     <p>{% blocktrans with countieslist=civil_parish.counties_list_textual|safe count baronies=baronies.length %}{{ civil_parish_name }} is in the county of {{ countieslist }}.{% plural %}{{ civil_parish_name }} is in the counties of {{ countieslist }}.{% endblocktrans %}</p>
 
-    {% if civil_parish.logainm_ref %}
-        <p>{% blocktrans with name=civil_parish.name logainm_ref=civil_parish.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% if civil_parish.logainm_refs|length == 0 %}
+        <p>{% blocktrans with name=civil_parish.name %}{{ name }} is not matched up to Logainm.ie yet.{% endblocktrans %}</p>
+    {% elif civil_parish.logainm_refs|length == 1 %}
+        <p>{% blocktrans with name=civil_parish.name logainm_ref=civil_parish.logainm_refs.0 %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% elif civil_parish.logainm_refs|length > 1 %}
+        <p>{% blocktrans with name=civil_parish.name %}{{ name }} is on Logainm.ie many times:{% endblocktrans %}{% for lid in civil_parish.logainm_refs %}<a href="http://www.logainm.ie/en/{{ lid }}">{{ civil_parish.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% endif %}
 
     <a name="map"></a>
