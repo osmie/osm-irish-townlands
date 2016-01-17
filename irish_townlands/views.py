@@ -495,7 +495,7 @@ def taginfo(request):
                 },
                 {
                     "key": "logainm:ref",
-                    "description": "The id of this object in Logainm, the Placename Database of Ireland."
+                    "description": "The id(s) of this object in Logainm, the Placename Database of Ireland."
                 },
                 {
                     "key": "official_name:en",
