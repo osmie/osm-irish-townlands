@@ -39,6 +39,7 @@ way   alt_name     text         linear
 way   alt_name:ga  text         linear
 way   name:census1901     text         linear
 way   name:census1911     text         linear
+way   name:griffithvaluation     text         linear
 way   place        text         linear
 way   attribution  text         linear
 way   source       text         linear

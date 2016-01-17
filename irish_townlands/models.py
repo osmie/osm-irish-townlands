@@ -120,13 +120,16 @@ class NameableThing(object):
             if self.place == 'island':
                 island = ' ' + ugettext("(Island)") + ' '
 
-            if self.has_different_name_census1901 or self.has_different_name_census1911:
+            if self.has_different_name_census1901 or self.has_different_name_census1911 or self.has_different_name_griffithvaluation :
                 census_names = []
                 if self.has_different_name_census1901: 
                     census_names.append(ugettext("'%(name)s' in 1901 Census") % { "name": self.name_census1901 })
                 if self.has_different_name_census1911: 
                     census_names.append(ugettext("'%(name)s' in 1911 Census") % { "name": self.name_census1911 })
+                if self.has_different_name_griffithvaluation: 
+                    census_names.append(ugettext("'%(name)s' in Griffith\'s Valuation") % { "name": self.name_griffithvaluation })
                 census_name = ' (' + ', '.join(census_names) + ')'
+
 
 
 
@@ -182,6 +185,7 @@ class Area(models.Model, NameableThing):
 
     name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_griffithvaluation_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
     alt_name = models.CharField(max_length=255, default=None, null=True, db_index=True)
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
@@ -414,14 +418,16 @@ class Area(models.Model, NameableThing):
             alternatives.append(self.alt_name)
             alternatives.extend(split_string(self.alt_name))
 
-        # Different names in the census
+        # Different names in the census etc
         if self.name_census1901_tag:
             alternatives.append(self.name_census1901_tag)
             alternatives.extend(split_string(self.name_census1901_tag))
         if self.name_census1911_tag:
             alternatives.append(self.name_census1911_tag)
             alternatives.extend(split_string(self.name_census1911_tag))
-
+        if self.name_griffithvaluation_tag:
+            alternatives.append(self.name_griffithvaluation_tag)
+            alternatives.extend(split_string(self.name_griffithvaluation_tag))
         
         # Optional Irish name(s)
         if incl_irish:
@@ -506,6 +512,21 @@ class Area(models.Model, NameableThing):
             return self.name
 
     @property
+    def name_griffithvaluation(self):
+        """What name should we search for when searching Griffith's Valuation"""
+        return self.name_griffithvaluation_tag if self.has_different_name_griffithvaluation else self.name
+
+    @property
+    def name_griffithvaluation_display(self):
+        """For a Griffith's Valuation search, returns current name if unchanged, else shows both names"""
+        if self.has_different_name_griffithvaluation:
+            return "{} ({})".format(self.name_griffithvaluation, self.name)
+        else:
+            return self.name
+
+
+
+    @property
     def has_different_name_census1901(self):
         return self.name_census1901_tag is not None and self.name_census1901_tag != self.name
 
@@ -513,6 +534,9 @@ class Area(models.Model, NameableThing):
     def has_different_name_census1911(self):
         return self.name_census1911_tag is not None and self.name_census1911_tag != self.name
 
+    @property
+    def has_different_name_griffithvaluation(self):
+        return self.name_griffithvaluation_tag is not None and self.name_griffithvaluation_tag != self.name
 
     @property
     def ed_name_census1911(self):
@@ -527,6 +551,14 @@ class Area(models.Model, NameableThing):
             return self.ed.name_census1901
         except:
             return ''
+
+    @property
+    def ed_name_griffithvaluation(self):
+        try:
+            return self.ed.name_griffithvaluation
+        except:
+            return ''
+
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
@@ -814,12 +846,14 @@ class Subtownland(models.Model, NameableThing):
     alt_name_ga = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_census1901_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
     name_census1911_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    name_griffithvaluation_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
     logainm_ref = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
     place = None
     has_different_name_census1901 = False
     has_different_name_census1911 = False
+    has_different_name_griffithvaluation = False
 
     @property
     def name(self):
