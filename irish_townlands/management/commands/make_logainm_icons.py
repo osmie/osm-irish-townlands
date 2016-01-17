@@ -15,7 +15,9 @@ def logainm_id_to_path(lid):
 def get_existing_logainm_ids():
     results = set()
     for klass in [ County, Barony, CivilParish, ElectoralDivision, Townland]:
-        results.update(klass.objects.exclude(logainm_ref=None).values_list('logainm_ref', flat=True))
+        for lid in klass.objects.exclude(logainm_ref=None).values_list('logainm_ref', flat=True):
+            lids = lid.split(";")
+            results.update(lids)
 
     return results
 

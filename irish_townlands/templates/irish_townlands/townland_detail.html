@@ -106,9 +106,14 @@
         <p>{% blocktrans with name=townland.name official_name_ga=townland.official_name_en %}The official Irish name of {{ name }} is {{ official_name_ga }}, and we don't know what the official English name is, but is probabaly {{ name }}.{% endblocktrans %}</p>
         {% endif %}
     {% endif %}
-    {% if townland.logainm_ref %}
-        <p>{% blocktrans with name=townland.name logainm_ref=townland.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% if townland.logainm_refs|length == 0 %}
+        <p>{% blocktrans with name=townland.name %}{{ name }} is not matched up to Logainm.ie yet.{% endblocktrans %}</p>
+    {% elif townland.logainm_refs|length == 1 %}
+        <p>{% blocktrans with name=townland.name logainm_ref=townland.logainm_refs.0 %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
+    {% elif townland.logainm_refs|length > 1 %}
+        <p>{% blocktrans with name=townland.name %}{{ name }} is on Logainm.ie many times:{% endblocktrans %}{% for lid in townland.logainm_refs %}<a href="http://www.logainm.ie/en/{{ lid }}">{{ townland.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% endif %}
+
 
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>

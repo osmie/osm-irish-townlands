@@ -560,6 +560,13 @@ class Area(models.Model, NameableThing):
             return ''
 
 
+    def logainm_refs(self):
+        if self.logainm_ref is None:
+            return []
+        else:
+            return [x.strip() for x in self.logainm_ref.split(";")]
+
+
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
 
