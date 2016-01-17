@@ -49,7 +49,7 @@
 
     {% with eds=county.eds_sorted %}
         <h2>{% trans "Electoral Divisions" %}</h2>
-        <p>There {{ eds|pluralize:"is,are" }} {{ eds|length }} electoral division{{ eds|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
+        <p>There {{ eds|pluralize:"is,are" }} {{ eds|length }} electoral division{{ eds|pluralize:"s" }} in Co. {{ county.name }} that we know about.</p>
 
         {% if eds %}
             <ul>
