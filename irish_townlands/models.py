@@ -553,9 +553,16 @@ class Area(models.Model, NameableThing):
             return ''
 
     @property
-    def ed_name_griffithsvaluation(self):
+    def civil_parish_name_griffithsvaluation(self):
         try:
-            return self.ed.name_griffithsvaluation
+            return self.civil_parish.name_griffithsvaluation
+        except:
+            return ''
+
+    @property
+    def barony_name_griffithsvaluation(self):
+        try:
+            return self.barony.name_griffithsvaluation
         except:
             return ''
 
