@@ -368,7 +368,7 @@ def search(request):
             context_instance=RequestContext(request))
 
     search_term = search_term.replace("-", " ")
-    qs = Q(name_tag__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term) | Q(name_census1901_tag__contains=search_term) | Q(name_census1911_tag__contains=search_term)
+    qs = Q(name_tag__icontains=search_term) | Q(name_ga__icontains=search_term) | Q(alt_name__icontains=search_term) | Q(alt_name_ga__icontains=search_term) | Q(name_census1901_tag__contains=search_term) | Q(name_census1911_tag__contains=search_term) | Q(name_griffithsvaluation_tag__contains=search_term)
 
     search_results = _search_for(qs)
 
@@ -492,6 +492,10 @@ def taginfo(request):
                 {
                     "key": "name:census1911",
                     "description": "The name of this area recorded in the 1911 census of Ireland & NI. Used for constructing links to census records"
+                },
+                {
+                    "key": "name:griffithsvaluation",
+                    "description": "The name of this area recorded in Griffith's Valuation of Ireland (1847-1864). Used for constructing links to valuation records"
                 },
                 {
                     "key": "logainm:ref",

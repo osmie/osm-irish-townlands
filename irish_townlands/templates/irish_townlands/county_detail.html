@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <p>{% blocktrans with county_name=county.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in Co. {{ county_name }}.{% endblocktrans %} <i>(</i><a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
+    <p>{% blocktrans with county_name=county.name %}Here are some details about Co. {{ county_name }} based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>.{% endblocktrans %} <i>(</i><a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %})</i></p>
 
     {% if county.logainm_ref %}
         <p>{% blocktrans with name=county.name logainm_ref=county.logainm_ref %}{{ name }} is on Logainm.ie: <a href="http://www.logainm.ie/en/{{ logainm_ref }}">{{ name }}</a>.{% endblocktrans %}</p>
@@ -19,10 +19,7 @@
     {% with baronies=county.baronies_sorted %}
         <h2>{% trans "Baronies" %}</h2>
         <p>
-            {% blocktrans with name=county.name count num=baronies|length %}There is {{ num }} barony in Co. {{ name }} that we know about.{% plural %}There are {{ num }} baronies in Co. {{ name }} that we know about.{% endblocktrans %}
-</p>
-        <p>
-            <a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
+            {% blocktrans with name=county.name count num=baronies|length %}There is {{ num }} barony in Co. {{ name }} that we know about.{% plural %}There are {{ num }} baronies in Co. {{ name }} that we know about. {% endblocktrans %}{% blocktrans %}You may wish to compare this list (below) with {% endblocktrans %}<a href="//en.wikipedia.org/wiki/Category:Baronies_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of baronies in {{ county_name }}.{% endblocktrans %}</a>
         </p>
 
         {% if baronies %}
@@ -37,10 +34,7 @@
     {% with civil_parishes=county.civil_parishes_sorted %}
         <h2>{% trans "Civil Parishes" %}</h2>
         <p>
-            {% blocktrans with name=county.name count num=civil_parishes|length  %}There is {{ num }} civil parish in Co. {{ name }} that we know about.{% plural %}There are {{ num }} civil parishes in Co. {{ name }} that we know about.{% endblocktrans %}
-        </p>
-        <p>
-            <a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>
+            {% blocktrans with name=county.name count num=civil_parishes|length  %}There is {{ num }} civil parish in Co. {{ name }} that we know about.{% plural %}There are {{ num }} civil parishes in Co. {{ name }} that we know about. {% endblocktrans %}{% blocktrans %}You may wish to compare this list (below) with {% endblocktrans %}<a href="//en.wikipedia.org/wiki/List_of_civil_parishes_of_Ireland#{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of civil parishes in {{ county_name }}.{% endblocktrans %}</a>
         </p>
 
         {% if civil_parishes %}
@@ -55,7 +49,7 @@
 
     {% with eds=county.eds_sorted %}
         <h2>{% trans "Electoral Divisions" %}</h2>
-        <p>There {{ eds|pluralize:"is,are" }} {{ eds|length }} electoral division{{ eds|pluralize:"es" }} in Co. {{ county.name }} that we know about.</p>
+        <p>There {{ eds|pluralize:"is,are" }} {{ eds|length }} electoral division{{ eds|pluralize:"s" }} in Co. {{ county.name }} that we know about.</p>
 
         {% if eds %}
             <ul>
@@ -69,10 +63,7 @@
 
     <h2>{% trans "Townlands" %}</h2>
     <p>
-        There are {% with nt=county.townlands_sorted|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}. This represents {{ county.townland_cover|floatformat:-2 }}% of all the area in Co. {{ county.name }}.
-    </p>
-    <p>
-        <a href="//en.wikipedia.org/wiki/List_of_townlands_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of townlands in {{ county_name }}.{% endblocktrans %}</a>
+        There are {% with nt=county.townlands_sorted|length %}{{ nt }} townland{{ nt|pluralize }}{% endwith %} that we know about in Co. {{ county.name }}. This represents {{ county.townland_cover|floatformat:-2 }}% of all the area in Co. {{ county.name }}. {% blocktrans %}You may wish to compare this list (below) with {% endblocktrans %}<a href="//en.wikipedia.org/wiki/List_of_townlands_of_County_{{ county.name }}">{% blocktrans with county_name=county.name %}Wikipedia's list of townlands in {{ county_name }}.{% endblocktrans %}</a>
     </p>
     <ul>
     {% for townland in county.townlands_for_list_display %}

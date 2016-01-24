@@ -47,6 +47,7 @@
         <li><a href="#map">{% trans "Map" %} ↓</a></li>
         <li><a href="#area">{% trans "Area" %} ↓</a></li>
         <li><a href="#borders">{% trans "Bordering Townlands" %} ↓</a></li>
+        <li><a href="#subtownlands">{% trans "Subtownlands" %} ↓</a></li>
         <li><a href="#records">{% trans "Records Search" %} ↓</a></li>
         <li><a href="#osm">{% trans "OpenStreetMap" %}↓</a></li>
     </ul>
@@ -190,7 +191,7 @@
     {% endif %}
 
     <a name="records"></a>
-    <h2>{% trans "Geneology / Ancestry / Records Search" %}</h2>
+    <h2>{% trans "Genealogy / Ancestry / Records Search" %}</h2>
     <p>
         {% blocktrans %}Curious to see who lived in {{ townland_name }} in the past? Maybe even seeing scans of their handwritten census returns?{% endblocktrans %}
         {% if townland.has_different_name_census1901 %}
@@ -199,10 +200,13 @@
         {% if townland.has_different_name_census1911 %}
             {% blocktrans with name_census1911=townland.name_census1911 %}In the 1911 Census, {{ townland_name }} was recorded as {{ name_census1911 }}.{% endblocktrans %}
         {% endif %}
+        {% if townland.has_different_name_griffithsvaluation %}
+            {% blocktrans with name_griffithsvaluation=townland.name_griffithsvaluation %}In Griffith's Valuation, {{ townland_name }} was recorded as {{ name_griffithsvaluation }}.{% endblocktrans %}
+        {% endif %}
         <ul>
             <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1911&county19011911={{ townland.county.name }}&townland={{ townland.name_census1911 }}&ded={{ townland.ed_name_census1911 }}&search=Search">{% blocktrans with name_census1911=townland.name_census1911_display %}Search the 1911 Irish Census for {{ name_census1911 }}{% endblocktrans %}</a></li>
             <li><a href="http://www.census.nationalarchives.ie/search/results.jsp?census_year=1901&county19011911={{ townland.county.name }}&townland={{ townland.name_census1901 }}&ded={{ townland.ed_name_census1901 }}&search=Search">{% blocktrans with name_census1901=townland.name_census1901_display %}Search the 1901 Irish Census for {{ name_census1901 }}{% endblocktrans %}</a></li>
-            <li><a href="http://www.askaboutireland.ie/griffith-valuation/index.xml?action=doPlaceSearch&Submit.x=51&Submit.y=16&Submit=Submit&freetext={{ townland.name }}&countyname={{ townland.county.name }}&baronyname={{ townland.barony|default:"" }}&unionname=&parishname={{ townland.civil_parish|default:"" }}">{% blocktrans %}Search the Griffith's Valuation (1847-1864) for {{ townland_name }}{% endblocktrans %}</a></li>
+            <li><a href="http://www.askaboutireland.ie/griffith-valuation/index.xml?action=doPlaceSearch&Submit.x=51&Submit.y=16&Submit=Submit&freetext={{ townland.name_griffithsvaluation }}&countyname={{ townland.county.name }}&baronyname={{ townland.barony_name_griffithsvaluation|default:"" }}&unionname=&parishname={{ townland.civil_parish_name_griffithsvaluation|default:"" }}">{% blocktrans with name_griffithsvaluation=townland.name_griffithsvaluation_display %}Search Griffith's Valuation (1847-1864) for {{ name_griffithsvaluation }}{% endblocktrans %}</a></li>
         </ul>
     </p>
 

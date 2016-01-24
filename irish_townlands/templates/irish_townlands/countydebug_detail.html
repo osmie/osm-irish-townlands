@@ -91,11 +91,11 @@ $(document).ready(function() {
     <h3>{% trans "Land covered by 2 (or more) Townlands" %}</h3>
 
     {% if county.polygon_barony_overlaps %}
-        <i>{% trans "Due to a bug in the software, there will sometimes be lines following the borders that appear as \"overlap\". Ignore them" %}</i>
+        <i>{% trans "Sometimes lines following borders appear as \"overlap\". Zooming in may reveal a tiny overlap somewhere along the line. Sometimes these overlaps are necessary e.g. where roads cross waterways." %}</i>
         
         <div class="map" id="map-td-overlap" data-dataset="td-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the townlands in {{ name }} the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No townlands overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
     <a name="unmapped_eds"></a><h3>Land & Water not covered by Electoral Divisions</h3>
@@ -109,11 +109,11 @@ $(document).ready(function() {
     <h3>{% trans "Land covered by 2 (or more) Electoral Divisions" %}</h3>
 
     {% if county.polygon_ed_overlaps %}
-        <i>{% trans "Due to a bug in the software, there will sometimes be lines following the borders that appear as \"overlap\". Ignore them" %}</i>
+        <i>{% trans "Sometimes lines following borders appear as \"overlap\". Zooming in may reveal a tiny overlap somewhere along the line. Sometimes these overlaps are necessary e.g. where roads cross waterways." %}</i>
         
         <div class="map" id="map-ed-overlap" data-dataset="ed-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the EDs in {{ name }} the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No EDs overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
     <h3>{% trans "Land not covered by Civil Parishes" %}</h3>
@@ -127,7 +127,7 @@ $(document).ready(function() {
     <h3>{% trans "Land covered by 2 (or more) Civil Parishes" %}</h3>
     
     {% if county.polygon_civil_parish_overlaps %}
-        <i>{% trans "Due to a bug in the software, there will sometimes be lines following the borders that appear as \"overlap\". Ignore them" %}</i>
+        <i>{% trans "Sometimes lines following borders appear as \"overlap\". Zooming in may reveal a tiny overlap somewhere along the line. Sometimes these overlaps are necessary e.g. where roads cross waterways." %}</i>
         <div class="map" id="map-cp-overlap" data-dataset="cp-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
         <p>{% blocktrans with name=county.name %}No civil parishes overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
@@ -145,10 +145,10 @@ $(document).ready(function() {
     <h3>{% trans "Land covered by 2 (or more) Baronies" %}</h3>
     
     {% if county.polygon_barony_overlaps %}
-        <i>{% trans "Due to a bug in the software, there will sometimes be lines following the borders that appear as \"overlap\". Ignore them" %}</i>
+        <i>{% trans "Sometimes lines following borders appear as \"overlap\". Zooming in may reveal a tiny overlap somewhere along the line. Sometimes these overlaps are necessary e.g. where roads cross waterways." %}</i>
         <div class="map" id="map-bar-overlap" data-dataset="bar-overlap" style="height: 600px; width: 800px;"></div>
     {% else %}
-        <p>{% blocktrans with name=county.name %}None of the baronies in {{ name }} in the OpenStreetMap database overlap.{% endblocktrans %}</p>
+        <p>{% blocktrans with name=county.name %}No baronies overlap in {{ name }} in the OpenStreetMap database.{% endblocktrans %}</p>
     {% endif %}
 
 
