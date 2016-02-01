@@ -85,7 +85,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "cluster water_polygon using water_polygon
 # to remove the old land_polygons shapefiles if that command doesn't succeed,
 # so abuse bash this way
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table land_polygons;" 4> /dev/null || true
-rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx && pgsql2shp townlands land_polygons >/dev/null
+rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" ${BASEDIR}/data/land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && pgsql2shp townlands ${BASEDIR}/data/land_polygons >/dev/null
 rm -f coastline.db
 
 # Make the split table
@@ -101,21 +101,21 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table water_polygon_split (gid ser
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into water_polygon_split (geom) select way from water_polygon;" 2> /dev/null || true
 split-large-polygons -q -d townlands -t water_polygon_split -c geom -i gid -a 0.001 -s 4326
 rm -rf water_polygon.*
-ogr2ogr -f "ESRI Shapefile" water_polygon.shp PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" "water_polygon_split"
+ogr2ogr -f "ESRI Shapefile" ${BASEDIR}/data/water_polygon.shp PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" "water_polygon_split"
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
 
-pgsql2shp -f counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
-pgsql2shp -f baronies_split.shp townlands "select * from valid_polygon_split where boundary = 'barony'" >/dev/null
-pgsql2shp -f civil_parishes_split.shp townlands "select * from valid_polygon_split where boundary = 'civil_parish'" >/dev/null
-pgsql2shp -f eds_split.shp townlands "select * from valid_polygon_split where admin_level = '9'" >/dev/null
-pgsql2shp -f townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
+pgsql2shp -f ${BASEDIR}/data/counties_split.shp townlands "select * from valid_polygon_split where admin_level = '6'" >/dev/null
+pgsql2shp -f ${BASEDIR}/data/baronies_split.shp townlands "select * from valid_polygon_split where boundary = 'barony'" >/dev/null
+pgsql2shp -f ${BASEDIR}/data/civil_parishes_split.shp townlands "select * from valid_polygon_split where boundary = 'civil_parish'" >/dev/null
+pgsql2shp -f ${BASEDIR}/data/eds_split.shp townlands "select * from valid_polygon_split where admin_level = '9'" >/dev/null
+pgsql2shp -f ${BASEDIR}/data/townlands_split.shp townlands "select * from valid_polygon_split where admin_level = '10'" >/dev/null
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon_split; " 2>/dev/null || true
 
 # Land not covered by...
-difference-polygons -q -l land_polygons.shp  -r counties_split.shp -o not_counties.shp -a 1e-09
-difference-polygons -q -l land_polygons.shp  -r baronies_split.shp -o not_baronies.shp -a 1e-09
-difference-polygons -q -l land_polygons.shp  -r civil_parishes_split.shp -o not_civil_parishes.shp -a 1e-09
-difference-polygons -q -l land_polygons.shp  -r eds_split.shp -o not_eds.shp -a 1e-09
+difference-polygons -q -l ${BASEDIR}/data/land_polygons.shp  -r ${BASEDIR}/data/counties_split.shp -o ${BASEDIR}/data/not_counties.shp -a 1e-09
+difference-polygons -q -l ${BASEDIR}/data/land_polygons.shp  -r ${BASEDIR}/data/baronies_split.shp -o ${BASEDIR}/data/not_baronies.shp -a 1e-09
+difference-polygons -q -l ${BASEDIR}/data/land_polygons.shp  -r ${BASEDIR}/data/civil_parishes_split.shp -o ${BASEDIR}/data/not_civil_parishes.shp -a 1e-09
+difference-polygons -q -l ${BASEDIR}/data/land_polygons.shp  -r ${BASEDIR}/data/eds_split.shp -o ${BASEDIR}/data/not_eds.shp -a 1e-09
 
 # Not covered by townlands. NB unlike the previous boundaries, townlands traditionally don't include water areas
-difference-polygons -q -l land_polygons.shp  -r townlands_split.shp -r water_polygon.shp -o not_townlands.shp -a 1e-09
+difference-polygons -q -l ${BASEDIR}/data/land_polygons.shp  -r ${BASEDIR}/data/townlands_split.shp -r ${BASEDIR}/data/water_polygon.shp -o ${BASEDIR}/data/not_townlands.shp -a 1e-09
