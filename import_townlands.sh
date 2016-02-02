@@ -85,7 +85,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "cluster water_polygon using water_polygon
 # to remove the old land_polygons shapefiles if that command doesn't succeed,
 # so abuse bash this way
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table land_polygons;" 4> /dev/null || true
-rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" ${BASEDIR}/data/land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && pgsql2shp townlands ${BASEDIR}/data/land_polygons >/dev/null
+rm -f coastline.db && osmcoastline -s 4326 -o coastline.db ireland-and-northern-ireland.osm.pbf >/dev/null && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && ogr2ogr -f PostgreSQL PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" coastline.db land_polygons -overwrite -lco OVERWRITE=YES -nlt MULTIPOLYGON && ogr2ogr -f "ESRI Shapefile" ${BASEDIR}/data/land_polygons.shp coastline.db land_polygons && split-large-polygons -q -d townlands -t land_polygons -c wkb_geometry -i ogc_fid -a 0.001 -s 4326 && (cd ${BASEDIR}/data/ && rm -f land_polygons.dbf land_polygons.prj land_polygons.shp land_polygons.shx ) && pgsql2shp -f ${BASEDIR}/data/land_polygons.shp townlands land_polygons >/dev/null
 rm -f coastline.db
 
 # Make the split table
@@ -100,7 +100,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table water_polygon_split (gid serial primary key, geom geometry(MultiPolygon, 4326));" 2> /dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "insert into water_polygon_split (geom) select way from water_polygon;" 2> /dev/null || true
 split-large-polygons -q -d townlands -t water_polygon_split -c geom -i gid -a 0.001 -s 4326
-rm -rf water_polygon.*
+rm -rf ${BASEDIR}/data/water_polygon.*
 ogr2ogr -f "ESRI Shapefile" ${BASEDIR}/data/water_polygon.shp PG:"dbname=townlands user=${DB_USER} password=${DB_PASS}" "water_polygon_split"
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table water_polygon_split; " 2>/dev/null || true
 
