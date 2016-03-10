@@ -1,24 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Leopold Chmielewski <leopold.chmielewski@gmail.com>, 2015
+# Leopold Chmielewski <leopold.chmielewski@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Irish Townlands\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-19 14:07+0100\n"
-"PO-Revision-Date: 2015-11-14 21:51+0000\n"
+"POT-Creation-Date: 2015-12-19 14:02+0100\n"
+"PO-Revision-Date: 2016-03-03 22:06+0000\n"
 "Last-Translator: Leopold Chmielewski <leopold.chmielewski@gmail.com>\n"
-"Language-Team: Polish (http://www.transifex.com/openstreetmap/irish-"
-"townlands/language/pl/)\n"
-"Language: pl\n"
+"Language-Team: Polish (http://www.transifex.com/openstreetmap/irish-townlands/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: models.py:42 templates/irish_townlands/index.html:10
 msgid "and"
@@ -28,19 +26,19 @@ msgstr "i"
 #: templates/irish_townlands/townland_detail.html:13
 #, python-format
 msgid "%(townland_name)s Townland"
-msgstr ""
+msgstr "Townland %(townland_name)s"
 
 #: models.py:109 templates/irish_townlands/duplicatenames.html:14
 #: templates/irish_townlands/subtownland_detail.html:19
 #: templates/irish_townlands/townland_detail.html:32
 #, python-format
 msgid "%(name)s Civil Parish"
-msgstr ""
+msgstr "Parafia cywilna %(name)s"
 
 #: models.py:112
 #, python-format
 msgid "Barony of %(barony_name)s"
-msgstr ""
+msgstr "Baronia %(barony_name)s"
 
 #: models.py:115 templates/irish_townlands/county_detail.html:5
 #: templates/irish_townlands/countydebug_detail.html:5
@@ -50,7 +48,7 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:22
 #, python-format
 msgid "Co. %(name)s"
-msgstr ""
+msgstr "Hrabstwo %(name)s"
 
 #: models.py:121
 msgid "(Island)"
@@ -95,9 +93,8 @@ msgid "Area in Acres, Rods and Perches"
 msgstr "Obszar w akrach, ćwierciach akrów i 1/160 akrów (acre, rood, perch)"
 
 #: models.py:644
-#, fuzzy
 msgid "Unkown County"
-msgstr "Hrabstwo"
+msgstr "Hrabstwo nieznane"
 
 #: pages.py:7
 msgid "About Townlands.ie"
@@ -114,21 +111,16 @@ msgstr "Prawa Townlands.ie zastrzeżone"
 #: pages.py:25 pages.py:179
 msgid ""
 "Since this is derived from <a href=\"openstreetmap.org\">OpenStreetMap</a> "
-"data, it's under the same licence as that. Namely the <a href=\"http://"
-"opendatacommons.org/licenses/odbl/\">Open Data Commons Open Database License "
-"(ODbL)</a>."
-msgstr ""
-"Nasze dane pochodzą z  <a href=\"openstreetmap.org\">OpenStreetMap</a> , "
-"stąd są ojęte tą samą licencją czyli <a href=\"http://opendatacommons.org/"
-"licenses/odbl/\">Open Data Commons Open Database License (ODbL)</a>."
+"data, it's under the same licence as that. Namely the <a "
+"href=\"http://opendatacommons.org/licenses/odbl/\">Open Data Commons Open "
+"Database License (ODbL)</a>."
+msgstr "Nasze dane pochodzą z  <a href=\"openstreetmap.org\">OpenStreetMap</a> , stąd są ojęte tą samą licencją czyli <a href=\"http://opendatacommons.org/licenses/odbl/\">Open Data Commons Open Database License (ODbL)</a>."
 
 #: pages.py:26
 msgid ""
-"Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap "
-"Copyright</a> guide for more informatiom."
-msgstr ""
-"Zajrzyj na <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap "
-"Copyright</a> po więcej informacji."
+"Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap"
+" Copyright</a> guide for more informatiom."
+msgstr "Zajrzyj na <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap Copyright</a> po więcej informacji."
 
 #: pages.py:31
 msgid "Downloading Townlands.ie data"
@@ -137,14 +129,10 @@ msgstr "Pobieranie Townlands.ie"
 #: pages.py:34
 msgid ""
 "Warning! This data is <strong>incomplete</strong> and does not cover all of "
-"Ireland. Some counties are fully mapped, others aren't finished. Coverage is "
-"being improved on a daily basis. Please consult the <a href=\"/progress/"
-"\">progress report</a> to find out more."
-msgstr ""
-"Uwaga! Te dane <strong>nie są kompletne</strong> i nie pokrywają całego "
-"terenu Irlandii. Niektóre hrabstwa mają kompletne mapy, inne nie są jeszcze "
-"ukończone. Pokrycie polepsza się z dnia na dzień. Obejrzyj <a href=\"/"
-"progress/\">raport postępu</a> żeby dowiedzieć się więcej."
+"Ireland. Some counties are fully mapped, others aren't finished. Coverage is"
+" being improved on a daily basis. Please consult the <a "
+"href=\"/progress/\">progress report</a> to find out more."
+msgstr "Uwaga! Te dane <strong>nie są kompletne</strong> i nie pokrywają całego terenu Irlandii. Niektóre hrabstwa mają kompletne mapy, inne nie są jeszcze ukończone. Pokrycie polepsza się z dnia na dzień. Obejrzyj <a href=\"/progress/\">raport postępu</a> żeby dowiedzieć się więcej."
 
 #: pages.py:36
 msgid "The data from Townlands.ie is available in many formats"
@@ -172,7 +160,7 @@ msgstr "CSV"
 
 #: pages.py:44
 msgid "no-geom CSV"
-msgstr ""
+msgstr "CSV bez geom"
 
 #: pages.py:47 templates/irish_townlands/barony_detail.html:73
 #: templates/irish_townlands/civil_parish_detail.html:20
@@ -187,7 +175,7 @@ msgstr ""
 #: templates/irish_townlands/search.html:30
 #: templates/irish_townlands/search_results.html:57
 msgid "Townlands"
-msgstr ""
+msgstr "Townlands"
 
 #: pages.py:48 pages.py:56 pages.py:64 pages.py:72 pages.py:80
 msgid "download shapefile"
@@ -216,7 +204,7 @@ msgstr "pobierz no-geom CSV"
 #: templates/irish_townlands/progress.html:103
 #: templates/irish_townlands/search_results.html:45
 msgid "Electoral Divisions"
-msgstr ""
+msgstr "Okręgi wyborcze"
 
 #: pages.py:63 templates/irish_townlands/barony_detail.html:60
 #: templates/irish_townlands/county_detail.html:38
@@ -227,7 +215,7 @@ msgstr ""
 #: templates/irish_townlands/progress.html:46
 #: templates/irish_townlands/progress.html:102
 msgid "Civil Parishes"
-msgstr ""
+msgstr "Parafie cywilne"
 
 #: pages.py:71 templates/irish_townlands/county_detail.html:20
 #: templates/irish_townlands/countydebug_detail.html:66
@@ -238,7 +226,7 @@ msgstr ""
 #: templates/irish_townlands/search.html:16
 #: templates/irish_townlands/search_results.html:21
 msgid "Baronies"
-msgstr ""
+msgstr "Baronie"
 
 #: pages.py:79 templates/irish_townlands/index.html:21
 #: templates/irish_townlands/mapper_details.html:12
@@ -247,11 +235,11 @@ msgstr ""
 #: templates/irish_townlands/search.html:9
 #: templates/irish_townlands/search_results.html:9
 msgid "Counties"
-msgstr ""
+msgstr "Hrabstwa"
 
-#: pages.py:87 pages.py:162
-msgid "Townland Touch"
-msgstr ""
+#: pages.py:87
+msgid "Townland Touching"
+msgstr "Dotykanie hrabstw"
 
 #: pages.py:96
 msgid "Data format"
@@ -259,13 +247,10 @@ msgstr "Format daty"
 
 #: pages.py:97
 msgid ""
-"The geometry is available in <a href=\"spatialreference.org/ref/epsg/wgs-84/"
-"\">WSG 84 (aka EPSG 4326, aka \"latitude and longitude\")</a> projection "
-"system."
-msgstr ""
-"Geometria jest dostępna we współrzędnych <a href=\"spatialreference.org/ref/"
-"epsg/wgs-84/\">WSG 84 (znanym jako EPSG 4326, lub \"długość i szerokość\")</"
-"a>."
+"The geometry is available in <a "
+"href=\"spatialreference.org/ref/epsg/wgs-84/\">WSG 84 (aka EPSG 4326, aka "
+"\"latitude and longitude\")</a> projection system."
+msgstr "Geometria jest dostępna we współrzędnych <a href=\"spatialreference.org/ref/epsg/wgs-84/\">WSG 84 (znanym jako EPSG 4326, lub \"długość i szerokość\")</a>."
 
 #: pages.py:99
 msgid "Attributes"
@@ -273,38 +258,38 @@ msgstr "Atrybuty"
 
 #: pages.py:100
 msgid "There are several columns per entry:"
-msgstr ""
+msgstr "Dla tego wpisu istnieje kilka kolumn:"
 
 #: pages.py:103
 msgid ""
 "Integer. The id of the object in the OSM database. If it's positive, it's a "
-"way; if it's negative, it's a relation. (Consult the <a href=\"http://wiki."
-"openstreetmap.org/wiki/Elements\">OSM data model</a> for more information). "
-"IDs are not shared across objects (e.g. there will never be an ED and a "
-"townland with the same OSM_ID)."
-msgstr ""
+"way; if it's negative, it's a relation. (Consult the <a "
+"href=\"http://wiki.openstreetmap.org/wiki/Elements\">OSM data model</a> for "
+"more information). IDs are not shared across objects (e.g. there will never "
+"be an ED and a townland with the same OSM_ID)."
+msgstr "Liczba całkowita. ID obiektu w bazie OSM. Jeżeli jest dodatni - jest to droga; jeżeli ujemny - relacja. (Zajrzyj do <a href=\"http://wiki.openstreetmap.org/wiki/Elements\">Modelu danych OSM</a>po więcej informacji). ID nie powielają się pomiędzy obiektami (np. nigdy nie będzie ED i townlandu z tym samym OSM_ID)."
 
 #: pages.py:105
 msgid ""
 "String. The name of the object. Should be the \"common name\". Almost "
 "certainly in English, but may be in Irish."
-msgstr ""
+msgstr "Ciąg znaków. Nazwa obiektu. Powinna być \"nazwa zwyczajowa\". Prawie zawsze po angielski, choć może być też po irlandzku."
 
 #: pages.py:105
 msgid ""
 "NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. "
 "Suggestions welcome for how to fix this."
-msgstr ""
+msgstr "NB: W pliku KML/KMZ jest to NAME2 ponieważ ogr2ogr to konwertuje. Mile widizne sugestie jak to poprawić."
 
 #: pages.py:107
 msgid "String. The name of the object in Irish."
-msgstr ""
+msgstr "Ciąg znaków. Nazwa obiektu po irlandzku."
 
 #: pages.py:109
 msgid ""
 "String. The name of the object in English. Many objects don't have this, in "
 "which case presume that NAME is the English name"
-msgstr ""
+msgstr "Ciąg znaków. Nazwa obiektu po angielsku. Wiele obiektów nie posiada go, w takim przypadku przyjmowane jest że NAME stanowi angielską nazwę."
 
 #: pages.py:111
 msgid "String. Alternative name."
@@ -312,7 +297,7 @@ msgstr "Napis. Alternatywna nazwa."
 
 #: pages.py:113
 msgid "String. Alternative Irish name. (it's short for \"alt_name:ga\")"
-msgstr ""
+msgstr "Ciąg znaków. Alternatywna nazwa irlandzka. (skrót do \"alt_name:ga\")"
 
 #: pages.py:115
 msgid "Float. Area in square metres"
@@ -332,98 +317,99 @@ msgstr "Napis. Nazwa użytkownika OSM, który narysował ten obszar mapy."
 
 #: pages.py:123
 msgid "String. ISO formatted datetime of when the object was added to OSM"
-msgstr ""
+msgstr "Ciąg znaków. Data i czas kiedy obiekt został dodany do OSM, sformatowany wg. ISO"
 
 #: pages.py:125
 msgid ""
 "Integer. <a href=\"https://en.wikipedia.org/wiki/Unix_time\">Unix 'epoch' "
 "time</a> of when the object was added to OSM."
-msgstr ""
+msgstr "Liczba całkowita. <a href=\"https://en.wikipedia.org/wiki/Unix_time\">Czas epoch Unix'a</a> kiedy obiekt został dodany do OSM."
 
 #: pages.py:127
 msgid ""
 "String. URL of this object on <a href=\"www.townlands.ie\">Townlands.ie</a> "
 "(this site)"
-msgstr ""
+msgstr "Ciąg znaków. URL tego obiektu na stronie <a href=\"www.townlands.ie\">Townlands.ie</a> (tej stronie)"
 
 #: pages.py:129
 msgid ""
 "String. Name of the county this object is in, if known. Not in 'county' or "
 "'civil_parish' files."
-msgstr ""
+msgstr "Ciąg znaków. Nazwa hrabstwa w jakim znajduje się ten obiekt. Nie w plikach 'hrabstw' ani 'parafii cywilnych'"
 
 #: pages.py:131
 msgid ""
 "Integer. OSM_ID of the county this object is in, if known. Not in 'county' "
 "or 'civil_parish' files."
-msgstr ""
+msgstr "Liczba całkowita. Identyfikator OSM_ID hrabstwa, w którym znajduje się obiekt, jeżeli jest znane. Nie w plikach 'hrabstw' ani 'parafii cywilnych'"
 
 #: pages.py:133
 msgid ""
 "String. Comma separated list of names of the counties this object is in, if "
 "known. Orderd by the county's osm_id. Only in the 'civil_parish' files."
-msgstr ""
+msgstr "Ciąg znaków. Oddzielona przecinkami lista nazw hrabstw, w których znajduje się obiekt. Sortowana wg. osm_id hrabstw. Tylko w plikach 'parafii cywilnych'."
 
 #: pages.py:135
 msgid ""
 "String. Comma separated list of osm_ids of the counties this object is in, "
 "if known. Orderd by the county's osm_id. Only in the 'civil_parish' files."
-msgstr ""
+msgstr "Ciąg znaków. Oddzielona przecinkami lista osm_id hrabstw, w których znajduje się obiekt. Sortowana wg. osm_id. Tylko w plikach 'parafii cywilnych'."
 
 #: pages.py:137
 msgid ""
-"String. Name of the ED this object is in, if known. Only in 'townland' files."
-msgstr ""
+"String. Name of the ED this object is in, if known. Only in 'townland' "
+"files."
+msgstr "Ciąg znaków. Nazwa ED, w którym znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:139
 msgid ""
 "Integer. OSM_ID of the ED this object is in, if known. Only in 'townland' "
 "files."
-msgstr ""
+msgstr "Liczba całkowita. OSM_ID ED, w którym znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:141
 msgid ""
 "String. Name of the civil parish this object is in, if known. Only in "
 "'townland' files."
-msgstr ""
+msgstr "Ciąg znaków. Nazwa parafii cywilnej, w której znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:143
 msgid ""
 "Integer. OSM_ID of the civil parish this object is in, if known. Only in "
 "'townland' files."
-msgstr ""
+msgstr "Liczba całkowita. OSM_ID parafii cywilnej, w której znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:145
 msgid ""
 "String. Name of the barony this object is in, if known. Only in 'townland' "
 "files."
-msgstr ""
+msgstr "Ciąg znaków. Nazwa baronii, w której znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:147
 msgid ""
 "Integer. OSM_ID of the barony this object is in, if known. Only in "
 "'townland' files."
-msgstr ""
+msgstr "Liczba całkowita. OSM_ID baronii, w której znajduje się obiekt. Tylko w plikach 'townland'."
 
 #: pages.py:149
 msgid "String. Value of the 'attribution' tag (if any)"
-msgstr ""
+msgstr "Ciąg znaków. Wartość tag-a 'attribution' (jeżeli istnieje)"
 
 #: pages.py:153
 msgid "Geom and no-geom version"
-msgstr ""
+msgstr "Wersja geom i bez geom"
 
 #: pages.py:154
 msgid ""
 "There are two CSV files, a normal version, and a \"no-geom\" version. The "
 "normal CSV file has an additional column:"
-msgstr ""
+msgstr "Istnieją dwa pliki CSV - zwykła wersja i wersja bez geom. Wersja zwykła CSV posiada dodatkową kolumnę:"
 
 #: pages.py:157
 msgid ""
-"String. <a href=\"//en.wikipedia.org/wiki/Well-known_text\">Well-known text</"
-"a> representation of this area."
-msgstr ""
+"String. <a href=\"//en.wikipedia.org/wiki/Well-known_text\">Well-known "
+"text</a> representation of this area."
+msgstr "Ciąg znaków. <a href=\"//en.wikipedia.org/wiki/Well-known_text\">Well-known text</a> reprezentujący dany obszar."
 
 #: pages.py:159
 msgid ""
@@ -432,7 +418,11 @@ msgid ""
 "suitable if you want to do some analysis on the data in a spreadsheet "
 "programme. Some spreadsheets have trouble with the long WKT field in the "
 "regular CSV version."
-msgstr ""
+msgstr "Plik CSV bez geom nie posiada tego, oraz nie ma danych kształtu (posiada tylko szrokość i długość geograficzną). Jest to wystarczające jeżeli chcesz robić analizę danych w arkuszu kalkulacyjnym. Niektóre arkusze mają problemy  z długim polem WKT w zwykłych plikach CSV."
+
+#: pages.py:162
+msgid "Townland Touch"
+msgstr "Townland Touch"
 
 #: pages.py:163
 msgid ""
@@ -440,41 +430,41 @@ msgid ""
 "other, and how (north/south/east/west). This allows us to have a \"This "
 "townland borders the follow townlands:...\" feature. The \"Townland Touch\" "
 "dataset contains a CSV export of this data. It has the following fields:"
-msgstr ""
+msgstr "Gdy synchronizujemy dane z OpenStreetMap, sprawdzamy, które townlandy graniczą z innymi i w jakim kierunku.. Pozwala to nam na posiadanie informacji: \"Ten townland graniczy z poniższymi\". Plik \"Styki Townlandów\" zawiera eksport tych danych w postaci CSV. Posiada on następujące pola:"
 
 #: pages.py:166
 msgid "osm_id of townland 1"
-msgstr ""
+msgstr "osm_id townlandu 1"
 
 #: pages.py:168
 msgid "osm_id of townland 2"
-msgstr ""
+msgstr "osm_id townlandu 2"
 
 #: pages.py:170
 msgid ""
-"Rough direction, in degrees, in which these 2 townlands border, as seen from "
-"t1. 0 = north, 90 = east etc."
-msgstr ""
+"Rough direction, in degrees, in which these 2 townlands border, as seen from"
+" t1. 0 = north, 90 = east etc."
+msgstr "Orientacyjny kierunek w stopniach, w jakim graniczą 2 townlandy widziane z townlanu 1. 0 = północ, 90 = wschód itd."
 
 #: pages.py:172
 msgid "The length, in metres, of the shared border."
-msgstr ""
+msgstr "Długość wspólnej granicy w metrach."
 
 #: pages.py:174
 msgid ""
 "For every two townlands (A & B) that touch, there will be 2 rows in this "
 "file. One where A is townland 1, the other were B is townland 1."
-msgstr ""
+msgstr "Dla każdych dwóch townlandów (A i B), które się stykają będą 2 linie w pliku. Jedna gdzie A określa townland 1 , druga gdzie B określa townland 1."
 
 #: pages.py:178
 msgid "Copyright & Licence"
-msgstr ""
+msgstr "Prawa autorskie i licencja."
 
 #: pages.py:180
 msgid ""
-"Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap "
-"Copyright</a> guide for more information."
-msgstr ""
+"Consult the <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap"
+" Copyright</a> guide for more information."
+msgstr "Zajrzyj do <a href=\"http://www.openstreetmap.org/copyright\">Praw autorskich OpenStreetMap </a> po więcej informacji."
 
 #: pages.py:186 templates/irish_townlands/townland_base.html:61
 msgid "How up-to-date is Townlands.ie?"
@@ -484,17 +474,13 @@ msgstr "Jak aktualne jest Townlands.ie?"
 msgid ""
 "Townlands.ie is updated every day. At the bottom of the page, you can see "
 "the date and time of the last import of data."
-msgstr ""
-"Townlands.ie jest aktualizowane codziennie. Na dole strony możesz zobaczyć "
-"datę i czas ostatniego importu danych."
+msgstr "Townlands.ie jest aktualizowane codziennie. Na dole strony możesz zobaczyć datę i czas ostatniego importu danych."
 
 #: pages.py:189
 msgid ""
-"We use the Ireland extracts from <a href=\"http://planet.openstreetmap.ie/"
-"\">OSM Data for Ireland</a>."
-msgstr ""
-"Używamy Irlandzkiego wycinka z <a href=\"http://planet.openstreetmap.ie/"
-"\">Danych OSM dla Irlandii</a>"
+"We use the Ireland extracts from <a "
+"href=\"http://planet.openstreetmap.ie/\">OSM Data for Ireland</a>."
+msgstr "Używamy Irlandzkiego wycinka z <a href=\"http://planet.openstreetmap.ie/\">Danych OSM dla Irlandii</a>"
 
 #: pages.py:193
 msgid "25,000 Townlands!"
@@ -508,28 +494,29 @@ msgstr "25.000 Townlandów"
 msgid ""
 "The Irish OpenStreetMap community has now passed an impressive milestone. "
 "25,000 townlands have now been mapped and added to OSM!"
-msgstr ""
+msgstr "Irlandzka społeczność OpenStreetMap osiągnęła imponujący wynik. 25000 townlandów jest już naniesione i dodane do map OSM!"
 
 #: pages.py:198
 msgid ""
 "The 25,000th townland was added by <a href=\"/mapper/NoelB\">NoelB</a>. On "
 "the 29th March 2015, they uploaded 3 townlands, one of which was the magic "
-"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon</a>."
-msgstr ""
+"25,000, <a href=\"/roscommon/corlis/\">Corlis, Co. Roscommon"
+msgstr "25 tysięczny townland został dodany przez <a href=\"/mapper/NoelB\">NoelB</a>. 29 marca 2015 wprowadzone zostały 3 townlandy, z nich jeden był magicznym 25000. Był to <a href=\"/roscommon/corlis/\">Corlis, Hrabstwo Roscommon</a>"
 
 #: pages.py:200
 msgid "What are townlands?"
-msgstr ""
+msgstr "Co to są townlandy?"
 
 #: pages.py:201
 msgid ""
 "A townland is a small geographical division of land. The townland system is "
 "of Gaelic origin, pre-dating the Norman invasion, and most have names of "
 "Irish origin. However, some townland names and boundaries come from Norman "
-"manors, <a href=\"https://en.wikipedia.org/wiki/Plantations_of_Ireland"
-"\">plantation divisions</a>, or later creations of the <a href=\"https://fr."
-"wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</a>."
-msgstr ""
+"manors, <a "
+"href=\"https://en.wikipedia.org/wiki/Plantations_of_Ireland\">plantation "
+"divisions</a>, or later creations of the <a "
+"href=\"https://fr.wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</a>."
+msgstr "Townland jest niewielkim geograficznym wycinkiem terenu. System townlandów ma pochodzenie Gealickie, sprzed inwazji normandzkiej i w większości posiadających nazwy pochodzące z języka irlandzkiego. Jednakże, niektóre nazwy townlandów i ich granic wywodzą się z normandzkich dworów, <a href=\"https://en.wikipedia.org/wiki/Plantations_of_Ireland\">irlandzkich plantacji</a>, bądź zostały utworzone później przez <a href=\"https://fr.wikipedia.org/wiki/Ordnance_Survey\">Ordnance Survey</a>."
 
 #: pages.py:203
 msgid ""
@@ -537,7 +524,7 @@ msgid ""
 "Through a donation of out of copyright sheets from Trinity College Dublin, "
 "the Irish OpenStreetMap community now has a source from which to map all "
 "townlands on the island of Ireland."
-msgstr ""
+msgstr "Według Wikipedii w Irlandii jest około 61000 townlandów. Dzięki podarowaniu przez Trinity College w Dublinie map bez praw autorskich, irlandzka społeczność OpenStreetMap ma teraz źródło, z którego może nanosić townlandy na wyspie Irlandii."
 
 #: pages.py:204
 msgid "Why are they important to have?"
@@ -549,61 +536,61 @@ msgid ""
 "of land and they form the building blocks for higher-level administrative "
 "units such as: Civil Parishes, Electoral Divisions (in the Republic of "
 "Ireland) or Wards (in Northern Ireland), Baronies, Counties (will allow for "
-"accurate fine tuning of pre-existing data in OSM), Provinces (will allow for "
-"accurate fine tuning of pre-existing data in OSM), Local, National & "
+"accurate fine tuning of pre-existing data in OSM), Provinces (will allow for"
+" accurate fine tuning of pre-existing data in OSM), Local, National & "
 "European Election Constituencies,"
-msgstr ""
+msgstr "W Irlandii townland jest generalnie najmniejszą jedostką terytorialną i jest częścią większej struktury jak np. parafii cywilnych (Civil Parish), okregu wyborczego (Electoral Division w Republice Irlandii lub Ward w Irlandii Północnej), baronii (Barony), hrabstwa (County) i prowincji (Province) oraz obwodów wyborczych do wyborów lokalnych, krajowych oraz europejskich."
 
 #: pages.py:206
 msgid ""
 "The benefits of having all townland boundaries mapped in OpenStreetMap are:"
-msgstr ""
+msgstr "Korzyści wynikające z posiadania wszystkich granic townlandów na mapach OpenStreetMaps:"
 
 #: pages.py:208
 msgid "It will allow for geocoding of rural addresses"
-msgstr ""
+msgstr "Pozwalają na geograficzne kodowanie wiejskich adresów"
 
 #: pages.py:209
 msgid "It will enable anyone to fully utilize and visualize Census data"
-msgstr ""
+msgstr "Pozwalają każdemu w pełni korzystać i wizualizować dane Spisów Powszechnych"
 
 #: pages.py:210
 msgid ""
 "Highly useful for genealogical searches for people looking into the history "
 "of family trees of immigrants down the centuries"
-msgstr ""
+msgstr "Bardzo użyteczne w poszukiwaniach genealogicznych dla osób szukających historii drzew rodzinnych imigrantów sprzed wieków"
 
 #: pages.py:211
 msgid ""
 "Gives the option of using OSM data for a much higher level of statistical "
-"analysis as presently the smallest boundaries available with which to divide "
-"up Ireland are City & County boundaries."
-msgstr ""
+"analysis as presently the smallest boundaries available with which to divide"
+" up Ireland are City & County boundaries."
+msgstr "Daje możliwość użycia danych OSM z dużo większym poziomem analizy statystycznej. Obecnie najmniejsze dostępne obrzeża podziału Irlanii to granice hrabstw i miast."
 
 #: pages.py:212
 msgid ""
 "All of the above plus the favourable terms of the ODbL license applies "
 "ensuring this data is free to use for any and all that want to make use of "
 "it, in other words, no exorbitant fee's would apply for this data."
-msgstr ""
+msgstr "Wszystkie powyższe oraz kilka ulubionych terminów z licencji ODbL obowiązują, zapewniając że powyższe dane są dostępne bezpłatnie do użytku. Innymi słowy nie obowiązują żadne wybujałe opłaty za te dane."
 
 #: pages.py:215
 msgid "About the Townland mapping project"
-msgstr ""
+msgstr "O projekcie nanoszenia map Townlandów"
 
 #: pages.py:216
 #, python-format
 msgid ""
 "Each townland has had to be manually traced and added to OSM. Our mappers "
-"have been working on the problem for years. We're <a href=\"/progress/"
-"\">currently only 42%% of the way through</a>, so it'll be another year "
-"before we're finished. We're adding about 100 per day <a href=\"/progress/"
-"activity/\">at this rate</a>."
-msgstr ""
+"have been working on the problem for years. We're <a "
+"href=\"/progress/\">currently only 42%% of the way through</a>, so it'll be "
+"another year before we're finished. We're adding about 100 per day <a "
+"href=\"/progress/activity/\">at this rate</a>."
+msgstr "Każdy townland musiał zostać ręcznie oznaczony i dodany do OSM. Osoby wprowadzające mapy pracowały nad tym przez lata. Jesteśmy <a href=\"/progress/\">aktualnie w 42%% drogi</a>, więc minie jeszcze rok zanim skończymy. W <a href=\"/progress/activity/\">tym tempie</a> dodajemy około 100 na dzień."
 
 #: pages.py:218
 msgid "How to map townlands"
-msgstr ""
+msgstr "Jak nanosić mapy townlandów"
 
 #: views.py:209
 #, python-format
@@ -641,61 +628,61 @@ msgstr[2] "%d dni"
 #, python-format
 msgid "%d townland"
 msgid_plural "%d townlands"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d townland"
+msgstr[1] "%d townlandów"
+msgstr[2] "%d townlandów"
 
 #: views.py:610
 #, python-format
 msgid "%d ED"
 msgid_plural "%d EDs"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d ED"
+msgstr[1] "%d ED"
+msgstr[2] "%d ED"
 
 #: views.py:612
 #, python-format
 msgid "%d civil parish"
 msgid_plural "%d civil parishes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d parafia cywilna"
+msgstr[1] "%d parafii cywilnych"
+msgstr[2] "%d parafii cywilnych"
 
 #: views.py:614
 #, python-format
 msgid "%d barony"
 msgid_plural "%d baronies"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d baronia"
+msgstr[1] "%d baronii"
+msgstr[2] "%d baronii"
 
 #: views.py:616
 #, python-format
 msgid "%d subtownland"
 msgid_plural "%d subtownlands"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d podtownland"
+msgstr[1] "%d podtownlandów"
+msgstr[2] "%d podtownlandów"
 
 #: views.py:618
 msgid "No mapping activity"
-msgstr ""
+msgstr "Brak aktywności nanoszenia na mapy"
 
 #: templates/irish_townlands/activity.html:4
 #: templates/irish_townlands/activity.html:5
 #: templates/irish_townlands/progress.html:33
 msgid "Mapping Activity"
-msgstr ""
+msgstr "Nanoszenie na mapy"
 
 #: templates/irish_townlands/activity.html:8
 #, python-format
 msgid "OpenStreetMap mapping activity from %(from)s to %(to)s"
-msgstr ""
+msgstr "Aktywność nanoszenia na mapy OpenStreetMap od %(from)s do %(to)s"
 
 #: templates/irish_townlands/activity_for_one_date.html:7
 #, python-format
 msgid "<a href=\"%(absurl)s%(url)s\">%(username)s</a> added"
-msgstr ""
+msgstr "dodano <a href=\"%(absurl)s%(url)s\">%(username)s</a>"
 
 #: templates/irish_townlands/activity_for_one_date.html:9
 #: templates/irish_townlands/county_detail.html:31
@@ -706,18 +693,18 @@ msgstr ""
 #, python-format
 msgid "%(num)s townland"
 msgid_plural "%(num)s townlands"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s townland"
+msgstr[1] "%(num)s townlandów"
+msgstr[2] "%(num)s townlandów"
 
 #: templates/irish_townlands/activity_for_one_date.html:13
 #: templates/irish_townlands/mappers.html:21
 #, python-format
 msgid "%(num)s ED"
 msgid_plural "%(num)s EDs"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s obwód wyborczy"
+msgstr[1] "%(num)s obwodów wyborczych"
+msgstr[2] "%(num)s obwodów wyborczych"
 
 #: templates/irish_townlands/activity_for_one_date.html:17
 #: templates/irish_townlands/index.html:16
@@ -725,9 +712,9 @@ msgstr[2] ""
 #, python-format
 msgid "%(num)s civil parish"
 msgid_plural "%(num)s civil parishes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s parafia cywilna"
+msgstr[1] "%(num)s parafii cywilnych"
+msgstr[2] "%(num)s parafii cywilnych"
 
 #: templates/irish_townlands/activity_for_one_date.html:21
 #: templates/irish_townlands/index.html:15
@@ -735,33 +722,33 @@ msgstr[2] ""
 #, python-format
 msgid "%(num)s barony"
 msgid_plural "%(num)s baronies"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s baronia"
+msgstr[1] "%(num)s baronii"
+msgstr[2] "%(num)s baronii"
 
 #: templates/irish_townlands/activity_for_one_date.html:25
 #, python-format
 msgid "%(num)s county"
 msgid_plural "%(num)s counties"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s hrabstwo"
+msgstr[1] "%(num)s hrabstw"
+msgstr[2] "%(num)s hrabstw"
 
 #: templates/irish_townlands/activity_for_one_date.html:29
 #: templates/irish_townlands/index.html:33
 #, python-format
 msgid "%(num)s subtownland"
 msgid_plural "%(num)s subtownlands"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s podtownland"
+msgstr[1] "%(num)s podtownlandów"
+msgstr[2] "%(num)s podtownlandów"
 
 #: templates/irish_townlands/barony_detail.html:9
 #, python-format
 msgid ""
-"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
-"here is a list of townlands in the barony of %(name)s."
-msgstr ""
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>,"
+" here is a list of townlands in the barony of %(name)s."
+msgstr "Na podstawie danych z <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, oto jest lista townlandów w baronii %(name)s."
 
 #: templates/irish_townlands/barony_detail.html:14
 #: templates/irish_townlands/ed_detail.html:15
@@ -769,7 +756,7 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:77
 #, python-format
 msgid "We don't know what county %(name)s is in."
-msgstr ""
+msgstr "Nie wiemy w jakim hrabstwie znajduje się %(name)s."
 
 #: templates/irish_townlands/barony_detail.html:18
 #: templates/irish_townlands/civil_parish_detail.html:32
@@ -778,9 +765,9 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:109
 #, python-format
 msgid ""
-"%(name)s is on Logainm.ie: <a href=\"http://www.logainm.ie/en/%(logainm_ref)s"
-"\">%(name)s</a>."
-msgstr ""
+"%(name)s is on Logainm.ie: <a "
+"href=\"http://www.logainm.ie/en/%(logainm_ref)s\">%(name)s</a>."
+msgstr "%(name)s jest na Logainm.ie: <a href=\"http://www.logainm.ie/en/%(logainm_ref)s\">%(name)s</a>."
 
 #: templates/irish_townlands/barony_detail.html:55
 #: templates/irish_townlands/civil_parish_detail.html:19
@@ -800,7 +787,7 @@ msgstr "Obszar"
 #, python-format
 msgid ""
 "%(name)s was added to OpenStreetMap on %(osm_timestamp)s by %(osm_user)s."
-msgstr ""
+msgstr "%(name)s został(a) dodany do OpenStreetMap dnia %(osm_timestamp)s przez %(osm_user)s."
 
 #: templates/irish_townlands/barony_detail.html:88
 #: templates/irish_townlands/civil_parish_detail.html:90
@@ -810,7 +797,7 @@ msgstr ""
 #: templates/irish_townlands/townland_detail.html:209
 #, python-format
 msgid "We don't know when %(name)s was added to OpenStreetMap."
-msgstr ""
+msgstr "Nie wiemy kiedy %(name)s zostało/a dodane do OpenStreetMap."
 
 #: templates/irish_townlands/barony_detail.html:94
 #: templates/irish_townlands/civil_parish_detail.html:96
@@ -819,7 +806,7 @@ msgstr ""
 #: templates/irish_townlands/subtownland_detail.html:150
 #: templates/irish_townlands/townland_detail.html:215
 msgid "Edit in iD"
-msgstr ""
+msgstr "Edycja w iD"
 
 #: templates/irish_townlands/barony_detail.html:96
 #: templates/irish_townlands/civil_parish_detail.html:98
@@ -828,29 +815,29 @@ msgstr ""
 #: templates/irish_townlands/subtownland_detail.html:152
 #: templates/irish_townlands/townland_detail.html:217
 msgid "Edit in Level0"
-msgstr ""
+msgstr "Edycja w Level0"
 
 #: templates/irish_townlands/civil_parish_detail.html:4
 #, python-format
 msgid "Townlands in %(civil_parish_name)s"
-msgstr ""
+msgstr "Townlandy w %(civil_parish_name)s"
 
 #: templates/irish_townlands/civil_parish_detail.html:7
 #, python-format
 msgid "Civil Parish of %(civil_parish_name)s, Co. %(county)s"
-msgstr ""
+msgstr "Parafia Cywilna %(civil_parish_name)s, Hrabstwo %(county)s"
 
 #: templates/irish_townlands/civil_parish_detail.html:9
 #, python-format
 msgid "Civil Parish of %(civil_parish_name)s"
-msgstr ""
+msgstr "Parafia Cywilna %(civil_parish_name)s"
 
 #: templates/irish_townlands/civil_parish_detail.html:15
 #, python-format
 msgid ""
-"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
-"here is a list of townlands in %(civil_parish_name)s."
-msgstr ""
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>,"
+" here is a list of townlands in %(civil_parish_name)s."
+msgstr "Na podstawie danych z <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, w %(civil_parish_name)s znajdują się następujące townlandy."
 
 #: templates/irish_townlands/civil_parish_detail.html:18
 #: templates/irish_townlands/civil_parish_detail.html:36
@@ -879,17 +866,17 @@ msgstr "OpenStreetMap"
 #, python-format
 msgid "%(civil_parish_name)s is in the barony of %(baronylist)s."
 msgid_plural "%(civil_parish_name)s is in the baronies of %(baronylist)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(civil_parish_name)s jest w baronii %(baronylist)s."
+msgstr[1] "%(civil_parish_name)s jest w baroniach %(baronylist)s."
+msgstr[2] "%(civil_parish_name)s jest w baroniach %(baronylist)s."
 
 #: templates/irish_townlands/civil_parish_detail.html:29
 #, python-format
 msgid "%(civil_parish_name)s is in the county of %(countieslist)s."
 msgid_plural "%(civil_parish_name)s is in the counties of %(countieslist)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(civil_parish_name)s jest w hrabstwie %(countieslist)s."
+msgstr[1] "%(civil_parish_name)s jest w hrabstwach %(countieslist)s."
+msgstr[2] "%(civil_parish_name)s jest w hrabstwach %(countieslist)s."
 
 #: templates/irish_townlands/civil_parish_detail.html:38
 #: templates/irish_townlands/ed_detail.html:32
@@ -906,7 +893,7 @@ msgstr "Jest zlokalizowana/y w %(centre)s."
 msgid ""
 "%(name)s has an area of %(area_km2)s km² / %(area_acres)s acres / "
 "%(area_mile2)s square miles."
-msgstr ""
+msgstr "%(name)s ma obszar %(area_km2)s km² / %(area_acres)s akrów / %(area_mile2)s mil kwadratowych."
 
 #: templates/irish_townlands/civil_parish_detail.html:94
 #: templates/irish_townlands/county_detail.html:106
@@ -935,74 +922,74 @@ msgstr "Edytuj w Potlatch"
 #: templates/irish_townlands/county_detail.html:4
 #, python-format
 msgid "Townlands in Co. %(name)s"
-msgstr ""
+msgstr "Townlandy w Hrabstwie %(name)s"
 
 #: templates/irish_townlands/county_detail.html:9
 #, python-format
 msgid ""
-"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
-"here is a list of townlands in Co. %(county_name)s."
-msgstr ""
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>,"
+" here is a list of townlands in Co. %(county_name)s."
+msgstr "Według danych z <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, to jest lista townlandów w hrabstwie Co. %(county_name)s."
 
 #: templates/irish_townlands/county_detail.html:9
 #: templates/irish_townlands/county_detail.html:113
 msgid "Debug</a> overlaps and coverage"
-msgstr ""
+msgstr "Debugowanie</a> zasięgu i nachodządzych się obszarów."
 
 #: templates/irish_townlands/county_detail.html:17
 #, python-format
 msgid ""
 "%(name)s has a total water area of %(water_area_m2)s m², which is "
 "%(water_percent)s%% of the total area"
-msgstr ""
+msgstr "%(name)s posiada %(water_area_m2)s m² terenów wodnych, co stanowi %(water_percent)s%% całości obszaru"
 
 #: templates/irish_townlands/county_detail.html:22
 #, python-format
 msgid "There is %(num)s barony in Co. %(name)s that we know about."
 msgid_plural "There are %(num)s baronies in Co. %(name)s that we know about."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "W Hrabstwie %(name)s znajduje się %(num)s baronia, o której wiemy."
+msgstr[1] "W Hrabstwie %(name)s znajduje się %(num)s baronii, o których wiemy."
+msgstr[2] "W Hrabstwie %(name)s znajduje się %(num)s baronii, o których wiemy."
 
 #: templates/irish_townlands/county_detail.html:25
 #, python-format
 msgid "Wikipedia's list of baronies in %(county_name)s."
-msgstr ""
+msgstr "Lista baronii w %(county_name)s wg Wikipedii"
 
 #: templates/irish_townlands/county_detail.html:40
 #, python-format
 msgid "There is %(num)s civil parish in Co. %(name)s that we know about."
 msgid_plural ""
 "There are %(num)s civil parishes in Co. %(name)s that we know about."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "W Hrabstwie %(name)s istnieje %(num)s parafia cyfilna, o której wiemy."
+msgstr[1] "W Hrabstwie %(name)s istnieje %(num)s parafii cyfilnych, o których wiemy."
+msgstr[2] "W Hrabstwie %(name)s istnieje %(num)s parafii cyfilnych, o których wiemy."
 
 #: templates/irish_townlands/county_detail.html:43
 #, python-format
 msgid "Wikipedia's list of civil parishes in %(county_name)s."
-msgstr ""
+msgstr "Lista parafii cywilnych w %(county_name)s wg Wikipedii."
 
 #: templates/irish_townlands/county_detail.html:75
 #, python-format
 msgid "Wikipedia's list of townlands in %(county_name)s."
-msgstr ""
+msgstr "Lista townlandów w %(county_name)s wg Wikipedii."
 
 #: templates/irish_townlands/county_detail.html:85
 #: templates/irish_townlands/search_results.html:69
 #: templates/irish_townlands/townland_detail.html:174
 msgid "Subtownlands"
-msgstr ""
+msgstr "Podtownlandy"
 
 #: templates/irish_townlands/county_detail.html:114
 #, python-format
 msgid "How long will it take OSM to finish %(county_name)s?"
-msgstr ""
+msgstr "Ile potrwa OSM aby ukończyć %(county_name)s?"
 
 #: templates/irish_townlands/countydebug_detail.html:4
 #, python-format
 msgid "Data Completeness in Co. %(name)s"
-msgstr ""
+msgstr "Kompletność danych w Hrabstwie %(name)s"
 
 #: templates/irish_townlands/countydebug_detail.html:60
 msgid "Data Completeness"
@@ -1015,11 +1002,11 @@ msgstr "Hrabstwo"
 
 #: templates/irish_townlands/countydebug_detail.html:64
 msgid "Townlands (excl water)"
-msgstr ""
+msgstr "Townlandy (bez obszarów wodnych)"
 
 #: templates/irish_townlands/countydebug_detail.html:65
 msgid "Townlands (incl water)"
-msgstr ""
+msgstr "Townlandy (z obszarami wodnymi)"
 
 #: templates/irish_townlands/countydebug_detail.html:81
 msgid "Area Coverage"
@@ -1032,16 +1019,16 @@ msgstr "Ziemia i Woda nie pokryta w Townlands"
 #: templates/irish_townlands/countydebug_detail.html:86
 #, python-format
 msgid "How long will %(name)s take to be mapped?"
-msgstr ""
+msgstr "Jak długo zajmie naniesienie na mapy %(name)s?"
 
 #: templates/irish_townlands/countydebug_detail.html:88
 #, python-format
 msgid "All of %(name)s is covered by townlands in the OpenStreetMap database."
-msgstr ""
+msgstr "Całość %(name)s jest pokryta townlandami w bazie OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:91
 msgid "Land covered by 2 (or more) Townlands"
-msgstr ""
+msgstr "Obszar pokryty przez 2 (lub więcej) Townlandy"
 
 #: templates/irish_townlands/countydebug_detail.html:94
 #: templates/irish_townlands/countydebug_detail.html:112
@@ -1050,74 +1037,75 @@ msgstr ""
 msgid ""
 "Due to a bug in the software, there will sometimes be lines following the "
 "borders that appear as \\"
-msgstr ""
+msgstr "Z powodu błędu w programie niektóre linie z granicami pojawiają się jako \\"
 
 #: templates/irish_townlands/countydebug_detail.html:98
 #, python-format
 msgid "None of the townlands in %(name)s the OpenStreetMap database overlap."
-msgstr ""
+msgstr "Żadne z townlandów w %(name)s w bazie OpenStreetMap nie pokrywają się."
 
 #: templates/irish_townlands/countydebug_detail.html:106
 #, python-format
 msgid "All of %(name)s is covered by EDs in the OpenStreetMap database."
-msgstr ""
+msgstr "Całość %(name)s jest pokryta obwodami wyborczymi w base OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:109
 msgid "Land covered by 2 (or more) Electoral Divisions"
-msgstr ""
+msgstr "Teren pokryty przez 2 (lub więcej) obwodów wyborczych."
 
 #: templates/irish_townlands/countydebug_detail.html:116
 #, python-format
 msgid "None of the EDs in %(name)s the OpenStreetMap database overlap."
-msgstr ""
+msgstr "Żadne z obwodów wyborczych w %(name)s nie zachodzą na siebie w bazie OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:119
 msgid "Land not covered by Civil Parishes"
-msgstr ""
+msgstr "Teren nie objęty Parafiami Cywilnymi."
 
 #: templates/irish_townlands/countydebug_detail.html:124
 #, python-format
 msgid ""
 "All of %(name)s is covered by civil parishes in the OpenStreetMap database."
-msgstr ""
+msgstr "Całość %(name)s jest pokryta parafiami cywilnymi w bazie OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:127
 msgid "Land covered by 2 (or more) Civil Parishes"
-msgstr ""
+msgstr "Teren objęty 2 (lub więcej) Parafiami Cywilnymi."
 
 #: templates/irish_townlands/countydebug_detail.html:133
 #, python-format
 msgid "No civil parishes overlap in %(name)s in the OpenStreetMap database."
-msgstr ""
+msgstr "Żadne z parafii cywilnych w %(name)s nie zachodzą na siebie w bazie OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:137
 msgid "Land not covered by Baronies"
-msgstr ""
+msgstr "Teren nie objęty Baroniami."
 
 #: templates/irish_townlands/countydebug_detail.html:142
 #, python-format
 msgid "All of %(name)s is covered by baronies in the OpenStreetMap database."
-msgstr ""
+msgstr "Całość %(name)s jest pokryta baroniami w bazie OpenStreetMap."
 
 #: templates/irish_townlands/countydebug_detail.html:145
 msgid "Land covered by 2 (or more) Baronies"
-msgstr ""
+msgstr "Teren objęty wieloma baroniami."
 
 #: templates/irish_townlands/countydebug_detail.html:151
 #, python-format
-msgid "None of the baronies in %(name)s in the OpenStreetMap database overlap."
-msgstr ""
+msgid ""
+"None of the baronies in %(name)s in the OpenStreetMap database overlap."
+msgstr "Żadne z baronii w %(name)s nie zachodzą na siebie w bazie OpenStreetMap."
 
 #: templates/irish_townlands/duplicatenames.html:4
 #: templates/irish_townlands/progress.html:30
 msgid "Duplicate townland names"
-msgstr ""
+msgstr "Powielone nazwy townlandów"
 
 #: templates/irish_townlands/duplicatenames.html:4
 #: templates/irish_townlands/progress.html:4
 #: templates/irish_townlands/progress.html:5
 msgid "Irish Traditional Boundaries Progress Report"
-msgstr ""
+msgstr "Raport postępu Irlandzkich Tradycyjnych Granic"
 
 #: templates/irish_townlands/duplicatenames.html:5
 msgid "Duplicate names"
@@ -1126,40 +1114,40 @@ msgstr "Powielone nazwy"
 #: templates/irish_townlands/duplicatenames.html:14
 #, python-format
 msgid "%(baronyname)s Barony"
-msgstr ""
+msgstr "Baronia %(baronyname)s"
 
 #: templates/irish_townlands/ed_detail.html:5
 #: templates/irish_townlands/subtownland_detail.html:20
 #: templates/irish_townlands/townland_detail.html:37
 #, python-format
 msgid "%(name)s Electoral Division"
-msgstr ""
+msgstr "Okręg Wyborczy %(name)s"
 
 #: templates/irish_townlands/ed_detail.html:9
 #, python-format
 msgid ""
-"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
-"here is a list of townlands in the Electoral Division / ED / District "
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>,"
+" here is a list of townlands in the Electoral Division / ED / District "
 "Electoral Division of %(name)s."
-msgstr ""
+msgstr "Według danych z <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, to jest lista townlandów w obwodzie wyborczym %(name)s."
 
 #: templates/irish_townlands/ed_detail.html:13
 #, python-format
 msgid "%(name)s is in <a href=\"%(countyurl)s\">Co. %(ed.county.name)s"
-msgstr ""
+msgstr "%(name)s znajduje się w <a href=\"%(countyurl)s\">hrabstwie %(ed.county.name)s"
 
 #: templates/irish_townlands/ed_detail.html:62
 #, python-format
 msgid "There is %(num)s civil parish in Co. %(name)s."
 msgid_plural "There are %(num)s civil parishes in Co. %(name)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "W hrabstwie %(name)s. jest %(num)s parafia cywilna."
+msgstr[1] "W hrabstwie %(name)s. jest %(num)s parafii cywilnych."
+msgstr[2] "W hrabstwie %(name)s. jest %(num)s parafii cywilnych."
 
 #: templates/irish_townlands/ed_detail.html:66
 #, python-format
 msgid "%(name)s (%(num)s townlands)"
-msgstr ""
+msgstr "%(name)s (%(num)s townlandów)"
 
 #: templates/irish_townlands/ed_detail.html:77
 #, python-format
@@ -1169,35 +1157,35 @@ msgid ""
 msgid_plural ""
 "There are %(num)s townlands that we know about in %(name)s. This represents "
 "%(td_cover)s%% of all the area in %(name)s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "W %(name)s znajduje się %(num)s townland, który znamy. Stanowi to %(td_cover)s%% całości %(name)s."
+msgstr[1] "W %(name)s znajduje się %(num)s townlandów, które znamy. Stanowi to %(td_cover)s%% całości %(name)s."
+msgstr[2] "W %(name)s znajduje się %(num)s townlandów, które znamy. Stanowi to %(td_cover)s%% całości %(name)s."
 
 #: templates/irish_townlands/index.html:4
 msgid "Townlands in Ireland"
-msgstr ""
+msgstr "Townlandy w Irlandii"
 
 #: templates/irish_townlands/index.html:8
 msgid ""
-"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>, "
-"here is a list of counties in Ireland."
-msgstr ""
+"Based on data in <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>,"
+" here is a list of counties in Ireland."
+msgstr "W bazie <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> znajdują się następujące hrabstwa w Irlandii."
 
 #: templates/irish_townlands/index.html:9
 msgid ""
 "Click on each county to see baronies, civil parishes and townlands in the "
 "respective county."
-msgstr ""
+msgstr "Klinknij na hrabstwie aby zobaczyć znajdujęce się w nim baronie, parafie cywilne oraz townlandy."
 
 #: templates/irish_townlands/index.html:10
 msgid ""
 "This page should be updated (roughly) daily. The OpenStreetMap community is "
 "adding more data regularly."
-msgstr ""
+msgstr "Ta strona powinna być aktualizowana (prawie) codziennie. Społeczność OpenStreetMap regularnie dodaje nowe dane."
 
 #: templates/irish_townlands/index.html:10
 msgid "See how much we have done and how much we have left to do"
-msgstr ""
+msgstr "Zobacz ile zrobiliśmy i ile jeszcze zostało"
 
 #: templates/irish_townlands/index.html:10
 msgid "how long it'll take us to finish"
@@ -1205,11 +1193,11 @@ msgstr "Ile nam zajmie ukończenie"
 
 #: templates/irish_townlands/index.html:10
 msgid "townland mapping activity"
-msgstr ""
+msgstr "aktywność nanoszenia na mapy townlandów"
 
 #: templates/irish_townlands/index.html:11
 msgid "Alphabetical index of townlands"
-msgstr ""
+msgstr "Alfabetyczna lista townlandów"
 
 #: templates/irish_townlands/index.html:13
 #: templates/irish_townlands/rate.html:13
@@ -1221,9 +1209,9 @@ msgstr "Irlandia"
 #, python-format
 msgid "%(num)s electoral division"
 msgid_plural "%(num)s electoral divisions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s okręg wyborczy"
+msgstr[1] "%(num)s okręgów wyborczych"
+msgstr[2] "%(num)s okręgów wyborczych"
 
 #: templates/irish_townlands/index.html:19
 msgid "currently mapped on OpenStreetMap"
@@ -1231,25 +1219,26 @@ msgstr "aktualnie zmapowane na OpenStreetMap"
 
 #: templates/irish_townlands/index.html:41
 msgid ""
-"The <a href=\"http://www.openstreetmap.ie/\">Irish OpenStreetMap community</"
-"a> are currently actively tracing all townland boundaries from GSGS 3906 map "
-"sheets into the OpenStreetMap database. If you wish to take part in this "
-"project, please see <a href=\"https://wiki.openstreetmap.org/wiki/Ireland/"
-"Mapping_Townlands\">this guide</a> for full instructions, including step-by-"
-"step videos, on how to take part."
-msgstr ""
+"The <a href=\"http://www.openstreetmap.ie/\">Irish OpenStreetMap "
+"community</a> are currently actively tracing all townland boundaries from "
+"GSGS 3906 map sheets into the OpenStreetMap database. If you wish to take "
+"part in this project, please see <a "
+"href=\"https://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands\">this "
+"guide</a> for full instructions, including step-by-step videos, on how to "
+"take part."
+msgstr "<a href=\"http://www.openstreetmap.ie/\">Irlandzka społeczność OpenStreetMap</a> aktualnie aktywnie przenosi wszystkie granice townlandów z map GSGS 3906 do baz danych OpenStreetMap. Jeżeli chcesz wziąć udział w projekcie zajrzyj do <a href=\"https://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands\">tego przewodnika</a> po pełne instrukcje włączając filmiki krok po kroku jak to zrobić."
 
 #: templates/irish_townlands/list.html:4 templates/irish_townlands/list.html:5
 #: templates/irish_townlands/townland_base.html:64
 msgid "Townland Index"
-msgstr ""
+msgstr "Indeks Townlandów"
 
 #: templates/irish_townlands/list.html:10
 #, python-format
 msgid ""
 "This is a index of Irish Townlands from the OpenStreetMap project. It has "
 "%(num)s townlands."
-msgstr ""
+msgstr "To jest indeks irlandzkich townlandów z projektu OpenStreetMap. Znajduje się tu %(num)s townlandów."
 
 #: templates/irish_townlands/list.html:12
 #, python-format
@@ -1259,16 +1248,18 @@ msgstr "Został wygenerowany %(today)s"
 #: templates/irish_townlands/list.html:17
 #, python-format
 msgid ""
-"This index is also available <a class=\"btn btn-primary btn-mini\" href="
-"\"%(alpha)s\">Without any groupings, with all townlands alphabetical</a>."
-msgstr ""
+"This index is also available <a class=\"btn btn-primary btn-mini\" "
+"href=\"%(alpha)s\">Without any groupings, with all townlands "
+"alphabetical</a>."
+msgstr "Ten indeks jest również dostępny <a class=\"btn btn-primary btn-mini\" href=\"%(alpha)s\">bez żadnego grupowania, ze wszystkimi townlandami ułożonymi alfabetycznie</a>."
 
 #: templates/irish_townlands/list.html:20
 #, python-format
 msgid ""
-"This index is also available <a class=\"btn btn-primary btn-mini\"href="
-"\"%(grouped)s\">Grouped into counties, baronies and civil parishes</a>."
-msgstr ""
+"This index is also available <a class=\"btn btn-primary btn-"
+"mini\"href=\"%(grouped)s\">Grouped into counties, baronies and civil "
+"parishes</a>."
+msgstr "Ten indeks jest również dostępny <a class=\"btn btn-primary btn-mini\" href=\"%(grouped)s\">zgrupowany wg hrabstw, baronii i parafii cywilnych</a>."
 
 #: templates/irish_townlands/list.html:26
 msgid "Hide Irish names"
@@ -1282,12 +1273,12 @@ msgstr "Pokaż irlandzkie nazwy"
 #: templates/irish_townlands/mapper_details.html:5
 #, python-format
 msgid "%(osm_user)s's mapping contributions"
-msgstr ""
+msgstr "Elementy dodane przez użytkownika %(osm_user)s"
 
 #: templates/irish_townlands/mapper_details.html:9
 #, python-format
 msgid "%(osm_user)s's mapping activity."
-msgstr ""
+msgstr "Aktywność użytkownika %(osm_user)s"
 
 #: templates/irish_townlands/mapper_details.html:9
 msgid "View all mappers"
@@ -1296,7 +1287,7 @@ msgstr "Pokaż wszystkich mapujących"
 #: templates/irish_townlands/mapper_details.html:9
 #, python-format
 msgid "View %(osm_user)s's OpenStreetMap profile."
-msgstr ""
+msgstr "Oglądanie profilu OpenStreetMap użytkownika %(osm_user)s"
 
 #: templates/irish_townlands/mapper_details.html:13
 #: templates/irish_townlands/mapper_details.html:24
@@ -1323,41 +1314,41 @@ msgstr "Użytkownik"
 #, python-format
 msgid "%(num)s Civil Parish"
 msgid_plural "%(num)s Civil Parishes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s Parafia Cywilna"
+msgstr[1] "%(num)s Parafii Cywilnych"
+msgstr[2] "%(num)s Parafii Cywilnych"
 
 #: templates/irish_townlands/mappers.html:23
 #, python-format
 msgid "%(num)s Barony"
 msgid_plural "%(num)s Baronies"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s Baronia"
+msgstr[1] "%(num)s Baronii"
+msgstr[2] "%(num)s Baronii"
 
 #: templates/irish_townlands/mappers.html:24
 #, python-format
 msgid "%(num)s County"
 msgid_plural "%(num)s Counties"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(num)s Hrabstwo"
+msgstr[1] "%(num)s Hrabstw"
+msgstr[2] "%(num)s Hrabstw"
 
 #: templates/irish_townlands/mappinghistory.html:4
 #: templates/irish_townlands/mappinghistory.html:5
 msgid "Townland Mapping Log"
-msgstr ""
+msgstr "Log nanoszenia na mapy Townlandów"
 
 #: templates/irish_townlands/mappinghistory.html:9
 msgid ""
 "This records the log of when people have been adding townlands to "
 "OpenStreetMap."
-msgstr ""
+msgstr "Tu zapisuje się log kiedy użytkownicy dodawali townlandy do OpenStreetMap."
 
 #: templates/irish_townlands/mappinghistory.html:24
 #, python-format
 msgid "<a href=\"%(mapper_url)s\">%(username)s</a> added %(desc)s"
-msgstr ""
+msgstr "<a href=\"%(mapper_url)s\">%(username)s</a> dodał(a) %(desc)s"
 
 #: templates/irish_townlands/progress.html:29
 msgid "Progress of each county"
@@ -1371,22 +1362,22 @@ msgstr "Potencjalny konflikt a danymi"
 #: templates/irish_townlands/progress.html:32
 #: templates/irish_townlands/rate.html:5 templates/irish_townlands/rate.html:9
 msgid "Rate of mapping"
-msgstr ""
+msgstr "Prędkośc nanoszenia na mapy"
 
 #: templates/irish_townlands/progress.html:34
 #: templates/irish_townlands/progress.html:96
 msgid "Logainm Status"
-msgstr ""
+msgstr "Status Logainm"
 
 #: templates/irish_townlands/progress.html:37
 msgid "How complete is the data in Open Street Map?"
-msgstr ""
+msgstr "Stopień kompletności danych Open Street Map"
 
 #: templates/irish_townlands/progress.html:38
 msgid ""
 "The data in OpenStreetMap is continuously updated. This page shows how much "
 "of each county has been mapped in townlands, baronies and civil parishes"
-msgstr ""
+msgstr "Dane w OpenStreetMap są ciągle aktualizowane. Ta strona pokazuje ile townlandów, baronii i parafii cywilnych zostało naniesionych w każdym hrabstwie"
 
 #: templates/irish_townlands/progress.html:51
 msgid "All Ireland"
@@ -1394,15 +1385,15 @@ msgstr "Cała Irlandia"
 
 #: templates/irish_townlands/progress.html:80
 msgid "How long will it take to finish?"
-msgstr ""
+msgstr "Ile zajmie ukończenie?"
 
 #: templates/irish_townlands/progress.html:83
 msgid "Duplicate Townland Name"
-msgstr ""
+msgstr "Zduplikowana nazwa townlandu"
 
 #: templates/irish_townlands/progress.html:84
 msgid "Duplicate townland names have moved to a separate page"
-msgstr ""
+msgstr "Duplikujące się nazwy townlandów zostały przeniesione na osobne strony"
 
 #: templates/irish_townlands/progress.html:92
 msgid "No Errors, data is good! 😁"
@@ -1410,9 +1401,9 @@ msgstr "Brak błędów, dane prawidłowe 😁"
 
 #: templates/irish_townlands/progress.html:97
 msgid ""
-"What is the status of Logainm data match up? How many objects have a logainm "
-"ref?"
-msgstr ""
+"What is the status of Logainm data match up? How many objects have a logainm"
+" ref?"
+msgstr "Jaki jest status zgodności danych z Logainm? Ile obiektów posiada referencje do logainm?"
 
 #: templates/irish_townlands/progress.html:99
 msgid "All objects"
@@ -1421,7 +1412,7 @@ msgstr "Wszystkie obiekty"
 #: templates/irish_townlands/progress.html:99
 #, python-format
 msgid "%(done)s of %(total)s"
-msgstr ""
+msgstr "%(done)s z %(total)s"
 
 #: templates/irish_townlands/progress.html:100
 #: templates/irish_townlands/progress.html:101
@@ -1436,7 +1427,7 @@ msgstr "Ile zajmie nam ukończenie"
 #: templates/irish_townlands/rate.html:9
 #: templates/irish_townlands/townland_base.html:20
 msgid "Irish Townlands"
-msgstr ""
+msgstr "Irlandzkie Townlandy"
 
 #: templates/irish_townlands/rate.html:9
 msgid "Progress"
@@ -1448,28 +1439,28 @@ msgid ""
 "is updated. When this happens, we record how much of Ireland is covered by "
 "townlands, and from that predict how long it'll take to finish the whole "
 "lot. This calculation excludes water-y areas."
-msgstr ""
+msgstr "Codziennie townlandy z OpenStreetMap są przetwarzane uaktualniając tą stronę. Kiedy to następuje, zapisujemy jaki stopień Irlandii jest pokryty townlandami i z tego prognozujemy ile zajmie całość. Obliczenia te nie uwzględniają obszarów wodnych."
 
 #: templates/irish_townlands/rate.html:17
 #, python-format
 msgid ""
 "If we take the rate since %(initial_date)s of %(rate)s%% per day, we'll "
 "never finish."
-msgstr ""
+msgstr "W tempie od %(initial_date)s - %(rate)s%% na dzień - nie skończymy nigdy."
 
 #: templates/irish_townlands/rate.html:19
 #, python-format
 msgid ""
 "If we take the rate since %(initial_date)s of %(rate)s%% per day, we'll be "
 "finished on %(end_date)s (only %(length)s left)."
-msgstr ""
+msgstr "W tempie od %(initial_date)s - %(rate)s%% na dzień - skończymy w dniu %(end_date)s (zostało tylko %(length)s)."
 
 #: templates/irish_townlands/rate.html:24
 #, python-format
 msgid ""
 "If we take the rate since 90 days ago (%(initial_date)s) of %(rate)s%% per "
 "day, we'll never finish."
-msgstr ""
+msgstr "W tempie ostatnich 90 dni (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy."
 
 #: templates/irish_townlands/rate.html:26
 #: templates/irish_townlands/rate.html:77
@@ -1477,49 +1468,50 @@ msgstr ""
 msgid ""
 "If we take the rate since 90 days ago (%(initial_date)s) of %(rate)s%% per "
 "day, we'll be finished on %(end_date)s (only %(length)s left)."
-msgstr ""
+msgstr "W tempie ostatnich 90 dni (od %(initial_date)s) - %(rate)s%% na dzień - skończymy w dniu %(end_date)s (zostało tylko %(length)s)."
 
 #: templates/irish_townlands/rate.html:32
 #, python-format
 msgid ""
 "If we take the rate since last month (%(initial_date)s) of %(rate)s%% per "
 "day, we'll never finish."
-msgstr ""
+msgstr "W tempie ostatniego miesiąca (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy."
 
 #: templates/irish_townlands/rate.html:34
 #, python-format
 msgid ""
 "If we take the rate since last month (%(initial_date)s) of %(rate)s%% per "
 "day, we'll be finished on %(end_date)s (only %(length)s left)."
-msgstr ""
+msgstr "W tempie ostatniego miesiąca (od %(initial_date)s) - %(rate)s%% na dzień, skończymy w dniu %(end_date)s (zostało tylko %(length)s)."
 
 #: templates/irish_townlands/rate.html:41
 #, python-format
 msgid ""
-"If we take the rate since this day last week (%(initial_date)s) of %(rate)s"
-"%% per day, we'll never finish."
-msgstr ""
+"If we take the rate since this day last week (%(initial_date)s) of "
+"%(rate)s%% per day, we'll never finish."
+msgstr "W tempie ubiegłego tygodnia (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy."
 
 #: templates/irish_townlands/rate.html:43
 #, python-format
 msgid ""
-"If we take the rate since this day last week (%(initial_date)s) of %(rate)s"
-"%% per day, we'll be finished on %(end_date)s (only %(length)s left)."
-msgstr ""
+"If we take the rate since this day last week (%(initial_date)s) of "
+"%(rate)s%% per day, we'll be finished on %(end_date)s (only %(length)s "
+"left)."
+msgstr "W tempie ubiegłego tygodnia (od %(initial_date)s) - %(rate)s%% na dzień, skończymy w dniu %(end_date)s (zostało tylko %(length)s)."
 
 #: templates/irish_townlands/rate.html:49
 #, python-format
 msgid ""
 "If we take the rate since yesterday (%(initial_date)s) of %(rate)s%% per "
 "day, we'll never finish."
-msgstr ""
+msgstr "We wczorajszym tempie (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy."
 
 #: templates/irish_townlands/rate.html:51
 #, python-format
 msgid ""
 "If we take the rate since yesterday (%(initial_date)s) of %(rate)s%% per "
 "day, we'll be finished on %(end_date)s (only %(length)s left)."
-msgstr ""
+msgstr "We wczorajszym tempie (od %(initial_date)s) - %(rate)s%% na dzień - skończymy w dniu %(end_date)s (zostało tylko %(length)s)."
 
 #: templates/irish_townlands/rate.html:61
 msgid "Done!"
@@ -1528,12 +1520,12 @@ msgstr "Zrobione!"
 #: templates/irish_townlands/rate.html:61
 #, python-format
 msgid "All the townlands in %(countyname)s are in OpenStreetMap!"
-msgstr ""
+msgstr "Wszystkie townlandy w hrabstwie %(countyname)s są już na  OpenStreetMap!"
 
 #: templates/irish_townlands/rate.html:64
 #, python-format
 msgid "There is %(percent)s%% to be mapped."
-msgstr ""
+msgstr "Pozostało %(percent)s%% do naniesienia na mapy."
 
 #: templates/irish_townlands/rate.html:65
 msgid "Based on..."
@@ -1543,33 +1535,33 @@ msgstr "Bazowane na..."
 #, python-format
 msgid ""
 "the rate since %(initial_date)s (%(rate)s%% per day), we'll never finish"
-msgstr ""
+msgstr "tempo od %(initial_date)s (%(rate)s%% na dzień) - nie skończymy nigdy"
 
 #: templates/irish_townlands/rate.html:70
 #, python-format
 msgid ""
 "the rate since %(initial_date)s (%(rate)s%% per day), we'll be finished on "
 "%(end_date)s (only %(length)s left)"
-msgstr ""
+msgstr "tempo od %(initial_date)s (%(rate)s%% na dzień) - skończymy w dniu %(end_date)s (zostało tylko %(length)s)"
 
 #: templates/irish_townlands/rate.html:75
 #, python-format
 msgid ""
 "If we take the rate since 90 days ago (%(initial_date)s) of %(rate)s%% per "
 "day, we'll never finish"
-msgstr ""
+msgstr "W tempie ostatnich 90 dni (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy"
 
 #: templates/irish_townlands/rate.html:83
 #, python-format
 msgid ""
 "the rate since last month (%(initial_date)s) of %(rate)s%% per day, we'll "
 "never finish"
-msgstr ""
+msgstr "tempo ostatniego miesiąca (od %(initial_date)s) - %(rate)s%% na dzień - nie skończymy nigdy"
 
 #: templates/irish_townlands/rate.html:108
 #, python-format
 msgid "Unmapped area in %(countyname)s"
-msgstr ""
+msgstr "Teren nie naniesiony na mapy w hrabstwie %(countyname)s"
 
 #: templates/irish_townlands/search.html:4
 #: templates/irish_townlands/search.html:5
@@ -1582,29 +1574,29 @@ msgstr "Szukaj"
 #: templates/irish_townlands/search.html:23
 #: templates/irish_townlands/search_results.html:33
 msgid "Civil Parish"
-msgstr ""
+msgstr "Parafia Cywilna"
 
 #: templates/irish_townlands/search_results.html:11
 #, python-format
 msgid ""
 "We found %(num_results)s county matching your search of \"%(search_term)s\"."
 msgid_plural ""
-"We found %(num_results)s counties matching your search of \"%(search_term)s"
-"\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+"We found %(num_results)s counties matching your search of "
+"\"%(search_term)s\"."
+msgstr[0] "Znaleźliśmy %(num_results)s hrabstwo spełniające Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s hrabstw spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s hrabstw spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:23
 #, python-format
 msgid ""
 "We found %(num_results)s barony matching your search of \"%(search_term)s\"."
 msgid_plural ""
-"We found %(num_results)s baronies matching your search of \"%(search_term)s"
-"\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+"We found %(num_results)s baronies matching your search of "
+"\"%(search_term)s\"."
+msgstr[0] "Znaleźliśmy %(num_results)s baronię spełniającą Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s baronie spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s baronii spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:35
 #, python-format
@@ -1614,31 +1606,30 @@ msgid ""
 msgid_plural ""
 "We found %(num_results)s civil parishes matching your search of "
 "\"%(search_term)s\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Znaleźliśmy %(num_results)s parafię cywilną spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s parafie cywilne spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s parafii cywilnych spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:47
 #, python-format
-msgid ""
-"We found %(num_results)s ED matching your search of \"%(search_term)s\"."
+msgid "We found %(num_results)s ED matching your search of \"%(search_term)s\"."
 msgid_plural ""
 "We found %(num_results)s EDs matching your search of \"%(search_term)s\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Znaleźliśmy %(num_results)s obwód wyborczy spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s obwody wyborcze spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s obwodów wyborczych spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:59
 #, python-format
 msgid ""
-"We found %(num_results)s townland matching your search of \"%(search_term)s"
-"\"."
+"We found %(num_results)s townland matching your search of "
+"\"%(search_term)s\"."
 msgid_plural ""
-"We found %(num_results)s townlands matching your search of \"%(search_term)s"
-"\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+"We found %(num_results)s townlands matching your search of "
+"\"%(search_term)s\"."
+msgstr[0] "Znaleźliśmy %(num_results)s townland spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s townlandy spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s townlandów spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:71
 #, python-format
@@ -1648,120 +1639,120 @@ msgid ""
 msgid_plural ""
 "We found %(num_results)s subtownlands matching your search of "
 "\"%(search_term)s\"."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Znaleźliśmy %(num_results)s subtownland spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[1] "Znaleźliśmy %(num_results)s subtownlandy spełniających Twoje zapytanie \"%(search_term)s\"."
+msgstr[2] "Znaleźliśmy %(num_results)s subtownlandów spełniających Twoje zapytanie \"%(search_term)s\"."
 
 #: templates/irish_townlands/search_results.html:82
 #, python-format
 msgid "Sorry. We found nothing for \"%(search_term)s\""
-msgstr ""
+msgstr "Przykro nam. Nie znaleźliśmy niczego co spełniałoby kryteria \"%(search_term)s\""
 
 #: templates/irish_townlands/subtownland_detail.html:32
 #: templates/irish_townlands/subtownland_detail.html:126
 #, python-format
 msgid "%(subtownland_name)s is in the townland of %(townland_link)s."
-msgstr ""
+msgstr "%(subtownland_name)s znajduje się w townlandzie %(townland_link)s."
 
 #: templates/irish_townlands/subtownland_detail.html:35
 #: templates/irish_townlands/townland_detail.html:56
 #, python-format
 msgid ""
-"%(townland_name)s is in the Electoral Division of %(ed)s, in Civil Parish of "
-"%(civil_parish)s, in the Barony of %(barony)s, in the County of %(county)s"
-msgstr ""
+"%(townland_name)s is in the Electoral Division of %(ed)s, in Civil Parish of"
+" %(civil_parish)s, in the Barony of %(barony)s, in the County of %(county)s"
+msgstr "%(townland_name)s znajduje się w obwodzie wyborczym %(ed)s, w parafii cywilnej %(civil_parish)s, w baronii %(barony)s, w hrabstwie %(county)s"
 
 #: templates/irish_townlands/subtownland_detail.html:38
 #: templates/irish_townlands/townland_detail.html:59
 #, python-format
 msgid "%(townland_name)s is in the Electoral Division of %(ed)s."
-msgstr ""
+msgstr "%(townland_name)s znajduje się w okręgu wyborczym %(ed)s."
 
 #: templates/irish_townlands/subtownland_detail.html:40
 #: templates/irish_townlands/townland_detail.html:61
 #, python-format
 msgid "We don't know what Electoral Division %(townland_name)s is in."
-msgstr ""
+msgstr "Niestety nie wiemy w jakim okręgu wyborczym znajduje się %(townland_name)s."
 
 #: templates/irish_townlands/subtownland_detail.html:43
 #: templates/irish_townlands/townland_detail.html:64
 #, python-format
 msgid "%(townland_name)s is in the Civil Parish of %(civil_parish)s."
-msgstr ""
+msgstr "%(townland_name)s znajduje się w parafii cywilnej %(civil_parish)s."
 
 #: templates/irish_townlands/subtownland_detail.html:45
 #: templates/irish_townlands/townland_detail.html:66
 #, python-format
 msgid "We don't know what Civil Parish %(townland_name)s is in."
-msgstr ""
+msgstr "Niestety nie wiemy w jakiej parafii cywilnej znajduje się %(townland_name)s."
 
 #: templates/irish_townlands/subtownland_detail.html:48
 #: templates/irish_townlands/townland_detail.html:69
 #, python-format
 msgid "%(townland_name)s is in the Barony of %(barony)s."
-msgstr ""
+msgstr "%(townland_name)s znajduje się w baronii %(barony)s."
 
 #: templates/irish_townlands/subtownland_detail.html:50
 #: templates/irish_townlands/townland_detail.html:71
 #, python-format
 msgid "We don't know what Barony %(townland_name)s is in."
-msgstr ""
+msgstr "Niestety nie wiemy w jakiej baronii znajduje się %(townland_name)s"
 
 #: templates/irish_townlands/subtownland_detail.html:54
 #: templates/irish_townlands/townland_detail.html:75
 #, python-format
 msgid "%(townland_name)s is in <a href=\"%(county_url)s\">Co. %(county)s</a>"
-msgstr ""
+msgstr "%(townland_name)s znajduje się w <a href=\"%(county_url)s\">hrabstwie %(county)s</a>"
 
 #: templates/irish_townlands/subtownland_detail.html:61
 #, python-format
 msgid "We don't know what townland %(subtownland_name)s is in."
-msgstr ""
+msgstr "Nie wiemy wjakim townlandzie znajduje się %(subtownland_name)s."
 
 #: templates/irish_townlands/subtownland_detail.html:67
 #: templates/irish_townlands/townland_detail.html:84
 #, python-format
 msgid "The Irish name for %(name)s is %(ga_name)s"
-msgstr ""
+msgstr "Irlandzka nazwa %(name)s to %(ga_name)s"
 
 #: templates/irish_townlands/subtownland_detail.html:69
 #: templates/irish_townlands/townland_detail.html:86
 #, python-format
 msgid "%(name)s is also known as %(alt_name_ga)s in Irish."
-msgstr ""
+msgstr "%(name)s jest znany również jako %(alt_name_ga)s po irlandzku."
 
 #: templates/irish_townlands/subtownland_detail.html:74
 #: templates/irish_townlands/townland_detail.html:91
 #, python-format
 msgid "The English name for %(name)s is %(en_name)s"
-msgstr ""
+msgstr "Angielska nazwa %(name)s to %(en_name)s"
 
 #: templates/irish_townlands/subtownland_detail.html:77
 #: templates/irish_townlands/townland_detail.html:94
 #, python-format
 msgid "%(name)s is also known as %(alt_name)s"
-msgstr ""
+msgstr "%(name)s jest również znane jako %(alt_name)s"
 
 #: templates/irish_townlands/subtownland_detail.html:80
 #: templates/irish_townlands/townland_detail.html:97
 #, python-format
 msgid "%(name)s is an island."
-msgstr ""
+msgstr "%(name)s jest wyspą."
 
 #: templates/irish_townlands/subtownland_detail.html:108
 msgid "Other Subtownlands"
-msgstr ""
+msgstr "Inne podtownlandy"
 
 #: templates/irish_townlands/subtownland_detail.html:111
 msgid "We don't know of any other subtownlands nearby."
-msgstr ""
+msgstr "Niestety nie znamy żadnych subtownlandów w pobliżu."
 
 #: templates/irish_townlands/subtownland_detail.html:113
 #, python-format
 msgid ""
 "%(subtownland_name)s is in the townland of %(townland_link)s, which has the "
 "following subtownlands:"
-msgstr ""
+msgstr "%(subtownland_name)s znajduje się w townlandzie %(townland_link)s, który ma następujące subtownlandy:"
 
 #: templates/irish_townlands/subtownland_detail.html:123
 msgid "Census Search"
@@ -1770,44 +1761,44 @@ msgstr "Szukaj w spisie powszechnym"
 #: templates/irish_townlands/subtownland_detail.html:128
 #, python-format
 msgid ""
-"Interested in Genealogical / ancestors who may have lived in "
+"Interested in Geneological / ancestors who may have lived in "
 "%(townland_name)s?"
-msgstr ""
+msgstr "Zainteresowany genealogią lub przodkami, którzy mogli żyć w %(townland_name)s?"
 
 #: templates/irish_townlands/subtownland_detail.html:130
 #, python-format
 msgid "Search the 1911 Irish Census for %(townland_name)s"
-msgstr ""
+msgstr "Szukaj %(townland_name)s w Irlandzkim Spisie Powszechnym 1911"
 
 #: templates/irish_townlands/subtownland_detail.html:131
 #, python-format
 msgid "Search the 1901 Irish Census for %(townland_name)s"
-msgstr ""
+msgstr "Szukaj %(townland_name)s w Irlandzkim Spisie Powszechnym 1901"
 
 #: templates/irish_townlands/subtownland_detail.html:135
 #, python-format
 msgid ""
 "Since we don't know what townland %(subtownland_name)s is in, we are unable "
-"to provide any genealogical data for this place name. Please check back "
+"to provide any geneological data for this place name. Please check back "
 "later, and it might have been added!"
-msgstr ""
+msgstr "Ponieważ nie wiemy w jakim townlandzie znajduje się %(subtownland_name)s, nie jesteśmy w stanie podać żadnych danych genealogicznych dla tego miejsca. Zajrzyj ponownie za jakiś czas - na pewno miejsce to zostanie dodane!"
 
 #: templates/irish_townlands/subtownland_detail.html:142
 #: templates/irish_townlands/townland_detail.html:207
 #, python-format
 msgid ""
-"%(name)s was added to OpenStreetMap on %(osm_timestamp)s by <a href="
-"\"%(mapperurl)s\">%(osm_user)s</a>."
-msgstr ""
+"%(name)s was added to OpenStreetMap on %(osm_timestamp)s by <a "
+"href=\"%(mapperurl)s\">%(osm_user)s</a>."
+msgstr "%(name)s zostało dodane do OpenStreetMap dnia %(osm_timestamp)s przez <a href=\"%(mapperurl)s\">%(osm_user)s</a>."
 
 #: templates/irish_townlands/townland_base.html:45
 msgid "Search for a townland, subtownland, civil parish, barony or county"
-msgstr ""
+msgstr "Szukaj townlandu, subtownlandu, parafii cywilnej, baronii albo hrabstwa"
 
 #: templates/irish_townlands/townland_base.html:46
 msgid ""
 "Search for a townland, civil parish, barony, electoral division or county"
-msgstr ""
+msgstr "Szukaj townlandu, parafii cywilnej, baronii, obwodu wyborczego albo hrabstwa"
 
 #: templates/irish_townlands/townland_base.html:59
 msgid "Copyright"
@@ -1827,22 +1818,22 @@ msgstr "Aktywność mapujących"
 
 #: templates/irish_townlands/townland_base.html:65
 msgid "Help add Logainm data to OSM"
-msgstr ""
+msgstr "Pomóż dodawać dane Logainm do OSM"
 
 #: templates/irish_townlands/townland_base.html:66
 #, python-format
 msgid "Last update: %(update_date)s"
-msgstr ""
+msgstr "Ostatnia aktualizacja: %(update_date)s"
 
 #: templates/irish_townlands/townland_detail.html:7
 #: templates/irish_townlands/townland_detail.html:13
 #, python-format
 msgid "%(townland_name)s Townland, Co. %(county_name)s"
-msgstr ""
+msgstr "Townland %(townland_name)s , hrabstwo %(county_name)s"
 
 #: templates/irish_townlands/townland_detail.html:49
 msgid "Bordering Townlands"
-msgstr ""
+msgstr "Granice Townlandów"
 
 #: templates/irish_townlands/townland_detail.html:50
 msgid "Records Search"
@@ -1853,21 +1844,21 @@ msgstr "Szukanie wpisów"
 msgid ""
 "The official English name of %(name)s is %(official_name_en)s, and the "
 "official Irish name is %(official_name_ga)s."
-msgstr ""
+msgstr "Oficialna angielska nazwa %(name)s to %(official_name_en)s, a oficjalna irlandzka to %(official_name_ga)s."
 
 #: templates/irish_townlands/townland_detail.html:103
 #, python-format
 msgid ""
 "The official English name of %(name)s is %(official_name_en)s, and we don't "
 "know what the official Irish name is."
-msgstr ""
+msgstr "Oficialna angielska nazwa %(name)s to %(official_name_en)s, niestety nie znamy oficjalnej nazwy irlandzkiej."
 
 #: templates/irish_townlands/townland_detail.html:105
 #, python-format
 msgid ""
 "The official Irish name of %(name)s is %(official_name_ga)s, and we don't "
 "know what the official English name is, but is probabaly %(name)s."
-msgstr ""
+msgstr "Oficialna irandzka nazwa %(name)s to %(official_name_ga)s, niestety nie znamy oficjalnej nazwy angielskiej ale prawdopodobnie jest to %(name)s."
 
 #: templates/irish_townlands/townland_detail.html:137
 #, python-format
@@ -1902,12 +1893,12 @@ msgstr "%(area)s akrów"
 #: templates/irish_townlands/townland_detail.html:145
 #, python-format
 msgid "Nationwide, it is the %(rank)s largest townland that we know about"
-msgstr ""
+msgstr "Jest to %(rank)s największy townland, o którym wiemy w skali kraju"
 
 #: templates/irish_townlands/townland_detail.html:147
 #, python-format
 msgid "Within Co. %(county)s, it is the %(county_rank)s largest townland"
-msgstr ""
+msgstr "Jest to %(county_rank)s największy townland w hrabstwie %(county)s"
 
 #: templates/irish_townlands/townland_detail.html:151
 msgid "Borders"
@@ -1916,88 +1907,88 @@ msgstr "Granice"
 #: templates/irish_townlands/townland_detail.html:153
 #, python-format
 msgid "%(townland_name)s borders the following other townlands:"
-msgstr ""
+msgstr "%(townland_name)s graniczy z poniższymi townlandami:"
 
 #: templates/irish_townlands/townland_detail.html:158
 #, python-format
 msgid "<a href=\"%(url)s\">%(name)s</a> to the north"
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(name)s</a> od północy"
 
 #: templates/irish_townlands/townland_detail.html:160
 #, python-format
 msgid "<a href=\"%(url)s\">%(name)s</a> to the south"
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(name)s</a> od południa"
 
 #: templates/irish_townlands/townland_detail.html:162
 #, python-format
 msgid "<a href=\"%(url)s\">%(name)s</a> to the east"
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(name)s</a> ze wschodu"
 
 #: templates/irish_townlands/townland_detail.html:164
 #, python-format
 msgid "<a href=\"%(url)s\">%(name)s</a> to the west"
-msgstr ""
+msgstr "<a href=\"%(url)s\">%(name)s</a> z zachodu"
 
 #: templates/irish_townlands/townland_detail.html:170
 #, python-format
 msgid ""
 "We don't have a record for what townlands (if any) %(townland_name)s borders"
-msgstr ""
+msgstr "Nie mamy informacji, z którym townlandem graniczy %(townland_name)s"
 
 #: templates/irish_townlands/townland_detail.html:184
 #, python-format
 msgid "We don't know about any subtownlands in %(townland_name)s."
-msgstr ""
+msgstr "Nie znamy żadnych subtownlandów w %(townland_name)s."
 
 #: templates/irish_townlands/townland_detail.html:188
-msgid "Genealogy / Ancestry / Records Search"
-msgstr ""
+msgid "Geneology / Ancestry / Records Search"
+msgstr "Genealogia / Przodkowie / Poszukiwanie wpisów"
 
 #: templates/irish_townlands/townland_detail.html:190
 #, python-format
 msgid ""
-"Curious to see who lived in %(townland_name)s in the past? Maybe even seeing "
-"scans of their handwritten census returns?"
-msgstr ""
+"Curious to see who lived in %(townland_name)s in the past? Maybe even seeing"
+" scans of their handwritten census returns?"
+msgstr "Chcesz zobaczyć kto mieszkał w %(townland_name)s w przeszłości? Może nawet zobaczyć skany ich ręcznie pisanych ankiet spisów powszechnych?"
 
 #: templates/irish_townlands/townland_detail.html:192
 #, python-format
 msgid ""
 "In the 1901 Census, %(townland_name)s was recorded as %(name_census1901)s."
-msgstr ""
+msgstr "W Spisie Powszechnym 1901, %(townland_name)s został zarejestrowany jako %(name_census1901)s."
 
 #: templates/irish_townlands/townland_detail.html:195
 #, python-format
 msgid ""
 "In the 1911 Census, %(townland_name)s was recorded as %(name_census1911)s."
-msgstr ""
+msgstr "W Spisie Powszechnym 1911, %(townland_name)s został zarejestrowany jako %(name_census1911)s."
 
 #: templates/irish_townlands/townland_detail.html:198
 #, python-format
 msgid "Search the 1911 Irish Census for %(name_census1911)s"
-msgstr ""
+msgstr "Szukaj %(name_census1911)s w Irlandzkim Spisie Powszechnym 1911"
 
 #: templates/irish_townlands/townland_detail.html:199
 #, python-format
 msgid "Search the 1901 Irish Census for %(name_census1901)s"
-msgstr ""
+msgstr "Szukaj %(name_census1901)s w Irlandzkim Spisie Powszechnym 1901"
 
 #: templates/irish_townlands/townland_detail.html:200
 #, python-format
 msgid "Search the Griffith's Valuation (1847-1864) for %(townland_name)s"
-msgstr ""
+msgstr "Szukaj %(townland_name)s w Griffith's Valuation (1847-1864) (Wycenach Gryffitha)"
 
 #: templates/irish_townlands/townland_detail.html:207
 #, python-format
 msgid "It was the %(order)s townland added to OpenStreetMap"
-msgstr ""
+msgstr "To jest %(order)s townland dodany do OpenStreetMap"
 
 #: templates/irish_townlands/townland_detail.html:220
 #, python-format
 msgid "The source for this townland is %(source)s."
-msgstr ""
+msgstr "Źródłem tego townlandu jest: %(source)s."
 
 #: templates/irish_townlands/townland_detail.html:221
 #, python-format
 msgid "The attribution for this townland is %(attribution)s."
-msgstr ""
+msgstr "Atrybutami tego townlandu są %(attribution)s."
