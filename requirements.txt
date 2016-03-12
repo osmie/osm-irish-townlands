@@ -1,4 +1,4 @@
-Django==1.6
+Django==1.7
 South
 iso8601
 requests
