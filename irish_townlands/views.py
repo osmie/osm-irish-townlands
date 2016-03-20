@@ -782,3 +782,33 @@ def lookup_by_logainm(request, logainm_ref):
     return render_to_response('irish_townlands/search_results.html', results,
         context_instance=RequestContext(request))
 
+def lookup_by_osm_id(request, osm_id):
+    qs = Q(osm_id=osm_id)
+
+    search_results = _search_for(qs)
+
+    # if there is only one, then redirect to it
+    if search_results['counties_num_results'] + search_results['baronies_num_results'] + search_results['civil_parishes_num_results'] + search_results['eds_num_results'] + search_results['townlands_num_results'] + search_results['subtownlands_num_results'] == 1:
+        obj = (search_results['counties'] + search_results['baronies'] + search_results['civil_parishes'] + search_results['eds'] + search_results['townlands'] + search_results['subtownlands'])[0]
+        return redirect('view_area', url_path=obj.url_path)
+
+    results = {
+        'search_term': logainm_ref,
+        'counties': search_results['counties'],
+        'counties_num_results': search_results['counties_num_results'],
+        'baronies': search_results['baronies'],
+        'baronies_num_results': search_results['baronies_num_results'],
+        'civil_parishes': search_results['civil_parishes'],
+        'civil_parishes_num_results': search_results['civil_parishes_num_results'],
+        'eds': search_results['eds'],
+        'eds_num_results': search_results['eds_num_results'],
+        'townlands': search_results['townlands'],
+        'townlands_num_results': search_results['townlands_num_results'],
+        'subtownlands': search_results['subtownlands'],
+        'subtownlands_num_results': search_results['subtownlands_num_results'],
+    }
+
+    return render_to_response('irish_townlands/search_results.html', results,
+        context_instance=RequestContext(request))
+
+

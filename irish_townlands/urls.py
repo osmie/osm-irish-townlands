@@ -23,6 +23,7 @@ urlpatterns = patterns('irish_townlands.views',
     url(r'^activity/$', RedirectView.as_view(pattern_name='activity', permanent=True)),
     url(r'^progress/mappinghistory/$', 'mappinghistory', name='mappinghistory' ),
     url(r'^by/logainm/(?P<logainm_ref>[0-9]+)/$', 'lookup_by_logainm', name='lookup_by_logainm' ),
+    url(r'^by/osm_id/(?P<osm_id>-?[0-9]+)/$', 'lookup_by_osm_id', name='lookup_by_osm_id' ),
 
     url(r'^(?P<url_path>[-\w\d/]+)/debug/$', 'county_debug', name='county_debug' ),
     url(r'^$', 'view_area', name='view_area' ),
