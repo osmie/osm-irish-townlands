@@ -13,7 +13,7 @@
 <a name="duperefs"></a>
 <h2>{% trans "Duplicate logainm:ref's" %}</h2>
 {% trans "There should only be one OSM object for each logainm id (logainm:ref tag)." %}
-{% blocktrans with num=duperefs.count count num=num %}There is {{ num }} occurance of this problem.{% plural %}There are {{ num }} occurances of this problem.{% endblocktrans %}
+{% blocktrans with num=duperefs|length count num=num %}There is {{ num }} occurance of this problem.{% plural %}There are {{ num }} occurances of this problem.{% endblocktrans %}
 <ul>
     {% for err in duperefs %}
         <li>{{ err|safe }}</li>
