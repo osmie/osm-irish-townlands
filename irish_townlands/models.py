@@ -168,7 +168,7 @@ class NameableThing(object):
         return alt_values_textual(self.alt_name_ga)
 
 class Polygon(models.Model):
-    osm_id = models.IntegerField()
+    osm_id = models.BigIntegerField()
     polygon_geojson = models.TextField(default='')
 
 class Area(models.Model, NameableThing):
@@ -176,7 +176,7 @@ class Area(models.Model, NameableThing):
     class Meta:
         abstract = True
 
-    osm_id = models.IntegerField(unique=True)
+    osm_id = models.BigIntegerField(unique=True)
 
     # The name tag
     name_tag = models.CharField(max_length=255, db_index=True)
