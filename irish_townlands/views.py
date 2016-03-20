@@ -812,3 +812,54 @@ def lookup_by_osm_id(request, osm_id):
         context_instance=RequestContext(request))
 
 
+def logainmqa_duperefs():
+    tables = [model._meta.db_table for model in [ Townland, CivilParish, County, Barony, ElectoralDivision, Subtownland ]]
+    sql_part = ["(SELECT osm_id, logainm_ref FROM {} WHERE logainm_ref IS NOT NULL)".format(table) for table in tables]
+    all_sql = "SELECT logainm_ref, array_agg(osm_id) as osm_ids FROM (" + " UNION ".join(sql_part) + ") AS t GROUP BY logainm_ref HAVING count(*) > 1"
+    cursor = connection.cursor()
+    cursor.execute(all_sql)
+    raw_data = cursor.fetchall()
+    
+    raw_data = [{
+        'logainm_ref': r[0], 'osm_ids_raw':r[1],
+        'num_osm_objs': len(r[1]),
+        'osms': [
+            { 'type': 'relation' if osmid < 0 else 'way',
+              'osmid': abs(osmid), 'raw_osmid': osmid,
+            }
+             for osmid in r[1] ]
+        } for r in raw_data]
+
+    raw_data.sort(key=lambda x: x['num_osm_objs'], reverse=True)
+
+    errors = []
+    for err in raw_data:
+        per_osm_messages = []
+        for osm in err['osms']:
+            per_osm_messages.append(
+                ugettext("<li>OSM %(type)s ID %(osmid)s <a href=\"http://www.openstreetmap.org/%(type)s/%(osmid)s\">[OSM.org]</a> <a href=\"/by/osm_id/%(raw_osmid)s\">[townlands.ie]</a> <a href=\"http://localhost:8111/import?url=http://api.openstreetmap.org/api/0.6/%(type)s/%(osmid)s/full\" target=\"_blank\">[JOSM]</a></li>") % osm
+            )
+
+
+        err['per_osm_message'] = "<ul>" + "".join(per_osm_messages) + "</ul>"
+        
+        errors.append(
+            ungettext(
+                "There is %(num_osm_objs)s OSM object for %(logainm_ref)s <a href=\"http://logainm.ie/en/%(logainm_ref)s\">[logainm.ie]</a> %(per_osm_message)s",
+                "There are %(num_osm_objs)s OSM objects for %(logainm_ref)s <a href=\"http://logainm.ie/en/%(logainm_ref)s\">[logainm.ie]</a> %(per_osm_message)s",
+                err['num_osm_objs']
+            ) % err
+        )
+
+
+    return errors
+
+
+def logainmqa(request):
+    results = {
+        'duperefs': logainmqa_duperefs(),
+    }
+
+    return render_to_response('irish_townlands/logainmqa.html', results,
+        context_instance=RequestContext(request))
+

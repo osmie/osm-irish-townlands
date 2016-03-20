@@ -17,6 +17,7 @@ urlpatterns = patterns('irish_townlands.views',
 
     url(r'^progress/duplicatenames/$', 'duplicatenames', name='duplicatenames' ),
     url(r'^progress/rate/$', 'rate', name='rate' ),
+    url(r'^progress/logainmqa/$', 'logainmqa', name='logainmqa' ),
 
     url(r'^progress/activity/$', 'activity', name='activity' ),
     url(r'^progress/activity/rss/$', 'activity_rss', name='activity_rss' ),

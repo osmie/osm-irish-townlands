@@ -1,0 +1,25 @@
+{% extends 'irish_townlands/townland_base.html' %}
+{% load i18n l10n humanize cache %}
+
+{% block title %}{% trans "Possible problems with the logainm data" %}{% endblock %}
+{% block header %}<h1>{% trans "Possible problems with the logainm data" %}</h1>{% endblock %}
+
+{% block body %}
+
+<ul>
+    <li><a href="#duperefs">{% trans "Duplicate logainm:ref's" %} ↓</a></li>
+</ul>
+
+<a name="duperefs"></a>
+<h2>{% trans "Duplicate logainm:ref's" %}</h2>
+{% trans "There should only be one OSM object for each logainm id (logainm:ref tag)." %}
+{% blocktrans with num=duperefs.count count num=num %}There is {{ num }} occurance of this problem.{% plural %}There are {{ num }} occurances of this problem.{% endblocktrans %}
+<ul>
+    {% for err in duperefs %}
+        <li>{{ err|safe }}</li>
+    {% empty %}
+        <li><i>{% trans 'No problems!' %}</i></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
