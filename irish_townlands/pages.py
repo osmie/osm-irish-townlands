@@ -24,8 +24,8 @@ PAGES = {
         'title': _('Copyright of Townlands.ie'),
 
         'body': """
-            <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
-            <p>"""+_("""Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.""")+"""</p>
+            <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="https://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
+            <p>"""+_("""Consult the <a href="https://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more informatiom.""")+"""</p>
         """,
     },
 
@@ -102,7 +102,7 @@ PAGES = {
             <p>"""+_("""There are several columns per entry:""")+"""
                 <dl class="dl-horizontal">
                     <dt>OSM_ID<dt>
-                    <dd>"""+_("""Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="http://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more information). IDs are not shared across objects (e.g. there will never be an ED and a townland with the same OSM_ID).""")+"""</dd>
+                    <dd>"""+_("""Integer. The id of the object in the OSM database. If it's positive, it's a way; if it's negative, it's a relation. (Consult the <a href="https://wiki.openstreetmap.org/wiki/Elements">OSM data model</a> for more information). IDs are not shared across objects (e.g. there will never be an ED and a townland with the same OSM_ID).""")+"""</dd>
                     <dt>NAME<dt>
                     <dd>"""+_("""String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish.""")+""" <i>("""+_("""NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.""")+""")</i></dd>
                     <dt>NAME_GA<dt>
@@ -189,7 +189,7 @@ PAGES = {
 
             <h2>"""+_("""Copyright & Licence""")+"""</h2>
             <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
-            <p>"""+_("""Consult the <a href="http://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more information.""")+"""</p>
+            <p>"""+_("""Consult the <a href="https://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more information.""")+"""</p>
 
         """, )
     },
@@ -227,7 +227,7 @@ PAGES = {
         <h2>"""+_("""About the Townland mapping project""")+"""</h2>
         <p>"""+_("""Each townland has had to be manually traced and added to OSM. Our mappers have been working on the problem for years. We're <a href="/progress/">currently only 42%% of the way through</a>, so it'll be another year before we're finished. We're adding about 100 per day <a href="/progress/activity/">at this rate</a>.""")+"""</p>
 
-        <p><a href="http://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands">"""+_("""How to map townlands""")+"""</a>.</p>
+        <p><a href="https://wiki.openstreetmap.org/wiki/Ireland/Mapping_Townlands">"""+_("""How to map townlands""")+"""</a>.</p>
 
         
         """,
@@ -274,7 +274,7 @@ PAGES = {
                 $(".map").each(function() {
                     // create the map
                     var map = new L.Map($(this).attr('id'));
-                    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                     var osmAttrib='Map data © OpenStreetMap contributors';
                     var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
                     var mapurl = $(this).data("mapurl");
