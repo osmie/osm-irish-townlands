@@ -2,12 +2,12 @@
 {% load i18n staticfiles translate_url %}
 
 {% block extra_headers %}
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'js/leaflet-0.7.7/leaflet.css' %}" />
     <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.ie.css" />
+        <link rel="stylesheet" href="{% static 'js/leaflet-0.7.7/leaflet.ie.css' %}" />
     <![endif]-->
 
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="{% static 'js/leaflet-0.7.7/leaflet.js' %}"></script>
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     {% block extra_headers_2 %}{% endblock %}
 {% endblock %}
