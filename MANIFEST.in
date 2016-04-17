@@ -1,2 +1,5 @@
 include LICENCE
-recursive-include irish_townlands/static/ *
+recursive-include irish_townlands/static *
+recursive-include irish_townlands/locale *
+recursive-include irish_townlands/templatetags *
+recursive-include irish_townlands/templates *
