@@ -237,7 +237,7 @@ PAGES = {
         'body': """
         <p>Townlands.ie provides several maps based on townlands. In accordance with the current <a href="/page/data_freshness/">update process</a>, it is updated once per day.</p>
         <h2>When were townlands mapped</h2>
-        <div id="townlandage" data-mapurl="http://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="townlandage" data-mapurl="https://www.townlands.ie/tiles/townlandage/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
         <p>Legend:
             <span style="width: 10px; height: 10px; background-color: #9e0142; display: inline-block"> </span> Today or Yesterday
             <span style="width: 10px; height: 10px; background-color: #d53e4f; display: inline-block"> </span> Last 3 days
@@ -251,23 +251,23 @@ PAGES = {
         </p>
 
         <h2>Who has mapped townlands</h2>
-        <div id="townlanduser" data-mapurl="http://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="townlanduser" data-mapurl="https://www.townlands.ie/tiles/townlanduser/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any county</h2>
-        <p>This map shows land that is not in any county. It is available in JOSM preset images as "OSMIE T.ie Land not in Counties". If you would like to use it in your own application, the tile URL is <pre>http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png</pre></p>
-        <div id="not_counties" data-mapurl="http://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <p>This map shows land that is not in any county. It is available in JOSM preset images as "OSMIE T.ie Land not in Counties". If you would like to use it in your own application, the tile URL is <pre>httpsn://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png</pre></p>
+        <div id="not_counties" data-mapurl="https://www.townlands.ie/tiles/not_counties/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any Barony</h2>
-        <div id="not_baronies" data-mapurl="http://www.townlands.ie/tiles/not_baronies/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="not_baronies" data-mapurl="https://www.townlands.ie/tiles/not_baronies/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any Civil Parishes</h2>
-        <div id="not_civil_parishes" data-mapurl="http://www.townlands.ie/tiles/not_civil_parishes/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="not_civil_parishes" data-mapurl="https://www.townlands.ie/tiles/not_civil_parishes/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any EDs</h2>
-        <div id="not_eds" data-mapurl="http://www.townlands.ie/tiles/not_eds/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="not_eds" data-mapurl="https://www.townlands.ie/tiles/not_eds/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <h2>Land not in any Townlands</h2>
-        <div id="not_townlands" data-mapurl="http://www.townlands.ie/tiles/not_townlands/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
+        <div id="not_townlands" data-mapurl="https://www.townlands.ie/tiles/not_townlands/{z}/{x}/{y}.png" class="map" style="width:100%; height:700px;"></div>
 
         <script>
             $(document).ready(function() {
