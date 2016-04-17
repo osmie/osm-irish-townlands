@@ -8,9 +8,9 @@ setup(name="django-osm-irish-townlands",
       author_email="rory@technomancy.org",
       packages=['irish_townlands', 'irish_townlands.management', 'irish_townlands.management.commands', 'irish_townlands.migrations'],
       package_data={'irish_townlands': [
-          'templates/irish_townlands/*', 'static/*.png', 'static/img/langflags/*', 'locale/*/*/*', 'templatetags/*',
-          'static/js/*',
+          'templates/irish_townlands/*', 'locale/*/*/*', 'templatetags/*',
       ]},
+      include_package_data=True,
       license='GPLv3',
       description='',
       install_requires=[
