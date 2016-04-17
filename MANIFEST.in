@@ -1,1 +1,2 @@
-recursive-include include townlands/static/ *
+include LICENCE
+recursive-include include irish_townlands/static/ *
