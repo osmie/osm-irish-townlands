@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <p>{% blocktrans with name=barony.name %}Based on data in <a href="http://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ name }}.{% endblocktrans %}</p>
+    <p>{% blocktrans with name=barony.name %}Based on data in <a href="https://www.openstreetmap.org">OpenStreetMap</a>, here is a list of townlands in the barony of {{ name }}.{% endblocktrans %}</p>
 
     {% if barony.county %}
         <p>{{ barony.name }} is in <a href="{% url 'view_area' barony.county.url_path %}">Co. {{ barony.county.name }}</a></p>
@@ -38,7 +38,7 @@
     <div id="map" style="height: 500px; width: 600px;"></div>
     <script>
         var map = new L.Map('map');
-        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
 
