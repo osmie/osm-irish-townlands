@@ -42,7 +42,7 @@
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
 
-        map.setView(new L.LatLng( {{ barony.centre_y }}, {{ barony.centre_x }}), 11 );
+        map.setView(new L.LatLng( {{ barony.centre_y|unlocalize }}, {{ barony.centre_x|unlocalize }}), 11 );
         map.addLayer(osm);
         var popup = new L.Popup();
 

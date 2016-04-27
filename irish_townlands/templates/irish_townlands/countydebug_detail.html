@@ -26,7 +26,7 @@ $(document).ready(function() {
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
 
-        map.setView(new L.LatLng( {{ county.centre_y }}, {{ county.centre_x }}), 9 );
+        map.setView(new L.LatLng( {{ county.centre_y|unlocalize }}, {{ county.centre_x|unlocalize }}), 9 );
         map.addLayer(osm);
         L.geoJson({
                 'type':'Feature',

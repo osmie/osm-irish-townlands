@@ -43,7 +43,7 @@
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});		
 
-        map.setView(new L.LatLng( {{ ed.centre_y }}, {{ ed.centre_x }}), 11 );
+        map.setView(new L.LatLng( {{ ed.centre_y|unlocalize }}, {{ ed.centre_x }}), 11 );
         map.addLayer(osm);
         var popup = new L.Popup();
 
