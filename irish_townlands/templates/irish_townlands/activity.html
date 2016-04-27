@@ -1,10 +1,33 @@
 {% extends 'irish_townlands/townland_base.html' %}
-{% load i18n l10n humanize %}
+{% load i18n l10n humanize static %}
 
 {% block title %}{% trans "Mapping Activity" %}{% endblock %}
 {% block header %}{% trans "Mapping Activity" %}{% endblock %}
 
+{% block extra_headers_2 %}
+<link rel="stylesheet" href="{% static 'css/chartist-0.9.7.min.css' %}">
+<script src="{% static 'js/chartist-0.9.7.min.js' %}"></script>
+    <script>
+        var data = {
+            labels: [{{ graph_data.townlands_per_day.labels|join:', ' }}],
+            series: [ [ {{ graph_data.townlands_per_day.series|join:', ' }} ] ]
+        };
+
+        var options = {
+            width: 800,
+            height: 200
+        };
+
+        $(document).ready(function() {
+            new Chartist.Line('.ct-chart', data);
+        });
+        
+    </script>
+{% endblock %}
+
 {% block body %}
+<h2>{% trans 'Townlands added in last 30 days' %}</h2>
+<div class="ct-chart"></div>
 <h2>{% blocktrans %}OpenStreetMap mapping activity from {{ from }} to {{ to }}{% endblocktrans %}</h2>
 {% for period in stats %}
     {% include "irish_townlands/activity_for_one_date.html" %}

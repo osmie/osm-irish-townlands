@@ -591,6 +591,17 @@ def group_by_username(model, start_date):
 
     return results
 
+def stats_for_graphs_for_period(from_date, to_date):
+    results = {}
+
+    sql = "select townlands.num, dates.date::text from (select dates::date as date from generate_series(%s, %s, interval '1 day') as dates order by dates asc) as dates left outer join (select count(*) as num, osm_timestamp::date as date from irish_townlands_townland group by date order by date asc) as townlands on (dates.date = townlands.date);"
+    cursor = connection.cursor()
+    cursor.execute(sql, (from_date, to_date))
+
+    townlands_per_day = cursor.fetchall()
+    results['townlands_per_day'] = {'labels': [mark_safe('"{}"'.format(x[1])) for x in townlands_per_day], 'series': [x[0] for x in townlands_per_day]}
+    return results
+
 def detailed_stats_for_period(from_date, to_date):
     assert from_date <= to_date, (from_date, to_date)
     dates = []
@@ -683,7 +694,9 @@ def activity(request):
 
     stats = detailed_stats_for_period(from_date, to_date)
 
-    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats},
+    graph_data = stats_for_graphs_for_period(to_date-timedelta(days=30), to_date)
+
+    return render_to_response('irish_townlands/activity.html', {'from': from_date, 'to': to_date, 'stats': stats, 'graph_data': graph_data},
             context_instance=RequestContext(request))
 
 
