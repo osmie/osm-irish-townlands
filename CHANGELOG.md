@@ -1,3 +1,17 @@
+<a name="20160427202227"></a>
+## 20160427202227 (2016-04-27)
+
+
+#### Features
+
+*   Add a chart to townlands mapped ([20f72c02](20f72c02))
+
+#### Bug Fixes
+
+*   Display map properly for locales with comma as decimal sep. (e.g.  French) ([e547168c](e547168c))
+
+
+
 <a name="20160419091007"></a>
 ## 20160419091007 (2016-04-19)
 
