@@ -10,11 +10,13 @@ DB_PASS=$2
 OSM2PGSQL_CACHE=1000M
 
 VERBOSE=""
+WGET_VERBOSE_ARG=" -q "     # by default no wget output
 if [[ "$#" -ge 3 ]] ; then 
     VERBOSE=$3
     if [[ ! -z $VERBOSE ]] ; then
         set -x
         OSM2PGSQL_CACHE=1200M
+        WGET_VERBOSE_ARG=""     # we want to see wget
     fi
 fi
 
@@ -27,7 +29,7 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 done
 
 
-wget -q -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
+wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
 
 if [[ $VERBOSE ]] ; then
     PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ireland-and-northern-ireland.osm.pbf
