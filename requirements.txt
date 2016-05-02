@@ -3,3 +3,5 @@ South
 iso8601
 requests
 solid_i18n
+git+https://github.com/rory/split-large-polygons@master
+git+https://github.com/rory/difference-polygons@master
