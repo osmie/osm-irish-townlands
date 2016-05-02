@@ -1,3 +1,21 @@
+<a name="20160502190211"></a>
+## 20160502190211 (2016-05-02)
+
+
+#### Bug Fixes
+
+*   Add some python dependencies that are needed ([41827e02](41827e02))
+
+#### Performance
+
+*   Precalculate alternative names and serve them up ([5fb89e45](5fb89e45))
+
+#### Features
+
+* **import:**  Make verbose import more verbose ([a2a6b7f1](a2a6b7f1))
+
+
+
 <a name="20160501121811"></a>
 ## 20160501121811 (2016-05-01)
 
