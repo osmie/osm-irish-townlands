@@ -770,10 +770,10 @@ class Townland(Area):
     def generate_url_path(self):
         name = slugify(self.name.lower())
 
-	county_name = County.objects.filter(id=self.county_id).values_list("name_tag", flat=True)[0] if self.county_id else None
-	civil_parish_name = CivilParish.objects.filter(id=self.civil_parish_id).values_list("name_tag", flat=True)[0] if self.civil_parish_id else None
-	barony_name = Barony.objects.filter(id=self.barony_id).values_list("name_tag", flat=True)[0] if self.barony_id else None
-	ed_name = ElectoralDivision.objects.filter(id=self.ed_id).values_list("name_tag", flat=True)[0] if self.ed_id else None
+        county_name = County.objects.filter(id=self.county_id).values_list("name_tag", flat=True)[0] if self.county_id else None
+        civil_parish_name = CivilParish.objects.filter(id=self.civil_parish_id).values_list("name_tag", flat=True)[0] if self.civil_parish_id else None
+        barony_name = Barony.objects.filter(id=self.barony_id).values_list("name_tag", flat=True)[0] if self.barony_id else None
+        ed_name = ElectoralDivision.objects.filter(id=self.ed_id).values_list("name_tag", flat=True)[0] if self.ed_id else None
 
         self.url_path = pathify(county_name, barony_name, civil_parish_name, ed_name, name)
 
