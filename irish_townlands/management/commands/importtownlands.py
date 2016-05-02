@@ -11,7 +11,7 @@ from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
 from django import db
-from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon
+from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon, NameEntry
 
 from collections import defaultdict
 import psycopg2
@@ -95,7 +95,7 @@ class Command(BaseCommand):
         #
         # cf. http://www.postgresql.org/docs/9.4/static/explicit-locking.html
         django_cursor = connection.cursor()
-        for model in [ Townland, CivilParish, County, Barony, ElectoralDivision, Subtownland, Polygon, TownlandTouch ]:
+        for model in [ Townland, CivilParish, County, Barony, ElectoralDivision, Subtownland, Polygon, TownlandTouch, NameEntry ]:
             table = model._meta.db_table
             # Doing a raw SQL rather than model.objects.all().delete() because
             # this uses less memory
@@ -507,6 +507,17 @@ class Command(BaseCommand):
                 assert len(set(t.url_path for t in self.townlands.values())) == len(self.townlands)
 
 
+    def calculate_name_entries(self):
+        with printer("calculating name entries"):
+            for name in ['townlands', 'baronies']:
+                with printer("calculating {} name entries".format(name)):
+                    for o in getattr(self, name).values():
+                        for desc in ('short', 'medium', 'long'):
+                            for sort_key, is_irish, display_html in o.expand_to_alternatives(desc):
+                                NameEntry(desc=desc[0], is_irish=is_irish, sort_key=sort_key, display_html=display_html, area=o).save()
+
+
+
     def save_all_objects(self):
         # save all now
         with printer("final objects save"):
@@ -619,6 +630,8 @@ class Command(BaseCommand):
                 self.calculate_not_covered()
 
             self.calculate_unique_urls()
+
+            self.calculate_name_entries()
 
             self.save_all_objects()
 

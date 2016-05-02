@@ -11,6 +11,8 @@ from django.utils import translation
 from django.utils.html import format_html, mark_safe
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 import math
 
 from django.db import models
@@ -363,7 +365,7 @@ class Area(models.Model, NameableThing):
         except:
             return None
 
-    def expand_to_alternatives(self, incl_irish=True, desc="long"):
+    def expand_to_alternatives(self, desc="long"):
         assert desc in ["long", "medium", "short"]
 
         # List of tuples. Each tuple has the key to use for sorting, and then
@@ -404,6 +406,7 @@ class Area(models.Model, NameableThing):
         arp = self.area_acres_roods_perches
         results.append((
             name_to_key(self.name),
+            False,
             format_html(u'{} <abbr title="{}">{} A, {} R, {} P</abbr>',
                 mark_safe(unicode(this_desc)), arp_text, arp[0], arp[1], arp[2])))
 
@@ -411,39 +414,38 @@ class Area(models.Model, NameableThing):
         alternatives = []
 
         # Include "Bar" part of "Foo or Bar"
-        alternatives.extend(split_string(self.name))
+        alternatives.extend((False, x) for x in split_string(self.name))
 
         # Include alt_name, even if alt_name is "Foo or Bar"
         if self.alt_name:
-            alternatives.append(self.alt_name)
-            alternatives.extend(split_string(self.alt_name))
+            alternatives.append((False, self.alt_name))
+            alternatives.extend((False, x) for x in split_string(self.alt_name))
 
         # Different names in the census etc
         if self.name_census1901_tag:
-            alternatives.append(self.name_census1901_tag)
-            alternatives.extend(split_string(self.name_census1901_tag))
+            alternatives.append((False, self.name_census1901_tag))
+            alternatives.extend((False, x) for x in split_string(self.name_census1901_tag))
         if self.name_census1911_tag:
-            alternatives.append(self.name_census1911_tag)
-            alternatives.extend(split_string(self.name_census1911_tag))
+            alternatives.append((False, self.name_census1911_tag))
+            alternatives.extend((False, x) for x in split_string(self.name_census1911_tag))
         if self.name_griffithsvaluation_tag:
-            alternatives.append(self.name_griffithsvaluation_tag)
-            alternatives.extend(split_string(self.name_griffithsvaluation_tag))
+            alternatives.append((False, self.name_griffithsvaluation_tag))
+            alternatives.extend((False, x) for x in split_string(self.name_griffithsvaluation_tag))
         
         # Optional Irish name(s)
-        if incl_irish:
-            if self.name_ga:
-                alternatives.append(self.name_ga)
-                alternatives.extend(split_string(self.name_ga))
+        if self.name_ga:
+            alternatives.append((True, self.name_ga))
+            alternatives.extend((True, x) for x in split_string(self.name_ga))
 
-            if self.alt_name_ga:
-                alternatives.append(self.alt_name_ga)
-                alternatives.extend(split_string(self.alt_name_ga))
+        if self.alt_name_ga:
+            alternatives.append((True, self.alt_name_ga))
+            alternatives.extend((True, x) for x in split_string(self.alt_name_ga))
 
         # Construct HTML 
-        for alt in alternatives:
+        for is_irish, alt in alternatives:
             key = name_to_key(alt)
 
-            results.append((key, format_html(u"{} <i>(see {})</i>".format(unicode(alt), this_desc))))
+            results.append((key, is_irish, format_html(u"{} <i>(see {})</i>".format(unicode(alt), this_desc))))
 
         return results
 
@@ -456,16 +458,7 @@ class Area(models.Model, NameableThing):
 
         It's then sorted by a sensible key for manual searching.
         """
-
-        townlands = self.townlands_sorted
-        results = []
-
-        for t in townlands:
-            results.extend(t.expand_to_alternatives())
-
-        results.sort()
-        results = [x[1] for x in results]
-        return results
+        return NameEntry.objects.filter(desc='l', is_irish=False, townlands__county=self).order_by('sort_key').values_list('display_html', flat=True)
 
     def added_order(self):
         klass = self.__class__
@@ -576,6 +569,7 @@ class Area(models.Model, NameableThing):
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
+    name_entries = GenericRelation('NameEntry', related_query_name='baronies')
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -613,6 +607,7 @@ class Barony(Area):
 
 class CivilParish(Area):
     counties = models.ManyToManyField("County", db_index=True, default=None, related_name="civil_parishes")
+    name_entries = GenericRelation('NameEntry', related_query_name='civil_parishes')
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -727,6 +722,7 @@ class County(Area):
 
 class ElectoralDivision(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="eds")
+    name_entries = GenericRelation('NameEntry', related_query_name='eds')
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -766,6 +762,7 @@ class Townland(Area):
     barony = models.ForeignKey(Barony, related_name='townlands', null=True)
     civil_parish = models.ForeignKey(CivilParish, related_name='townlands', null=True)
     ed = models.ForeignKey(ElectoralDivision, related_name='townlands', null=True)
+    name_entries = GenericRelation('NameEntry', related_query_name='townlands')
 
     def generate_url_path(self):
         name = slugify(self.name.lower())
@@ -920,3 +917,18 @@ class Subtownland(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+class NameEntry(models.Model):
+    desc = models.CharField(max_length=1, choices=[('s', 'short'), ('m', 'medium'), ('l', 'long')], default='l', db_index=True)
+    sort_key = models.CharField(max_length=255, db_index=True)
+    display_html = models.CharField(max_length=500)
+    is_irish = models.BooleanField(default=False, db_index=True)
+    # FIXME add join index based on desc, is_irish, sort_key
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    area = GenericForeignKey('content_type', 'object_id')
+
+    def __unicode__(self):
+        return u"NameEntry(desc=%r, sort_key=%r, display_html=%r, is_irish=%r, content_type=%r, object_id=%r, area=%r)" % (self.desc, self.sort_key, self.display_html, self.is_irish, self.content_type, self.object_id, self.area)
+

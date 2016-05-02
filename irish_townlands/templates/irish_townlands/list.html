@@ -34,26 +34,26 @@
     {% if should_group %}
         {% ifchanged %}
             </ol>
-            <h2>{{ t.0 }}</h2>
+            <h2>{{ t.0|default:"<i class=\"text-muted\">(County unknown)</i>" }}</h2>
             <ol>
         {% endifchanged %}
         {% ifchanged t.0 t.1 %}
             </ol>
-            <h3>{{ t.1 }}</h3>
+            <h3>{{ t.1|default:"<i class=\"text-muted\">(Barony unknown)</i>" }}</h3>
             <ol>
         {% endifchanged %}
         {% ifchanged t.0 t.1 t.2 %}
             </ol>
-            <h4>{{ t.2 }}</h4>
+            <h4>{{ t.2|default:"<i class=\"text-muted\">(Civil Parish unknown)</i>" }}</h4>
             <ol>
         {% endifchanged %}
 
-        <li>{{ t.4 }}</li>
+        <li>{{ t.3|safe }}</li>
     {% else %}
         {% ifchanged %}
             <h2>{{ t.0.0|upper }}</h2>
         {% endifchanged %}
-        <li>{{ t.1 }}</li>
+        <li>{{ t.1|safe }}</li>
     {% endif %}
 {% endfor %}
 </ol></p>

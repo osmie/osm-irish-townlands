@@ -68,7 +68,7 @@
     <ul>
     {% for townland in county.townlands_for_list_display %}
         <li>
-            {{ townland }}
+            {{ townland|safe }}
         </li>
     {% endfor %}
     </ul>

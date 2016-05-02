@@ -20,7 +20,7 @@ from django.utils.translation import ungettext, ugettext
 from django.utils.html import format_html, mark_safe
 from django.db import connection
 
-from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress, Subtownland
+from .models import Metadata, Townland, CivilParish, Barony, County, ElectoralDivision, Error, Progress, Subtownland, NameEntry
 from .pages import PAGES
 
 COUNTIES = [u'Antrim', u'Armagh', u'Carlow', u'Cavan', u'Clare', u'Cork',
@@ -732,27 +732,16 @@ def townland_index_grouped(request):
 def townland_index(request, should_group=False):
     incl_irish = request.GET.get("incl_irish", "yes") == "yes"
 
-    townlands = Townland.objects.select_related("barony", "civil_parish", "county").only("url_path", "name_tag", "name_ga", "alt_name", "alt_name_ga", "place", "area_m2", "barony__name_tag", "county__name_tag", "civil_parish__name_tag")
+    results = NameEntry.objects.filter(desc='m' if should_group else 'l')
+    if not incl_irish:
+        results = results.filter(is_irish=False)
 
-    results = []
+    if should_group:
+        results = results.order_by("townlands__county__name_tag", "townlands__barony__name_tag", "townlands__civil_parish__name_tag", "sort_key").values_list("townlands__county__name_tag", "townlands__barony__name_tag", "townlands__civil_parish__name_tag", "display_html")
+    else:
+        results = results.order_by("sort_key").values_list("sort_key", "display_html")
 
-    num_townlands = 0
-    for t in townlands:
-        alternatives = t.expand_to_alternatives(incl_irish=incl_irish, desc=('medium' if should_group else 'long'))
-        if should_group:
-            # Big hack here to get the sorting I want. Added zero width space
-            # (\ufeff) before each 'unknown' element so that it would be sorted
-            # last (e.g. "barony unknown" section will be the last entry for
-            # that county under all the actual baronies we know about.
-            alternatives = [
-                (format_html(u"<span class=\"text-muted\">Co.</span> {}", t.county.name) if t.county else mark_safe(u"\ufeff<i class=\"text-muted\">(County unknown)</i>"),
-                 format_html(u"<span class=\"text-muted\">Barony of</span> {}", t.barony.name) if t.barony else mark_safe(u'\ufeff<i class=\"text-muted\">(Barony unknown)</i>'),
-                 format_html(u"{} <span class=\"text-muted\">Civil Parish</span>", t.civil_parish.name) if t.civil_parish else mark_safe(u'\ufeff<i class=\"text-muted\">(Civil Parish unknown)</i>'),
-                 townland_key, text) for (townland_key, text) in alternatives]
-        results.extend(alternatives)
-        num_townlands += 1
-
-    results.sort()
+    num_townlands = Townland.objects.all().count()
 
     view_name = 'townland_index_grouped' if should_group else 'townland_index_alphabetical'
 
