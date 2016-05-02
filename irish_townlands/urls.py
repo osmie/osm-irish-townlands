@@ -1,11 +1,11 @@
-from django.conf.urls import *
+from django.conf.urls import url
 from django.views.generic import RedirectView
 
 from django.conf import settings
 
 from .views import *
 
-urlpatterns = patterns('irish_townlands.views',
+urlpatterns = [
 
     url(r'^index/$', townland_index_alphabetical, name='townland_index_alphabetical' ),
     url(r'^index/grouped/$', townland_index_grouped, name='townland_index_grouped' ),
@@ -34,4 +34,4 @@ urlpatterns = patterns('irish_townlands.views',
     # This must go at the end
     url(r'^(?P<url_path>[-\w\d/]+)/$', view_area, name='view_area' ),
 
-)
+]
