@@ -1,11 +1,15 @@
 <a name="20160505201215"></a>
 ## 20160505201215 (2016-05-05)
 
-
 #### Bug Fixes
 
 * **import:**  Add missing import ([bc5dcf6f](bc5dcf6f))
 
+<a name="20160505181309"></a>
+
+
+## 20160505181309 (2016-05-05)
+*   Calc proper urls in nameentries ([0d1cc1da](0d1cc1da))
 
 
 <a name="20160505175946"></a>
