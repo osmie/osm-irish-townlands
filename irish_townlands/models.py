@@ -458,7 +458,7 @@ class Area(models.Model, NameableThing):
 
         It's then sorted by a sensible key for manual searching.
         """
-        return NameEntry.objects.filter(desc='l', is_irish=False, townlands__county=self).order_by('sort_key').values_list('display_html', flat=True)
+        return NameEntry.objects.filter(desc='l', is_irish=False, townlands__in=self.townlands.all()).order_by('sort_key').values_list('display_html', flat=True)
 
     def added_order(self):
         klass = self.__class__
