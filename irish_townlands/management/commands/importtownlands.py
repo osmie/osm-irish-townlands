@@ -10,6 +10,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction, connection
 from django.conf import settings
 from django.db.models import Sum
+from django.utils import translation
 from django import db
 from ...models import County, Townland, Barony, CivilParish, ElectoralDivision, TownlandTouch, Metadata, Error, Progress, Subtownland, Polygon, NameEntry
 
