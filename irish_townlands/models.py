@@ -392,6 +392,17 @@ class Area(models.Model, NameableThing):
                     names = input_string.split(s)
                     for name in names[1:]:
                         results.append(name)
+
+            for s in ['North', 'South', 'East', 'West', 'Upper', 'Lower']:
+                if input_string.lower().endswith(" "+s.lower()):
+                    # X North
+                    other_part = input_string[0:-len(" "+s)]
+                    results.append(s + " " + other_part)
+                elif input_string.lower().startswith(" "+s.lower()):
+                    # North X
+                    other_part = input_string[len(" "+s)]
+                    results.append(other_part + " " + s)
+
             return results
 
         # Given a name, convert it to sortable key
