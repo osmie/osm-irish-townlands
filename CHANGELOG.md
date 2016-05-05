@@ -1,3 +1,16 @@
+<a name="20160505175946"></a>
+## 20160505175946 (2016-05-05)
+
+
+#### Bug Fixes
+
+*   Show proper HTML w/o escaping for CPs etc ([3e3d922d](3e3d922d))
+*   Support listing townlands that aren't counties ([d0f76064](d0f76064))
+*   Support Dj1.0 URL file format ([ea93e46c](ea93e46c))
+*   Support Dj1.10 url formats ([3b5635a2](3b5635a2))
+
+
+
 <a name="20160502190211"></a>
 ## 20160502190211 (2016-05-02)
 
