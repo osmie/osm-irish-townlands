@@ -508,6 +508,7 @@ class Command(BaseCommand):
 
 
     def calculate_name_entries(self):
+        translation.active("en_IE")
         with printer("calculating name entries"):
             for name in ['townlands', 'baronies']:
                 with printer("calculating {} name entries".format(name)):
