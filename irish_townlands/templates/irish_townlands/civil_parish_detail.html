@@ -73,13 +73,13 @@
             {% if townland_list|length == 1 %}
                 {# Only in one county #}
                 {% for townland in townland_list.0.1 %}
-                    <li> {{ townland }} </li>
+                    <li> {{ townland|safe }} </li>
                 {% endfor %}
             {% else %}
                 {% for county_name, townlands in townland_list %}
                     <h3>{{ county_name }}</h3>
                     {% for townland in townlands %}
-                        <li> {{ townland }} </li>
+                        <li> {{ townland|safe }} </li>
                     {% endfor %}
                 {% endfor %}
             {% endif %}

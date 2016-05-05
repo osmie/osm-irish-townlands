@@ -80,7 +80,7 @@
     </p>
     <ul>
     {% for townland in barony.townlands_for_list_display %}
-        <li> {{ townland }} </li>
+        <li> {{ townland|safe }} </li>
     {% endfor %}
     </ul>
 
