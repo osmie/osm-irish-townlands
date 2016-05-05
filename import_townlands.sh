@@ -10,6 +10,7 @@ DB_PASS=$2
 OSM2PGSQL_CACHE=1000M
 
 VERBOSE=""
+QUICK=0
 WGET_VERBOSE_ARG=" -q "     # by default no wget output
 if [[ "$#" -ge 3 ]] ; then 
     VERBOSE=$3
@@ -17,6 +18,9 @@ if [[ "$#" -ge 3 ]] ; then
         set -x
         OSM2PGSQL_CACHE=1200M
         WGET_VERBOSE_ARG=""     # we want to see wget
+        if [[ $VERBOSE == "quick" ]] ; then
+            QUICK=1
+        fi
     fi
 fi
 
@@ -31,10 +35,17 @@ done
 
 wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
 
+FILENAME=ireland-and-northern-ireland.osm.pbf
 if [[ $VERBOSE ]] ; then
-    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ireland-and-northern-ireland.osm.pbf
+    if [[ $QUICK ]] ; then
+        # Only import carlow
+        rm -f carlow.osm.pbf
+        osmosis --read-pbf ./ireland-and-northern-ireland.osm.pbf --bounding-box left=-7.094 bottom=52.504 right=-6.713 top=52.852 completeWays=yes completeRelations=yes cascadingRelations=yes --write-pbf ./carlow.osm.pbf
+        FILENAME=carlow.osm.pbf
+    fi
+    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME}
 else
-    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ireland-and-northern-ireland.osm.pbf &>/dev/null
+    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME} &>/dev/null
 fi
 
 # not needed anymore
