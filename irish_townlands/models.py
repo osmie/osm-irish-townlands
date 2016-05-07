@@ -697,7 +697,7 @@ class CivilParish(Area):
 
         for countyname in results:
             results[countyname].sort()
-            results[countyname] = [x[1] for x in results[countyname]]
+            results[countyname] = [x[2] for x in results[countyname]]
 
         results = results.items()
 
