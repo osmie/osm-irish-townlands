@@ -1,3 +1,18 @@
+<a name="20160505203206"></a>
+## 20160505203206 (2016-05-05)
+
+
+#### Bug Fixes
+
+* **import:**  Call correct function name for translation ([d2ff92d2](d2ff92d2))
+
+#### Features
+
+*   Expand "X North" into "North X" as well ([31b67bb7](31b67bb7))
+*   Passing quick as 3rd param only imports carlow - quicker! ([ae6577e0](ae6577e0))
+
+
+
 <a name="20160505201215"></a>
 ## 20160505201215 (2016-05-05)
 
