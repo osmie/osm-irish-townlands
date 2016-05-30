@@ -1,3 +1,13 @@
+<a name="20160507170957"></a>
+## 20160507170957 (2016-05-07)
+
+
+#### Bug Fixes
+
+*   Update to match current output of expand_to_alternatives ([a30cb891](a30cb891))
+
+
+
 <a name="20160505203206"></a>
 ## 20160505203206 (2016-05-05)
 
