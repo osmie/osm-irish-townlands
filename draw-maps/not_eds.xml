@@ -37,7 +37,7 @@
     <StyleName>noteds-polygons</StyleName>
     <StyleName>noteds-lines</StyleName>
     <Datasource>
-        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/not_eds.shp]]></Parameter>
+        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/data/not_eds.shp]]></Parameter>
        <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>

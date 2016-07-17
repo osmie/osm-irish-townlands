@@ -37,7 +37,7 @@
     <StyleName>notcivil_parishes-polygons</StyleName>
     <StyleName>notcivil_parishes-lines</StyleName>
     <Datasource>
-        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/not_civil_parishes.shp]]></Parameter>
+        <Parameter name="file"><![CDATA[/home/rory/django-osm-irish-townlands/data/not_civil_parishes.shp]]></Parameter>
        <Parameter name="type"><![CDATA[shape]]></Parameter>
     </Datasource>
   </Layer>
