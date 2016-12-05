@@ -69,6 +69,9 @@ class Command(BaseCommand):
         # the query into 2 parts. If it was all """....""" then there's a
         # postgres syntax error at 'http://'
 
+        dump(directory, "provinces", dbuser, dbpass,
+             """SELECT osm_id, name, "name:en" as name_en, "name:ga" as name_ga, way as geom FROM valid_polygon WHERE admin_level = '5'""")
+
         dump(directory, "townlands", dbuser, dbpass,
             """SELECT xx.*, ST_Area(xx.geom::geography) AS area,
                 ST_Y(ST_Centroid(xx.geom)) AS latitude, ST_X(ST_Centroid(xx.geom)) AS longitude,
