@@ -93,6 +93,14 @@ PAGES = {
                     <td></td>
                     <td><a href="/static/downloads/townlandtouch.csv.zip">"""+_("""download no-geom CSV""")+"""</a></td>
                 </tr>
+                <tr>
+                    <td>"""+_("""Provinces""")+"""</td>
+                    <td><a href="/static/downloads/provinces.zip">"""+_("""download shapefile""")+"""</a></td>
+                    <td><a href="/static/downloads/provinces.geojson.zip">"""+_("""download GeoJSON""")+"""</a></td>
+                    <td><a href="/static/downloads/provinces.kmz">"""+_("""download KML""")+"""</a></td>
+                    <td><a href="/static/downloads/provinces.csv.zip">"""+_("""download CSV""")+"""</a></td>
+                    <td><a href="/static/downloads/provinces-no-geom.csv.zip">"""+_("""download no-geom CSV""")+"""</a></td>
+                </tr>
             </table>
 
             <h2>"""+_("""Data format""")+"""</h2>
@@ -186,6 +194,19 @@ PAGES = {
                 """+_("""For every two townlands (A & B) that touch, there will be 2 rows in this file. One where A is townland 1, the other were B is townland 1.""")+"""
             </p>
 
+            <h3>"""+_("""Provinces""")+"""</h3>
+            <p>"""+_("""There is less data in the provinces file:""")+"""
+                <dl class="dl-horizontal">
+                    <dt>osm_id</dt>
+                    <dd>"""+_("""osm_id of the object in OpenStreetMap""")+"""</dd>
+                    <dt>NAME<dt>
+                    <dd>"""+_("""String. The name of the object. Should be the "common name". Almost certainly in English, but may be in Irish.""")+""" <i>("""+_("""NB: In the KML/KMZ file, this is NAME2 due to how ogr2ogr converts things. Suggestions welcome for how to fix this.""")+""")</i></dd>
+                    <dt>NAME_GA<dt>
+                    <dd>"""+_("""String. The name of the object in Irish.""")+"""</dd>
+                    <dt>NAME_EN<dt>
+                    <dd>"""+_("""String. The name of the object in English. Many objects don't have this, in which case presume that NAME is the English name""")+"""</dd>
+                </dl>
+            </p>
 
             <h2>"""+_("""Copyright & Licence""")+"""</h2>
             <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
