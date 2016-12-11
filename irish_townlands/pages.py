@@ -191,7 +191,7 @@ PAGES = {
             <p>"""+_("""Since this is derived from <a href="openstreetmap.org">OpenStreetMap</a> data, it's under the same licence as that. Namely the <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License (ODbL)</a>.""")+"""</p>
             <p>"""+_("""Consult the <a href="https://www.openstreetmap.org/copyright">OpenStreetMap Copyright</a> guide for more information.""")+"""</p>
 
-        """, )
+        """ )
     },
 
     'data_freshness': {
