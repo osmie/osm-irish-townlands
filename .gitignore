@@ -4,6 +4,7 @@
 .*.swo
 ireland-and-northern-ireland-latest.osm.pbf
 ireland-and-northern-ireland.osm.pbf
+offaly.osm.pbf
 build/*
 coastline.db
 
