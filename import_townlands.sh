@@ -55,6 +55,10 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
 
+# Add hstore indexes
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE INDEX plantet_osm_polygon__tags ON planet_osm_polygon using gist (tags);" 2>/dev/null
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE INDEX plantet_osm_point__tags ON planet_osm_point using gist (tags);" 2>/dev/null
+
 # temporary clean up
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "delete from planet_osm_point where not ( place = 'locality' and locality = 'subtownland' );" 2>/dev/null
 
