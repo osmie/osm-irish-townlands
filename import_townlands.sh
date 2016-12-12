@@ -39,7 +39,7 @@ wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-
 
 FILENAME=ireland-and-northern-ireland.osm.pbf
 if [[ $VERBOSE ]] ; then
-    if [[ $QUICK ]] ; then
+    if [[ $QUICK == 1 ]] ; then
         # Only import carlow
         rm -f carlow.osm.pbf
         osmosis --read-pbf ./ireland-and-northern-ireland.osm.pbf --bounding-box left=-7.094 bottom=52.504 right=-6.713 top=52.852 completeWays=yes completeRelations=yes cascadingRelations=yes --write-pbf ./carlow.osm.pbf
