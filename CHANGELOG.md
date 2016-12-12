@@ -1,3 +1,18 @@
+<a name="20161212151156"></a>
+## 20161212151156 (2016-12-12)
+
+
+#### Features
+
+*   Add more data for subtownlands ([5f437457](5f437457))
+
+#### Bug Fixes
+
+*   Properly support the verbose, non-quick version ([664e0190](664e0190))
+*   Correctly remove unneeded non-subtownlands ([e3bb5d30](e3bb5d30))
+
+
+
 <a name="20161211160755"></a>
 ## 20161211160755 (2016-12-11)
 
