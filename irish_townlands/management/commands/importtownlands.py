@@ -228,7 +228,7 @@ class Command(BaseCommand):
 
     def calculate_subtownlands(self):
         with printer("Calculating subtownlands"):
-            self.cursor.execute("select distinct on (s.osm_id) s.osm_id, s.name, s.\"name:ga\", alt_name, st_x(st_transform(s.way, 4326)) as x, st_y(st_transform(s.way, 4326)) as y, t.osm_id as townland_id from planet_osm_point as s join valid_polygon as t on (st_within(s.way, t.way)) where s.place = 'locality' and s.locality = 'subtownland' and t.admin_level = '10';")
+            self.cursor.execute("select distinct on (s.osm_id) s.osm_id, s.name, s.tags->\'name:ga\', s.tags->'alt_name', st_x(st_transform(s.way, 4326)) as x, st_y(st_transform(s.way, 4326)) as y, t.osm_id as townland_id from planet_osm_point as s join valid_polygon as t on (st_within(s.way, t.way)) where s.place = 'locality' and s.locality = 'subtownland' and t.admin_level = '10';")
             subtownlands = []
             for osm_id, name, name_ga, alt_name, location_x, location_y, townland_id in self.cursor:
                 subtownlands.append(Subtownland(osm_id=osm_id, name_tag=name, name_ga=name_ga, alt_name=alt_name, location_x=location_x, location_y=location_y, townland=self.townlands[townland_id]))
@@ -579,21 +579,21 @@ class Command(BaseCommand):
 
             self.cols = [
                 ('name', 'name_tag'),
-                ('"name:ga"', 'name_ga'),
-                ('"name:en"', 'name_en'),
-                ('alt_name', 'alt_name'),
-                ('"alt_name:ga"', 'alt_name_ga'),
-                ('"official_name:en"', 'official_name_en'),
-                ('"official_name:ga"', 'official_name_ga'),
-                ('"logainm:ref"', 'logainm_ref'),
-                ('"name:census1901"', 'name_census1901_tag'),
-                ('"name:census1911"', 'name_census1911_tag'),
-                ('"name:griffithsvaluation"', 'name_griffithsvaluation_tag'),
+                ("tags->'name:ga'", 'name_ga'),
+                ("tags->'name:en'", 'name_en'),
+                ("tags->'alt_name'", 'alt_name'),
+                ("tags->'alt_name:ga'", 'alt_name_ga'),
+                ("tags->'official_name:en'", 'official_name_en'),
+                ("tags->'official_name:ga'", 'official_name_ga'),
+                ("tags->'logainm:ref'", 'logainm_ref'),
+                ("tags->'name:census1901'", 'name_census1901_tag'),
+                ("tags->'name:census1911'", 'name_census1911_tag'),
+                ("tags->'name:griffithsvaluation'", 'name_griffithsvaluation_tag'),
                 ('osm_id', 'osm_id'),
                 ('place', 'place'),
-                ('"source"', 'source'),
-                ('attribution', 'attribution'),
-                ('ref', 'ref'),
+                ("tags->'source'", 'source'),
+                ("tags->'attribution'", 'attribution'),
+                ("tags->'ref'", 'ref'),
                 ('st_area(st_transform(way, 29902))', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
                 ('ST_Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
