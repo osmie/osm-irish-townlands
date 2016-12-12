@@ -86,6 +86,8 @@
         {% endwith %}
     </ul>
 
+    {% include "irish_townlands/old_names.inc.html" with old_names=civil_parish.old_names name=civil_parish.name %}
+
     <a name="osm"></a>
     <h2>{% trans "OpenStreetMap" %}</h2>
     {% if civil_parish.osm_timestamp %}

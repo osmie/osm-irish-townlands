@@ -80,6 +80,8 @@
         <p>{% blocktrans with name=subtownland.name  %}{{ name }} is an island.{% endblocktrans %}</p>
     {% endif %}
 
+    {% include "irish_townlands/old_names.inc.html" with old_names=subtownland.old_names name=subtownland.name %}
+
     <a name="map"></a>
     <h2>{% trans "Map" %}</h2>
     <p>

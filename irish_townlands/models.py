@@ -14,11 +14,12 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 import math
+import json
 
 from django.db import models
 
 
-from .utils import m2_to_arp, remove_prefixes, remove_accents
+from .utils import m2_to_arp, remove_prefixes, remove_accents, historic_names
 
 def err_msg(msg, *args, **kwargs):
     msg = msg.format(*args, **kwargs)
@@ -579,6 +580,17 @@ class Area(models.Model, NameableThing):
         else:
             return [x.strip() for x in self.logainm_ref.split(";")]
 
+    @property
+    def tags(self):
+        if self._tags_json == '':
+            return {}
+        else:
+            return json.loads(self._tags_json)
+
+    @property
+    def old_names(self):
+        return historic_names(self.tags)
+
 
 class Barony(Area):
     county = models.ForeignKey("County", null=True, db_index=True, default=None, related_name="baronies")
@@ -931,6 +943,17 @@ class Subtownland(models.Model, NameableThing):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
+
+    @property
+    def tags(self):
+        if self._tags_json == '':
+            return {}
+        else:
+            return json.loads(self._tags_json)
+
+    @property
+    def old_names(self):
+        return historic_names(self.tags)
 
 class NameEntry(models.Model):
     desc = models.CharField(max_length=1, choices=[('s', 'short'), ('m', 'medium'), ('l', 'long')], default='l', db_index=True)
