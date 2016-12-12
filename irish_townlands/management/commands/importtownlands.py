@@ -597,6 +597,7 @@ class Command(BaseCommand):
                 ('st_area(st_transform(way, 29902))', 'area_m2'),
                 ('ST_X(st_transform((ST_centroid(way)), 4326))', 'centre_x'),
                 ('ST_Y(st_transform((ST_centroid(way)), 4326))', 'centre_y'),
+                ('hstore_to_json(tags)', '_tags_json'),
             ]
 
             self.connect_to_db()

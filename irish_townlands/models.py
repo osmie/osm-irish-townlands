@@ -219,6 +219,8 @@ class Area(models.Model, NameableThing):
 
     logainm_ref = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
+    _tags_json = models.TextField(default='', null=True)
+
     def __unicode__(self):
         return "{0} ({1})".format(self.name, self.osm_id)
 
@@ -871,6 +873,7 @@ class Subtownland(models.Model, NameableThing):
     name_griffithsvaluation_tag = models.CharField(max_length=255, default=None, null=True, db_index=True)
 
     logainm_ref = models.CharField(max_length=255, default=None, null=True, db_index=True)
+    _tags_json = models.TextField(default='', null=True)
 
     place = None
     has_different_name_census1901 = False
