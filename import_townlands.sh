@@ -32,6 +32,7 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=$DB_PASS $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
 
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE EXTENSION IF NOT EXISTS postgis;" 2>/dev/null
 
 wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
 
