@@ -40,10 +40,11 @@ wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-
 FILENAME=ireland-and-northern-ireland.osm.pbf
 if [[ $VERBOSE ]] ; then
     if [[ $QUICK == 1 ]] ; then
-        # Only import carlow
+        # Only import offaly
         rm -f carlow.osm.pbf
-        osmosis --read-pbf ./ireland-and-northern-ireland.osm.pbf --bounding-box left=-7.094 bottom=52.504 right=-6.713 top=52.852 completeWays=yes completeRelations=yes cascadingRelations=yes --write-pbf ./carlow.osm.pbf
-        FILENAME=carlow.osm.pbf
+        rm -f offaly.osm.pbf
+        osmosis --read-pbf ./ireland-and-northern-ireland.osm.pbf --bounding-box left=-8.0836546 bottom=52.8481712 right=-6.977759 top=53.4242735 completeWays=yes completeRelations=yes cascadingRelations=yes --write-pbf ./offaly.osm.pbf
+        FILENAME=offaly.osm.pbf
     fi
     PGPASSWORD=${DB_PASS} osm2pgsql --hstore-all --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME}
 else
