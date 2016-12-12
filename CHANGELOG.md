@@ -1,3 +1,18 @@
+<a name="20161212213915"></a>
+## 20161212213915 (2016-12-12)
+
+
+#### Bug Fixes
+
+*   Import as json string, not python dict ([57321940](57321940))
+
+#### Features
+
+*   Display old names ([070e378e](070e378e))
+*   Store all tags in the object ([3aead247](3aead247))
+
+
+
 <a name="20161212151314"></a>
 ## 20161212151314 (2016-12-12)
 
