@@ -32,6 +32,7 @@ for TABLE in planet_osm_nodes planet_osm_rels planet_osm_ways planet_osm_line pl
 	PGOPTIONS="--client-min-messages=warning" PGPASSWORD=$DB_PASS $POSTGIS_CMD -c "drop table if exists $TABLE;"
 done
 
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE EXTENSION IF NOT EXISTS hstore;" 2>/dev/null
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE EXTENSION IF NOT EXISTS postgis;" 2>/dev/null
 
 wget ${WGET_VERBOSE_ARG} -N http://planet.openstreetmap.ie/ireland-and-northern-ireland.osm.pbf || wget -q -O ireland-and-northern-ireland.osm.pbf -N http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.pbf || echo "Could not download"
@@ -44,9 +45,9 @@ if [[ $VERBOSE ]] ; then
         osmosis --read-pbf ./ireland-and-northern-ireland.osm.pbf --bounding-box left=-7.094 bottom=52.504 right=-6.713 top=52.852 completeWays=yes completeRelations=yes cascadingRelations=yes --write-pbf ./carlow.osm.pbf
         FILENAME=carlow.osm.pbf
     fi
-    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME}
+    PGPASSWORD=${DB_PASS} osm2pgsql --hstore-all --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME}
 else
-    PGPASSWORD=${DB_PASS} osm2pgsql --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME} &>/dev/null
+    PGPASSWORD=${DB_PASS} osm2pgsql --hstore-all --latlong --username ${DB_USER} --host localhost --database townlands --cache ${OSM2PGSQL_CACHE} --cache-strategy sparse --slim --style ${BASEDIR}/townlands.style -G ${FILENAME} &>/dev/null
 fi
 
 # not needed anymore
