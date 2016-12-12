@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if old_names.has_results %}
+    <a name="oldnames"></a>
+    <h2>{% trans 'Old Names' %}</h2>
+    {% blocktrans with name=county.name %}{{ name }} wasn't always called {{ name }}. It had the following names in the past:{% endblocktrans %}
+    <table class="table" style="width: auto">
+        <tr>{% for header in old_names.header %}<th>{{ header }}</th>{% endfor %}</tr>
+        {% for row in old_names.body %}<tr>
+            {% for col in row %}<td>{{ col }}</td>{% endfor %}
+        {% endfor %}
+    </table>
+{% endif %}
