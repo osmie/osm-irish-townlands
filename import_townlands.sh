@@ -60,7 +60,7 @@ PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE INDEX plantet_osm_polygon__tags ON
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "CREATE INDEX plantet_osm_point__tags ON planet_osm_point using gist (tags);" 2>/dev/null
 
 # temporary clean up
-PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "delete from planet_osm_point where not ( place = 'locality' and locality = 'subtownland' );" 2>/dev/null
+PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "delete from planet_osm_point where not ( COALESCE(place, '') = 'locality' and COALESCE(locality, '') = 'subtownland' );" 2>/dev/null
 
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "drop table valid_polygon;" 2>/dev/null || true
 PGPASSWORD=${DB_PASS} $POSTGIS_CMD -c "create table if not exists valid_polygon (like planet_osm_polygon);" 2>/dev/null
