@@ -30,21 +30,8 @@ node  locality     text         linear
 node,way   admin_level  text         linear
 node,way   area         text         # hard coded support for area=1/yes => polygon is in osm2pgsql
 node,way   boundary     text         linear
-node,way   name         text         linear
-node,way   name:en      text         linear
-node,way   name:ga      text         linear
-node,way   alt_name     text         linear
-node,way   alt_name:ga  text         linear
-node,way   name:census1901     text         linear
-node,way   name:census1911     text         linear
-node,way   name:griffithsvaluation     text         linear
+node,way   name     text         linear
 way   place        text         linear
-node,way   attribution  text         linear
-node,way   source       text         linear
-node,way   ref          text         linear
-node,way   logainm:ref        text         linear
-node,way   official_name:en    text         linear
-node,way   official_name:ga    text         linear
 way   natural      text         polygon  # natural=coastline tags are discarded by a hard coded rule in osm2pgsql
 way   water        text         polygon
 way   waterway     text         polygon
