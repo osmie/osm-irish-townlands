@@ -393,13 +393,13 @@ class Area(models.Model, NameableThing):
         # An area called "Foo or Bar" should be expanded to 2 entries, "Foo"
         # and "Bar". This code split it that way.
         def split_string(input_string):
-            strings_to_split = [" and ", " or ", " agus ", u" nó ", ";"]
+            strings_to_split = [" and ", " or ", " agus ", u" nó ", ";", "/"]
             results = []
             for s in strings_to_split:
                 if s in input_string:
                     names = input_string.split(s)
                     for name in names[1:]:
-                        results.append(name)
+                        results.append(name.trim())
 
             for s in ['North', 'South', 'East', 'West', 'Upper', 'Lower']:
                 if input_string.lower().endswith(" "+s.lower()):
