@@ -87,22 +87,7 @@
     {% endfor %}
     </ul>
 
-    <a name="osm"></a>
-    <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if county.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=county.osm_timestamp|date:"j M Y" osm_user=county.osm_user name=county_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
-    {% else %}
-        <p>{% blocktrans with name=county_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
-    {% endif %}
-    {% if county.osm_id %}
-        <p>
-            <a href="{{ county.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ county.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ county.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ county.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ county.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-        </p>
-    {% endif %}
+    {% include "irish_townlands/inc/osm_links.html" with obj=county obj_name=county_name %}
     <p> <a href="{% url 'county_debug' county.url_path %}">{% trans "Debug</a> overlaps and coverage" %}</p>
     <p> <a href="{% url 'rate' %}#{{ county.name }}">{% blocktrans with county_name=county.name %}How long will it take OSM to finish {{ county_name }}?{% endblocktrans %}</a></p>
 
