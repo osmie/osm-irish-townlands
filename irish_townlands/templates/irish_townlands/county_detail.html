@@ -16,7 +16,7 @@
     <p>{% blocktrans with name=county.name area_km2=county.area_km2|floatformat|intcomma area_acres=county.area_acres|floatformat|intcomma area_mile2=county.area_mile2|floatformat|intcomma %}{{ name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles.{% endblocktrans %}</p>
     <p>{% blocktrans with name=county.name water_area_m2=county.water_area_m2|floatformat|intcomma water_percent=county.water_percent|floatformat %}{{ name }} has a total water area of {{ water_area_m2 }} m², which is {{ water_percent }}% of the total area{% endblocktrans %}</p>
 
-    {% include "irish_townlands/old_names.inc.html" with old_names=county.old_names name=county.name %}
+    {% include "irish_townlands/inc/old_names.html" with old_names=county.old_names name=county.name %}
 
     {% with baronies=county.baronies_sorted %}
         <h2>{% trans "Baronies" %}</h2>

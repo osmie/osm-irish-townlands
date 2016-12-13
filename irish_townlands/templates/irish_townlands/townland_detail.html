@@ -153,7 +153,7 @@
         <p>{% blocktrans with county=townland.county.name county_rank=townland.area_rank_county|ordinal %}Within Co. {{ county }}, it is the {{ county_rank }} largest townland{% endblocktrans %}</p>
     {% endif %}
 
-    {% include "irish_townlands/old_names.inc.html" with old_names=townland.old_names name=townland.name %}
+    {% include "irish_townlands/inc/old_names.html" with old_names=townland.old_names name=townland.name %}
 
     <a name="borders"></a>
     <h2>{% trans "Borders" %}</h2>

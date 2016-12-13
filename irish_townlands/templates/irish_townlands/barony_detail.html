@@ -59,7 +59,7 @@
     <h2>{% trans "Area" %}</h2>
     <p>{{ barony.name }} has an area of {{ barony.area_km2|floatformat|intcomma }} km² / {{ barony.area_acres|floatformat|intcomma }} acres / {{ barony.area_mile2|floatformat|intcomma }} square miles</p>
 
-    {% include "irish_townlands/old_names.inc.html" with old_names=barony.old_names name=barony.name %}
+    {% include "irish_townlands/inc/old_names.html" with old_names=barony.old_names name=barony.name %}
 
     {% with civil_parishes=barony.civil_parishes.all %}
     {% if civil_parishes %}

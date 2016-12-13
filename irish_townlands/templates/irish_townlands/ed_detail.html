@@ -60,7 +60,7 @@
     <h2>{% trans "Area" %}</h2>
     <p>{% blocktrans with area_km2=ed.area_km2|floatformat|intcomma area_acres=ed.area_acres|floatformat|intcomma area_mile2=ed.area_mile2|floatformat|intcomma name=ed.name %}{{ name }} has an area of {{ area_km2 }} km² / {{ area_acres }} acres / {{ area_mile2 }} square miles.{% endblocktrans %}</p>
 
-    {% include "irish_townlands/old_names.inc.html" with old_names=ed.old_names name=ed.name %}
+    {% include "irish_townlands/inc/old_names.html" with old_names=ed.old_names name=ed.name %}
 
     {% with civil_parishes=county.civil_parishes.all %}
     {% if civil_parishes %}
