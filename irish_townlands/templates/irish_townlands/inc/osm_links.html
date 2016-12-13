@@ -1,6 +1,6 @@
 {% load i18n static %}
 <a name="osm"></a>
-<h2><img style="height: 1em" src="{% static 'img/osm-logo.svg' %}" alt="OpenStreetMap Logo"> {% trans "OpenStreetMap" %}</h2>
+<h2><img style="height: 1em" src="{% static 'img/logo/osm.svg' %}" alt="OpenStreetMap Logo"> {% trans "OpenStreetMap" %}</h2>
 {% if obj.osm_timestamp %}
     <p>{% blocktrans with osm_timestamp=obj.osm_timestamp|date:"j M Y" osm_user=obj.osm_user name=obj_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
 {% else %}
