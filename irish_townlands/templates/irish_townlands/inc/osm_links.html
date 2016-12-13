@@ -1,18 +1,28 @@
-{% load i18n %}
+{% load i18n static %}
 <a name="osm"></a>
-<h2>{% trans "OpenStreetMap" %}</h2>
+<h2><img style="height: 1em" src="{% static 'img/osm-logo.svg' %}" alt="OpenStreetMap Logo"> {% trans "OpenStreetMap" %}</h2>
 {% if obj.osm_timestamp %}
     <p>{% blocktrans with osm_timestamp=obj.osm_timestamp|date:"j M Y" osm_user=obj.osm_user name=obj_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
 {% else %}
     <p>{% blocktrans with name=obj_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
 {% endif %}
 {% if obj.osm_id %}
-    <p>
-        <a href="{{ obj.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-        <a href="{{ obj.osm_history_viewer_browse_url }}">{% trans "OpenStreetMap Edit History" %}</a>
-        <a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-        <a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-        <a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-        <a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-    </p>
+<dl class="dl-horizontal">
+    <dt>View</dt>
+    <dd>
+        <ul class="list-inline">
+            <li><a class="btn btn-primary" href="{{ obj.osm_browse_url }}"> {% trans "View on OpenStreetMap.org" %}</a></li>
+            <li><a class="btn btn-primary" href="{{ obj.osm_history_viewer_browse_url }}">{% trans "Show Changes" %}</a></li>
+        </ul>
+    </dd>
+    <dt>{% trans 'Edit' %}</dt>
+    <dd>
+        <ul class="list-inline">
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_josm_url }}" target="_blank">{% trans "JOSM" %}</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_id_url }}">{% trans "iD" %}</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_potlatch_url }}">{% trans "Potlatch" %}</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_level0_url }}">{% trans "Level0" %}</a></li>
+        </ul>
+    </dd>
+</dl>
 {% endif %}
