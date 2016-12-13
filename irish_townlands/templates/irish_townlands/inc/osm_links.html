@@ -18,8 +18,8 @@
     <dt>{% trans 'Edit' %}</dt>
     <dd>
         <ul class="list-inline">
-            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_josm_url }}" target="_blank">{% trans "JOSM" %}</a></li>
-            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_id_url }}">{% trans "iD" %}</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_josm_url }}" target="_blank"><img style="height: 1.2em" src="{% static 'img/logo/josm.svg' %}" alt="JOSM logo" > {% trans "JOSM" %}</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_id_url }}"><img style="height: 1.2em" src="{% static 'img/logo/id.svg' %}" alt="iD logo" > {% trans "iD" %}</a></li>
             <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_potlatch_url }}">{% trans "Potlatch" %}</a></li>
             <li><a class="btn btn-primary" target="_blank" href="{{ obj.edit_in_level0_url }}">{% trans "Level0" %}</a></li>
         </ul>
