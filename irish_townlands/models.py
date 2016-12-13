@@ -66,7 +66,7 @@ class NameableThing(object):
 
     @property
     def osm_browse_url(self):
-        return "http://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
+        return "https://www.openstreetmap.org/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_josm_url(self):
@@ -74,15 +74,20 @@ class NameableThing(object):
 
     @property
     def edit_in_potlatch_url(self):
-        return "http://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+        return "https://www.openstreetmap.org/edit?editor=potlatch2&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_id_url(self):
-        return "http://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
+        return "https://www.openstreetmap.org/edit?editor=id&{type}={id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     @property
     def edit_in_level0_url(self):
+        # Level0 currently uses a self signed cert
         return "http://level0.osmz.ru/?url={type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
+
+    @property
+    def osm_history_viewer_browse_url(self):
+        return "https://pewu.github.io/osm-history/#/{type}/{id}".format(type=self.osm_type, id=abs(self.osm_id))
 
     def full_name(self, incl_other_names=True, incl_hierachies=True, incl_misc=True):
         name = self.name
