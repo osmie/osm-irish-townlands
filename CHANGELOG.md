@@ -1,3 +1,21 @@
+<a name="20161213175627"></a>
+## 20161213175627 (2016-12-13)
+
+
+#### Bug Fixes
+
+*   Include new OSM links on all objects ([3f125d05](3f125d05))
+*   HTTPS more links ([32ce8485](32ce8485))
+*   Link to OSM history ([b581ca8f](b581ca8f))
+*   Don't force "Derry" name for county. Just use what's in OSM ([0e0f3fc2](0e0f3fc2))
+
+#### Features
+
+*   Include logos from JOSM and iD and display ([0237d4e1](0237d4e1))
+*   Nicer styling of OSM links ([4e729343](4e729343))
+
+
+
 <a name="20161212213915"></a>
 ## 20161212213915 (2016-12-12)
 
