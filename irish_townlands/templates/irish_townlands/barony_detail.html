@@ -86,22 +86,6 @@
     {% endfor %}
     </ul>
 
-    <a name="osm"></a>
-    <h2>OpenStreetMap</h2>
-    {% if barony.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=barony.osm_timestamp|date:"j M Y" osm_user=barony.osm_user name=barony_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
-    {% else %}
-        <p>{% blocktrans with name=barony_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
-    {% endif %}
-    {% if barony.osm_id %}
-        <p>
-            <a href="{{ barony.osm_browse_url }}">Show on OpenStreetMap.org</a>
-            <a class="btn btn-primary" target="_blank" href="{{ barony.edit_in_josm_url }}" target="_blank">Edit in JOSM</a>
-            <a class="btn btn-primary" target="_blank" href="{{ barony.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ barony.edit_in_potlatch_url }}">Edit in Potlatch</a>
-            <a class="btn btn-primary" target="_blank" href="{{ barony.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-        </p>
-    {% endif %}
-
+    {% include "irish_townlands/inc/osm_links.html" with obj=barony obj_name=county_name %}
 
 {% endblock body %}

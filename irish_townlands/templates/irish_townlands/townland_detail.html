@@ -212,22 +212,7 @@
         </ul>
     </p>
 
-    <a name="osm"></a>
-    <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if townland.osm_timestamp %}{% url 'mapper_details' osm_user as mapperurl %}
-        <p>{% with osm_timestamp=townland.osm_timestamp|date:"j M Y" osm_user=townland.osm_user name=townland_name %}{% blocktrans %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by <a href="{{ mapperurl }}">{{ osm_user }}</a>.{% endblocktrans %} {% endwith %}{% blocktrans with order=townland.added_order|ordinal %}It was the {{ order }} townland added to OpenStreetMap{% endblocktrans %}</p>
-    {% else %}
-        <p>{% blocktrans with name=townland_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
-    {% endif %}
-    {% if townland.osm_id %}
-        <p>
-            <a href="{{ townland.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ townland.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-        </p>
-    {% endif %}
+    {% include "irish_townlands/inc/osm_links.html" with obj=townland obj_name=townland_name %}
     {% if townland.source %}{% blocktrans with source=townland.source %}The source for this townland is {{ source }}.{% endblocktrans %}{% endif %}
     {% if townland.attribution %}{% blocktrans with attribution=townland.attribution %}The attribution for this townland is {{ attribution }}.{% endblocktrans %}{% endif %}
 

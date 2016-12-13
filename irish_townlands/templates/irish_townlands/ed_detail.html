@@ -96,22 +96,6 @@
     {% endfor %}
     </ul>
 
-    <a name="osm"></a>
-    <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if ed.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=ed.osm_timestamp|date:"j M Y" osm_user=ed.osm_user name=ed_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
-    {% else %}
-        <p>{% blocktrans with name=ed_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
-    {% endif %}
-    {% if ed.osm_id %}
-        <p>
-            <a href="{{ ed.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ ed.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ e.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-        </p>
-    {% endif %}
-
+    {% include "irish_townlands/inc/osm_links.html" with obj=ed obj_name=ed_name %}
 
 {% endblock body %}

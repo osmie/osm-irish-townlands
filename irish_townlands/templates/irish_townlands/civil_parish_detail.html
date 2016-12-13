@@ -88,21 +88,6 @@
 
     {% include "irish_townlands/inc/old_names.html" with old_names=civil_parish.old_names name=civil_parish.name %}
 
-    <a name="osm"></a>
-    <h2>{% trans "OpenStreetMap" %}</h2>
-    {% if civil_parish.osm_timestamp %}
-        <p>{% blocktrans with osm_timestamp=civil_parish.osm_timestamp|date:"j M Y" osm_user=civil_parish.osm_user name=civil_parish_name %}{{ name }} was added to OpenStreetMap on {{ osm_timestamp }} by {{ osm_user }}.{% endblocktrans %}</p>
-    {% else %}
-        <p>{% blocktrans with name=civil_parish_name %}We don't know when {{ name }} was added to OpenStreetMap.{% endblocktrans %}</p>
-    {% endif %}
-    {% if civil_parish.osm_id %}
-        <p>
-            <a href="{{ civil_parish.osm_browse_url }}">{% trans "Show on OpenStreetMap.org" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_josm_url }}" target="_blank">{% trans "Edit in JOSM" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_id_url }}">{% trans "Edit in iD" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_potlatch_url }}">{% trans "Edit in Potlatch" %}</a>
-            <a class="btn btn-primary" target="_blank" href="{{ civil_parish.edit_in_level0_url }}">{% trans "Edit in Level0" %}</a>
-        </p>
-    {% endif %}
+    {% include "irish_townlands/inc/osm_links.html" with obj=civil_parish obj_name=civil_parish_name %}
 
 {% endblock body %}
