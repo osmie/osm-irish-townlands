@@ -188,7 +188,7 @@ class Command(BaseCommand):
 
             county_names = set([
                 "Tyrone", "Kerry", "Dublin", "Down", "Fermanagh", "Wexford", "Mayo", "Carlow",
-                "Wicklow", "Longford", "Westmeath", "Cork", "Leitrim", "Laois", "Waterford", "Tipperary",
+                "Wicklow", "Longford", "Westmeath", "Cork", "Leitrim", "Laois", "Londonderry", "Waterford", "Tipperary",
                 "Monaghan", "Kilkenny", "Galway", "Meath", "Donegal", "Cavan", "Kildare", "Offaly",
                 "Derry", "Clare", "Armagh", "Antrim", "Limerick", "Louth", "Sligo", "Roscommon",
                 ])
