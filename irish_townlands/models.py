@@ -399,7 +399,7 @@ class Area(models.Model, NameableThing):
                 if s in input_string:
                     names = input_string.split(s)
                     for name in names[1:]:
-                        results.append(name.trim())
+                        results.append(name.strip())
 
             for s in ['North', 'South', 'East', 'West', 'Upper', 'Lower']:
                 if input_string.lower().endswith(" "+s.lower()):
