@@ -18,6 +18,6 @@ if ! git diff --exit-code >/dev/null ; then
 fi
 
 VERSION=$(date '+%Y%m%d%H%M%S')
-clog -F --setversion=${VERSION} -C CHANGELOG.md
+clog -F --setversion=${VERSION} -C CHANGELOG.md || true
 
 git tag ${VERSION}
